@@ -10763,13 +10763,7 @@ ul ul a:hover {
 }
 
 .login-form input {
-  width: 100%;
-  height: 40px;
-  font-size: 17px;
-  font-weight: 500;
-  padding: 7px;
-  border: 1px solid #d1d1d1;
-  border-radius: 4px;
+  height: 45px;
 }
 
 #loginbutton {
@@ -10793,5 +10787,57 @@ ul ul a:hover {
   .login-form {
     width: 100%;
   }
+}
+
+.form-main-heading {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.form-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.form-container .column {
+  width: 50%;
+  padding: 0 20px;
+}
+
+.form-container .column:nth-child(odd) {
+  padding-left: 0;
+}
+
+.form-container .column:nth-child(even) {
+  padding-right: 0;
+}
+
+.column .form-field {
+  margin-bottom: 20px;
+}
+
+.column .form-field img {
+  width: 65px;
+  height: 65px;
+  border: 1px solid #d0d0d0;
+}
+
+.form-field-heading {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.form-button {
+  margin-top: 10px;
+  padding: 10px 20px;
 }
 

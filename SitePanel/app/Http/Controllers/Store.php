@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class Store extends Controller
 {
     public function addStore(){
-        return view('pages.store.addstore');
+        return View('pages.store.addstore');
     }
 }

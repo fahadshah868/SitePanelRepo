@@ -14,9 +14,9 @@
             @csrf
             <div class="login-form">
                 <div class="login-fields-heading">User Name:</div>
-                <input type="text" placeholder="user name"/>
+                <input type="text" class="form-control" placeholder="user name"/>
                 <div class="login-fields-heading">Password:</div>
-                <input type="password" placeholder="password"/>
+                <input type="password" class="form-control" placeholder="password"/>
                 <input type="submit" value="Login" id="loginbutton"/>
             </div>
         </form>

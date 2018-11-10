@@ -5,40 +5,40 @@
 @section('content')
 
 <div class="form-main-container">
-    <div class="form-main-heading">Add Store</div>
+    <div class="form-main-heading">Add Coupon</div>
     <hr>
     <form>
         <div class="form-container">
             <div class="column">
                 <div class="form-field">
-                <div class="form-field-heading">Store Title</div>
+                <div class="form-field-heading">Offer Title</div>
                     <input type="text" class="form-control" placeholder="xyz"/>
                 </div>
                 <div class="form-field">
-                    <div class="form-field-heading">Store Type</div>
-                    <select class="form-control">
-                        <option>Select Type</option>
-                        <option>Normal</option>
-                        <option>Popular</option>
-                    </select>
-                </div>
-                <div class="form-field">
-                    <div class="form-field-heading">Store Logo</div>
-                    <img src="#" id="imgpath" />
-                    <input type="file" id="imgfilepath"/>
-                </div>
-            </div>
-            <div class="column">
-                <div class="form-field">
-                    <div class="form-field-heading">Store Site Link</div>
-                    <input type="text" class="form-control" placeholder="www.xyz.com"/>
-                </div>
-                <div class="form-field">
-                    <div class="form-field-heading">Store Status</div>
+                    <div class="form-field-heading">Coupon Status</div>
                     <select class="form-control">
                         <option>Select Status</option>
                         <option>Active</option>
                         <option>Deactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="column">
+                <div class="form-field">
+                    <div class="form-field-heading">Offer Type</div>
+                    <select class="form-control">
+                        <option>Select Offer Type</option>
+                        <option>Sale</option>
+                        <option>Code</option>
+                        <option>Instore Coupon</option>
+                    </select>
+                    </div>
+                <div class="form-field">
+                    <div class="form-field-heading">Coupon Type</div>
+                    <select class="form-control">
+                        <option>Select Type</option>
+                        <option>Normal</option>
+                        <option>Popular</option>
                     </select>
                 </div>
             </div>

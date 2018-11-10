@@ -5,17 +5,17 @@
 @section('content')
 
 <div class="form-main-container">
-    <div class="form-main-heading">Add Store</div>
+    <div class="form-main-heading">Add Category</div>
     <hr>
     <form>
         <div class="form-container">
             <div class="column">
                 <div class="form-field">
-                <div class="form-field-heading">Store Title</div>
+                <div class="form-field-heading">Category Title</div>
                     <input type="text" class="form-control" placeholder="xyz"/>
                 </div>
                 <div class="form-field">
-                    <div class="form-field-heading">Store Type</div>
+                    <div class="form-field-heading">Category Type</div>
                     <select class="form-control">
                         <option>Select Type</option>
                         <option>Normal</option>
@@ -23,18 +23,14 @@
                     </select>
                 </div>
                 <div class="form-field">
-                    <div class="form-field-heading">Store Logo</div>
+                    <div class="form-field-heading">Category Logo</div>
                     <img src="#" id="imgpath" />
                     <input type="file" id="imgfilepath"/>
                 </div>
             </div>
             <div class="column">
                 <div class="form-field">
-                    <div class="form-field-heading">Store Site Link</div>
-                    <input type="text" class="form-control" placeholder="www.xyz.com"/>
-                </div>
-                <div class="form-field">
-                    <div class="form-field-heading">Store Status</div>
+                    <div class="form-field-heading">Category Status</div>
                     <select class="form-control">
                         <option>Select Status</option>
                         <option>Active</option>
