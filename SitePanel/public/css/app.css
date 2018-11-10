@@ -10475,49 +10475,23 @@ body {
   background-color: #fafafa;
 }
 
-* {
+*,
+*:after,
+*:before {
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@font-face {
-  font-family: poppins1;
-  font-style: normal;
-  font-weight: 300;
-  font-stretch: normal;
-  src: url(/fonts/Poppins-Light.otf?02c5a7af5427f03f93cd9094334ee181);
+a {
+  color: #fff;
+  text-decoration: none;
 }
 
-@font-face {
-  font-family: poppins1;
-  font-style: normal;
-  font-weight: 400;
-  font-stretch: normal;
-  src: url(/fonts/Poppins-Regular.otf?de2dd9339ae7636475fcd91b3ed0e24f);
-}
-
-@font-face {
-  font-family: poppins1;
-  font-style: normal;
-  font-weight: 500;
-  font-stretch: normal;
-  src: url(/fonts/Poppins-Medium.otf?f88c443f02135a3ba091560e76ed767f);
-}
-
-@font-face {
-  font-family: poppins1;
-  font-style: normal;
-  font-weight: 600;
-  font-stretch: normal;
-  src: url(/fonts/Poppins-SemiBold.otf?b0b3d360d13a9649222edd1d844dfc9c);
-}
-
-@font-face {
-  font-family: poppins1;
-  font-style: normal;
-  font-weight: 700;
-  font-stretch: normal;
-  src: url(/fonts/Poppins-Bold.otf?e47421f9b8cec2661620743c53475c8d);
+a:hover {
+  color: #0061ff;
+  text-decoration: none;
 }
 
 .wrapper a {
@@ -10754,6 +10728,70 @@ ul ul a:hover {
 
   #sidebarCollapse span {
     display: none;
+  }
+}
+
+.login-top-navbar {
+  background-color: #044D6E;
+  padding: 30px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.login-form {
+  margin: auto;
+  margin-top: 100px;
+  width: 500px;
+  padding: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+}
+
+.login-fields-heading {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 10px 0 3px 0;
+}
+
+.login-form input {
+  width: 100%;
+  height: 40px;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 7px;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+}
+
+#loginbutton {
+  margin-top: 15px;
+  background-color: #044D6E;
+  height: 40px;
+  outline: none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  border: 1px solid #044D6E;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#loginbutton:hover {
+  background-color: #033349;
+}
+
+@media only screen and (max-width: 517px) {
+  .login-form {
+    width: 100%;
   }
 }
 

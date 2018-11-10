@@ -11,4 +11,9 @@
 |
 */
 
-Route::get('/', 'Store@addStore');
+//login routes
+Route::get('/', 'Login@login');
+Route::post('/authenticate','Login@authenticate');
+
+//store routes
+Route::get('/addstore' , 'Store@addStore');

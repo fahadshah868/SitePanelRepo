@@ -14,7 +14,7 @@
 </style>
 
 <div class="addstore-main-container">
-    <div class="addstore-main-heading">Add Store</div>
+<div class="addstore-main-heading">Add Store</div>
     <hr>
     <div class="addstore-form-container">
         <table style="width: 100%;" cellspacing="30">
