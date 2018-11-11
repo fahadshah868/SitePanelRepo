@@ -2,26 +2,10 @@
     font-size: 22px;
     font-weight: 700;
 }
-.form-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 20px 0;
-}
-.form-container .column{
-    width: 50%;
-    padding: 0 20px;
-}
-.form-container .column:nth-child(odd){
-    padding-left: 0;
-}
-.form-container .column:nth-child(even){
-    padding-right: 0;
-}
-.column .form-field{
+.form-field{
     margin-bottom: 20px;
 }
-.column .form-field img{
+.form-field img{
     width: 65px;
     height: 65px;
     border: 1px solid #d0d0d0;
@@ -38,5 +22,6 @@
 @media only screen and (max-width: 750px){
     .form-container .column{
         width: 100%;   
+        padding: 0;
     }
 }

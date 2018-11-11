@@ -29,16 +29,16 @@
                 </div>
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#adminsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-user"></i>
                             Admin
                         </a>
-                        <ul class="collapse list-unstyled" id="storesuboptions">
+                        <ul class="collapse list-unstyled" id="adminsuboptions">
                             <li>
                                 <a href="/adduser" id="addstore">Add User</a>
                             </li>
                             <li>
-                                <a href="#" id="viewstore">View Users</a>
+                                <a href="/viewallusers" id="viewstore">View Users</a>
                             </li>
                         </ul>
                     </li>
@@ -52,7 +52,7 @@
                                 <a href="/addstore" id="addstore">Add Store</a>
                             </li>
                             <li>
-                                <a href="#" id="viewstore">View Stores</a>
+                                <a href="/viewallstores" id="viewstore">View Stores</a>
                             </li>
                         </ul>
                     </li>
@@ -66,7 +66,7 @@
                                 <a href="/addcategory">Add Category</a>
                             </li>
                             <li>
-                                <a href="#">View Categories</a>
+                                <a href="/viewallcategories">View Categories</a>
                             </li>
                         </ul>
                     </li>
@@ -80,7 +80,7 @@
                                 <a href="/addcoupon">Add Coupons</a>
                             </li>
                             <li>
-                                <a href="#">View Coupons</a>
+                                <a href="/viewallcoupons">View Coupons</a>
                             </li>
                         </ul>
                     </li>
@@ -115,6 +115,9 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/updateprofile"><i class="fa fa-user"></i>Update Profile</a>
+                                </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#"><i class="fa fa-sign-out-alt"></i>Logout</a>
                                 </li>

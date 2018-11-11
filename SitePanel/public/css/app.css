@@ -10540,8 +10540,8 @@ a:hover {
 }
 
 #sidebar {
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 220px;
+  max-width: 220px;
   background: #044D6E;
   color: #fff;
   -webkit-transition: all 0.3s;
@@ -10549,8 +10549,8 @@ a:hover {
 }
 
 #sidebar.active {
-  min-width: 100px;
-  max-width: 100px;
+  min-width: 90px;
+  max-width: 90px;
   text-align: center;
 }
 
@@ -10570,8 +10570,12 @@ a:hover {
   display: block;
 }
 
+.fa-user {
+  margin-right: 5px;
+}
+
 .fa-sign-out-alt {
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
 #sidebar.active ul li a {
@@ -10794,37 +10798,11 @@ ul ul a:hover {
   font-weight: 700;
 }
 
-.form-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  margin: 20px 0;
-}
-
-.form-container .column {
-  width: 50%;
-  padding: 0 20px;
-}
-
-.form-container .column:nth-child(odd) {
-  padding-left: 0;
-}
-
-.form-container .column:nth-child(even) {
-  padding-right: 0;
-}
-
-.column .form-field {
+.form-field {
   margin-bottom: 20px;
 }
 
-.column .form-field img {
+.form-field img {
   width: 65px;
   height: 65px;
   border: 1px solid #d0d0d0;
@@ -10843,6 +10821,83 @@ ul ul a:hover {
 
 @media only screen and (max-width: 750px) {
   .form-container .column {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+.viewitems-main-heading {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.btn {
+  color: #fff;
+}
+
+th,
+td {
+  text-align: center;
+  vertical-align: top;
+}
+
+td img {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #d1d1d1;
+}
+
+.login-top-navbar {
+  background-color: #044D6E;
+  padding: 30px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.update-profile-form {
+  margin: auto;
+  width: 500px;
+  padding: 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.updateprofile-fields-heading {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 15px 0 3px 0;
+}
+
+.update-profile-form input {
+  height: 45px;
+}
+
+#loginbutton {
+  margin-top: 15px;
+  background-color: #044D6E;
+  height: 40px;
+  outline: none;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  border: 1px solid #044D6E;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#loginbutton:hover {
+  background-color: #033349;
+}
+
+@media only screen and (max-width: 580px) {
+  .update-profile-form {
     width: 100%;
   }
 }

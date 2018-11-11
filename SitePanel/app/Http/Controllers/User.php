@@ -9,4 +9,7 @@ class User extends Controller
     public function addUser(){
         return view('pages.user.adduser');
     }
+    public function viewAllUsers(){
+        return view('pages.user.allusers');
+    }
 }

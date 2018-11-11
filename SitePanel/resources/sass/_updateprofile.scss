@@ -1,0 +1,43 @@
+.login-top-navbar{
+    background-color: #044D6E;
+    padding: 30px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+}
+.update-profile-form{
+    margin: auto;
+    width: 500px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+}
+.updateprofile-fields-heading{
+    font-size: 17px;
+    font-weight: 700;
+    margin: 15px 0 3px 0;
+}
+.update-profile-form input{
+    height: 45px;
+}
+#loginbutton{
+    margin-top: 15px;
+    background-color: #044D6E;
+    height: 40px;
+    outline: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+    border: 1px solid #044D6E;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#loginbutton:hover{
+    background-color: #033349;
+}
+@media only screen and (max-width: 580px){
+    .update-profile-form{
+        width: 100%;
+    }
+}

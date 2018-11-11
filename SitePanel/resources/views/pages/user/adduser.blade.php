@@ -9,58 +9,44 @@
     <hr>
     <form>
         <div class="form-container">
-            <!---------------------------------------------------------------------------------
-                COLUMN 1            
-            ---------------------------------------------------------------------------------->
-            <div class="column">
-                <div class="form-field">
-                <div class="form-field-heading">User Name</div>
-                    <input type="text" class="form-control" placeholder="xyz"/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">User Name</div>
+                        <input type="text" class="form-control" placeholder="xyz"/>
+                    </div>
                 </div>
-                <div class="form-field">
-                    <div class="form-field-heading">User Type</div>
-                    <select class="form-control">
-                        <option>Select Type</option>
-                        <option>Employee</option>
-                        <option>Admin</option>
-                    </select>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Password</div>
+                        <input type="text" class="form-control" placeholder="password"/>
+                    </div>
                 </div>
             </div>
-            <!---------------------------------------------------------------------------------
-                COLUMN 2           
-            ---------------------------------------------------------------------------------->
-            <div class="column">
-                <div class="form-field">
-                    <div class="form-field-heading">Password</div>
-                    <input type="text" class="form-control" placeholder="www.xyz.com"/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">User Type</div>
+                        <select class="form-control">
+                            <option>Select Type</option>
+                            <option>Employee</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-field">
-                    <div class="form-field-heading">User Status</div>
-                    <select class="form-control">
-                        <option>Select Status</option>
-                        <option>Active</option>
-                        <option>Deactive</option>
-                    </select>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">User Status</div>
+                        <select class="form-control">
+                            <option>Select Status</option>
+                            <option>Active</option>
+                            <option>Deactive</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <input type="submit" value="Add User" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
-<script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#imgpath').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    $("#imgfilepath").change(function(){
-        readURL(this);
-    });
-</script>
 @endsection
