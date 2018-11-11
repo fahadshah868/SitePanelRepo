@@ -1,11 +1,11 @@
 @extends('layouts.app_layout')
 
-@section('title','Add Coupon')
+@section('title','Add Product')
 
 @section('content')
 
 <div class="form-main-container">
-    <div class="form-main-heading">Add Coupon</div>
+    <div class="form-main-heading">Add Product</div>
     <hr>
     <form>
         <div class="form-container">
@@ -33,10 +33,15 @@
                         <option>Deactive</option>
                     </select>
                 </div>
+                <div class="form-field">
+                    <div class="form-field-heading">Store Logo</div>
+                    <img src="#" id="imgpath" />
+                    <input type="file" id="imgfilepath"/>
+                </div>
             </div>
-            <!---------------------------------------------------------------------------------
+            <!----------------------------------------------------------------------------------
                 COLUMN 2
-            ---------------------------------------------------------------------------------->
+            ------------------------------------------------------------------------------------>
             <div class="column">
                 <div class="form-field">
                     <div class="form-field-heading">Offer Type</div>
@@ -79,7 +84,7 @@
                     <input type="date" class="form-control"/>
                 </div>
             </div>
-            <input type="submit" value="Add Coupon" class="btn btn-primary form-button"/>
+            <input type="submit" value="Add Product" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>

@@ -9,6 +9,9 @@
     <hr>
     <form>
         <div class="form-container">
+            <!---------------------------------------------------------------------------------
+                COLUMN 1            
+            ---------------------------------------------------------------------------------->
             <div class="column">
                 <div class="form-field">
                 <div class="form-field-heading">Category Title</div>
@@ -28,6 +31,9 @@
                     <input type="file" id="imgfilepath"/>
                 </div>
             </div>
+            <!---------------------------------------------------------------------------------
+                COLUMN 2
+            ---------------------------------------------------------------------------------->
             <div class="column">
                 <div class="form-field">
                     <div class="form-field-heading">Category Status</div>
@@ -38,9 +44,7 @@
                     </select>
                 </div>
             </div>
-            <div class="column">
-                <input type="submit" value="Add Store" class="btn btn-primary form-button"/>
-            </div>
+            <input type="submit" value="Add Category" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>

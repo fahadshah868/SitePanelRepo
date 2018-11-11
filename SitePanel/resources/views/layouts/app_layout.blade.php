@@ -30,6 +30,20 @@
                 <ul class="list-unstyled components">
                     <li>
                         <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-user"></i>
+                            Admin
+                        </a>
+                        <ul class="collapse list-unstyled" id="storesuboptions">
+                            <li>
+                                <a href="/adduser" id="addstore">Add User</a>
+                            </li>
+                            <li>
+                                <a href="#" id="viewstore">View Users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-store-alt"></i>
                             Stores
                         </a>
@@ -44,7 +58,7 @@
                     </li>
                     <li>
                         <a href="#categorysuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-copy"></i>
+                            <i class="fas fa-tag"></i>
                             Categoies
                         </a>
                         <ul class="collapse list-unstyled" id="categorysuboptions">
@@ -58,7 +72,7 @@
                     </li>
                     <li>
                         <a href="#couponsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-copy"></i>
+                            <i class="fa fa-code"></i>
                             Coupon
                         </a>
                         <ul class="collapse list-unstyled" id="couponsuboptions">
@@ -72,12 +86,12 @@
                     </li>
                     <li>
                         <a href="#productsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-copy"></i>
+                            <i class="fas fa-shopping-bag"></i>
                             Product
                         </a>
                         <ul class="collapse list-unstyled" id="productsuboptions">
                             <li>
-                                <a href="#">Add Product</a>
+                                <a href="/addproduct">Add Product</a>
                             </li>
                             <li>
                                 <a href="#">View Products</a>

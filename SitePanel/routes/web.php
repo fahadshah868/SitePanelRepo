@@ -15,6 +15,9 @@
 Route::get('/', 'Login@login');
 Route::post('/authenticate','Login@authenticate');
 
+//user routes
+Route::get('/adduser','User@addUser');
+
 //store routes
 Route::get('/addstore','Store@addStore');
 
@@ -23,3 +26,6 @@ Route::get('/addcategory','Category@addCategory');
 
 //coupon routes
 Route::get('/addcoupon','Coupon@addCoupon');
+
+//product routes
+Route::get('/addproduct','Product@addProduct');

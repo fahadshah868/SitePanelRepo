@@ -10673,7 +10673,7 @@ ul ul a:hover {
     MEDIAQUERIES
 ----------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   #sidebar {
     min-width: 100px;
     max-width: 100px;
@@ -10839,5 +10839,11 @@ ul ul a:hover {
 .form-button {
   margin-top: 10px;
   padding: 10px 20px;
+}
+
+@media only screen and (max-width: 750px) {
+  .form-container .column {
+    width: 100%;
+  }
 }
 
