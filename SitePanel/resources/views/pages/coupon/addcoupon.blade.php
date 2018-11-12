@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','Add Coupon')
-
-@section('content')
-
 <div class="form-main-container">
     <div class="form-main-heading">Add Coupon</div>
     <hr>
@@ -109,4 +103,3 @@
         </div>
     </form>
 </div>
-@endsection

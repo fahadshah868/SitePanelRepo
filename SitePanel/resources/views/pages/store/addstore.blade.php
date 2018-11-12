@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','Add Store')
-
-@section('content')
-
 <div class="form-main-container">
     <div class="form-main-heading">Add Store</div>
     <hr>
@@ -66,7 +60,6 @@
             reader.onload = function (e) {
                 $('#imgpath').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
@@ -74,4 +67,3 @@
         readURL(this);
     });
 </script>
-@endsection

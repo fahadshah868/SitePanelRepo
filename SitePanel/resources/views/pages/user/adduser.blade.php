@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','Add User')
-
-@section('content')
-
 <div class="form-main-container">
     <div class="form-main-heading">Add User</div>
     <hr>
@@ -49,4 +43,3 @@
         </div>
     </form>
 </div>
-@endsection

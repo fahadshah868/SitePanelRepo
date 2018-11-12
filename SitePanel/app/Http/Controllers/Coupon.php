@@ -9,7 +9,7 @@ class Coupon extends Controller
     public function addCoupon(){
         return view('pages.coupon.addcoupon');
     }
-    public function viewAllCoupons(){
+    public function getAllCoupons(){
         return view('pages.coupon.allcoupons');
     }
 }

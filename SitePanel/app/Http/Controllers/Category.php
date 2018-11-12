@@ -9,7 +9,7 @@ class Category extends Controller
     public function addCategory(){
         return view('pages.category.addcategory');
     }
-    public function viewAllCategories(){
+    public function getAllCategories(){
         return view('pages.category.allcategories');
     }
 }

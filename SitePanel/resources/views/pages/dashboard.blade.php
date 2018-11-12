@@ -35,10 +35,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="adminsuboptions">
                             <li>
-                                <a href="/adduser" id="addstore">Add User</a>
+                                <a href="#" id="adduser">Add User</a>
                             </li>
                             <li>
-                                <a href="/viewallusers" id="viewstore">View Users</a>
+                                <a href="#" id="viewusers">View Users</a>
                             </li>
                         </ul>
                     </li>
@@ -49,10 +49,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="storesuboptions">
                             <li>
-                                <a href="/addstore" id="addstore">Add Store</a>
+                                <a href="#" id="addstore">Add Store</a>
                             </li>
                             <li>
-                                <a href="/viewallstores" id="viewstore">View Stores</a>
+                                <a href="#" id="viewstores">View Stores</a>
                             </li>
                         </ul>
                     </li>
@@ -63,10 +63,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="categorysuboptions">
                             <li>
-                                <a href="/addcategory">Add Category</a>
+                                <a href="#" id="addcategory">Add Category</a>
                             </li>
                             <li>
-                                <a href="/viewallcategories">View Categories</a>
+                                <a href="#" id="viewcategories">View Categories</a>
                             </li>
                         </ul>
                     </li>
@@ -77,10 +77,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="couponsuboptions">
                             <li>
-                                <a href="/addcoupon">Add Coupons</a>
+                                <a href="#" id="addcoupon">Add Coupon</a>
                             </li>
                             <li>
-                                <a href="/viewallcoupons">View Coupons</a>
+                                <a href="#" id="viewcoupons">View Coupons</a>
                             </li>
                         </ul>
                     </li>
@@ -91,10 +91,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="productsuboptions">
                             <li>
-                                <a href="/addproduct">Add Product</a>
+                                <a href="#" id="addproduct">Add Product</a>
                             </li>
                             <li>
-                                <a href="#">View Products</a>
+                                <a href="#" id="viewproducts">View Products</a>
                             </li>
                         </ul>
                     </li>
@@ -113,10 +113,10 @@
                         <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="fas fa-align-justify"></i>
                         </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="collapse navbar-collapse" id="topnavbar">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/updateprofile"><i class="fa fa-user"></i>Update Profile</a>
+                                    <a class="nav-link" href="#" id="updateprofile"><i class="fa fa-user"></i>Update Profile</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#"><i class="fa fa-sign-out-alt"></i>Logout</a>
@@ -126,7 +126,6 @@
                     </div>
                 </nav>
                 <div id="panel-body-container" style="padding: 20px 30px;">
-                    @yield('content')
                 </div>
             </div>
         </div>
@@ -134,18 +133,58 @@
 <script type="text/javascript">
         $(document).ready(function () {
             //by default active first link and sub-link
-            $("#sidebar ul a:first").addClass("sidebar-activelink");
-            $("#sidebar ul ul a:first").addClass("sidebar-activesublink");
+            $("#sidebar ul a:first").addClass("activelink");
+            $("#sidebar ul ul a:first").addClass("activesublink");
+            $("#panel-body-container").load("/addstore");
+
             //when resize browser window
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
             //active link and sub-link when click on sidebar link
             $("#sidebar ul ul a").click(function(){
-                $("#sidebar ul ul a").removeClass("sidebar-activesublink");
-                $(this).addClass("sidebar-activesublink");
-                $("#sidebar ul a").removeClass("sidebar-activelink");
-                $(this).parent().parent().siblings().addClass("sidebar-activelink");
+                $("#topnavbar ul a").removeClass("activelink");
+                $("#sidebar ul ul a").removeClass("activesublink");
+                $("#sidebar ul a").removeClass("activelink");
+                $(this).addClass("activesublink");
+                $(this).parent().parent().siblings().addClass("activelink");
+                if($(this).attr('id') == "adduser"){
+                    $("#panel-body-container").load("/adduser");
+                }
+                else if($(this).attr('id') == "viewusers"){
+                    $("#panel-body-container").load("/allusers");
+                }
+                else if($(this).attr('id') == "addstore"){
+                    $("#panel-body-container").load("/addstore");
+                }
+                else if($(this).attr('id') == "viewstores"){
+                    $("#panel-body-container").load("/allstores");
+                }
+                else if($(this).attr('id') == "addcategory"){
+                    $("#panel-body-container").load("/addcategory");
+                }
+                else if($(this).attr('id') == "viewcategories"){
+                    $("#panel-body-container").load("/allcategories");
+                }
+                else if($(this).attr('id') == "addcoupon"){
+                    $("#panel-body-container").load("/addcoupon");
+                }
+                else if($(this).attr('id') == "viewcoupons"){
+                    $("#panel-body-container").load("/allcoupons");
+                }
+                else if($(this).attr('id') == "addproduct"){
+                    $("#panel-body-container").load("/addproduct");
+                }
+                else if($(this).attr('id') == "viewproducts"){
+                    $("#panel-body-container").load("/allproducts");
+                }
+            });
+            $("#topnavbar ul a").click(function(){
+                $("#sidebar ul a").removeClass("activelink");
+                $("#topnavbar ul a").removeClass("activelink");
+                $("#sidebar ul ul a").removeClass("activesublink");
+                $(this).addClass("activelink");
+                $("#panel-body-container").load("/updateprofile");
             });
         });
 

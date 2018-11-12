@@ -15,24 +15,29 @@
 Route::get('/', 'Login@login');
 Route::post('/authenticate','Login@authenticate');
 
+//dashboard routes
+Route::get('/dashboard',function(){
+    return view('pages.dashboard');
+});
+
 //user routes
 Route::get('/adduser','User@addUser');
-Route::get('/viewallusers','User@viewAllUsers');
+Route::get('/allusers','User@getAllUsers');
 
 //profile
 Route::get('/updateprofile','Profile@updateProfile');
 
 //store routes
 Route::get('/addstore','Store@addStore');
-Route::get('/viewallstores','Store@viewAllStores');
+Route::get('/allstores','Store@getAllStores');
 
 //category routes
 Route::get('/addcategory','Category@addCategory');
-Route::get('/viewallcategories','Category@viewAllCategories');
+Route::get('/allcategories','Category@getAllCategories');
 
 //coupon routes
 Route::get('/addcoupon','Coupon@addCoupon');
-Route::get('/viewallcoupons','Coupon@viewAllCoupons');
+Route::get('/allcoupons','Coupon@getAllCoupons');
 
 //product routes
 Route::get('/addproduct','Product@addProduct');

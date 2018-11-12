@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','Update Profile')
-
-@section('content')
-
 <div class="form-main-container">
     <div class="form-main-heading">Update Profile</div>
     <hr>
@@ -22,5 +16,3 @@
         </div>
     </form>
 </div>
-
-@endsection

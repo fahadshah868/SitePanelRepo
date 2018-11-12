@@ -50,7 +50,7 @@
 .nav-item{
     transition: 0.4s;
     border-radius: 3px;
-    padding: 0 10px;
+    margin-right: 10px;
 }
 .nav-item a{
     font-size: 18px;
@@ -107,7 +107,7 @@
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
-    font-size: 0.85em;
+    font-size: 14px;
 }
 
 #sidebar.active ul li a i {
@@ -118,6 +118,8 @@
 }
 
 #sidebar.active ul ul a {
+    font-size: 12px !important;
+    font-weight: 500 !important;
     padding: 10px !important;
 }
 
@@ -149,10 +151,10 @@
     color: #fff;
     background: #0b78aa;
 }
-.sidebar-activelink{
+.activelink{
     background-color: #0b78aa;
 }
-.sidebar-activesublink{
+.activesublink{
     color: #fff !important;
 }
 #sidebar ul li a i {

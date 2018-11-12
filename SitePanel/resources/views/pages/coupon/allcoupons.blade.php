@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','All Coupons')
-
-@section('content')
-
 <div class="viewitems-main-container">
     <div class="viewitems-main-heading">All Coupons</div>
     <hr>
@@ -41,4 +35,3 @@
         </table>
     </div>
 </div>
-@endsection

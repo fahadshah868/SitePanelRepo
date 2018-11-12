@@ -10,6 +10,6 @@ class Login extends Controller
         return view("pages.login");
     }
     public function authenticate(Request $request){
-        return redirect('/addstore');
+        return redirect('/dashboard');
     }
 }

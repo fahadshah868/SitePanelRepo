@@ -1,9 +1,3 @@
-@extends('layouts.app_layout')
-
-@section('title','All Users')
-
-@section('content')
-
 <div class="viewitems-main-container">
     <div class="viewitems-main-heading">All Users</div>
     <hr>
@@ -35,4 +29,3 @@
         </table>
     </div>
 </div>
-@endsection
