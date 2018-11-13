@@ -8,9 +8,31 @@
 th,td{
     text-align: center;
     vertical-align: top;
+    padding: 10px !important;
+    font-size: 13px;
+}
+td .btn{
+    height: 32px !important;
+    font-size: 12px;
+    font-weight: 500;
 }
 td img{
     width: 50px;
     height: 50px;
     border: 1px solid #d1d1d1;
+}
+.viewitems-header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.viewitems-header-searchbar{
+    width: 350px;
+}
+.viewitems-header-searchbar #searchbar{
+    background-image: url('/images/searchicon.png');
+    background-repeat: no-repeat;
+    background-position: 7px 7px;
+    background-size: 22px 22px;
+    padding-left: 38px;
 }

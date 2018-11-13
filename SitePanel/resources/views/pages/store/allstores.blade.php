@@ -1,8 +1,16 @@
+<!----------------------------------------------------------------------------
+add js file for client side searchbar filter
+------------------------------------------------------------------------------>
+<script type="text/javascript" src="js/clientsidesearchbarfilter.js"></script>
+
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">All Stores</div>
+    <div class="viewitems-header-container">
+        <div class="viewitems-main-heading">All Stores</div>
+        <div class="viewitems-header-searchbar"><input type="text" placeholder="Search Store" id="searchbar" class="form-control"/></div>
+    </div>
     <hr>
     <div class="viewitems-tableview">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
                     <th>Store Title</th>
