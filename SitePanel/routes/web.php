@@ -41,3 +41,14 @@ Route::get('/allcoupons','Coupon@getAllCoupons');
 
 //product routes
 Route::get('/addproduct','Product@addProduct');
+
+
+
+
+
+
+
+
+Route::get('/sample',function(){
+    return view("sample");
+});

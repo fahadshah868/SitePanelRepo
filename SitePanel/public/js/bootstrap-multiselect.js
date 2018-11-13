@@ -390,7 +390,7 @@
             enableHTML: false,
             buttonClass: 'btn btn-primary',
             inheritClass: false,
-            buttonWidth: '200px !important',
+            buttonWidth: '100%',
             buttonContainer: '<div class="btn-group" />',
             dropRight: false,
             dropUp: false,
