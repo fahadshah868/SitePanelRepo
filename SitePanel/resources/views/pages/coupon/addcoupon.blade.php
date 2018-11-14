@@ -36,7 +36,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store</div>
-                        <select class="form-control">
+                        <select class="multiselectdropdown" multiple data-live-search="true">
                             <option>Target</option>
                             <option>Kohl's</option>
                             <option>Papa John's</option>
@@ -50,8 +50,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category</div>
-                        <select class="form-control">
-                            <option>Select Category</option>
+                        <select class="multiselectdropdown" multiple data-live-search="true">
                             <option>Baby</option>
                             <option>Clothing</option>
                             <option>Jewelery</option>
@@ -103,3 +102,4 @@
         </div>
     </form>
 </div>
+<script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>

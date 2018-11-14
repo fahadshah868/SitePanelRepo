@@ -1,7 +1,7 @@
 <!----------------------------------------------------------------------------
 add js file for client side searchbar filter
 ------------------------------------------------------------------------------>
-<script type="text/javascript" src="js/clientsidesearchbarfilter.js"></script>
+<script type="text/javascript" src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
