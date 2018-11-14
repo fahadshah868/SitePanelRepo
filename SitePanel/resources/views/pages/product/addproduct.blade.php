@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    .dropdown-menu.show{
+        height: 300px;
+        top: -339px !important;
+        bottom: 0;
+    }
+    </style>
+</head>
+<body>
 <div class="form-main-container">
     <div class="form-main-heading">Add Product</div>
     <hr>
@@ -35,8 +51,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store</div>
-                        <select class="form-control">
-                            <option>Select Store</option>
+                        <select class="multiselectdropdown" multiple data-live-search="true">
                             <option>Target</option>
                             <option>Kohl's</option>
                             <option>Papa John's</option>
@@ -50,8 +65,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category</div>
-                        <select class="form-control">
-                            <option>Select Category</option>
+                        <select class="multiselectdropdown" multiple data-live-search="true">
                             <option>Baby</option>
                             <option>Clothing</option>
                             <option>Jewelery</option>
@@ -111,8 +125,7 @@
             <input type="submit" value="Add Product" class="btn btn-primary form-button"/>
         </div>
     </form>
-</div>
-
+    <script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -128,3 +141,6 @@
         readURL(this);
     });
 </script>
+</div>    
+</body>
+</html>
