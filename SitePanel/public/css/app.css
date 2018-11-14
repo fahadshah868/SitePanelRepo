@@ -10821,16 +10821,15 @@ ul ul a:hover {
   padding: 10px 20px;
 }
 
-.dropdown-menu.show {
-  height: 300px;
-  top: -300px !important;
-}
-
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;
     padding: 0;
   }
+}
+
+.viewitems-tableview {
+  overflow-x: auto;
 }
 
 .viewitems-main-heading {

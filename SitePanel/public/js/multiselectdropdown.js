@@ -18,4 +18,5 @@ $(document).ready(function(){
                     buttonContainer: '<div class="dropdown"/>',
                     buttonClass: 'btn btn-default'
     });
+    $(".dropdown").addClass("dropup");
 });

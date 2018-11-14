@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
 <div class="form-main-container">
     <div class="form-main-heading">Add Coupon</div>
     <hr>
@@ -73,6 +64,20 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
+                        <div class="form-field-heading">Start Date</div>
+                        <input type="date" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">End Date</div>
+                        <input type="date" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
                         <div class="form-field-heading">Coupon Type</div>
                         <select class="form-control">
                             <option>Select Type</option>
@@ -92,24 +97,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Start Date</div>
-                        <input type="date" class="form-control"/>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">End Date</div>
-                        <input type="date" class="form-control"/>
-                    </div>
-                </div>
-            </div>
             <input type="submit" value="Add Coupon" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
 <script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
-</body>
-</html>
