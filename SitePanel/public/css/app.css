@@ -10821,6 +10821,10 @@ ul ul a:hover {
   padding: 10px 20px;
 }
 
+label.error {
+  color: red;
+}
+
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;

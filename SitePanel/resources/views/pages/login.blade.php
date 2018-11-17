@@ -8,18 +8,35 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <body>
+    <script src="{{asset('js/jquery-3.3.1.slim.min.js')}}"></script>
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('js/jquery.validate.js')}}"></script>
     <div class="body-main-container">
         <nav class="login-top-navbar"><a href="/">Site Panel</a></nav>
-        <form action="/authenticate" method="POST">
+        <form action="/authenticate" method="POST" id="loginform">
             @csrf
             <div class="login-form">
                 <div class="login-fields-heading">User Name:</div>
-                <input type="text" class="form-control" placeholder="user name"/>
+                <input type="text" class="form-control" name="username" placeholder="user name"/>
                 <div class="login-fields-heading">Password:</div>
-                <input type="password" class="form-control" placeholder="password"/>
+                <input type="password" class="form-control" name="password" placeholder="password"/>
                 <input type="submit" value="Login" id="loginbutton"/>
             </div>
         </form>
     </div>
+    <script>
+        $(document).ready(function(){
+            $("#loginform").validate({
+                rules:{
+                    username: "required",
+                    password: "required"
+                },
+                messages:{
+                    username: "please enter user name",
+                    password: "please enter password"
+                }
+            });
+        });
+    </script>
 </body>
 </html>
