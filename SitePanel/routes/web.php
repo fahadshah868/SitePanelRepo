@@ -12,8 +12,8 @@
 */
 
 //login routes
-Route::get('/', 'Login@login');
-Route::post('/authenticate','Login@authenticate');
+Route::get('/', 'LoginController@login');
+Route::post('/authenticate','LoginController@authenticate');
 
 //dashboard routes
 Route::get('/dashboard',function(){
@@ -21,34 +21,26 @@ Route::get('/dashboard',function(){
 });
 
 //user routes
-Route::get('/adduser','User@addUser');
-Route::get('/allusers','User@getAllUsers');
+Route::get('/adduser','UserController@addUser');
+Route::get('/allusers','UserController@getAllUsers');
 
 //profile
-Route::get('/updateprofile','Profile@updateProfile');
+Route::get('/updateprofile','ProfileController@updateProfile');
 
 //store routes
-Route::get('/addstore','Store@addStore');
-Route::get('/allstores','Store@getAllStores');
+Route::get('/addstore','StoreController@addStore');
+Route::get('/allstores','StoreController@getAllStores');
 
 //category routes
-Route::get('/addcategory','Category@addCategory');
-Route::get('/allcategories','Category@getAllCategories');
+Route::get('/addcategory','CategoryController@addCategory');
+Route::get('/allcategories','CategoryController@getAllCategories');
 
 //coupon routes
-Route::get('/addcoupon','Coupon@addCoupon');
-Route::get('/allcoupons','Coupon@getAllCoupons');
+Route::get('/addcoupon','CouponController@addCoupon');
+Route::get('/allcoupons','CouponController@getAllCoupons');
 
 //product routes
-Route::get('/addproduct','Product@addProduct');
+Route::get('/addproduct','ProductController@addProduct');
 
-
-
-
-
-
-
-
-Route::get('/sample',function(){
-    return view("sample");
-});
+//logout
+Route::get('/logout','LogoutController@logout');

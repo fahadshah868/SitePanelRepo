@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Store extends Controller
+class StoreController extends Controller
 {
     public function addStore(){
         return View('pages.store.addstore');

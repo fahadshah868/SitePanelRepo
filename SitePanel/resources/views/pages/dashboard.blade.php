@@ -121,7 +121,7 @@
                                     <a class="nav-link" href="#" id="updateprofile"><i class="fa fa-user"></i>Update Profile</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                                    <a class="nav-link" href="/logout"><i class="fa fa-sign-out-alt"></i>Logout</a>
                                 </li>
                             </ul>
                         </div>

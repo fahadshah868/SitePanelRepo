@@ -11,11 +11,18 @@
     <script src="{{asset('js/jquery-3.3.1.slim.min.js')}}"></script>
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/jquery.validate.js')}}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <div class="body-main-container">
         <nav class="login-top-navbar"><a href="/">Site Panel</a></nav>
         <form action="/authenticate" method="POST" id="loginform">
             @csrf
             <div class="login-form">
+                @if(Session::has('errormessage'))
+                <div class="alert alert-danger alert-dismissible fade show">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>{{Session::get('errormessage')}}</strong>
+                </div>
+                @endif
                 <div class="login-fields-heading">User Name:</div>
                 <input type="text" class="form-control" name="username" placeholder="user name"/>
                 <div class="login-fields-heading">Password:</div>
