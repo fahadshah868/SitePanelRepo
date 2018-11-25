@@ -12,8 +12,8 @@
 */
 
 //login routes
-Route::get('/', 'LoginController@login');
-Route::post('/authenticate','LoginController@authenticate');
+Route::get('/', 'LoginController@getLogin');
+Route::post('/','LoginController@postLogin');
 
 //dashboard routes
 Route::get('/dashboard',function(){
@@ -21,8 +21,11 @@ Route::get('/dashboard',function(){
 });
 
 //user routes
-Route::get('/adduser','UserController@addUser');
+Route::get('/adduser','UserController@getAddUser');
+Route::post('/adduser','UserController@postAddUser');
 Route::get('/allusers','UserController@getAllUsers');
+Route::get('/updateuser/{id}','UserController@getUpdateUser');
+Route::put('/updateuser/{id}','UserController@getUpdateUser');
 
 //profile
 Route::get('/updateprofile','ProfileController@updateProfile');

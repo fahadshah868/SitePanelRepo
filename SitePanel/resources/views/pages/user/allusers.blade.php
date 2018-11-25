@@ -16,99 +16,20 @@
                 </tr>
             </thead>
             <tbody>
-                @for($i=1; $i<=1; $i++)
-                <tr>
-                    <td>bilal</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>Ali</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>zohaib</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>daniel</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>nabeel</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>awais</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>sajaad</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>waqas</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>omer</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr><tr>
-                    <td>javed</td>
-                    <td>12345</td>
-                    <td>Employee</td>
-                    <td>Active</td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-                @endfor
+                @if(count($allusers) > 0)
+                    @foreach($allusers as $user)
+                        <tr>
+                            <td>{{ $user->username }}</td>
+                            <td>{{ $user->password }}</td>
+                            <td>{{ $user->usertype }}</td>
+                            <td>{{ $user->userstatus }}</td>
+                            <td>
+                                <a href="/updateuser/{{$user->id}}" class="btn btn-primary">Update</a>
+                                <a href="/updateuser/{{$user->id}}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>

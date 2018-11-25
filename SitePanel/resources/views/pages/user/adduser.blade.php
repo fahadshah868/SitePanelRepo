@@ -1,7 +1,14 @@
 <div class="form-main-container">
     <div class="form-main-heading">Add User</div>
     <hr>
-    <form id="adduserform">
+    @if(Session::has('successmessage'))
+    <div class="alert alert-success alert-dismissible fade show">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{Session::get('errormessage')}}</strong>
+    </div>
+    @endif
+    <form id="adduserform" action="/adduser" method="POST">
+        @csrf
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-6">

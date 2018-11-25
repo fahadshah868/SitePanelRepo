@@ -9,10 +9,10 @@ use Session;
 
 class LoginController extends Controller
 {
-    public function login(){
+    public function getLogin(){
         return view("pages.login");
     }
-    public function authenticate(Request $request){
+    public function postLogin(Request $request){
         $userdata = array(
             'username' => $request->get('username'),
             'password' => $request->get('password'),
