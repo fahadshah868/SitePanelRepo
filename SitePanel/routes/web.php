@@ -44,6 +44,7 @@ Route::get('/allcoupons','CouponController@getAllCoupons');
 
 //product routes
 Route::get('/addproduct','ProductController@addProduct');
+Route::get('/allproducts','ProductController@getAllProducts');
 
 //logout
 Route::get('/logout','LogoutController@logout');

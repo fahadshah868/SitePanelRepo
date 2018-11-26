@@ -37,10 +37,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="adminsuboptions">
                             <li>
-                                <a href="#" id="adduser">Add User</a>
+                                <a href="/adduser" class="sidebar-suboption">Add User</a>
                             </li>
                             <li>
-                                <a href="#" id="viewusers">View Users</a>
+                                <a href="/allusers" class="sidebar-suboption">View Users</a>
                             </li>
                         </ul>
                     </li>
@@ -51,10 +51,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="storesuboptions">
                             <li>
-                                <a href="#" id="addstore">Add Store</a>
+                                <a href="/addstore" class="sidebar-suboption">Add Store</a>
                             </li>
                             <li>
-                                <a href="#" id="viewstores">View Stores</a>
+                                <a href="/allstores" class="sidebar-suboption">View Stores</a>
                             </li>
                         </ul>
                     </li>
@@ -65,10 +65,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="categorysuboptions">
                             <li>
-                                <a href="#" id="addcategory">Add Category</a>
+                                <a href="/addcategory" class="sidebar-suboption">Add Category</a>
                             </li>
                             <li>
-                                <a href="#" id="viewcategories">View Categories</a>
+                                <a href="/allcategories" class="sidebar-suboption">View Categories</a>
                             </li>
                         </ul>
                     </li>
@@ -79,10 +79,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="couponsuboptions">
                             <li>
-                                <a href="#" id="addcoupon">Add Coupon</a>
+                                <a href="/addcoupon" class="sidebar-suboption">Add Coupon</a>
                             </li>
                             <li>
-                                <a href="#" id="viewcoupons">View Coupons</a>
+                                <a href="/allcoupons" class="sidebar-suboption">View Coupons</a>
                             </li>
                         </ul>
                     </li>
@@ -93,10 +93,10 @@
                         </a>
                         <ul class="collapse list-unstyled" id="productsuboptions">
                             <li>
-                                <a href="#" id="addproduct">Add Product</a>
+                                <a href="/addproduct" class="sidebar-suboption">Add Product</a>
                             </li>
                             <li>
-                                <a href="#" id="viewproducts">View Products</a>
+                                <a href="/allproducts" class="sidebar-suboption">View Products</a>
                             </li>
                         </ul>
                     </li>
@@ -105,7 +105,6 @@
 
             <!-- Page Content  -->
             <div id="content">
-
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
                         <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -118,7 +117,7 @@
                         <div class="collapse navbar-collapse" id="topnavbar">
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#" id="updateprofile"><i class="fa fa-user"></i>Update Profile</a>
+                                    <a class="nav-link" href="/updateprofile" id="updateprofile"><i class="fa fa-user"></i>Update Profile</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="/logout"><i class="fa fa-sign-out-alt"></i>Logout</a>
@@ -137,59 +136,32 @@
             //by default active first link and sub-link
             $("#sidebar ul a:first").addClass("activelink");
             $("#sidebar ul ul a:first").addClass("activesublink");
-            $("#panel-body-container").load("/addstore");
+            $("#panel-body-container").load("/adduser");
 
             //when resize browser window
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
             //active link and sub-link when click on sidebar link
-            $("#sidebar ul ul a").click(function(){
-                $("#topnavbar ul a").removeClass("activelink");
-                $("#sidebar ul ul a").removeClass("activesublink");
-                $("#sidebar ul a").removeClass("activelink");
-                $(this).addClass("activesublink");
-                $(this).parent().parent().siblings().addClass("activelink");
-                if($(this).attr('id') == "adduser"){
-                    $("#panel-body-container").load("/adduser");
+            $("#sidebar ul ul a, #topnavbar ul a").click(function(event){
+                event.preventDefault();
+                if($(this).hasClass("sidebar-suboption")){
+                    $("#topnavbar ul a").removeClass("activelink");
+                    $("#sidebar ul ul a").removeClass("activesublink");
+                    $("#sidebar ul a").removeClass("activelink");
+                    $(this).addClass("activesublink");
+                    $(this).parent().parent().siblings().addClass("activelink");
+                    $("#panel-body-container").load($(this).attr('href'));
                 }
-                else if($(this).attr('id') == "viewusers"){
-                    $("#panel-body-container").load("/allusers");
+                else{
+                    $("#sidebar ul a").removeClass("activelink");
+                    $("#topnavbar ul a").removeClass("activelink");
+                    $("#sidebar ul ul a").removeClass("activesublink");
+                    $(this).addClass("activelink");
+                    $("#panel-body-container").load($(this).attr('href'));
                 }
-                else if($(this).attr('id') == "addstore"){
-                    $("#panel-body-container").load("/addstore");
-                }
-                else if($(this).attr('id') == "viewstores"){
-                    $("#panel-body-container").load("/allstores");
-                }
-                else if($(this).attr('id') == "addcategory"){
-                    $("#panel-body-container").load("/addcategory");
-                }
-                else if($(this).attr('id') == "viewcategories"){
-                    $("#panel-body-container").load("/allcategories");
-                }
-                else if($(this).attr('id') == "addcoupon"){
-                    $("#panel-body-container").load("/addcoupon");
-                }
-                else if($(this).attr('id') == "viewcoupons"){
-                    $("#panel-body-container").load("/allcoupons");
-                }
-                else if($(this).attr('id') == "addproduct"){
-                    $("#panel-body-container").load("/addproduct");
-                }
-                else if($(this).attr('id') == "viewproducts"){
-                    $("#panel-body-container").load("/allproducts");
-                }
-            });
-            $("#topnavbar ul a").click(function(){
-                $("#sidebar ul a").removeClass("activelink");
-                $("#topnavbar ul a").removeClass("activelink");
-                $("#sidebar ul ul a").removeClass("activesublink");
-                $(this).addClass("activelink");
-                $("#panel-body-container").load("/updateprofile");
             });
         });
-
     </script>
 </body>
 </html>

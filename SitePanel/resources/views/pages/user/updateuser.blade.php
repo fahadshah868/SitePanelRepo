@@ -47,6 +47,7 @@
                     </div>
                 </div>
                 <input type="submit" value="Add User" class="btn btn-primary form-button"/>
+                <a href="/allusers" class="btn btn-success form-button">Back To Users</a>
             </div>
         </form>
     </div>
@@ -66,7 +67,7 @@
                     usertype: "Please select user type",
                     userstatus: "Please select user status"
                 }
-    
             });
         });
     </script>
+    <script src="js/tableviewbuttons.js"></script>

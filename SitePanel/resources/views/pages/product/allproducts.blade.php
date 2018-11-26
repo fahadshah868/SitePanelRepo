@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Coupons</div>
+        <div class="viewitems-main-heading">All Products</div>
         <div class="viewitems-header-searchbar"><input type="text" placeholder="Search Coupon" id="searchbar" class="form-control"/></div>
     </div>
     <hr>

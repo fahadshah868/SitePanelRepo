@@ -34,4 +34,5 @@
         </table>
     </div>
 </div>
-<script type="text/javascript" src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
+<script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
+<script src="{{asset('js/tableviewbuttons.js')}}"></script>
