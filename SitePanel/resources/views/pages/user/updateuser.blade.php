@@ -1,5 +1,5 @@
 <div class="form-main-container">
-        <div class="form-main-heading">Add User</div>
+        <div class="form-main-heading">Update User</div>
         <hr>
         @if(Session::has('successmessage'))
         <div class="alert alert-success alert-dismissible fade show">
@@ -46,8 +46,8 @@
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="Add User" class="btn btn-primary form-button"/>
-                <a href="/allusers" class="btn btn-success form-button">Back To Users</a>
+                <input type="submit" value="Update User" class="btn btn-primary form-button"/>
+                <a href="/allusers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
             </div>
         </form>
     </div>

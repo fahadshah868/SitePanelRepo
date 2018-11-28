@@ -143,7 +143,7 @@
                 $('#sidebar').toggleClass('active');
             });
             //active link and sub-link when click on sidebar link
-            $("#sidebar ul ul a, #topnavbar ul a").click(function(event){
+            $("#sidebar ul ul a, #topnavbar ul a:first").click(function(event){
                 event.preventDefault();
                 if($(this).hasClass("sidebar-suboption")){
                     $("#topnavbar ul a").removeClass("activelink");

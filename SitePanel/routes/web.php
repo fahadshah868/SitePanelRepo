@@ -26,6 +26,7 @@ Route::post('/adduser','UserController@postAddUser');
 Route::get('/allusers','UserController@getAllUsers');
 Route::get('/updateuser/{id}','UserController@getUpdateUser');
 Route::put('/updateuser/{id}','UserController@getUpdateUser');
+Route::post('/deleteuser/{id}','UserController@deleteUser');
 
 //profile
 Route::get('/updateprofile','ProfileController@updateProfile');

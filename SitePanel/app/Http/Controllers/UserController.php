@@ -34,4 +34,9 @@ class UserController extends Controller
         $data['userdata'] = User::find($id);
         return view('pages.user.updateuser',$data);
     }
+    public function deleteUser($id){
+        $user = User::find($id);
+        $user->delete();
+        return back();
+    }
 }

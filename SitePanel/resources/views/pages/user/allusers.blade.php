@@ -9,7 +9,6 @@
             <thead>
                 <tr>
                     <th>User Name</th>
-                    <th>Password</th>
                     <th>User Type</th>
                     <th>User Status</th>
                     <th>Actions</th>
@@ -20,12 +19,11 @@
                     @foreach($allusers as $user)
                         <tr>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->password }}</td>
                             <td>{{ $user->usertype }}</td>
                             <td>{{ $user->userstatus }}</td>
                             <td>
                                 <a href="/updateuser/{{$user->id}}" class="btn btn-primary">Update</a>
-                                <a href="/updateuser/{{$user->id}}" class="btn btn-danger">Delete</a>
+                                <a href="/deleteuser/{{$user->id}}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     @endforeach

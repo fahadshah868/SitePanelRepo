@@ -10768,6 +10768,10 @@ ul ul a:hover {
   margin: 10px 0 3px 0;
 }
 
+.alert-danger {
+  text-align: center;
+}
+
 .login-form input {
   height: 45px;
 }
@@ -10823,6 +10827,10 @@ ul ul a:hover {
 
 label.error {
   color: red;
+}
+
+.fa-backward {
+  margin-right: 5px;
 }
 
 @media only screen and (max-width: 750px) {
