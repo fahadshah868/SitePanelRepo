@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Stores</div>
+        <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $userscount }})</span></div>
         <div class="viewitems-header-searchbar"><input type="text" placeholder="Search User" id="searchbar" class="form-control"/></div>
     </div>
     <hr>

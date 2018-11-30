@@ -18,12 +18,25 @@ class UserController extends Controller
         $user->password = Hash::make($request->get('password'));
         $user->usertype = $request->get('usertype');
         $user->userstatus = $request->get('userstatus');
-        $user->save();
-        Session::flash('successmessage','add user successfully');
-        return back();
+        $is_save = $user->save();
+        if($is_save){
+            $response = [
+                "status" => "true",
+                "success_message" => "Add User Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "User Not Registered Successfully"
+            ];
+            return response()->json($response);
+        }
     }
     public function getAllUsers(){
         $data['allusers'] = User::all();
+        $data['userscount'] = count($data['allusers']);
         return view('pages.user.allusers', $data);
     }
     public function getUpdateUser($id){
