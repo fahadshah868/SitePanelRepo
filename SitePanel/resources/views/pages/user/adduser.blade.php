@@ -97,6 +97,7 @@
                     }
                 },
                 error: function(){
+                    alert("Ajax Error! something went wrong...");
                 }
             });
         });

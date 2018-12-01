@@ -29,7 +29,7 @@ class UserController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "User Not Registered Successfully"
+                "error_message" => "Error! User Not Registered Successfully"
             ];
             return response()->json($response);
         }
@@ -49,7 +49,20 @@ class UserController extends Controller
     }
     public function deleteUser($id){
         $user = User::find($id);
-        $user->delete();
-        return back();
+        $is_delete = $user->delete();
+        if($is_delete){
+            $response = [
+                "status" => "true",
+                "success_message" => "User Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! User Not Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
     }
 }

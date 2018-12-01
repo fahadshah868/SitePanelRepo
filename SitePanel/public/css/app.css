@@ -10494,6 +10494,15 @@ a:hover {
   text-decoration: none;
 }
 
+.alert-success-message {
+  display: none;
+}
+
+.alert-danger-message {
+  display: none;
+  text-align: left;
+}
+
 .wrapper a {
   color: #fff;
   list-style: none;
@@ -10831,15 +10840,6 @@ label.error {
 
 .fa-backward {
   margin-right: 5px;
-}
-
-.alert-success-message {
-  display: none;
-}
-
-.alert-danger-message {
-  display: none;
-  text-align: left;
 }
 
 @media only screen and (max-width: 750px) {
