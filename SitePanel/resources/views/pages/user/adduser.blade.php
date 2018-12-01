@@ -32,8 +32,8 @@
                         <div class="form-field-heading">User Type</div>
                         <select class="form-control" id="usertype" name="usertype">
                             <option value="">Select Type</option>
-                            <option value="Employee">Employee</option>
-                            <option value="Admin">Admin</option>
+                            <option value="employee">Employee</option>
+                            <option value="admin">Admin</option>
                         </select>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                         <div class="form-field-heading">User Status</div>
                         <select class="form-control" id="userstatus" name="userstatus">
                             <option value="">Select Status</option>
-                            <option value="Active">Active</option>
-                            <option value="Deactive">Deactive</option>
+                            <option value="active">Active</option>
+                            <option value="deactive">Deactive</option>
                         </select>
                     </div>
                 </div>
@@ -71,6 +71,7 @@
         });
         $("#adduserform").submit(function(event){
             event.preventDefault();
+            var url = $(this).attr("action");
             var username = $("#username").val();
             var password = $("#password").val();
             var usertype = $("#usertype").val();
@@ -78,7 +79,7 @@
             var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
             $.ajax({
                 method: 'POST',
-                url: '/adduser',
+                url: url,
                 dataType: "json",
                 data: jsondata,
                 contentType: "application/json",
@@ -91,9 +92,7 @@
                     }
                     else{
                         $("#alert-danger-message-area").html(data.error_message);
-                        $("#alert-danger").fadeTo(3000, 500).slideUp(500, function(){
-                            $("#alert-danger").slideUp(500);
-                        });
+                        $("#alert-danger").css("display","block");
                     }
                 },
                 error: function(){

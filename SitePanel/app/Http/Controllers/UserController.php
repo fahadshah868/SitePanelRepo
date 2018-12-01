@@ -44,8 +44,26 @@ class UserController extends Controller
         return view('pages.user.updateuser',$data);
     }
     public function putUpdateUser(Request $request, $id){
-        $data['userdata'] = User::find($id);
-        return view('pages.user.updateuser',$data);
+        $user = User::find($id);
+        $user->username = $request->get('username');
+        $user->password = Hash::make($request->get('password'));
+        $user->usertype = $request->get('usertype');
+        $user->userstatus = $request->get('userstatus');
+        $is_save = $user->save();
+        if($is_save){
+            $response = [
+                "status" => "true",
+                "success_message" => "Update User Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! User Not Updated Successfully"
+            ];
+            return response()->json($response);
+        }
     }
     public function deleteUser($id){
         $user = User::find($id);

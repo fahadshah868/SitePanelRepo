@@ -10831,7 +10831,8 @@ ul ul a:hover {
 
 .form-button {
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 7px 15px;
+  font-size: 15px;
 }
 
 label.error {
