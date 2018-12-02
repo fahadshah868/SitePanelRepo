@@ -24,8 +24,9 @@ a:hover{
 }
 .alert-success-message{
     display: none;
+    text-align: left !important;
 }
 .alert-danger-message{
     display: none;
-    text-align: left;
+    text-align: left !important;
 }

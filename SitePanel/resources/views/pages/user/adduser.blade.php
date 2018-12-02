@@ -77,6 +77,7 @@
             var usertype = $("#usertype").val();
             var userstatus = $("#userstatus").val();
             var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
+            $("#adduserform").trigger("reset");
             $.ajax({
                 method: 'POST',
                 url: url,

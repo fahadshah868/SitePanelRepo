@@ -5,20 +5,21 @@
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong id="alert-danger-message-area"></strong>
         </div>
-        <form id="updateuserform" action="/updateuser/{{$userdata->id}}" method="POST">
+        <form id="updateuserform" action="/updateuser" method="POST">
             @csrf
             <div class="form-container">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Name</div>
-                        <input type="text" class="form-control" value="{{$userdata->username}}" name="username" placeholder="john"/>
+                            <input type="text" id="id" value="{{$userdata->id}}" hidden >
+                            <input type="text" class="form-control" id="username" value="{{$userdata->username}}" name="username" placeholder="john"/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Password</div>
-                            <input type="text" class="form-control" value="{{$userdata->password}}" name="password" placeholder="password"/>
+                            <input type="text" class="form-control" id="password" value="{{$userdata->password}}" name="password" placeholder="password"/>
                         </div>
                     </div>
                 </div>
@@ -26,7 +27,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Type</div>
-                            <select class="form-control" name="usertype">
+                            <select class="form-control" id="usertype" name="usertype">
                                 @if($userdata->usertype == "employee")
                                 <option value="Employee" selected>Employee</option>
                                 <option value="Admin">Admin</option>
@@ -40,7 +41,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
-                            <select class="form-control" name="userstatus">
+                            <select class="form-control" id="userstatus" name="userstatus">
                                 @if($userdata->userstatus == "active")
                                 <option value="Active" selected>Active</option>
                                 <option value="Deactive">Deactive</option>
@@ -85,10 +86,12 @@
                 var password = $("#password").val();
                 var usertype = $("#usertype").val();
                 var userstatus = $("#userstatus").val();
-                var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
+                var id = $("#id").val();
+                var jsondata = JSON.stringify({id: id, username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
+                console.log(jsondata);
                 $.ajax({
-                    method: 'PUT',
-                    url: url,
+                    method: 'POST',
+                    url: '/updateuser',
                     dataType: "json",
                     data: jsondata,
                     contentType: "application/json",

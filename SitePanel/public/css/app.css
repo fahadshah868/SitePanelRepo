@@ -10496,11 +10496,12 @@ a:hover {
 
 .alert-success-message {
   display: none;
+  text-align: left !important;
 }
 
 .alert-danger-message {
   display: none;
-  text-align: left;
+  text-align: left !important;
 }
 
 .wrapper a {
@@ -10912,6 +10913,14 @@ td img {
   background-position: 7px 7px;
   background-size: 22px 22px;
   padding-left: 38px;
+}
+
+.fa-edit {
+  margin-right: 5px;
+}
+
+.fa-trash {
+  margin-right: 5px;
 }
 
 .login-top-navbar {

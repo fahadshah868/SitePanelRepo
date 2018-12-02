@@ -21,7 +21,7 @@ class LoginController extends Controller
             return redirect('/dashboard');
         }
         else{
-            Session::flash('errormessage' , "Wrong Login Details");
+            Session::flash('login_errormessage' , "Wrong Login Details");
             return back();
         }
     }

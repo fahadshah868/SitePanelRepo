@@ -4,6 +4,10 @@
         <div class="viewitems-header-searchbar"><input type="text" placeholder="Search User" id="searchbar" class="form-control"/></div>
     </div>
     <hr>
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alert-success-message-area"></strong>
+    </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
@@ -26,8 +30,8 @@
                             <td>{{ $user->usertype }}</td>
                             <td>{{ $user->userstatus }}</td>
                             <td>
-                                <a href="/updateuser/{{$user->id}}" id="updaterecord" class="btn btn-primary">Update</a>
-                                <a href="/deleteuser/{{$user->id}}" id="deleterecord" class="btn btn-danger">Delete</a>
+                                <a href="/updateuser/{{$user->id}}" id="updaterecord" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/deleteuser/{{$user->id}}" id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -40,6 +44,12 @@
 <script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
+        if('{{ Session::has("updateuser_successmessage") }}'){
+            $("#alert-success-message-area").html('{{ Session::get("updateuser_successmessage") }}');
+            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                $("#alert-success").slideUp(500);
+            });
+        }
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
             if($(this).attr("id") == "updaterecord"){
@@ -77,8 +87,7 @@
                                 },
                                 error: function(){
                                     alert("Ajax Error! something went wrong...");
-                                },
-                                async: false
+                                }
                             });
                         }
                     }

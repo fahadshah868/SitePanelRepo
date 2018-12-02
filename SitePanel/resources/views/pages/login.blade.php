@@ -17,10 +17,10 @@
         <form action="/" method="POST" id="loginform">
             @csrf
             <div class="login-form">
-                @if(Session::has('errormessage'))
+                @if(Session::has('login_errormessage'))
                 <div class="alert alert-danger alert-dismissible fade show">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>{{Session::get('errormessage')}}</strong>
+                    <strong>{{Session::get('login_errormessage')}}</strong>
                 </div>
                 @endif
                 <div class="login-fields-heading">User Name:</div>
