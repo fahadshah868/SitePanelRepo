@@ -31,7 +31,7 @@
                             <td>{{ $user->userstatus }}</td>
                             <td>
                                 <a href="/updateuser/{{$user->id}}" id="updaterecord" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deleteuser/{{$user->id}}" id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->usertype}}' id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -52,13 +52,16 @@
         }
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
+
             if($(this).attr("id") == "updaterecord"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deleterecord"){
                 var url = $(this).attr("href");
                 bootbox.confirm({
-                    message: "Are you sure to delete this record",
+                    message: "<b>Are you sure to delete this record?</b><br>"+
+                    "<b>User:</b>  "+$(this).data("username")+"<br>"+
+                    "<b>User Type:</b>  "+$(this).data("usertype"),
                     buttons: {
                         confirm: {
                             label: 'Delete',
