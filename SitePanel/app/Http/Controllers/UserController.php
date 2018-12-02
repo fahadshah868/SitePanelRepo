@@ -13,23 +13,33 @@ class UserController extends Controller
         return view('pages.user.adduser');
     }
     public function postAddUser(Request $request){
-        $user = new User;
-        $user->username = $request->get('username');
-        $user->password = Hash::make($request->get('password'));
-        $user->usertype = $request->get('usertype');
-        $user->userstatus = $request->get('userstatus');
-        $is_save = $user->save();
-        if($is_save){
-            $response = [
-                "status" => "true",
-                "success_message" => "Add User Successfully"
-            ];
-            return response()->json($response);
+        $exists = User::where('username',$request->get('username'))->first();
+        if(!$exists){
+            $user = new User;
+            $user->username = $request->get('username');
+            $user->password = Hash::make($request->get('password'));
+            $user->usertype = $request->get('usertype');
+            $user->userstatus = $request->get('userstatus');
+            $is_save = $user->save();
+            if($is_save){
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Add User Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Error! User Not Registered Successfully"
+                ];
+                return response()->json($response);
+            }
         }
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! User Not Registered Successfully"
+                "error_message" => $request->get('username')."! This User Already Registered"
             ];
             return response()->json($response);
         }

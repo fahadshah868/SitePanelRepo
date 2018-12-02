@@ -2,11 +2,11 @@
     <div class="form-main-heading">Add User</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
     <form id="adduserform" action="/adduser" method="POST">
@@ -54,8 +54,12 @@
 </div>
 <script>
     $(document).ready(function(){
-        //validation rules
-        $("#adduserform").validate({
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
+        $("#adduserform").submit(function(event){
+            event.preventDefault();
+        }).validate({
             rules: {
                 username: "required",
                 password: "required",
@@ -67,39 +71,40 @@
                 password: "please enter user password",
                 usertype: "Please select user type",
                 userstatus: "Please select user status"
+            },
+            submitHandler: function(form) {
+                var url = $("#adduserform").attr("action");
+                var username = $("#username").val();
+                var password = $("#password").val();
+                var usertype = $("#usertype").val();
+                var userstatus = $("#userstatus").val();
+                var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
+                $("#adduserform").trigger("reset");
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    dataType: "json",
+                    data: jsondata,
+                    contentType: "application/json",
+                    success: function(data){
+                        if(data.status == "true"){
+                            $("#alert-success-message-area").html(data.success_message);
+                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                                $("#alert-success").slideUp(500);
+                            });
+                        }
+                        else{
+                            $("#alert-danger-message-area").html(data.error_message);
+                            $("#alert-danger").css("display","block");
+                        }
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
             }
-        });
-        $("#adduserform").submit(function(event){
-            event.preventDefault();
-            var url = $(this).attr("action");
-            var username = $("#username").val();
-            var password = $("#password").val();
-            var usertype = $("#usertype").val();
-            var userstatus = $("#userstatus").val();
-            var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
-            $("#adduserform").trigger("reset");
-            $.ajax({
-                method: 'POST',
-                url: url,
-                dataType: "json",
-                data: jsondata,
-                contentType: "application/json",
-                success: function(data){
-                    if(data.status == "true"){
-                        $("#alert-success-message-area").html(data.success_message);
-                        $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
-                            $("#alert-success").slideUp(500);
-                        });
-                    }
-                    else{
-                        $("#alert-danger-message-area").html(data.error_message);
-                        $("#alert-danger").css("display","block");
-                    }
-                },
-                error: function(){
-                    alert("Ajax Error! something went wrong...");
-                }
-            });
         });
     });
 </script>
