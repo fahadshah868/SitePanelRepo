@@ -74,6 +74,7 @@
             },
             submitHandler: function(form) {
                 var url = $("#adduserform").attr("action");
+                var method = $("#adduserform").attr("method");
                 var username = $("#username").val();
                 var password = $("#password").val();
                 var usertype = $("#usertype").val();
@@ -82,7 +83,7 @@
                 $("#adduserform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
-                    method: 'POST',
+                    method: method,
                     url: url,
                     dataType: "json",
                     data: jsondata,

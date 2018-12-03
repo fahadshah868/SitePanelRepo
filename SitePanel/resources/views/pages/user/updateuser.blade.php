@@ -75,7 +75,7 @@
                     userstatus: "Please select user status"
                 }
             });
-            $("a").click(function(event){
+            $("#backbutton").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
             });

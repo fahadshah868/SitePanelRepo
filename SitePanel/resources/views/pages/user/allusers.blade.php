@@ -27,11 +27,11 @@
                     @foreach($allusers as $user)
                         <tr>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->usertype }}</td>
-                            <td>{{ $user->userstatus }}</td>
+                            <td>{{ $user->type }}</td>
+                            <td>{{ $user->status }}</td>
                             <td>
                                 <a href="/updateuser/{{$user->id}}" id="updaterecord" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->usertype}}' id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->type}}' id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach

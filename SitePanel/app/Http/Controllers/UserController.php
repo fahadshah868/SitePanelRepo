@@ -18,8 +18,8 @@ class UserController extends Controller
             $user = new User;
             $user->username = $request->get('username');
             $user->password = Hash::make($request->get('password'));
-            $user->usertype = $request->get('usertype');
-            $user->userstatus = $request->get('userstatus');
+            $user->type = $request->get('usertype');
+            $user->status = $request->get('userstatus');
             $is_save = $user->save();
             if($is_save){
                 $response = [
@@ -57,8 +57,8 @@ class UserController extends Controller
         $user = User::find($request->get('id'));
         $user->username = $request->get('username');
         $user->password = Hash::make($request->get('password'));
-        $user->usertype = $request->get('usertype');
-        $user->userstatus = $request->get('userstatus');
+        $user->type = $request->get('usertype');
+        $user->status = $request->get('userstatus');
         $is_update = $user->save();
         if($is_update){
             $response = [

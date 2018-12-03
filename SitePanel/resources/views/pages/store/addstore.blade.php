@@ -1,7 +1,7 @@
 <div class="form-main-container">
     <div class="form-main-heading">Add Store</div>
     <hr>
-    <form id="addstoreform">
+    <form id="addstoreform" action="/addstore" method="POST">
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-6">
@@ -73,6 +73,41 @@
                 storetype: "please select store type",
                 storestatus: "please select store status",
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
+            },
+            submitHandler: function(form) {
+                var url = $("#addstoreform").attr("action");
+                var method = $("#addstoreform").attr("method");
+                var storetitle = $("#storetitle").val();
+                var storesiteurl = $("#storesiteurl").val();
+                var storetype = $("#storetype").val();
+                var storestatus = $("#storestatus").val();
+                var storelogo = $("#storelogo").val();
+                var jsondata = JSON.stringify({storetitle: storetitle, storesiteurl: storesiteurl, storetype: storetype, storestatus: storestatus, storelogo: storelogo, _token: '{{ csrf_token() }}'});
+                $("#addstoreform").trigger("reset");
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: method,
+                    url: url,
+                    dataType: "json",
+                    data: jsondata,
+                    contentType: "application/json",
+                    success: function(data){
+                        if(data.status == "true"){
+                            $("#alert-success-message-area").html(data.success_message);
+                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                                $("#alert-success").slideUp(500);
+                            });
+                        }
+                        else{
+                            $("#alert-danger-message-area").html(data.error_message);
+                            $("#alert-danger").css("display","block");
+                        }
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
             }
         });
         //set image to imagebox

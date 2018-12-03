@@ -15,8 +15,8 @@ class UsersTableSeeder extends Seeder
         User::create([
             'username' => 'fahad',
             'password' => Hash::make('12345'),
-            'usertype' => 'admin',
-            'userstatus' => 'active',
+            'type' => 'admin',
+            'status' => 'active'
         ]);
     }
 }
