@@ -50,7 +50,7 @@ class StoreController extends Controller
         }
     }
     public function getAllStores(){
-        $data['allstores'] = User::all();
+        $data['allstores'] = Store::all();
         $data['storescount'] = count($data['allstores']);
         return view('pages.store.allstores', $data);
     }

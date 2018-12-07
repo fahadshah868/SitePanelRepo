@@ -17,19 +17,21 @@
                 </tr>
             </thead>
             <tbody>
-                @for($i=1; $i<=100; $i++)
-                <tr>
-                    <td>kohls</td>
-                    <td>www.kohls.com</td>
-                    <td>Popular</td>
-                    <td>Active</td>
-                    <td><img src="https://botw-pd.s3.amazonaws.com/styles/logo-thumbnail/s3/0007/0994/brand.gif?itok=UM7EbV20" /></td>
-                    <td>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-                @endfor
+                @if(count($allstores) > 0)
+                    @foreach($allstores as $store)
+                        <tr>
+                            <td>{{ $store->title }}</td>
+                            <td>{{ $store->site_url }}</td>
+                            <td>{{ $store->type }}</td>
+                            <td>{{ $store->status }}</td>
+                            <td><img src="{{ asset($store->logo_url) }}"/></td>
+                            <td>
+                                <a href="/updateuser/{{$store->id}}" id="updaterecord" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/deleteuser/{{$store->id}}" data-storetitle='{{$store->title}}' data-storetype='{{$store->type}}' id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </div>
