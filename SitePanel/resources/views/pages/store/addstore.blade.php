@@ -1,19 +1,28 @@
 <div class="form-main-container">
     <div class="form-main-heading">Add Store</div>
     <hr>
-    <form id="addstoreform" action="/addstore" method="POST">
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-success-message-area"></strong>
+    </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
+    <form id="addstoreform" action="/addstore" method="POST" enctype="multipart/form-data">
+    @csrf
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Title</div>
-                        <input type="text" class="form-control" name="storetitle" placeholder="Kohls"/>
+                        <input type="text" class="form-control" id="storetitle" name="storetitle" placeholder="Kohls"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Site Url</div>
-                        <input type="text" class="form-control" name="storesiteurl" placeholder="www.Kohls.com"/>
+                        <input type="text" class="form-control" id="storesiteurl" name="storesiteurl" placeholder="www.Kohls.com"/>
                     </div>
                 </div>
             </div>
@@ -21,7 +30,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Type</div>
-                        <select class="form-control" name="storetype">
+                        <select class="form-control" id="storetype" name="storetype">
                             <option value="">Select Type</option>
                             <option value="Normal">Normal</option>
                             <option value="Popular">Popular</option>
@@ -31,7 +40,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <select class="form-control" name="storestatus">
+                        <select class="form-control" id="storestatus" name="storestatus">
                             <option value="">Select Status</option>
                             <option value="Active">Active</option>
                             <option value="Deactive">Deactive</option>
@@ -44,7 +53,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Store Logo</div>
                         <img src="#" id="imgpath" />
-                        <input type="file" id="imgfilepath" name="storelogo" accept=".png, .jpg, .jpeg"/>
+                        <input type="file" id="storelogo" name="storelogo" accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>
             </div>
@@ -59,7 +68,9 @@
         return ($(element).data('imagewidth') || 0) == $(element).data('imageheight');
         }, "please select the correct image");
         //validation rules
-        var validator = $("#addstoreform").validate({
+        var validator = $("#addstoreform").submit(function(event){
+            event.preventDefault();
+        }).validate({
             rules: {
                 storetitle: "required",
                 storesiteurl: { required: true, url: true },
@@ -75,22 +86,29 @@
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
             },
             submitHandler: function(form) {
-                var url = $("#addstoreform").attr("action");
-                var method = $("#addstoreform").attr("method");
-                var storetitle = $("#storetitle").val();
-                var storesiteurl = $("#storesiteurl").val();
-                var storetype = $("#storetype").val();
-                var storestatus = $("#storestatus").val();
-                var storelogo = $("#storelogo").val();
-                var jsondata = JSON.stringify({storetitle: storetitle, storesiteurl: storesiteurl, storetype: storetype, storestatus: storestatus, storelogo: storelogo, _token: '{{ csrf_token() }}'});
+                var _url = $("#addstoreform").attr("action");
+                var _method = $("#addstoreform").attr("method");
+                var _storetitle = $("#storetitle").val();
+                var _storesiteurl = $("#storesiteurl").val();
+                var _storetype = $("#storetype").val();
+                var _storestatus = $("#storestatus").val();
+                var _storelogo = $("#storelogo")[0].files[0];
+                var formdata = new FormData();
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storesiteurl: _storesiteurl, storetype: _storetype, storestatus: _storestatus});
+                formdata.append("storelogo", _storelogo);
+                formdata.append("formdata", _jsondata);
+                formdata.append('_token', '{{ csrf_token() }}');
                 $("#addstoreform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
-                    method: method,
-                    url: url,
+                    method: _method,
+                    url: _url,
                     dataType: "json",
-                    data: jsondata,
-                    contentType: "application/json",
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    enctype: 'multipart/form-data',
                     success: function(data){
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);
@@ -112,7 +130,7 @@
         });
         //set image to imagebox
         function readURL(input) {
-            var photoinput = $("#imgfilepath");
+            var photoinput = $("#storelogo");
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 
@@ -134,7 +152,7 @@
             }
         }
         //when select any file
-        $("#imgfilepath").change(function(){
+        $("#storelogo").change(function(){
             readURL(this);
         });
     });

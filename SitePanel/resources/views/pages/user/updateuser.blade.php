@@ -28,7 +28,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">User Type</div>
                             <select class="form-control" id="usertype" name="usertype">
-                                @if($userdata->usertype == "employee")
+                                @if($userdata->type == "employee")
                                 <option value="Employee" selected>Employee</option>
                                 <option value="Admin">Admin</option>
                                 @else
@@ -42,7 +42,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
                             <select class="form-control" id="userstatus" name="userstatus">
-                                @if($userdata->userstatus == "active")
+                                @if($userdata->status == "active")
                                 <option value="Active" selected>Active</option>
                                 <option value="Deactive">Deactive</option>
                                 @else

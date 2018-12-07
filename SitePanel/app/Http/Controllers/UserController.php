@@ -13,13 +13,13 @@ class UserController extends Controller
         return view('pages.user.adduser');
     }
     public function postAddUser(Request $request){
-        $exists = User::where('username',$request->get('username'))->first();
-        if(!$exists){
+        $is_user_exist = User::where('username',$request->username)->first();
+        if(!$is_user_exist){
             $user = new User;
-            $user->username = $request->get('username');
-            $user->password = Hash::make($request->get('password'));
-            $user->type = $request->get('usertype');
-            $user->status = $request->get('userstatus');
+            $user->username = $request->username;
+            $user->password = Hash::make($request->password);
+            $user->type = $request->usertype;
+            $user->status = $request->userstatus;
             $is_save = $user->save();
             if($is_save){
                 $response = [
@@ -31,7 +31,7 @@ class UserController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => "Error! User Not Registered Successfully"
+                    "error_message" => "Error! User Is Not Registered Successfully"
                 ];
                 return response()->json($response);
             }
@@ -39,7 +39,7 @@ class UserController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => $request->get('username')."! This User Already Registered"
+                "error_message" => $request->username."! This User is Already Registered"
             ];
             return response()->json($response);
         }
@@ -54,11 +54,11 @@ class UserController extends Controller
         return view('pages.user.updateuser',$data);
     }
     public function postUpdateUser(Request $request){
-        $user = User::find($request->get('id'));
-        $user->username = $request->get('username');
-        $user->password = Hash::make($request->get('password'));
-        $user->type = $request->get('usertype');
-        $user->status = $request->get('userstatus');
+        $user = User::find($request->id);
+        $user->username = $request->username;
+        $user->password = Hash::make($request->password);
+        $user->type = $request->usertype;
+        $user->status = $request->userstatus;
         $is_update = $user->save();
         if($is_update){
             $response = [

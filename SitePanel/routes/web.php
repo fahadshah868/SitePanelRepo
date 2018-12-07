@@ -32,8 +32,8 @@ Route::get('/deleteuser/{id}','UserController@deleteUser');
 Route::get('/updateprofile','ProfileController@updateProfile');
 
 //store routes
-Route::get('/addstore','StoreController@getaddStore');
-Route::post('/addstore','StoreController@postaddStore');
+Route::get('/addstore','StoreController@getAddStore');
+Route::post('/addstore','StoreController@postAddStore');
 Route::get('/allstores','StoreController@getAllStores');
 Route::get('/updatestore/{id}','StoreController@getUpdateStore');
 Route::post('/updatestore','StoreController@postUpdateStore');

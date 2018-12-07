@@ -73,20 +73,20 @@
                 userstatus: "Please select user status"
             },
             submitHandler: function(form) {
-                var url = $("#adduserform").attr("action");
-                var method = $("#adduserform").attr("method");
-                var username = $("#username").val();
-                var password = $("#password").val();
-                var usertype = $("#usertype").val();
-                var userstatus = $("#userstatus").val();
-                var jsondata = JSON.stringify({username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
+                var _url = $("#adduserform").attr("action");
+                var _method = $("#adduserform").attr("method");
+                var _username = $("#username").val();
+                var _password = $("#password").val();
+                var _usertype = $("#usertype").val();
+                var _userstatus = $("#userstatus").val();
+                var _jsondata = JSON.stringify({username: _username, password: _password, usertype: _usertype, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                 $("#adduserform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
-                    method: method,
-                    url: url,
+                    method: _method,
+                    url: _url,
                     dataType: "json",
-                    data: jsondata,
+                    data: _jsondata,
                     contentType: "application/json",
                     success: function(data){
                         if(data.status == "true"){
