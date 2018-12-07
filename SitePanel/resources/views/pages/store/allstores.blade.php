@@ -1,9 +1,13 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Stores</div>
+        <div class="viewitems-main-heading">All Stores<span class="viewitems-main-heading-count">({{ $storescount }})</span></div>
         <div class="viewitems-header-searchbar"><input type="text" placeholder="Search Store" id="searchbar" class="form-control"/></div>
     </div>
     <hr>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -27,7 +31,7 @@
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storetype='{{$store->type}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storesiteurl='{{$store->site_url}}' data-storetype='{{$store->type}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -36,6 +40,8 @@
         </table>
     </div>
 </div>
+<script src="{{asset('js/bootbox.min.js')}}"></script>
+<script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
         if('{{ Session::has("updateuser_successmessage") }}'){
@@ -49,14 +55,13 @@
             if($(this).attr("id") == "updatestore"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deletestoreaaaa"){
-                /********************************************
-                TODO***************************************/
+            else if($(this).attr("id") == "deletestore"){
                 var url = $(this).attr("href");
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
-                    "<b>User:</b>  "+$(this).data("username")+"<br>"+
-                    "<b>User Type:</b>  "+$(this).data("usertype"),
+                    "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
+                    "<b>Store Site Url:</b>  "+$(this).data("storesiteurl")+"<br>"+
+                    "<b>Store Type:</b>  "+$(this).data("storetype"),
                     buttons: {
                         confirm: {
                             label: 'Delete',
@@ -76,7 +81,7 @@
                                 contentType: "application/json",
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allusers");
+                                        $("#panel-body-container").load("/allstores");
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);

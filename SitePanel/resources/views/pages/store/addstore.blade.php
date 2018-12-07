@@ -32,7 +32,7 @@
                         <div class="form-field-heading">Store Type</div>
                         <select class="form-control" id="storetype" name="storetype">
                             <option value="">Select Type</option>
-                            <option value="Normal">Normal</option>
+                            <option value="Regular">Regular</option>
                             <option value="Popular">Popular</option>
                         </select>
                     </div>
@@ -112,7 +112,6 @@
                     contentType: false,
                     processData: false,
                     cache: false,
-                    enctype: 'multipart/form-data',
                     success: function(data){
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);

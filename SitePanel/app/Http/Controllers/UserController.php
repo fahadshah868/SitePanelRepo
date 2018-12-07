@@ -39,7 +39,7 @@ class UserController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => $request->username."! This User is Already Registered"
+                "error_message" => ucwords($request->username)."! This User is Already Registered"
             ];
             return response()->json($response);
         }
@@ -50,7 +50,7 @@ class UserController extends Controller
         return view('pages.user.allusers', $data);
     }
     public function getUpdateUser($id){
-        $data['userdata'] = User::find($id);
+        $data['user'] = User::find($id);
         return view('pages.user.updateuser',$data);
     }
     public function postUpdateUser(Request $request){

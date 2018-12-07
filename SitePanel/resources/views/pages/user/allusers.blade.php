@@ -4,10 +4,6 @@
         <div class="viewitems-header-searchbar"><input type="text" placeholder="Search User" id="searchbar" class="form-control"/></div>
     </div>
     <hr>
-    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong id="alert-success-message-area"></strong>
-    </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>

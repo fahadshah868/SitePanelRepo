@@ -12,14 +12,14 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Name</div>
-                            <input type="text" id="id" value="{{$userdata->id}}" hidden >
-                            <input type="text" class="form-control" id="username" value="{{$userdata->username}}" name="username" placeholder="john"/>
+                            <input type="text" id="id" value="{{$user->id}}" hidden >
+                            <input type="text" class="form-control" id="username" value="{{$user->username}}" name="username" placeholder="john"/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Password</div>
-                            <input type="text" class="form-control" id="password" value="{{$userdata->password}}" name="password" placeholder="password"/>
+                            <input type="text" class="form-control" id="password" value="{{$user->password}}" name="password" placeholder="password"/>
                         </div>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">User Type</div>
                             <select class="form-control" id="usertype" name="usertype">
-                                @if($userdata->type == "employee")
+                                @if($user->type == "employee")
                                 <option value="Employee" selected>Employee</option>
                                 <option value="Admin">Admin</option>
                                 @else
@@ -42,7 +42,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
                             <select class="form-control" id="userstatus" name="userstatus">
-                                @if($userdata->status == "active")
+                                @if($user->status == "active")
                                 <option value="Active" selected>Active</option>
                                 <option value="Deactive">Deactive</option>
                                 @else
