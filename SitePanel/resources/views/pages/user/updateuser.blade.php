@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <input type="submit" value="Update User" class="btn btn-primary form-button"/>
-                <a href="/allusers" id="backbutton" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
+                <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
             </div>
         </form>
     </div>
@@ -75,7 +75,7 @@
                     userstatus: "Please select user status"
                 }
             });
-            $("#backbutton").click(function(event){
+            $("#backtousers").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
             });

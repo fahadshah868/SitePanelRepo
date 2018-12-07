@@ -30,8 +30,8 @@
                             <td>{{ $user->type }}</td>
                             <td>{{ $user->status }}</td>
                             <td>
-                                <a href="/updateuser/{{$user->id}}" id="updaterecord" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->type}}' id="deleterecord" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/updateuser/{{$user->id}}" id="updateuser" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->type}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -53,10 +53,10 @@
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
 
-            if($(this).attr("id") == "updaterecord"){
+            if($(this).attr("id") == "updateuser"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deleterecord"){
+            else if($(this).attr("id") == "deleteuser"){
                 var url = $(this).attr("href");
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

@@ -54,4 +54,8 @@ class StoreController extends Controller
         $data['storescount'] = count($data['allstores']);
         return view('pages.store.allstores', $data);
     }
+    public function getUpdateStore($id){
+        $data['store'] = Store::find($id);
+        return view('pages.store.updatestore');
+    }
 }

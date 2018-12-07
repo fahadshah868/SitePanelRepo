@@ -58,6 +58,7 @@
                 </div>
             </div>
             <input type="submit" value="Add Store" class="btn btn-primary form-button"/>
+            <a href="/allstores" id="backtostores" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Stores</a>
         </div>
     </form>
 </div>
@@ -65,6 +66,10 @@
     $(document).ready(function(){
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#backtostores").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
         });
         //define custom validation method to check image dimensions
         $.validator.addMethod('validateimage', function(value, element) {
