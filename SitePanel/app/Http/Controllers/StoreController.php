@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Store;
 use File;
+use Session;
 
 class StoreController extends Controller
 {
@@ -66,7 +67,34 @@ class StoreController extends Controller
     }
     public function getUpdateStore($id){
         $data['store'] = Store::find($id);
-        return view('pages.store.updatestore');
+        return view('pages.store.updatestore',$data);
+    }
+    public function getUpdateStoreForm($id){
+        $data['store'] = Store::find($id);
+        return view('pages.store.updatestoreform',$data);
+    }
+    public function postUpdateStoreForm(Request $request){
+        $store = Store::find($request->storeid);
+        $store->title = $request->storetitle;
+        $store->site_url = $request->storesiteurl;
+        $store->type = $request->storetype;
+        $store->status = $request->storestatus;
+        $is_update = $store->save();
+        if($is_update){
+            Session::flash("updatestore_successmessage","Store Updated Successfully");
+            $response = [
+                "status" => "true",
+                "success_message" => "Store Updated Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! Store Is Not Updated Successfully"
+            ];
+            return response()->json($response);
+        }
     }
     public function deleteStore($id){
         $store = Store::find($id);

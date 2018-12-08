@@ -11,8 +11,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-field">
+                            <input type="text" id="userid" value="{{$user->id}}" hidden >
                             <div class="form-field-heading">User Name</div>
-                            <input type="text" id="id" value="{{$user->id}}" hidden >
                             <input type="text" class="form-control" id="username" value="{{$user->username}}" name="username" placeholder="john"/>
                         </div>
                     </div>
@@ -53,8 +53,8 @@
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="Update User" class="btn btn-primary form-button"/>
                 <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
+                <input type="submit" value="Update User" class="btn btn-primary form-button"/>
             </div>
         </form>
     </div>
@@ -81,20 +81,19 @@
             });
             $("#updateuserform").submit(function(event){
                 event.preventDefault();
-                var url = $(this).attr("action");
-                var username = $("#username").val();
-                var password = $("#password").val();
-                var usertype = $("#usertype").val();
-                var userstatus = $("#userstatus").val();
-                var id = $("#id").val();
-                var jsondata = JSON.stringify({id: id, username: username, password: password, usertype: usertype, userstatus: userstatus, _token: '{{ csrf_token() }}'});
-                console.log(jsondata);
+                var _userid = $("#userid").val();
+                var _username = $("#username").val();
+                var _password = $("#password").val();
+                var _usertype = $("#usertype").val();
+                var _userstatus = $("#userstatus").val();
+                var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, usertype: _usertype, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                 $.ajax({
                     method: 'POST',
                     url: '/updateuser',
                     dataType: "json",
-                    data: jsondata,
+                    data: _jsondata,
                     contentType: "application/json",
+                    cache: false,
                     success: function(data){
                         if(data.status == "true"){
                             $("#panel-body-container").load("/allusers");

@@ -36,6 +36,8 @@ Route::get('/addstore','StoreController@getAddStore');
 Route::post('/addstore','StoreController@postAddStore');
 Route::get('/allstores','StoreController@getAllStores');
 Route::get('/updatestore/{id}','StoreController@getUpdateStore');
+Route::get('/updatestoreform/{id}','StoreController@getUpdateStoreForm');
+Route::post('/updatestoreform','StoreController@postUpdateStoreForm');
 Route::post('/updatestore','StoreController@postUpdateStore');
 Route::get('/deletestore/{id}','StoreController@deleteStore');
 

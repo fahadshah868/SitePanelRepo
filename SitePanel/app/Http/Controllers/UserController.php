@@ -54,7 +54,7 @@ class UserController extends Controller
         return view('pages.user.updateuser',$data);
     }
     public function postUpdateUser(Request $request){
-        $user = User::find($request->id);
+        $user = User::find($request->userid);
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->type = $request->usertype;

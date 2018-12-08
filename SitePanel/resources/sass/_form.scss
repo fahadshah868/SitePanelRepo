@@ -26,6 +26,15 @@ label.error{
 .fa-backward{
     margin-right: 5px;
 }
+.fa-forward{
+    margin-left: 5px;
+}
+.update-image-button{
+    width: 200px;
+    margin-top: 20px;
+    padding: 7px 15px;
+    font-size: 15px;
+}
 @media only screen and (max-width: 750px){
     .form-container .column{
         width: 100%;   

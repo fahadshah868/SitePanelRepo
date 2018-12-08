@@ -89,8 +89,6 @@
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
             },
             submitHandler: function(form) {
-                var _url = $("#addstoreform").attr("action");
-                var _method = $("#addstoreform").attr("method");
                 var _storetitle = $("#storetitle").val();
                 var _storesiteurl = $("#storesiteurl").val();
                 var _storetype = $("#storetype").val();
@@ -100,13 +98,13 @@
                 var _jsondata = JSON.stringify({storetitle: _storetitle, storesiteurl: _storesiteurl, storetype: _storetype, storestatus: _storestatus});
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);
-                formdata.append('_token', '{{ csrf_token() }}');
+                formdata.append("_token", "{{ csrf_token() }}");
                 $("#addstoreform").trigger("reset");
                 $('#imgpath').attr("src", "");
                 $(".alert").css("display","none");
                 $.ajax({
-                    method: _method,
-                    url: _url,
+                    method: "POST",
+                    url: "/addstore",
                     dataType: "json",
                     data: formdata,
                     contentType: false,

@@ -73,8 +73,6 @@
                 userstatus: "Please select user status"
             },
             submitHandler: function(form) {
-                var _url = $("#adduserform").attr("action");
-                var _method = $("#adduserform").attr("method");
                 var _username = $("#username").val();
                 var _password = $("#password").val();
                 var _usertype = $("#usertype").val();
@@ -83,11 +81,12 @@
                 $("#adduserform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
-                    method: _method,
-                    url: _url,
+                    method: 'POST',
+                    url: "/adduser",
                     dataType: "json",
                     data: _jsondata,
                     contentType: "application/json",
+                    cache: false,
                     success: function(data){
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);
