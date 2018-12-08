@@ -7,8 +7,32 @@
     </div>
     <div class="row" id="updatestore">
         <div class="col-xl-3" style="margin: 20px 0;">
-            <img src="{{asset('images/store/amazon.png')}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
-            <a href="" class="btn btn-primary update-image-button">Update Image<i class="fa fa-forward"></i></a>
+            <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
+            {{--popup to update image--}}
+            <button id="uploadstorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#exampleModalCenter">Update Image<i class="fa fa-forward"></i></button>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form id="updatestoreimageform" action="/updatestoreimage" method="POST">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Update Store Logo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" value="{{ $store->id }}" id="storeid" name="storeid" hidden>
+                                <img src="#" id="imgpath" class="updateimage" />
+                                <input type="file" id="storelogo" name="storelogo" accept=".png, .jpg, .jpeg"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success form-button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
+                                <input type="submit" class="btn btn-primary form-button" value="Update" id="updatestorelogo">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xl-9">
             <div class="row">
@@ -55,9 +79,92 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        $("#uploadstorelogobutton").click(function(){
+            $("#updatestoreimageform").trigger("reset");
+            $('#imgpath').attr("src", "");
+        });
         $("#updatestore a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
+        });
+        $.validator.addMethod('validateimage', function(value, element) {
+        return ($(element).data('imagewidth') || 0) == $(element).data('imageheight');
+        }, "please select the correct image");
+        var validator = $("#updatestoreimageform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                storelogo: { required: true, validateimage: true }
+            },
+            messages: {
+                storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
+            },
+            submitHandler: function(form) {
+                var _storeid = $("#storeid").val()
+                var _storelogo = $("#storelogo")[0].files[0];
+                var _jsondata = JSON.stringify({storeid: _storeid});
+                var formdata = new FormData();
+                formdata.append("storelogo", _storelogo);
+                formdata.append("formdata", _jsondata);
+                formdata.append("_token", "{{ csrf_token() }}");
+                $("#addstoreform").trigger("reset");
+                $('#imgpath').attr("src", "");
+                $(".alert").css("display","none");
+                $.ajax({
+                    method: "POST",
+                    url: "/updatestoreimage",
+                    dataType: "json",
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    success: function(data){
+                        if(data.status == "true"){
+                            $("#alert-success-message-area").html(data.success_message);
+                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                                $("#alert-success").slideUp(500);
+                            });
+                        }
+                        else{
+                            $("#alert-danger-message-area").html(data.error_message);
+                            $("#alert-danger").css("display","block");
+                        }
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
+            }
+        });
+        //set image to imagebox
+        function readURL(input) {
+            var photoinput = $("#storelogo");
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var image = new Image();
+                    image.src= e.target.result;
+                    image.onload = function() {
+                        var imagewidth = image.width;
+                        var imageheight = image.height;
+                        photoinput.data('imagewidth', imagewidth);
+                        photoinput.data('imageheight', imageheight);
+                        if(imagewidth === imageheight){
+                            $('#imgpath').attr('src', e.target.result);
+                        }
+                        else{
+                            $('#imgpath').attr('src', '');
+                        }
+                        validator.element(photoinput);
+                    };
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        //when select any file
+        $("#storelogo").change(function(){
+            readURL(this);
         });
     });
 </script>

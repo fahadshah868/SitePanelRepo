@@ -27,7 +27,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Type</div>
-                            <select class="form-control" id="usertype" name="usertype">
+                            <select class="form-control" id="userrole" name="userrole">
                                 @if($user->type == "employee")
                                 <option value="Employee" selected>Employee</option>
                                 <option value="Admin">Admin</option>
@@ -84,14 +84,15 @@
                 var _userid = $("#userid").val();
                 var _username = $("#username").val();
                 var _password = $("#password").val();
-                var _usertype = $("#usertype").val();
+                var _userrole = $("#userrole").val();
                 var _userstatus = $("#userstatus").val();
-                var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, usertype: _usertype, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
+                var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                 $.ajax({
                     method: 'POST',
                     url: '/updateuser',
                     dataType: "json",
                     data: _jsondata,
+                    dataType: "json",
                     contentType: "application/json",
                     cache: false,
                     success: function(data){

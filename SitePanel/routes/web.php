@@ -29,7 +29,9 @@ Route::post('/updateuser','UserController@postUpdateUser');
 Route::get('/deleteuser/{id}','UserController@deleteUser');
 
 //profile
-Route::get('/updateprofile','ProfileController@updateProfile');
+Route::get('/updateprofile','ProfileController@getUpdateProfile');
+Route::post('/comparepassword','ProfileController@postComparePassword');
+Route::post('/updateprofile','ProfileController@postUpdateProfile');
 
 //store routes
 Route::get('/addstore','StoreController@getAddStore');
@@ -38,7 +40,7 @@ Route::get('/allstores','StoreController@getAllStores');
 Route::get('/updatestore/{id}','StoreController@getUpdateStore');
 Route::get('/updatestoreform/{id}','StoreController@getUpdateStoreForm');
 Route::post('/updatestoreform','StoreController@postUpdateStoreForm');
-Route::post('/updatestore','StoreController@postUpdateStore');
+Route::post('/updatestoreimage','StoreController@postUpdateStoreImage');
 Route::get('/deletestore/{id}','StoreController@deleteStore');
 
 //category routes

@@ -24,7 +24,7 @@ class StoreController extends Controller
             //upload file and save path into db
             if($request->hasFile('storelogo')){
                 $storelogo = $request->file('storelogo');
-                $store_logo_name = $formdata->storetitle.".".$storelogo->getClientOriginalExtension();
+                $store_logo_name = ucwords($formdata->storetitle).".".$storelogo->getClientOriginalExtension();
                 $storelogo->move('images/store/',$store_logo_name);
                 $store_logo_path = 'images/store/'.$store_logo_name;
                 $store->logo_url = $store_logo_path;
@@ -92,6 +92,39 @@ class StoreController extends Controller
             $response = [
                 "status" => "false",
                 "error_message" => "Error! Store Is Not Updated Successfully"
+            ];
+            return response()->json($response);
+        }
+    }
+    public function postUpdateStoreImage(Request $request){
+        $formdata = json_decode($request->formdata);
+        $store = Store::find($formdata->storeid);
+        if($request->hasFile('storelogo')){
+            $storelogo = $request->file('storelogo');
+            $store_logo_name = ucwords($store->title).".".$storelogo->getClientOriginalExtension();
+            $storelogo->move('images/store/',$store_logo_name);
+            $store_logo_path = 'images/store/'.$store_logo_name;
+            $store->logo_url = $store_logo_path;
+            $is_save = $store->save();
+            if($is_save){
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Add Store Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "success_message" => "Error! Store Is Not Added Successfully"
+                ];
+                return response()->json($response);
+            }
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "success_message" => "Error! Store Logo Not Found"
             ];
             return response()->json($response);
         }

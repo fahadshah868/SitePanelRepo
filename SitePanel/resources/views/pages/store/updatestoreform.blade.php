@@ -96,6 +96,7 @@
                     url: "/updatestoreform",
                     dataType: "json",
                     data: _jsondata,
+                    dataType: "json",
                     contentType: "application/json",
                     cache: false,
                     success: function(data){

@@ -18,7 +18,7 @@ class UserController extends Controller
             $user = new User;
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
-            $user->type = $request->usertype;
+            $user->role = $request->userrole;
             $user->status = $request->userstatus;
             $is_save = $user->save();
             if($is_save){
@@ -57,7 +57,7 @@ class UserController extends Controller
         $user = User::find($request->userid);
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
-        $user->type = $request->usertype;
+        $user->role = $request->userrole;
         $user->status = $request->userstatus;
         $is_update = $user->save();
         if($is_update){

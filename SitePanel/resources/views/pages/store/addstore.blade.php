@@ -111,6 +111,7 @@
                     processData: false,
                     cache: false,
                     success: function(data){
+                        alert(data);
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
@@ -134,7 +135,6 @@
             var photoinput = $("#storelogo");
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                
                 reader.onload = function (e) {
                     var image = new Image();
                     image.src= e.target.result;
@@ -145,6 +145,9 @@
                         photoinput.data('imageheight', imageheight);
                         if(imagewidth === imageheight){
                             $('#imgpath').attr('src', e.target.result);
+                        }
+                        else{
+                            $('#imgpath').attr('src', '');
                         }
                         validator.element(photoinput);
                     };

@@ -30,8 +30,8 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">User Type</div>
-                        <select class="form-control" id="usertype" name="usertype">
-                            <option value="">Select Type</option>
+                        <select class="form-control" id="userrole" name="userrole">
+                            <option value="">Select Role</option>
                             <option value="employee">Employee</option>
                             <option value="admin">Admin</option>
                         </select>
@@ -75,9 +75,9 @@
             submitHandler: function(form) {
                 var _username = $("#username").val();
                 var _password = $("#password").val();
-                var _usertype = $("#usertype").val();
+                var _userrole = $("#userrole").val();
                 var _userstatus = $("#userstatus").val();
-                var _jsondata = JSON.stringify({username: _username, password: _password, usertype: _usertype, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
+                var _jsondata = JSON.stringify({username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                 $("#adduserform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
@@ -85,6 +85,7 @@
                     url: "/adduser",
                     dataType: "json",
                     data: _jsondata,
+                    dataType: "json",
                     contentType: "application/json",
                     cache: false,
                     success: function(data){
