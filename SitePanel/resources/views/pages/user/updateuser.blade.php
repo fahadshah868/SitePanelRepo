@@ -28,7 +28,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">User Type</div>
                             <select class="form-control" id="userrole" name="userrole">
-                                @if($user->type == "employee")
+                                @if($user->role == "employee")
                                 <option value="Employee" selected>Employee</option>
                                 <option value="Admin">Admin</option>
                                 @else

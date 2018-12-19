@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    //
+    protected $primaryKey = 'id';
+    public $incrementing = false;
 }

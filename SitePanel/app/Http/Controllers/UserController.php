@@ -13,8 +13,8 @@ class UserController extends Controller
         return view('pages.user.adduser');
     }
     public function postAddUser(Request $request){
-        $is_user_exist = User::where('username',$request->username)->exists();
-        if(!$is_user_exist){
+        $is_user_exists = User::where('username',$request->username)->exists();
+        if(!$is_user_exists){
             $user = new User;
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
@@ -54,9 +54,8 @@ class UserController extends Controller
         return view('pages.user.updateuser',$data);
     }
     public function postUpdateUser(Request $request){
-        $is_user_exist = User::where('username',$request->username)->exists();
-        if(!$is_user_exist){
-            $user = User::find($request->userid);
+        $user = User::find($request->userid);
+        if($user->username == $request->username){
             $user->username = $request->username;
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
@@ -79,11 +78,36 @@ class UserController extends Controller
             }
         }
         else{
-            $response = [
-                "status" => "false",
-                "error_message" => ucwords($request->username)."! This User is Already Registered"
-            ];
-            return response()->json($response);
+            $is_user_exists = User::where('username',$request->username)->exists();
+            if(!$is_user_exists){
+                $user->username = $request->username;
+                $user->password = Hash::make($request->password);
+                $user->role = $request->userrole;
+                $user->status = $request->userstatus;
+                $is_update = $user->save();
+                if($is_update){
+                    $response = [
+                        "status" => "true",
+                        "success_message" => "Update User Successfully"
+                    ];
+                    Session::flash('updateuser_successmessage','User Updated Successfully');
+                    return response()->json($response);
+                }
+                else{
+                    $response = [
+                        "status" => "false",
+                        "error_message" => "Error! User Not Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => ucwords($request->username)."! This User is Already Registered"
+                ];
+                return response()->json($response);
+            }
         }
     }
     public function deleteUser($id){

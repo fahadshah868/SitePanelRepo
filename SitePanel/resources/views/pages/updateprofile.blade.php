@@ -13,7 +13,7 @@
         @csrf
         <div class="update-profile-form">
             <div class="updateprofile-fields-heading">User Name:</div>
-            <input type="text" class="form-control" value="{{Auth::User()->username}}" name="username" id="username" placeholder="user name"/>
+            <input type="text" class="form-control" value="{{Auth::User()->username}}" name="username" readonly />
             <div class="updateprofile-fields-heading">New Password:</div>
             <input type="password" class="form-control" name="newpassword" id="newpassword" placeholder="new password"/>
             <div class="updateprofile-fields-heading">Confirm Password:</div>
@@ -28,19 +28,16 @@
             event.preventDefault();
         }).validate({
             rules: {
-                username: "required",
                 newpassword: {required: true, maxlength: 8},
                 confirmpassword: {required: true, equalTo: "#newpassword"}
             },
             messages: {
-                username: "please enter user name",
                 newpassword: {required: "please enter your new password", maxlength: "your password must have 8 characters"},
                 confirmpassword: {required: "please enter confirm password", equalTo: "password is not match"}
             },
             submitHandler: function(form) {
-                var _username = $("#username").val();
                 var _newpassword = $("#newpassword").val();
-                var _jsondata = JSON.stringify({username: _username, newpassword: _newpassword, _token: '{{csrf_token()}}'});
+                var _jsondata = JSON.stringify({newpassword: _newpassword, _token: '{{csrf_token()}}'});
                 $("#updateprofileform").trigger("reset");
                 $(".alert").css("display","none");
                 $.ajax({

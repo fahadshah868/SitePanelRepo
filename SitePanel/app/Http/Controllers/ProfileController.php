@@ -14,7 +14,6 @@ class ProfileController extends Controller
     }
     public function postUpdateProfile(Request $request){
         $user = User::find(Auth::User()->id);
-        $user->username = $request->username;
         $user->password = Hash::make($request->newpassword);
         $is_update = $user->save();
         if($is_update){
