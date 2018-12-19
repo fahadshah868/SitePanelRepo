@@ -7,9 +7,11 @@
     </div>
     <div class="row" id="updatestore">
         <div class="col-xl-3" style="margin: 20px 0;">
-            <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
+            <div class="update-image-container">
+                <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
+                <button id="uploadstorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#exampleModalCenter">Update Image<i class="fa fa-forward"></i></button>
+            </div>            
             {{--popup to update image--}}
-            <button id="uploadstorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#exampleModalCenter">Update Image<i class="fa fa-forward"></i></button>
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">

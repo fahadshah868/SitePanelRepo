@@ -30,7 +30,6 @@ Route::get('/deleteuser/{id}','UserController@deleteUser');
 
 //profile
 Route::get('/updateprofile','ProfileController@getUpdateProfile');
-Route::post('/comparepassword','ProfileController@postComparePassword');
 Route::post('/updateprofile','ProfileController@postUpdateProfile');
 
 //store routes

@@ -10861,6 +10861,16 @@ label.error {
   font-size: 15px;
 }
 
+.update-image-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;

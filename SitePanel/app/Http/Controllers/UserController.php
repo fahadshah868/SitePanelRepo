@@ -13,7 +13,7 @@ class UserController extends Controller
         return view('pages.user.adduser');
     }
     public function postAddUser(Request $request){
-        $is_user_exist = User::where('username',$request->username)->first();
+        $is_user_exist = User::where('username',$request->username)->exists();
         if(!$is_user_exist){
             $user = new User;
             $user->username = $request->username;
@@ -54,24 +54,34 @@ class UserController extends Controller
         return view('pages.user.updateuser',$data);
     }
     public function postUpdateUser(Request $request){
-        $user = User::find($request->userid);
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->role = $request->userrole;
-        $user->status = $request->userstatus;
-        $is_update = $user->save();
-        if($is_update){
-            $response = [
-                "status" => "true",
-                "success_message" => "Update User Successfully"
-            ];
-            Session::flash('updateuser_successmessage','User Updated Successfully');
-            return response()->json($response);
+        $is_user_exist = User::where('username',$request->username)->exists();
+        if(!$is_user_exist){
+            $user = User::find($request->userid);
+            $user->username = $request->username;
+            $user->password = Hash::make($request->password);
+            $user->role = $request->userrole;
+            $user->status = $request->userstatus;
+            $is_update = $user->save();
+            if($is_update){
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Update User Successfully"
+                ];
+                Session::flash('updateuser_successmessage','User Updated Successfully');
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Error! User Not Updated Successfully"
+                ];
+                return response()->json($response);
+            }
         }
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! User Not Updated Successfully"
+                "error_message" => ucwords($request->username)."! This User is Already Registered"
             ];
             return response()->json($response);
         }

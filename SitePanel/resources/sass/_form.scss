@@ -40,6 +40,10 @@ label.error{
     padding: 7px 15px;
     font-size: 15px;
 }
+.update-image-container{
+    display: flex;
+    flex-direction: column;
+}
 @media only screen and (max-width: 750px){
     .form-container .column{
         width: 100%;   
