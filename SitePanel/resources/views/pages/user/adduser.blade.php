@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">User Type</div>
+                        <div class="form-field-heading">User Role</div>
                         <select class="form-control" id="userrole" name="userrole">
                             <option value="">Select Role</option>
                             <option value="employee">Employee</option>
@@ -63,13 +63,13 @@
             rules: {
                 username: "required",
                 password: "required",
-                usertype: "required",
+                userrole: "required",
                 userstatus: "required"
             },
             messages: {
                 username: "please enter user name",
                 password: "please enter user password",
-                usertype: "Please select user type",
+                userrole: "Please select user type",
                 userstatus: "Please select user status"
             },
             submitHandler: function(form) {

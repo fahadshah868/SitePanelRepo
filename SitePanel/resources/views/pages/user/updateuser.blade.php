@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-field">
-                            <div class="form-field-heading">User Type</div>
+                            <div class="form-field-heading">User Role</div>
                             <select class="form-control" id="userrole" name="userrole">
                                 @if($user->role == "employee")
                                 <option value="Employee" selected>Employee</option>
@@ -60,54 +60,55 @@
     </div>
     <script>
         $(document).ready(function(){
-            //validation rules
-            $("#updateuserform").validate({
-                rules: {
-                    username: "required",
-                    password: "required",
-                    usertype: "required",
-                    userstatus: "required"
-                },
-                messages: {
-                    username: "please enter user name",
-                    password: "please enter user password",
-                    usertype: "Please select user type",
-                    userstatus: "Please select user status"
-                }
-            });
             $("#backtousers").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
             });
             $("#updateuserform").submit(function(event){
                 event.preventDefault();
-                var _userid = $("#userid").val();
-                var _username = $("#username").val();
-                var _password = $("#password").val();
-                var _userrole = $("#userrole").val();
-                var _userstatus = $("#userstatus").val();
-                var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
-                $.ajax({
-                    method: 'POST',
-                    url: '/updateuser',
-                    dataType: "json",
-                    data: _jsondata,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        if(data.status == "true"){
-                            $("#panel-body-container").load("/allusers");
+            }).validate({
+                rules: {
+                    username: "required",
+                    password: "required",
+                    userrole: "required",
+                    userstatus: "required"
+                },
+                messages: {
+                    username: "please enter user name",
+                    password: "please enter user password",
+                    userrole: "Please select user type",
+                    userstatus: "Please select user status"
+                },
+                submitHandler: function(form) {
+                    var _userid = $("#userid").val();
+                    var _username = $("#username").val();
+                    var _password = $("#password").val();
+                    var _userrole = $("#userrole").val();
+                    var _userstatus = $("#userstatus").val();
+                    var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
+                    $.ajax({
+                        method: 'POST',
+                        url: '/updateuser',
+                        dataType: "json",
+                        data: _jsondata,
+                        dataType: "json",
+                        contentType: "application/json",
+                        cache: false,
+                        success: function(data){
+                            if(data.status == "true"){
+                                $("#panel-body-container").load("/allusers");
+                            }
+                            else{
+                                $("#alert-danger-message-area").html(data.error_message);
+                                $("#alert-danger").css("display","block");
+                            }
+                        },
+                        error: function(){
+                            alert("Ajax Error! something went wrong...");
                         }
-                        else{
-                            $("#alert-danger-message-area").html(data.error_message);
-                            $("#alert-danger").css("display","block");
-                        }
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                    });
+                    return false;
+                }
             });
         });
     </script>
