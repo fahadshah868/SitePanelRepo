@@ -2,7 +2,7 @@
     <div class="form-main-heading">Update Store</div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
     <form id="updatestoreform" action="/updatestoreform" method="POST" enctype="multipart/form-data">
@@ -101,7 +101,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load('/updatestore/'+_storeid);
+                            $("#panel-body-container").load('/updatestore/'+data.id);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

@@ -79,6 +79,7 @@
                                 url: url,
                                 dataType: "json",
                                 contentType: "application/json",
+                                cache: false,
                                 success: function(data){
                                     if(data.status == "true"){
                                         $("#panel-body-container").load("/allstores");
