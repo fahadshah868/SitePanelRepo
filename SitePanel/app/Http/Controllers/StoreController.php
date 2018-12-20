@@ -101,7 +101,7 @@ class StoreController extends Controller
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "id" => $request->id,
+                    "id" => $request->storeid,
                     "success_message" => "Store Updated Successfully"
                 ];
                 return response()->json($response);
@@ -126,7 +126,7 @@ class StoreController extends Controller
                     Session::flash("updatestore_successmessage","Store Updated Successfully");
                     $response = [
                         "status" => "true",
-                        "id" => $request->id,
+                        "id" => $request->storeid,
                         "success_message" => "Store Updated Successfully"
                     ];
                     return response()->json($response);
@@ -264,23 +264,32 @@ class StoreController extends Controller
         $formdata = json_decode($request->formdata);
         $store = Store::find($formdata->storeid);
         if($request->hasFile('storelogo')){
+            if(File::exists($store->logo_url)){
+                File::delete($store->logo_url);
+            }
+            $domain = parse_url($store->site_url);
+            $domain = str_replace("www.","",$domain['host']);
             $storelogo = $request->file('storelogo');
-            $store_logo_name = ucwords($store->title).".".$storelogo->getClientOriginalExtension();
-            $storelogo->move('images/store/',$store_logo_name);
+            $resized_store_logo = Image::make($storelogo);
+            $resized_store_logo->resize(200, 200);
+            $store_logo_name = $domain."-coupons.".$storelogo->getClientOriginalExtension();
+            $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
             $is_save = $store->save();
             if($is_save){
+                Session::flash("updatestorelogo_successmessage","Update Store Logo Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Add Store Successfully"
+                    "id" => $domain,
+                    "success_message" => "Update Store Logo Successfully"
                 ];
                 return response()->json($response);
             }
             else{
                 $response = [
                     "status" => "false",
-                    "success_message" => "Error! Store Is Not Added Successfully"
+                    "success_message" => "Error! Store Is Not Updated Successfully"
                 ];
                 return response()->json($response);
             }

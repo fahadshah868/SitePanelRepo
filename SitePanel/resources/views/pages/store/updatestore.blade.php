@@ -9,7 +9,7 @@
         <div class="col-xl-3" style="margin: 20px 0;">
             <div class="update-image-container">
                 <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
-                <button id="uploadstorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#exampleModalCenter">Update Image<i class="fa fa-forward"></i></button>
+                <button id="updatestorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#exampleModalCenter">Update Image<i class="fa fa-forward"></i></button>
             </div>            
             {{--popup to update image--}}
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -78,10 +78,16 @@
                 $("#alert-success").slideUp(500);
             });
         }
+        else if('{{Session::has("updatestorelogo_successmessage")}}'){
+            $("#alert-success-message-area").html('{{Session::get("updatestorelogo_successmessage")}}');
+            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                $("#alert-success").slideUp(500);
+            });
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#uploadstorelogobutton").click(function(){
+        $("#updatestorelogobutton").click(function(){
             $("#updatestoreimageform").trigger("reset");
             $('#imgpath').attr("src", "");
         });
@@ -100,8 +106,7 @@
             },
             messages: {
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
-            },
-            submitHandler: function(form) {
+            },submitHandler: function(form) {
                 var _storeid = $("#storeid").val()
                 var _storelogo = $("#storelogo")[0].files[0];
                 var _jsondata = JSON.stringify({storeid: _storeid});
@@ -122,6 +127,8 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
+                            $("#exampleModalCenter").modal('toggle');
+                            $("#panel-body-container").load("/updatestore/"+data.id);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
