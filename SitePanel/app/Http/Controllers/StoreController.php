@@ -21,14 +21,18 @@ class StoreController extends Controller
             if(!$is_storesiteurl_exists){
                 $store = new Store;
                 $domain = parse_url($formdata->storesiteurl);
-                $domain = str_replace("www.","",$domain['host']);
-                $store->id = $domain;
-                $store->title = ucwords($formdata->storetitle);
-                $store->site_url = $formdata->storesiteurl;
+                $domain = strtolower($domain['host']);
+                $domain = str_replace("www.","",$domain);
+                $store->store_url = $domain;
+                $store->title = $formdata->storetitle; //set all characters to lowercase except first letter of all words
+                $store->site_url = strtolower($formdata->storesiteurl);
                 $store->type = $formdata->storetype;
                 $store->status = $formdata->storestatus;
                 //upload file and save path into db
                 if($request->hasFile('storelogo')){
+                    if(!File::exists(public_path("images/store"))){
+                        File::makeDirectory(public_path("images/store", 0777, true, true));
+                    }
                     $storelogo = $request->file('storelogo');
                     $resized_store_logo = Image::make($storelogo);
                     $resized_store_logo->resize(200, 200);
@@ -63,7 +67,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => ucwords($formdata->storesiteurl)."! This Store Site Url is Already Added"
+                    "error_message" => strtolower($formdata->storesiteurl)."! This Store Site Url is Already Added"
                 ];
                 return response()->json($response);
             }
@@ -71,7 +75,7 @@ class StoreController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => ucwords($formdata->storetitle)."! This Store Title is Already Added"
+                "error_message" => $formdata->storetitle."! This Store Title is Already Added"
             ];
             return response()->json($response);
         }
@@ -92,8 +96,8 @@ class StoreController extends Controller
     public function postUpdateStoreForm(Request $request){
         $store = Store::find($request->storeid);
         if($store->title == $request->storetitle && $store->site_url == $request->storesiteurl){
-            $store->title = ucwords($request->storetitle);
-            $store->site_url = $request->storesiteurl;
+            $store->title = $request->storetitle;
+            $store->site_url = strtolower($request->storesiteurl);
             $store->type = $request->storetype;
             $store->status = $request->storestatus;
             $is_store_updated = $store->save();
@@ -117,8 +121,8 @@ class StoreController extends Controller
         else if($store->title != $request->storetitle && $store->site_url == $request->storesiteurl){
             $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
             if(!$is_storetitle_exists){
-                $store->title = ucwords($request->storetitle);
-                $store->site_url = $request->storesiteurl;
+                $store->title = $request->storetitle;
+                $store->site_url = strtolower($request->storesiteurl);
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $is_store_updated = $store->save();
@@ -142,7 +146,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => ucwords($request->storetitle)."! This Store Title Is Already Added"
+                    "error_message" => $request->storetitle."! This Store Title Is Already Added"
                 ];
                 return response()->json($response);
             }
@@ -151,10 +155,11 @@ class StoreController extends Controller
             $is_storesiteurl_exists = Store::where('site_url',$request->storesiteurl)->exists();
             if(!$is_storesiteurl_exists){
                 $domain = parse_url($request->storesiteurl);
-                $domain = str_replace("www.","",$domain['host']);
-                $store->id = $domain;
-                $store->title = ucwords($request->storetitle);
-                $store->site_url = $request->storesiteurl;
+                $domain = strtolower($domain['host']);
+                $domain = str_replace("www.","",$domain);
+                $store->store_url = $domain;
+                $store->title = $request->storetitle;
+                $store->site_url = strtolower($request->storesiteurl);
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 //if file exists on server
@@ -193,7 +198,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => ucwords($request->storesiteurl)."! This Store Site Url Is Already Added"
+                    "error_message" => strtolower($request->storesiteurl)."! This Store Site Url Is Already Added"
                 ];
                 return response()->json($response);
             }
@@ -204,10 +209,11 @@ class StoreController extends Controller
                 $is_storesiteurl_exists = Store::where('site_url',$request->storesiteurl)->exists();
                 if(!$is_storesiteurl_exists){
                     $domain = parse_url($request->storesiteurl);
-                    $domain = str_replace("www.","",$domain['host']);
-                    $store->id = $domain;
-                    $store->title = ucwords($request->storetitle);
-                    $store->site_url = $request->storesiteurl;
+                    $domain = strtolower($domain['host']);
+                    $domain = str_replace("www.","",$domain);
+                    $store->store_url = $domain;
+                    $store->title = $request->storetitle;
+                    $store->site_url = strtolower($request->storesiteurl);
                     $store->type = $request->storetype;
                     $store->status = $request->storestatus;
                     //if file exists on server
@@ -246,7 +252,7 @@ class StoreController extends Controller
                 else{
                     $response = [
                         "status" => "false",
-                        "error_message" => ucwords($request->storesiteurl)."! This Store Site Url is Already Added"
+                        "error_message" => strtolower($request->storesiteurl)."! This Store Site Url is Already Added"
                     ];
                     return response()->json($response);
                 }
@@ -254,7 +260,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => ucwords($request->storetitle)."! This Store Title is Already Added"
+                    "error_message" => $request->storetitle."! This Store Title is Already Added"
                 ];
                 return response()->json($response);
         }
@@ -269,6 +275,7 @@ class StoreController extends Controller
             }
             $domain = parse_url($store->site_url);
             $domain = str_replace("www.","",$domain['host']);
+            $domain = strtolower($domain);
             $storelogo = $request->file('storelogo');
             $resized_store_logo = Image::make($storelogo);
             $resized_store_logo->resize(200, 200);

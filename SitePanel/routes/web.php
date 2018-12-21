@@ -43,8 +43,10 @@ Route::post('/updatestoreimage','StoreController@postUpdateStoreImage');
 Route::get('/deletestore/{id}','StoreController@deleteStore');
 
 //category routes
-Route::get('/addcategory','CategoryController@addCategory');
+Route::get('/addcategory','CategoryController@getaddCategory');
+Route::post('/addcategory','CategoryController@postAddCategory');
 Route::get('/allcategories','CategoryController@getAllCategories');
+Route::get('/deletecategory/{id}','CategoryController@deleteCategory');
 
 //coupon routes
 Route::get('/addcoupon','CouponController@addCoupon');

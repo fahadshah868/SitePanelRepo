@@ -17,7 +17,7 @@
             <thead>
                 <tr>
                     <th>User Name</th>
-                    <th>User Type</th>
+                    <th>User Role</th>
                     <th>User Status</th>
                     <th>Actions</th>
                 </tr>
@@ -32,7 +32,7 @@
                         <td>
                             @if($user->id != Auth::User()->id)
                             <a href="/updateuser/{{$user->id}}" id="updateuser" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                            <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-usertype='{{$user->role}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-userrole='{{$user->role}}' data-userstatus='{{$user->status}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             @endif
                         </td>
                     </tr>
@@ -63,7 +63,8 @@
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>User:</b>  "+$(this).data("username")+"<br>"+
-                    "<b>User Type:</b>  "+$(this).data("usertype"),
+                    "<b>User Role:</b>  "+$(this).data("userrole")+"<br>"+
+                    "<b>User Status:</b>  "+$(this).data("userstatus"),
                     buttons: {
                         confirm: {
                             label: 'Delete',

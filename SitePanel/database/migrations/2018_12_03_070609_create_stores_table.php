@@ -14,9 +14,10 @@ class CreateStoresTable extends Migration
     public function up()
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->string('id')->primarykey();
-            $table->string('title')->unique();
-            $table->string('site_url')->unique();
+            $table->bigIncrements('id')->primarykey();
+            $table->string('title',191)->unique();
+            $table->string('store_url',191)->unique();
+            $table->string('site_url',191)->unique();
             $table->enum('type',['popular','regular']);
             $table->enum('status',['active','deactive']);
             $table->string('logo_url');

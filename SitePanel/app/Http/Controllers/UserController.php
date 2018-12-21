@@ -16,7 +16,7 @@ class UserController extends Controller
         $is_user_exists = User::where('username',$request->username)->exists();
         if(!$is_user_exists){
             $user = new User;
-            $user->username = $request->username;
+            $user->username = strtolower($request->username);
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
@@ -39,7 +39,7 @@ class UserController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => ucwords($request->username)."! This User is Already Registered"
+                "error_message" => strtolower($request->username)."! This User is Already Registered"
             ];
             return response()->json($response);
         }
@@ -56,7 +56,7 @@ class UserController extends Controller
     public function postUpdateUser(Request $request){
         $user = User::find($request->userid);
         if($user->username == $request->username){
-            $user->username = $request->username;
+            $user->username = strtolower($request->username);
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
@@ -80,7 +80,7 @@ class UserController extends Controller
         else{
             $is_user_exists = User::where('username',$request->username)->exists();
             if(!$is_user_exists){
-                $user->username = $request->username;
+                $user->username = strtolower($request->username);
                 $user->password = Hash::make($request->password);
                 $user->role = $request->userrole;
                 $user->status = $request->userstatus;
@@ -104,7 +104,7 @@ class UserController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => ucwords($request->username)."! This User is Already Registered"
+                    "error_message" => strtolower($request->username)."! This User is Already Registered"
                 ];
                 return response()->json($response);
             }

@@ -31,7 +31,7 @@
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storesiteurl='{{$store->site_url}}' data-storetype='{{$store->type}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storesiteurl='{{$store->site_url}}' data-storetype='{{$store->type}}' data-storestatus='{{$store->status}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -44,12 +44,6 @@
 <script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
-        if('{{ Session::has("updateuser_successmessage") }}'){
-            $("#alert-success-message-area").html('{{ Session::get("updateuser_successmessage") }}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
-                $("#alert-success").slideUp(500);
-            });
-        }
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
             if($(this).attr("id") == "updatestore"){
@@ -61,7 +55,8 @@
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
                     "<b>Store Site Url:</b>  "+$(this).data("storesiteurl")+"<br>"+
-                    "<b>Store Type:</b>  "+$(this).data("storetype"),
+                    "<b>Store Type:</b>  "+$(this).data("storetype")+"<br>"+
+                    "<b>Store Status:</b>  "+$(this).data("storestatus")+"<br>",
                     buttons: {
                         confirm: {
                             label: 'Delete',

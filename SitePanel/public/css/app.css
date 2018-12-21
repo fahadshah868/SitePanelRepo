@@ -10871,6 +10871,10 @@ label.error {
           flex-direction: column;
 }
 
+.category-logo-container {
+  display: none;
+}
+
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;
