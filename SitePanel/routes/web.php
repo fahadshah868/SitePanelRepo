@@ -46,6 +46,10 @@ Route::get('/deletestore/{id}','StoreController@deleteStore');
 Route::get('/addcategory','CategoryController@getaddCategory');
 Route::post('/addcategory','CategoryController@postAddCategory');
 Route::get('/allcategories','CategoryController@getAllCategories');
+Route::get('/updatecategory/{id}','CategoryController@getUpdateCategory');
+Route::get('/updatecategoryform/{id}','CategoryController@getUpdateCategoryForm');
+Route::post('/updatecategoryform','CategoryController@postUpdateCategoryForm');
+Route::post('/updatecategoryimage','CategoryController@postUpdateCategoryImage');
 Route::get('/deletecategory/{id}','CategoryController@deleteCategory');
 
 //coupon routes

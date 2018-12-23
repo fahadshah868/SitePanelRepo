@@ -23,13 +23,13 @@
                         <td>{{ $category->type }}</td>
                         <td>{{ $category->status }}</td>
                         <td>
-                            @if($category->logo_url == "")
+                            @if($category->type == "regular")
                             <b>N/A</b>
                             @else
                             <img src="{{ asset($category->logo_url) }}"/></td>
                             @endif
                         <td>
-                            <a href="/updatecategory/{{$category->id}}" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                            <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorytype='{{$category->type}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
@@ -45,7 +45,7 @@
     $(document).ready(function(){
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatestore"){
+            if($(this).attr("id") == "updatecategory"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deletecategory"){

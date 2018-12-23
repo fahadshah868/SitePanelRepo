@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use Intervention\Image\ImageManagerStatic as Image;
 use File;
+use Session;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
     }
     public function postAddCategory(Request $request){
         $formdata = json_decode($request->formdata);
-        $is_category_exists = Category::find($formdata->categorytitle);
+        $is_category_exists = Category::where("title",$formdata->categorytitle)->exists();
         if(!$is_category_exists){
             $category = new Category;
             $category->title = $formdata->categorytitle;
@@ -43,7 +44,7 @@ class CategoryController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "success_message" => "Error! Category Is Not Added Successfully"
+                    "error_message" => "Error! Category Is Not Added Successfully"
                 ];
                 return response()->json($response);
             }
@@ -60,6 +61,185 @@ class CategoryController extends Controller
         $data['allcategories'] = Category::all();
         $data['categoriescount'] = count($data['allcategories']);
         return view('pages.category.allcategories',$data);
+    }
+    public function getUpdateCategory($id){
+        $data['category'] = Category::find($id);
+        return view('pages.category.updatecategory',$data);
+    }
+    public function getUpdateCategoryForm($id){
+        $data['category'] = Category::find($id);
+        return view('pages.category.updatecategoryform',$data);
+    }
+    public function postUpdateCategoryForm(Request $request){
+        $category = Category::find($request->categoryid);
+        if($category->title == $request->categorytitle && $category->type == $request->categorytype){
+            $category->title = $request->categorytitle;
+            $category->type = $request->categorytype;
+            $category->status = $request->categorystatus;
+            $is_category_updated = $category->save();
+            if($is_category_updated){
+                Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                $response = [
+                    "status" => "true",
+                    "id" => $request->categoryid,
+                    "success_message" => "Category Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Category Is Not Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+        }
+        else if($category->title != $request->categorytitle && $category->type == $request->categorytype){
+            $is_category_exists = Category::where("title",$request->categorytitle)->exists();
+            if(!$is_category_exists){
+                $category->title = $request->categorytitle;
+                $category->type = $request->categorytype;
+                $category->status = $request->categorystatus;
+                $is_category_updated = $category->save();
+                if($is_category_updated){
+                    Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                    $response = [
+                        "status" => "true",
+                        "id" => $request->categoryid,
+                        "success_message" => "Category Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+                else{
+                    $response = [
+                        "status" => "false",
+                        "error_message" => "Category Is Not Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->categorytitle."! This Category Title is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+        else if($category->title == $request->categorytitle && $category->type != $request->categorytype){
+            $category->title = $request->categorytitle;
+            $category->type = $request->categorytype;
+            $category->status = $request->categorystatus;
+            if($category->type == "regular"){
+                if(!empty($category->logo_url) && File::exists($category->logo_url)){
+                    File::delete($category->logo_url);
+                }
+            }
+            $is_category_updated = $category->save();
+            if($is_category_updated){
+                Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                $response = [
+                    "status" => "true",
+                    "id" => $request->categoryid,
+                    "success_message" => "Category Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Category Is Not Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+        }
+        else if($category->title == $request->categorytitle && $category->type != $request->categorytype){
+            $is_category_exists = Category::where("title",$request->categorytitle)->exists();
+            if(!$is_category_exists){
+                $category->title = $request->categorytitle;
+                $category->type = $request->categorytype;
+                $category->status = $request->categorystatus;
+                if($category->type == "regular"){
+                    if($category->logo_url != "" && File::exists($category->logo_url)){
+                        File::delete($category->logo_url);
+                    }
+                }
+                $is_category_updated = $category->save();
+                if($is_category_updated){
+                    Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                    $response = [
+                        "status" => "true",
+                        "id" => $request->categoryid,
+                        "success_message" => "Category Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+                else{
+                    $response = [
+                        "status" => "false",
+                        "error_message" => "Category Is Not Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->categorytitle."! This Category Title is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+    }
+    public function postUpdateCategoryImage(Request $request){
+        $categorylogo_message = "";
+        $formdata = json_decode($request->formdata);
+        $category = Category::find($formdata->categoryid);
+        if($request->hasFile("categorylogo")){
+            if(!empty($category->logo_url) && File::exists($category->logo_url)){
+                File::delete($category->logo_url);
+            }
+            if(!File::exists(public_path("images/category"))){
+                File::makeDirectory(public_path("images/category", 0777, true, true));
+            }
+            if(empty($category->logo_url)){
+                $categorylogo_message = "Added";
+            }
+            else{
+                $categorylogo_message = "Updated";
+            }
+            $categorylogo = $request->file('categorylogo');
+            $resized_category_logo = Image::make($categorylogo);
+            $resized_category_logo->resize(200, 200);
+            $category_logo_name = strtolower($category->title).".".$categorylogo->getClientOriginalExtension();
+            $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
+            $category_logo_path = 'images/category/'.$category_logo_name;
+            $category->logo_url = $category_logo_path;
+            $is_categorylogo_updated = $category->save();
+            if($is_categorylogo_updated){
+                Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
+                $response = [
+                    "status" => "true",
+                    "id" => $formdata->categoryid,
+                    "success_message" => "Category Logo ".$categorylogo_message." Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Category Logo Is Not ".$categorylogo_message." Successfully"
+                ];
+                return response()->json($response);
+            }
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! Category Logo Not Found"
+            ];
+            return response()->json($response);
+        }
     }
     public function deleteCategory($id){
         $category = Category::find($id);

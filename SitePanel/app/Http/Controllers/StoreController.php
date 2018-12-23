@@ -51,7 +51,7 @@ class StoreController extends Controller
                     else{
                         $response = [
                             "status" => "false",
-                            "success_message" => "Error! Store Is Not Added Successfully"
+                            "error_message" => "Error! Store Is Not Added Successfully"
                         ];
                         return response()->json($response);
                     }
@@ -59,7 +59,7 @@ class StoreController extends Controller
                 else{
                     $response = [
                         "status" => "false",
-                        "success_message" => "Error! Store Logo Not Found"
+                        "error_message" => "Error! Store Logo Not Found"
                     ];
                     return response()->json($response);
                 }
@@ -174,7 +174,7 @@ class StoreController extends Controller
                         Session::flash("updatestore_successmessage","Store Updated Successfully");
                         $response = [
                             "status" => "true",
-                            "id" => $domain,
+                            "id" => $request->storeid,
                             "success_message" => "Store Updated Successfully"
                         ];
                         return response()->json($response);
@@ -228,7 +228,7 @@ class StoreController extends Controller
                             Session::flash("updatestore_successmessage","Store Updated Successfully");
                             $response = [
                                 "status" => "true",
-                                "id" => $domain,
+                                "id" => $request->storeid,
                                 "success_message" => "Store Updated Successfully"
                             ];
                             return response()->json($response);
@@ -288,7 +288,7 @@ class StoreController extends Controller
                 Session::flash("updatestorelogo_successmessage","Update Store Logo Successfully");
                 $response = [
                     "status" => "true",
-                    "id" => $domain,
+                    "id" => $formdata->storeid,
                     "success_message" => "Update Store Logo Successfully"
                 ];
                 return response()->json($response);
@@ -296,7 +296,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "success_message" => "Error! Store Is Not Updated Successfully"
+                    "error_message" => "Error! Store Is Not Updated Successfully"
                 ];
                 return response()->json($response);
             }
@@ -304,7 +304,7 @@ class StoreController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "success_message" => "Error! Store Logo Not Found"
+                "error_message" => "Error! Store Logo Not Found"
             ];
             return response()->json($response);
         }
