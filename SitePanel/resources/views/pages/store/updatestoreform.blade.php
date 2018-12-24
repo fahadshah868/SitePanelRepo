@@ -29,11 +29,11 @@
                         <div class="form-field-heading">Store Type</div>
                         <select class="form-control" id="storetype" name="storetype">
                             @if($store->type == "regular")
-                                <option value="Regular" selected>Regular</option>
-                                <option value="Popular">Popular</option>
+                                <option value="regular" selected>Regular</option>
+                                <option value="popular">Popular</option>
                             @else
-                                <option value="Regular">Regular</option>
-                                <option value="Popular" selected>Popular</option>
+                                <option value="regular">Regular</option>
+                                <option value="popular" selected>Popular</option>
                             @endif
                         </select>
                     </div>
@@ -43,11 +43,11 @@
                         <div class="form-field-heading">Store Status</div>
                         <select class="form-control" id="storestatus" name="storestatus">
                             @if($store->status == "active")
-                                <option value="Active" selected>Active</option>
-                                <option value="Deactive">Deactive</option>
+                                <option value="active" selected>Active</option>
+                                <option value="deactive">Deactive</option>
                             @else
-                                <option value="Active">Active</option>
-                                <option value="Deactive" selected>Deactive</option>
+                                <option value="active">Active</option>
+                                <option value="deactive" selected>Deactive</option>
                             @endif
                         </select>
                     </div>

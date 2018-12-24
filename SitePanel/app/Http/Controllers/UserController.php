@@ -55,7 +55,8 @@ class UserController extends Controller
     }
     public function postUpdateUser(Request $request){
         $user = User::find($request->userid);
-        if($user->username == $request->username){
+        //if username == username
+        if(strcasecmp($user->username , $request->username) == 0){
             $user->username = strtolower($request->username);
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;

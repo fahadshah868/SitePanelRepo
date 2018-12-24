@@ -23,11 +23,11 @@
                             <div class="form-field-heading">Category Type</div>
                             <select class="form-control" id="categorytype" name="categorytype">
                                 @if($category->type == "regular")
-                                    <option value="Regular" selected>Regular</option>
-                                    <option value="Popular">Popular</option>
+                                    <option value="regular" selected>Regular</option>
+                                    <option value="popular">Popular</option>
                                 @else
-                                    <option value="Regular">Regular</option>
-                                    <option value="Popular" selected>Popular</option>
+                                    <option value="regular">Regular</option>
+                                    <option value="popular" selected>Popular</option>
                                 @endif
                             </select>
                         </div>
@@ -37,11 +37,11 @@
                             <div class="form-field-heading">Category Status</div>
                             <select class="form-control" id="categorystatus" name="categorystatus">
                                 @if($category->status == "active")
-                                    <option value="Active" selected>Active</option>
-                                    <option value="Deactive">Deactive</option>
+                                    <option value="active" selected>Active</option>
+                                    <option value="deactive">Deactive</option>
                                 @else
-                                    <option value="Active">Active</option>
-                                    <option value="Deactive" selected>Deactive</option>
+                                    <option value="active">Active</option>
+                                    <option value="deactive" selected>Deactive</option>
                                 @endif
                             </select>
                         </div>
@@ -90,6 +90,7 @@
                         contentType: "application/json",
                         cache: false,
                         success: function(data){
+                            console.log(data);
                             if(data.status == "true"){
                                 $("#panel-body-container").load('/updatecategory/'+data.id);
                             }

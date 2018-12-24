@@ -95,7 +95,8 @@ class StoreController extends Controller
     }
     public function postUpdateStoreForm(Request $request){
         $store = Store::find($request->storeid);
-        if($store->title == $request->storetitle && $store->site_url == $request->storesiteurl){
+        //if title == title && siteurl == siteurl
+        if(strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->site_url , $request->storesiteurl) == 0){
             $store->title = $request->storetitle;
             $store->site_url = strtolower($request->storesiteurl);
             $store->type = $request->storetype;
@@ -118,7 +119,8 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        else if($store->title != $request->storetitle && $store->site_url == $request->storesiteurl){
+        //if title != title && siteurl == siteurl
+        else if(strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->site_url , $request->storesiteurl) == 0){
             $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
             if(!$is_storetitle_exists){
                 $store->title = $request->storetitle;
@@ -151,7 +153,8 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        else if($store->title == $request->storetitle && $store->site_url != $request->storesiteurl){
+        //if title == title && siteurl != siteurl
+        else if(strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->site_url , $request->storesiteurl) != 0){
             $is_storesiteurl_exists = Store::where('site_url',$request->storesiteurl)->exists();
             if(!$is_storesiteurl_exists){
                 $domain = parse_url($request->storesiteurl);
@@ -166,7 +169,7 @@ class StoreController extends Controller
                 if(File::exists($store->logo_url)){
                     $extension = File::extension($store->logo_url);
                     $store_logo_name = $domain."-coupons.".$extension;
-                    File::move($store->logo_url,'images/store/'.$store_logo_name);
+                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                     $is_store_updated = $store->save();
@@ -203,7 +206,8 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        else if($store->title != $request->storetitle && $store->site_url != $request->storesiteurl){
+        //if title != title && siteurl != siteurl
+        else if(strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->site_url , $request->storesiteurl) != 0){
             $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
             if(!$is_storetitle_exists){
                 $is_storesiteurl_exists = Store::where('site_url',$request->storesiteurl)->exists();
@@ -220,7 +224,7 @@ class StoreController extends Controller
                     if(File::exists($store->logo_url)){
                         $extension = File::extension($store->logo_url);
                         $store_logo_name = $domain."-coupons.".$extension;
-                        File::move($store->logo_url,'images/store/'.$store_logo_name);
+                        File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
                         $store_logo_path = 'images/store/'.$store_logo_name;
                         $store->logo_url = $store_logo_path;
                         $is_store_updated = $store->save();
@@ -263,7 +267,7 @@ class StoreController extends Controller
                     "error_message" => $request->storetitle."! This Store Title is Already Added"
                 ];
                 return response()->json($response);
-        }
+            }
         }
     }
     public function postUpdateStoreImage(Request $request){

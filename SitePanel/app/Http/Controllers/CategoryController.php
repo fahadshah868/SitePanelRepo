@@ -72,7 +72,8 @@ class CategoryController extends Controller
     }
     public function postUpdateCategoryForm(Request $request){
         $category = Category::find($request->categoryid);
-        if($category->title == $request->categorytitle && $category->type == $request->categorytype){
+        //if(title == title && type == type)
+        if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->type , $request->categorytype) == 0){
             $category->title = $request->categorytitle;
             $category->type = $request->categorytype;
             $category->status = $request->categorystatus;
@@ -94,12 +95,21 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
         }
-        else if($category->title != $request->categorytitle && $category->type == $request->categorytype){
+        //if(title != title && type == type)
+        else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) == 0){
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
                 $category->type = $request->categorytype;
                 $category->status = $request->categorystatus;
+                //if file exists on server
+                if(File::exists($category->logo_url)){
+                    $extension = File::extension($category->logo_url);
+                    $category_logo_name = strtolower($request->categorytitle).".".$extension;
+                    File::move(public_path($category->logo_url),public_path('images/category/'.$category_logo_name));
+                    $category_logo_path = 'images/category/'.$category_logo_name;
+                    $category->logo_url = $category_logo_path;
+                }
                 $is_category_updated = $category->save();
                 if($is_category_updated){
                     Session::flash("updatecategory_successmessage","Category Updated Successfully");
@@ -126,13 +136,15 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
         }
-        else if($category->title == $request->categorytitle && $category->type != $request->categorytype){
+        //if(title == title && type != type)
+        else if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->type , $request->categorytype) != 0){
             $category->title = $request->categorytitle;
             $category->type = $request->categorytype;
             $category->status = $request->categorystatus;
-            if($category->type == "regular"){
+            if(strcasecmp($request->categorytype , "regular") == 0){
                 if(!empty($category->logo_url) && File::exists($category->logo_url)){
                     File::delete($category->logo_url);
+                    $category->logo_url = null;
                 }
             }
             $is_category_updated = $category->save();
@@ -153,15 +165,25 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
         }
-        else if($category->title == $request->categorytitle && $category->type != $request->categorytype){
+        //if(title != title && type != type)
+        else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) != 0){
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
                 $category->type = $request->categorytype;
                 $category->status = $request->categorystatus;
-                if($category->type == "regular"){
-                    if($category->logo_url != "" && File::exists($category->logo_url)){
+                //if file exists on server
+                if(File::exists($category->logo_url)){
+                    $extension = File::extension($category->logo_url);
+                    $category_logo_name = strtolower($request->categorytitle).".".$extension;
+                    File::move(public_path($category->logo_url),public_path('images/category/'.$category_logo_name));
+                    $category_logo_path = 'images/category/'.$category_logo_name;
+                    $category->logo_url = $category_logo_path;
+                }
+                if(strcasecmp($category->type , "regular") == 0){
+                    if(!empty($category->logo_url) && File::exists($category->logo_url)){
                         File::delete($category->logo_url);
+                        $category->logo_url = null;
                     }
                 }
                 $is_category_updated = $category->save();

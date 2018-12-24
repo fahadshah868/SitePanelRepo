@@ -29,11 +29,11 @@
                             <div class="form-field-heading">User Role</div>
                             <select class="form-control" id="userrole" name="userrole">
                                 @if($user->role == "employee")
-                                <option value="Employee" selected>Employee</option>
-                                <option value="Admin">Admin</option>
+                                <option value="employee" selected>Employee</option>
+                                <option value="admin">Admin</option>
                                 @else
-                                <option value="Employee">Employee</option>
-                                <option value="Admin" selected>Admin</option>
+                                <option value="employee">Employee</option>
+                                <option value="admin" selected>Admin</option>
                                 @endif
                             </select>
                         </div>
@@ -43,11 +43,11 @@
                             <div class="form-field-heading">User Status</div>
                             <select class="form-control" id="userstatus" name="userstatus">
                                 @if($user->status == "active")
-                                <option value="Active" selected>Active</option>
-                                <option value="Deactive">Deactive</option>
+                                <option value="active" selected>Active</option>
+                                <option value="deactive">Deactive</option>
                                 @else
-                                <option value="Active">Active</option>
-                                <option value="Deactive" selected>Deactive</option>
+                                <option value="active">Active</option>
+                                <option value="deactive" selected>Deactive</option>
                                 @endif
                             </select>
                         </div>

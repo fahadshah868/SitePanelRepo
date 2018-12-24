@@ -25,8 +25,8 @@
                         <div class="form-field-heading">Category Type</div>
                         <select class="form-control" name="categorytype" id="categorytype">
                             <option value="">Select Type</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Popular">Popular</option>
+                            <option value="regular">Regular</option>
+                            <option value="popular">Popular</option>
                         </select>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                         <div class="form-field-heading">Category Status</div>
                         <select class="form-control" name="categorystatus" id="categorystatus">
                             <option value="">Select Status</option>
-                            <option value="Active">Active</option>
-                            <option value="Deactive">Deactive</option>
+                            <option value="active">Active</option>
+                            <option value="deactive">Deactive</option>
                         </select>
                     </div>
                 </div>
