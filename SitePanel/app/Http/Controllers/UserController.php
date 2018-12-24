@@ -20,8 +20,8 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
-            $is_save = $user->save();
-            if($is_save){
+            $is_user_save = $user->save();
+            if($is_user_save){
                 $response = [
                     "status" => "true",
                     "success_message" => "Add User Successfully"
@@ -113,8 +113,8 @@ class UserController extends Controller
     }
     public function deleteUser($id){
         $user = User::find($id);
-        $is_delete = $user->delete();
-        if($is_delete){
+        $is_user_deleted = $user->delete();
+        if($is_user_deleted){
             $response = [
                 "status" => "true",
                 "success_message" => "User Deleted Successfully"
@@ -124,7 +124,7 @@ class UserController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! User Not Deleted Successfully"
+                "error_message" => "Error! User Is Not Deleted Successfully"
             ];
             return response()->json($response);
         }
