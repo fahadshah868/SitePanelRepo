@@ -52,6 +52,10 @@ Route::post('/updatecategoryform','CategoryController@postUpdateCategoryForm');
 Route::post('/updatecategoryimage','CategoryController@postUpdateCategoryImage');
 Route::get('/deletecategory/{id}','CategoryController@deleteCategory');
 
+//offertype routes
+Route::get('/addoffertype','OfferTypeController@getAddOfferType');
+Route::post('/addoffertype','OfferTypeController@postAddOfferType');
+
 //coupon routes
 Route::get('/addcoupon','CouponController@addCoupon');
 Route::get('/allcoupons','CouponController@getAllCoupons');

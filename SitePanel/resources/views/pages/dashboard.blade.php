@@ -73,6 +73,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#offertypesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-list-alt"></i>
+                            Offer Type
+                        </a>
+                        <ul class="collapse list-unstyled" id="offertypesuboptions">
+                            <li>
+                                <a href="/addoffertype" class="sidebar-suboption">Add OfferType</a>
+                            </li>
+                            <li>
+                                <a href="/alloffertypes" class="sidebar-suboption">View OfferTypes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#couponsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-code"></i>
                             Coupon
