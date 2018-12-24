@@ -10934,11 +10934,27 @@ td img {
           justify-content: space-between;
 }
 
-.viewitems-header-searchbar {
-  width: 350px;
+.viewitems-header-searchbar-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
-.viewitems-header-searchbar #searchbar {
+.viewitems-header-searchbar-filter {
+  width: 230px;
+  margin-right: 10px;
+}
+
+.viewitems-header-searchbar {
+  width: 350px;
+  display: none;
+}
+
+.viewitems-header-searchbar-container #searchbar {
   background-image: url("/images/searchicon.png");
   background-repeat: no-repeat;
   background-position: 7px 7px;

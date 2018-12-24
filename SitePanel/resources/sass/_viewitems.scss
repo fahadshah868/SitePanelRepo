@@ -34,10 +34,19 @@ td img{
     flex-direction: row;
     justify-content: space-between;
 }
+.viewitems-header-searchbar-container{
+    display: flex;
+    flex-direction: row;
+}
+.viewitems-header-searchbar-filter{
+    width: 230px;
+    margin-right: 10px;
+}
 .viewitems-header-searchbar{
     width: 350px;
+    display: none;
 }
-.viewitems-header-searchbar #searchbar{
+.viewitems-header-searchbar-container #searchbar{
     background-image: url('/images/searchicon.png');
     background-repeat: no-repeat;
     background-position: 7px 7px;

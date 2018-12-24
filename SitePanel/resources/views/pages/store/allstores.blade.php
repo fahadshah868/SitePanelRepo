@@ -1,7 +1,20 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading">All Stores<span class="viewitems-main-heading-count">({{ $storescount }})</span></div>
-        <div class="viewitems-header-searchbar"><input type="text" placeholder="Search Store" id="searchbar" class="form-control"/></div>
+        <div class="viewitems-header-searchbar-container">
+            <div class="viewitems-header-searchbar-filter">
+                <select class="form-control" id="columnsfilter">
+                    <option value="" selected>Select Column For Search</option>
+                    <option value="0">Store Title</option>
+                    <option value="1">Store Site Url</option>
+                    <option value="2">Store Type</option>
+                    <option value="3">Store Status</option>
+                </select>
+            </div>
+            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
+                <input type="text" id="searchbar" class="form-control"/>
+            </div>
+        </div>
     </div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
@@ -41,9 +54,60 @@
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
-<script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
+        //select column for search
+        $("#columnsfilter").change(function(){
+            $("#tableview td, #tableview th").css("background-color","transparent");
+            var column = $("#columnsfilter").val();
+            $("#searchbar").val("");
+            filterTable();
+            if(column != ""){
+                if(column == 0){
+                    $("#searchbar").attr('placeholder','Search Store Title');
+                }
+                else if(column == 1){
+                    $("#searchbar").attr('placeholder','Search Store Site URL');
+                }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search Store Type');
+                }
+                else if(column == 3){
+                    $("#searchbar").attr('placeholder','Search Store Status');
+                }
+                $("#viewitems-header-searchbar").css("display","block");
+                var th = $("#tableview th");
+                var td = $("#tableview td");
+                th[column].style.backgroundColor = "yellow";
+                td[column].style.backgroundColor = "yellow";
+            }
+            else{
+                $("#viewitems-header-searchbar").css("display","none");
+            }
+        });
+        //client side search filter
+        $("#searchbar").keyup(function(){
+            filterTable();
+        });
+        //search/filter table
+        function filterTable(){
+            var filter, table, tr, td, i, column;
+            column = $("#columnsfilter").val();
+            filter = $("#searchbar").val().toUpperCase();
+            table = $("#tableview");
+            tr = table.find("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[column];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
             if($(this).attr("id") == "updatestore"){

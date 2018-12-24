@@ -1,7 +1,19 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }})</span></div>
-        <div class="viewitems-header-searchbar"><input type="text" placeholder="Search Category" id="searchbar" class="form-control"/></div>
+        <div class="viewitems-header-searchbar-container">
+            <div class="viewitems-header-searchbar-filter">
+                <select class="form-control" id="columnsfilter">
+                    <option value="" selected>Select Column For Search</option>
+                    <option value="0">Category Title</option>
+                    <option value="1">Category Type</option>
+                    <option value="2">Category Status</option>
+                </select>
+            </div>
+            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
+                <input type="text" id="searchbar" class="form-control"/>
+            </div>
+        </div>
     </div>
     <hr>
     <div class="viewitems-tableview">
@@ -40,9 +52,57 @@
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
+        //select column for search
+        $("#columnsfilter").change(function(){
+            $("#tableview td, #tableview th").css("background-color","transparent");
+            var column = $("#columnsfilter").val();
+            $("#searchbar").val("");
+            filterTable();
+            if(column != ""){
+                if(column == 0){
+                    $("#searchbar").attr('placeholder','Search Category Title');
+                }
+                else if(column == 1){
+                    $("#searchbar").attr('placeholder','Search Category Type');
+                }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search Category Status');
+                }
+                $("#viewitems-header-searchbar").css("display","block");
+                var th = $("#tableview th");
+                var td = $("#tableview td");
+                th[column].style.backgroundColor = "yellow";
+                td[column].style.backgroundColor = "yellow";
+            }
+            else{
+                $("#viewitems-header-searchbar").css("display","none");
+            }
+        });
+        //client side search filter
+        $("#searchbar").keyup(function(){
+            filterTable();
+        });
+        //search/filter table
+        function filterTable(){
+            var filter, table, tr, td, i, column;
+            column = $("#columnsfilter").val();
+            filter = $("#searchbar").val().toUpperCase();
+            table = $("#tableview");
+            tr = table.find("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[column];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
             if($(this).attr("id") == "updatecategory"){

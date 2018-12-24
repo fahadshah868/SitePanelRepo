@@ -1,7 +1,19 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $userscount }})</span></div>
-        <div class="viewitems-header-searchbar"><input type="text" placeholder="Search User" id="searchbar" class="form-control"/></div>
+        <div class="viewitems-header-searchbar-container">
+            <div class="viewitems-header-searchbar-filter">
+                <select class="form-control" id="columnsfilter">
+                    <option value="" selected>Select Column For Search</option>
+                    <option value="0">User Name</option>
+                    <option value="1">User Role</option>
+                    <option value="2">User Status</option>
+                </select>
+            </div>
+            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
+                <input type="text" id="searchbar" class="form-control"/>
+            </div>
+        </div>
     </div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
@@ -43,7 +55,6 @@
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
-<script src="{{asset('js/clientsidesearchbarfilter.js')}}"></script>
 <script>
     $(document).ready(function(){
         if('{{ Session::has("updateuser_successmessage") }}'){
@@ -52,9 +63,57 @@
                 $("#alert-success").slideUp(500);
             });
         }
+        //select column for search
+        $("#columnsfilter").change(function(){
+            $("#tableview td, #tableview th").css("background-color","transparent");
+            var column = $("#columnsfilter").val();
+            $("#searchbar").val("");
+            filterTable();
+            if(column != ""){
+                if(column == 0){
+                    $("#searchbar").attr('placeholder','Search User Name');
+                }
+                else if(column == 1){
+                    $("#searchbar").attr('placeholder','Search User Role');
+                }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search User Status');
+                }
+                $("#viewitems-header-searchbar").css("display","block");
+                var th = $("#tableview th");
+                var td = $("#tableview td");
+                th[column].style.backgroundColor = "yellow";
+                td[column].style.backgroundColor = "yellow";
+            }
+            else{
+                $("#viewitems-header-searchbar").css("display","none");
+            }
+        });
+        //client side search filter
+        $("#searchbar").keyup(function(){
+            filterTable();
+        });
+        //search/filter table
+        function filterTable(){
+            var filter, table, tr, td, i, column;
+            column = $("#columnsfilter").val();
+            filter = $("#searchbar").val().toUpperCase();
+            table = $("#tableview");
+            tr = table.find("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[column];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        } 
+        //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-
             if($(this).attr("id") == "updateuser"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
