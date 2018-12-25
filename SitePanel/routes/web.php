@@ -60,9 +60,9 @@ Route::get('/updateoffertype/{id}','OfferTypeController@getUpdateOfferType');
 Route::post('/updateoffertype','OfferTypeController@postUpdateOfferType');
 Route::get('/deleteoffertype/{id}','OfferTypeController@deleteOfferType');
 
-//coupon routes
-Route::get('/addcoupon','CouponController@addCoupon');
-Route::get('/allcoupons','CouponController@getAllCoupons');
+//offer routes
+Route::get('/addoffer','OfferController@getAddOffer');
+Route::get('/alloffers','OfferController@getAllOffers');
 
 //product routes
 Route::get('/addproduct','ProductController@addProduct');

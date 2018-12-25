@@ -13,7 +13,7 @@
                         <div class="form-field">
                             <input type="text" id="categoryid" value="{{$category->id}}" hidden>
                             <div class="form-field-heading">Category Title</div>
-                        <input type="text" class="form-control" value="{{ $category->title }}" id="categorytitle" name="categorytitle" placeholder="Kohls"/>
+                        <input type="text" class="form-control" value="{{ $category->title }}" id="categorytitle" name="categorytitle" placeholder="Baby"/>
                         </div>
                     </div>
                 </div>

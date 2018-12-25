@@ -30,6 +30,7 @@
                     <strong>SP</strong>
                 </div>
                 <ul class="list-unstyled components">
+                    @if(Auth::User()->role == "admin")
                     <li>
                         <a href="#adminsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-user"></i>
@@ -44,6 +45,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                     <li>
                         <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-store-alt"></i>
@@ -87,16 +89,16 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#couponsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#offersuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-code"></i>
-                            Coupon
+                            Offer
                         </a>
-                        <ul class="collapse list-unstyled" id="couponsuboptions">
+                        <ul class="collapse list-unstyled" id="offersuboptions">
                             <li>
-                                <a href="/addcoupon" class="sidebar-suboption">Add Coupon</a>
+                                <a href="/addoffer" class="sidebar-suboption">Add Offer</a>
                             </li>
                             <li>
-                                <a href="/allcoupons" class="sidebar-suboption">View Coupons</a>
+                                <a href="/alloffers" class="sidebar-suboption">View Offers</a>
                             </li>
                         </ul>
                     </li>
@@ -150,7 +152,13 @@
             //by default active first link and sub-link
             $("#sidebar ul a:first").addClass("activelink");
             $("#sidebar ul ul a:first").addClass("activesublink");
-            $("#panel-body-container").load("/adduser");
+            
+            if('{{Auth::User()->role}}' == "admin"){
+                $("#panel-body-container").load("/adduser");
+            }
+            else{
+                $("#panel-body-container").load("/addstore");
+            }
 
             //when resize browser window
             $('#sidebarCollapse').on('click', function () {
