@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\OfferType;
+use Session;
 
 class OfferTypeController extends Controller
 {
@@ -56,6 +57,7 @@ class OfferTypeController extends Controller
             $offertype->status = $request->offertypestatus;
             $is_offertype_updated = $offertype->save();
             if($is_offertype_updated){
+                Session::flash("updateoffertype_successmessage","Update Offer Type Successfully");
                 $response = [
                     "status" => "true",
                     "success_message" => "Update Offer Type Successfully"
@@ -77,6 +79,7 @@ class OfferTypeController extends Controller
                 $offertype->status = $request->offertypestatus;
                 $is_offertype_updated = $offertype->save();
                 if($is_offertype_updated){
+                    Session::flash("updateoffertype_successmessage","Update Offer Type Successfully");
                     $response = [
                         "status" => "true",
                         "success_message" => "Update Offer Type Successfully"
@@ -99,8 +102,6 @@ class OfferTypeController extends Controller
                 return response()->json($response);
             }
         }
-
-
     }
     public function deleteOfferType($id){
         $offertype = OfferType::find($id);

@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <input type="text" value="{{ $offertype->id }}" name="offertypeid" hidden>
+                        <input type="text" value="{{ $offertype->id }}" id="offertypeid" hidden>
                         <div class="form-field-heading">Offer Type Title</div>
                         <input type="text" class="form-control" id="offertypetitle" value="{{ $offertype->title }}" name="offertypetitle" placeholder="code, sale, instore etc"/>
                     </div>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <a href="/alloffertypes" id="backtooffertypes" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer Types</a>
-            <input type="submit" value="Add Offer Type" class="btn btn-primary form-button"/>
+            <input type="submit" value="Update Offer Type" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
@@ -49,7 +49,7 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#addOffertypeform").submit(function(event){
+        $("#updateOffertypeform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
@@ -61,11 +61,11 @@
                 offertypestatus: "please enter offer type status"
             },
             submitHandler: function(form) {
-                var _offertypeid = ("#offertypeid").val();
+                var _offertypeid = $("#offertypeid").val();
                 var _offertypetitle = $("#offertypetitle").val();
                 var _offertypestatus = $("#offertypestatus").val();
-                var _jsondata = JSON.stringify({offertypeid : _offertypeid, offertypetitle: _offertypetitle, offertypestatus: _offertypestatus, _token: '{{ csrf_token() }}'});
-                $("#addOffertypeform").trigger("reset");
+                var _jsondata = JSON.stringify({offertypeid: _offertypeid, offertypetitle: _offertypetitle, offertypestatus: _offertypestatus, _token: '{{ csrf_token() }}'});
+                $("#updateOffertypeform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
                     method: 'POST',
@@ -77,10 +77,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
-                                $("#alert-success").slideUp(500);
-                            });
+                            $("#panel-body-container").load("/alloffertypes");
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

@@ -59,14 +59,15 @@
     $(document).ready(function(){
         if('{{ Session::has("updateuser_successmessage") }}'){
             $("#alert-success-message-area").html('{{ Session::get("updateuser_successmessage") }}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
         //select column for search
         $("#columnsfilter").change(function(){
-            $("#tableview td, #tableview th").css("background-color","transparent");
             var column = $("#columnsfilter").val();
+            var index = parseInt(column)+1;
+            $("#tableview td, #tableview th").removeClass("highlighted-column");
             $("#searchbar").val("");
             filterTable();
             if(column != ""){
@@ -80,10 +81,7 @@
                     $("#searchbar").attr('placeholder','Search User Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
-                var th = $("#tableview th");
-                var td = $("#tableview td");
-                th[column].style.backgroundColor = "yellow";
-                td[column].style.backgroundColor = "yellow";
+                $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlighted-column");
             }
             else{
                 $("#viewitems-header-searchbar").css("display","none");

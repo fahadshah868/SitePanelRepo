@@ -10970,6 +10970,10 @@ td img {
   margin-right: 5px;
 }
 
+.highlighted-column {
+  background-color: yellow;
+}
+
 .login-top-navbar {
   background-color: #044D6E;
   padding: 30px 0;

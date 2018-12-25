@@ -91,7 +91,7 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }

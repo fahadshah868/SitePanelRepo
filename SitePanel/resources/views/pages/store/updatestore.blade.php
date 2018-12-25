@@ -74,13 +74,13 @@
     $(document).ready(function(){
         if('{{Session::has("updatestore_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatestore_successmessage")}}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
         else if('{{Session::has("updatestorelogo_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatestorelogo_successmessage")}}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
@@ -129,7 +129,7 @@
                             $("#updatestorelogomodal").modal('toggle');
                             $("#panel-body-container").load("/updatestore/"+data.id);
                             $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }

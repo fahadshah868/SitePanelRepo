@@ -58,8 +58,9 @@
     $(document).ready(function(){
         //select column for search
         $("#columnsfilter").change(function(){
-            $("#tableview td, #tableview th").css("background-color","transparent");
             var column = $("#columnsfilter").val();
+            var index = parseInt(column)+1;
+            $("#tableview td, #tableview th").removeClass("highlighted-column");
             $("#searchbar").val("");
             filterTable();
             if(column != ""){
@@ -76,10 +77,7 @@
                     $("#searchbar").attr('placeholder','Search Store Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
-                var th = $("#tableview th");
-                var td = $("#tableview td");
-                th[column].style.backgroundColor = "yellow";
-                td[column].style.backgroundColor = "yellow";
+                $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlighted-column");
             }
             else{
                 $("#viewitems-header-searchbar").css("display","none");

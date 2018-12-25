@@ -82,13 +82,13 @@
     $(document).ready(function(){
         if('{{Session::has("updatecategory_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatecategory_successmessage")}}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
         else if('{{Session::has("updatecategorylogo_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatecategorylogo_successmessage")}}');
-            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
@@ -137,7 +137,7 @@
                             $("#updatecategorylogomodal").modal('toggle');
                             $("#panel-body-container").load("/updatecategory/"+data.id);
                             $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(3000, 500).slideUp(500, function(){
+                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }
