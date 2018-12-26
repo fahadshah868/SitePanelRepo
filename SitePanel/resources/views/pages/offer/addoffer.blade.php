@@ -1,5 +1,5 @@
 <div class="form-main-container">
-    <div class="form-main-heading">Add Coupon</div>
+    <div class="form-main-heading">Add Offer</div>
     <hr>
     <form id="addcouponform">
         <div class="form-container">
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Coupon Code</div>
+                        <div class="form-field-heading">Code</div>
                         <input type="text" class="form-control" name="offercode" placeholder="code">
                     </div>
                 </div>
@@ -33,8 +33,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Description</div>
-                        <textarea class="form-control" name="offerdescription" placeholder="description"></textarea>
+                        <div class="form-field-heading">Details</div>
+                        <textarea class="form-control" name="offerdetails" placeholder="description"></textarea>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Add Coupon" class="btn btn-primary form-button"/>
+            <input type="submit" value="Add Offer" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
@@ -109,7 +109,7 @@
                 offertitle: "required",
                 offertype: "required",
                 offercode: "required",
-                offerdescription: "required",
+                offerdetails: "required",
                 selectstore: "required",
                 selectcategory: "required",
                 startdate: "required",
@@ -121,7 +121,7 @@
                 offertitle: "please enter offer title",
                 offertype: "please select offer type",
                 offercode: "please enter offer code",
-                offerdescription: "please enter offer description",
+                offerdetails: "please enter offer description",
                 selectstore: "please select store",
                 selectcategory: "please select category",
                 startdate: "please select starting date",
