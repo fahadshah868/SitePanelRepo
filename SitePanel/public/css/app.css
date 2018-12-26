@@ -10875,6 +10875,17 @@ label.error {
   display: none;
 }
 
+.form-field-checkbox {
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.form-field-checkbox input[type="checkbox"] {
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+}
+
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;
