@@ -44,7 +44,7 @@ class OfferController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "success_message" => "Offer Is Not Added Successfully"
+                "error_message" => "Offer Is Not Added Successfully"
             ];
             return response()->json($response);
         }
@@ -53,5 +53,23 @@ class OfferController extends Controller
         $data['alloffers'] = Offer::all();
         $data['offerscount'] = count($data['alloffers']);
         return view('pages.offer.alloffers',$data);
+    }
+    public function deleteOffer($id){
+        $offer = Offer::find($id);
+        $is_offer_deleted = $offer->delete();
+        if($is_offer_deleted){
+            $response = [
+                "status" => "true",
+                "success_message" => "Offer Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Offer Is Not Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
     }
 }

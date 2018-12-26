@@ -6,7 +6,7 @@
                 <select class="form-control" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Offer Title</option>
-                    <option value="1">Offer Type</option>
+                    <option value="1">Offer Type By Store</option>
                     <option value="2">Offer Code</option>
                     <option value="3">Offer Details</option>
                     <option value="4">Store</option>
@@ -14,7 +14,7 @@
                     <option value="6">Offer Starting Date</option>
                     <option value="7">Offer Expiry Date</option>
                     <option value="8">Offer Uses</option>
-                    <option value="9">Type</option>
+                    <option value="9">Offer Type</option>
                     <option value="10">Offer Status</option>
                 </select>
             </div>
@@ -28,8 +28,8 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
-                    <th>Offer Title</th>
-                    <th>Offer Type</th>
+                    <th>Title</th>
+                    <th>Offer Type By Store</th>
                     <th>Code</th>
                     <th>Details</th>
                     <th>Store</th>
@@ -38,11 +38,11 @@
                     <th>Expiry Date</th>
                     <th>Uses</th>
                     <th>Type</th>
-                    <th>Offer Status</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tablebody">
                 @foreach($alloffers as $offer)
                 <tr>
                     <td>{{ $offer->title }}</td>
@@ -57,8 +57,8 @@
                     <td>{{ $offer->type }}</td>
                     <td>{{ $offer->status }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary">Update</a>
-                        <a href="#" class="btn btn-danger">Delete</a>
+                        <a href="/updateoffer/{{$offer->id}}" id="updateOffer" class="btn btn-primary">Update</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offertitle="{{ $offer->title }}" data-offertypebystore="{{ $offer->offer_type_id }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstore="{{ $offer->store_id }}" data-offercategory="{{ $offer->category_id }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -66,6 +66,7 @@
         </table>
     </div>
 </div>
+<script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
         if('{{ Session::has("updateoffer_successmessage") }}'){
@@ -86,7 +87,7 @@
                     $("#searchbar").attr('placeholder','Search Offer Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Offer Type');
+                    $("#searchbar").attr('placeholder','Search Offer Type By Store');
                 }
                 else if(column == 2){
                     $("#searchbar").attr('placeholder','Search Offer Code');
@@ -110,7 +111,7 @@
                     $("#searchbar").attr('placeholder','Search Offer Uses');
                 }
                 else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search Type');
+                    $("#searchbar").attr('placeholder','Search Offer Type');
                 }
                 else if(column == 10){
                     $("#searchbar").attr('placeholder','Search Offer Status');
@@ -147,16 +148,24 @@
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updateOffer"){
+            if($(this).attr("id") == "updateoffer"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deleteOffer"){
+            else if($(this).attr("id") == "deleteoffer"){
                 var url = $(this).attr("href");
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
-                    "<b>Offer:</b>  "+$(this).data("Offername")+"<br>"+
-                    "<b>Offer Role:</b>  "+$(this).data("Offerrole")+"<br>"+
-                    "<b>Offer Status:</b>  "+$(this).data("Offerstatus"),
+                    "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
+                    "<b>Offer Type By Store:</b>  "+$(this).data("offertypebystore")+"<br>"+
+                    "<b>Offer Code:</b>  "+$(this).data("offercode")+"<br>"+
+                    "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
+                    "<b>Store:</b>  "+$(this).data("offerstore")+"<br>"+
+                    "<b>Category:</b>  "+$(this).data("offercategory")+"<br>"+
+                    "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
+                    "<b>Offer Expiry Date:</b>  "+$(this).data("offerexpirydate")+"<br>"+
+                    "<b>Offer Uses:</b>  "+$(this).data("offeruses")+"<br>"+
+                    "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
+                    "<b>Offer Status:</b>  "+$(this).data("offerstatus"),
                     buttons: {
                         confirm: {
                             label: 'Delete',
@@ -176,7 +185,7 @@
                                 contentType: "application/json",
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allOffers");
+                                        $("#panel-body-container").load("/alloffers");
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);
