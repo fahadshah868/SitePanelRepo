@@ -45,17 +45,17 @@
             <tbody>
                 @foreach($alloffers as $offer)
                 <tr>
-                    <td>$offer->title</td>
-                    <td>$offer->offer_type_id</td>
-                    <td>$offer->code</td>
-                    <td>$offer->details</td>
-                    <td>$offer->store_id</td>
-                    <td>$offer->category_id</td>
-                    <td>$offer->starting_date</td>
-                    <td>$offer->expiry_date</td>
-                    <td>$offer->uses</td>
-                    <td>$offer->type</td>
-                    <td>$offer->status</td>
+                    <td>{{ $offer->title }}</td>
+                    <td>{{ $offer->offer_type_id }}</td>
+                    <td>{{ $offer->code }}</td>
+                    <td>{{ $offer->details }}</td>
+                    <td>{{ $offer->store_id }}</td>
+                    <td>{{ $offer->category_id }}</td>
+                    <td>{{ $offer->starting_date }}</td>
+                    <td>{{ $offer->expiry_date }}</td>
+                    <td>{{ $offer->uses }}</td>
+                    <td>{{ $offer->type }}</td>
+                    <td>{{ $offer->status }}</td>
                     <td>
                         <a href="#" class="btn btn-primary">Update</a>
                         <a href="#" class="btn btn-danger">Delete</a>
