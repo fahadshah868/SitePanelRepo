@@ -7,6 +7,7 @@ use App\Store;
 use App\Category;
 use App\OfferType;
 use App\Offer;
+use Session;
 
 class OfferController extends Controller
 {
@@ -17,7 +18,7 @@ class OfferController extends Controller
         return view("pages.offer.addoffer",$data);
     }
     public function postAddOffer(Request $request){
-        $is_offer_save = false;
+        $is_offer_saved = false;
         for($store=0; $store< count($request->offer_stores); $store++){
             for($category=0; $category< count($request->offer_categories); $category++){
                 $offer = new Offer;
@@ -31,10 +32,10 @@ class OfferController extends Controller
                 $offer->expiry_date = $request->offer_expirydate;
                 $offer->type = $request->offertype;
                 $offer->status = $request->offerstatus;
-                $is_offer_save = $offer->save();                
+                $is_offer_saved = $offer->save();
             }
         }
-        if($is_offer_save){
+        if($is_offer_saved){
             $response = [
                 "status" => "true",
                 "success_message" => "Add Offer Successfully"
@@ -53,6 +54,42 @@ class OfferController extends Controller
         $data['alloffers'] = Offer::all();
         $data['offerscount'] = count($data['alloffers']);
         return view('pages.offer.alloffers',$data);
+    }
+    public function getUpdateOffer($id){
+        $data['offer'] = Offer::find($id);
+        $data['alloffertypes'] = OfferType::all();
+        $data['allstores'] = Store::all();
+        $data['allcategories'] = Category::all();
+        return view('pages.offer.updateoffer',$data);
+    }
+    public function postUpdateOffer(Request $request){
+        $offer = Offer::find($request->offerid);
+        $offer->title = $request->offertitle;
+        $offer->offer_type_id = $request->offertype_bystore;
+        $offer->code = $request->offercode;
+        $offer->details = $request->offerdetails;
+        $offer->store_id = $request->offer_store;
+        $offer->category_id = $request->offer_category;
+        $offer->starting_date = $request->offer_startingdate;
+        $offer->expiry_date = $request->offer_expirydate;
+        $offer->type = $request->offertype;
+        $offer->status = $request->offerstatus;
+        $is_offer_updated = $offer->save();
+        if($is_offer_updated){
+            Session::flash("offerupdated_successmessage","Offer Updated Successfully");
+            $response = [
+                "status" => "true",
+                "success_message" => "Offer Updated Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Offer Is Not Updated Successfully"
+            ];
+            return response()->json($response);
+        }
     }
     public function deleteOffer($id){
         $offer = Offer::find($id);

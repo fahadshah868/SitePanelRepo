@@ -24,6 +24,14 @@
         </div>
     </div>
     <hr>
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alert-success-message-area"></strong>
+    </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -47,17 +55,25 @@
                 <tr>
                     <td>{{ $offer->title }}</td>
                     <td>{{ $offer->offer_type->title }}</td>
+                    @if($offer->code != null)
                     <td>{{ $offer->code }}</td>
+                    @else
+                    <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
+                    @endif
                     <td>{{ $offer->details }}</td>
                     <td>{{ $offer->store->title }}</td>
                     <td>{{ $offer->category->title }}</td>
                     <td>{{ $offer->starting_date }}</td>
+                    @if($offer->expiry_date != null)
                     <td>{{ $offer->expiry_date }}</td>
+                    @else
+                    <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
+                    @endif
                     <td>{{ $offer->uses }}</td>
                     <td>{{ $offer->type }}</td>
                     <td>{{ $offer->status }}</td>
                     <td>
-                        <a href="/updateoffer/{{$offer->id}}" id="updateOffer" class="btn btn-primary">Update</a>
+                        <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
                         <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offertitle="{{ $offer->title }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
@@ -69,8 +85,8 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
-        if('{{ Session::has("updateoffer_successmessage") }}'){
-            $("#alert-success-message-area").html('{{ Session::get("updateoffer_successmessage") }}');
+        if('{{ Session::has("offerupdated_successmessage") }}'){
+            $("#alert-success-message-area").html('{{ Session::get("offerupdated_successmessage") }}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
@@ -142,6 +158,9 @@
                     } else {
                         tr[i].style.display = "none";
                     }
+                }
+                else{
+                    tr[i].style.display = "";
                 }
             }
         } 

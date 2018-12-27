@@ -98,6 +98,9 @@
                         tr[i].style.display = "none";
                     }
                 }
+                else{
+                    tr[i].style.display = "";
+                }
             }
         }
         //navigation buttons actions

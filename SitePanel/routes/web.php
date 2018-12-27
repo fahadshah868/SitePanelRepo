@@ -64,6 +64,8 @@ Route::get('/deleteoffertype/{id}','OfferTypeController@deleteOfferType');
 Route::get('/addoffer','OfferController@getAddOffer');
 Route::post('/addoffer','OfferController@postAddOffer');
 Route::get('/alloffers','OfferController@getAllOffers');
+Route::get('/updateoffer/{id}','OfferController@getUpdateOffer');
+Route::post('/updateoffer','OfferController@postUpdateOffer');
 Route::get('/deleteoffer/{id}','OfferController@deleteOffer');
 
 //product routes
