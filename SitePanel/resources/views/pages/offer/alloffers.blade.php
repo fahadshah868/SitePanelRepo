@@ -46,11 +46,11 @@
                 @foreach($alloffers as $offer)
                 <tr>
                     <td>{{ $offer->title }}</td>
-                    <td>{{ $offer->offer_type_id }}</td>
+                    <td>{{ $offer->offer_type->title }}</td>
                     <td>{{ $offer->code }}</td>
                     <td>{{ $offer->details }}</td>
-                    <td>{{ $offer->store_id }}</td>
-                    <td>{{ $offer->category_id }}</td>
+                    <td>{{ $offer->store->title }}</td>
+                    <td>{{ $offer->category->title }}</td>
                     <td>{{ $offer->starting_date }}</td>
                     <td>{{ $offer->expiry_date }}</td>
                     <td>{{ $offer->uses }}</td>
@@ -58,7 +58,7 @@
                     <td>{{ $offer->status }}</td>
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateOffer" class="btn btn-primary">Update</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offertitle="{{ $offer->title }}" data-offertypebystore="{{ $offer->offer_type_id }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstore="{{ $offer->store_id }}" data-offercategory="{{ $offer->category_id }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offertitle="{{ $offer->title }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 @endforeach

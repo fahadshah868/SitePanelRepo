@@ -209,7 +209,6 @@
                     contentType: "application/json",
                     cache: false,
                     success: function(data){
-                        alert(data);
                         if(data.status == "true"){
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
