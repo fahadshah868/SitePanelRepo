@@ -30,10 +30,26 @@
                     </div>
                 </div>
             </div>
-            @if($offer->code != null)
+            @if(strcasecmp($offer->offer_type->title , "code") == 0)
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-field-checkbox">
+                    <div class="form-field-checkbox hide-offercode-field" id="offercode-field">
+                        <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Code</div>
+                        <input type="text" class="form-control" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code">
+                    </div>
+                </div>
+            </div>
+            @elseif($offer->code != null)
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field-checkbox" id="offercode-field">
                         <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
                     </div>
                 </div>
@@ -49,7 +65,7 @@
             @else
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-field-checkbox">
+                    <div class="form-field-checkbox" id="offercode-field">
                         <input type="checkbox" id="offercode-checkbox" checked><span class="form-field-heading">Code Not Required</span>
                     </div>
                 </div>
@@ -178,6 +194,7 @@
                     </div>
                 </div>
             </div>
+            <a href="/alloffers" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
             <input type="submit" value="Update Offer" class="btn btn-primary form-button"/>
         </div>
     </form>
@@ -187,6 +204,27 @@
     $(document).ready(function(){
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#offertype_bystore").change(function(){
+            $("#offercode").prop('disabled', false);
+            $("#offercode-checkbox").prop("checked", false);
+            var offertype_text = $("#offertype_bystore :selected").text();
+            var offertype_value = $("#offertype_bystore :selected").val();
+            if(offertype_value != ""){
+                if(offertype_text.toUpperCase() == "CODE"){
+                    $("#offercode-field").addClass("hide-offercode-field");
+                }
+                else{
+                    $("#offercode-field").removeClass("hide-offercode-field");
+                }
+            }
+            else{
+                $("#offercode-field").addClass("hide-offercode-field");
+            }
+        });
+        $("#backtooffers").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load("/alloffers");
         });
         $("#offercode-checkbox").click(function(){
             if($("#offercode-checkbox").prop("checked")){

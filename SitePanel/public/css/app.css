@@ -10886,6 +10886,10 @@ label.error {
   height: 16px;
 }
 
+.hide-offercode-field {
+  display: none;
+}
+
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;

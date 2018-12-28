@@ -32,7 +32,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-field-checkbox">
+                    <div class="form-field-checkbox hide-offercode-field"  id="offercode-field">
                         <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
                     </div>
                 </div>
@@ -128,6 +128,23 @@
     $(document).ready(function(){
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#offertype_bystore").change(function(){
+            $("#offercode").prop('disabled', false);
+            $("#offercode-checkbox").prop("checked", false);
+            var offertype_text = $("#offertype_bystore :selected").text();
+            var offertype_value = $("#offertype_bystore :selected").val();
+            if(offertype_value != ""){
+                if(offertype_text.toUpperCase() == "CODE"){
+                    $("#offercode-field").addClass("hide-offercode-field");
+                }
+                else{
+                    $("#offercode-field").removeClass("hide-offercode-field");
+                }
+            }
+            else{
+                $("#offercode-field").addClass("hide-offercode-field");
+            }
         });
         $("#offercode-checkbox").click(function(){
             if($("#offercode-checkbox").prop("checked")){

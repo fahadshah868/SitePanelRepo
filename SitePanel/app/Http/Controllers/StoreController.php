@@ -44,7 +44,7 @@ class StoreController extends Controller
                     if($is_save){
                         $response = [
                             "status" => "true",
-                            "success_message" => "Add Store Successfully"
+                            "success_message" => "Store Added Successfully"
                         ];
                         return response()->json($response);
                     }
@@ -289,11 +289,11 @@ class StoreController extends Controller
             $store->logo_url = $store_logo_path;
             $is_save = $store->save();
             if($is_save){
-                Session::flash("updatestorelogo_successmessage","Update Store Logo Successfully");
+                Session::flash("updatestorelogo_successmessage","Store Logo Updated Successfully");
                 $response = [
                     "status" => "true",
                     "id" => $formdata->storeid,
-                    "success_message" => "Update Store Logo Successfully"
+                    "success_message" => "Store Logo Updated Successfully"
                 ];
                 return response()->json($response);
             }
@@ -329,7 +329,7 @@ class StoreController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! Store Not Deleted Successfully"
+                "error_message" => "Error! Store Is Not Deleted Successfully"
             ];
             return response()->json($response);
         }

@@ -37,7 +37,7 @@ class CategoryController extends Controller
             if($is_save){
                 $response = [
                     "status" => "true",
-                    "success_message" => "Add Category Successfully"
+                    "success_message" => "Category Added Successfully"
                 ];
                 return response()->json($response);
             }
@@ -279,7 +279,7 @@ class CategoryController extends Controller
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! Category Not Deleted Successfully"
+                "error_message" => "Error! Category Is Not Deleted Successfully"
             ];
             return response()->json($response);
         }

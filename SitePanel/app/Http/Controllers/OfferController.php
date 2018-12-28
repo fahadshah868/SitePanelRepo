@@ -38,7 +38,7 @@ class OfferController extends Controller
         if($is_offer_saved){
             $response = [
                 "status" => "true",
-                "success_message" => "Add Offer Successfully"
+                "success_message" => "Offer Added Successfully"
             ];
             return response()->json($response);
         }

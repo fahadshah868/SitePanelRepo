@@ -24,7 +24,7 @@ class UserController extends Controller
             if($is_user_save){
                 $response = [
                     "status" => "true",
-                    "success_message" => "Add User Successfully"
+                    "success_message" => "User Registered Successfully"
                 ];
                 return response()->json($response);
             }
@@ -65,7 +65,7 @@ class UserController extends Controller
             if($is_update){
                 $response = [
                     "status" => "true",
-                    "success_message" => "Update User Successfully"
+                    "success_message" => "User Updated Successfully"
                 ];
                 Session::flash('updateuser_successmessage','User Updated Successfully');
                 return response()->json($response);
@@ -73,7 +73,7 @@ class UserController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => "Error! User Not Updated Successfully"
+                    "error_message" => "Error! User Is Not Updated Successfully"
                 ];
                 return response()->json($response);
             }
@@ -87,17 +87,17 @@ class UserController extends Controller
                 $user->status = $request->userstatus;
                 $is_update = $user->save();
                 if($is_update){
+                    Session::flash('updateuser_successmessage','User Updated Successfully');
                     $response = [
                         "status" => "true",
-                        "success_message" => "Update User Successfully"
+                        "success_message" => "User Updated Successfully"
                     ];
-                    Session::flash('updateuser_successmessage','User Updated Successfully');
                     return response()->json($response);
                 }
                 else{
                     $response = [
                         "status" => "false",
-                        "error_message" => "Error! User Not Updated Successfully"
+                        "error_message" => "Error! User Is Not Updated Successfully"
                     ];
                     return response()->json($response);
                 }

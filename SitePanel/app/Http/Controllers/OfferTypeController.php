@@ -21,7 +21,7 @@ class OfferTypeController extends Controller
             if($is_offertype_save){
                 $response = [
                     "status" => "true",
-                    "success_message" => "Add Offer Type Successfully"
+                    "success_message" => "Offer Type Added Successfully"
                 ];
                 return response()->json($response);
             }
@@ -57,10 +57,10 @@ class OfferTypeController extends Controller
             $offertype->status = $request->offertypestatus;
             $is_offertype_updated = $offertype->save();
             if($is_offertype_updated){
-                Session::flash("updateoffertype_successmessage","Update Offer Type Successfully");
+                Session::flash("updateoffertype_successmessage","Offer Type Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Update Offer Type Successfully"
+                    "success_message" => "Offer Type Updated Successfully"
                 ];
                 return response()->json($response);
             }
@@ -79,10 +79,10 @@ class OfferTypeController extends Controller
                 $offertype->status = $request->offertypestatus;
                 $is_offertype_updated = $offertype->save();
                 if($is_offertype_updated){
-                    Session::flash("updateoffertype_successmessage","Update Offer Type Successfully");
+                    Session::flash("updateoffertype_successmessage","Offer Type Updated Successfully");
                     $response = [
                         "status" => "true",
-                        "success_message" => "Update Offer Type Successfully"
+                        "success_message" => "Offer Type Updated Successfully"
                     ];
                     return response()->json($response);
                 }
