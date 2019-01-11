@@ -5,29 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Store;
+use App\Category;
 use File;
 use Session;
 
 class StoreController extends Controller
 {
     public function getAddStore(){
-        return View('pages.store.addstore');
+        $data['allcategories'] = Category::where('status','active')->get();
+        return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
         $formdata = json_decode($request->formdata);
         $is_storetitle_exists = Store::where('title',$formdata->storetitle)->exists();
         if(!$is_storetitle_exists){
-            $is_storesiteurl_exists = Store::where('site_url',$formdata->storesiteurl)->exists();
+            $is_storesiteurl_exists = Store::where('primary_url',$formdata->storeprimaryurl)->exists();
             if(!$is_storesiteurl_exists){
                 $store = new Store;
-                $domain = parse_url($formdata->storesiteurl);
-                $domain = strtolower($domain['host']);
-                $domain = str_replace("www.","",$domain);
-                $store->store_url = $domain;
                 $store->title = $formdata->storetitle; //set all characters to lowercase except first letter of all words
                 $store->site_url = strtolower($formdata->storesiteurl);
                 $store->type = $formdata->storetype;
                 $store->status = $formdata->storestatus;
+                
+                
+                
+                $domain = parse_url($formdata->storesiteurl);
+                $domain = strtolower($domain['host']);
+                $domain = str_replace("www.","",$domain);
+                $store->store_url = $domain;
                 //upload file and save path into db
                 if($request->hasFile('storelogo')){
                     if(!File::exists(public_path("images/store"))){

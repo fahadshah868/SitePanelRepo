@@ -21,8 +21,52 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Site Url</div>
-                        <input type="text" class="form-control" id="storesiteurl" name="storesiteurl" placeholder="www.Kohls.com"/>
+                        <div class="form-field-heading">Store Categories</div>
+                        <select class="multiselectdropdown" id="storecategories" name="storecategories" multiple data-live-search="true">
+                            @foreach($allcategories as $category)
+                            <option value="{{$category->id}}">{{$category->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Details</div>
+                        <textarea class="form-control" id="storedetails" name="storedetails" placeholder="details"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Primary Url</div>
+                        <input type="text" class="form-control" id="storeprimaryurl" name="storeprimaryurl" placeholder="http://www.kohls.com">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Secondary Url</div>
+                        <input type="text" class="form-control" id="storesecondaryurl" name="storesecondaryurl" placeholder="kohls.com" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Network</div>
+                        <select class="form-control" id="network" name="network">
+                            <option value="">Select Network</option>
+                            <option value="cj">cj</option>
+                            <option value="shareasale">shareasale</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Network Url</div>
+                        <input type="text" class="form-control" id="networkurl" name="networkurl" placeholder="network url">
                     </div>
                 </div>
             </div>
@@ -61,10 +105,21 @@
         </div>
     </form>
 </div>
+<script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#storeprimaryurl").bind('keyup input propertychange',function(){
+            var value = $("#storeprimaryurl").val();
+            if (value.indexOf("http://www.") >= 0){
+                var abc = value.replace("http://www.","");
+                $("#storesecondaryurl").val(abc);
+            }
+            else{
+                $("#storesecondaryurl").val("");
+            }
         });
         //define custom validation method to check image dimensions
         $.validator.addMethod('validateimage', function(value, element) {
@@ -76,26 +131,42 @@
         }).validate({
             rules: {
                 storetitle: "required",
-                storesiteurl: { required: true, url: true },
+                storecategories: "required",
+                storedetails: "required",
+                storeprimaryurl: { required: true, url: true },
+                storesecondaryurl: "required",
+                network: "required",
+                networkurl: "required",
                 storetype: "required",
                 storestatus: "required",
                 storelogo: { required: true, validateimage: true }
             },
             messages: {
                 storetitle: "please enter store title",
-                storesiteurl: { required: "please enter store site link", url: "site url must be 'http://www.site.com' format"},
+                storecategories: "please select store categories",
+                storedetails: "please enter store details",
+                storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
+                storesecondaryurl: "please enter store secondary url",
+                network: "please select network",
+                networkurl: "please enter netwrok url",
                 storetype: "please select store type",
                 storestatus: "please select store status",
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
             },
             submitHandler: function(form) {
                 var _storetitle = $("#storetitle").val();
-                var _storesiteurl = $("#storesiteurl").val();
+                var _storecategories = $("#storecategories").val();
+                var _storedetails = $("#storedetails").val();
+                var _storeprimaryurl = $("#storeprimaryurl").val();
+                var _storesecondaryurl = $("#storesecondaryurl").val();
+                var _network = $("#network").val();
+                var _networkurl = $("#networkurl").val();
                 var _storetype = $("#storetype").val();
                 var _storestatus = $("#storestatus").val();
                 var _storelogo = $("#storelogo")[0].files[0];
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({storetitle: _storetitle, storesiteurl: _storesiteurl, storetype: _storetype, storestatus: _storestatus});
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, network: _network, networkurl: _networkurl, storetype: _storetype, storestatus: _storestatus});
+                alert(_jsondata);
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");

@@ -16,6 +16,7 @@ class CreateOffersTable extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('title');
+            $table->string('anchor');
             $table->bigInteger('offer_type_id')->unsigned();
             $table->foreign('offer_type_id')->references('id')->on('offer_types')->onDelete('cascade');
             $table->string('code')->nullable();

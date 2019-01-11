@@ -10515,7 +10515,6 @@ a:hover {
   background: #044D6E;
   border: none;
   border-radius: 0;
-  margin-bottom: 20px;
   -webkit-box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
           box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -10815,7 +10814,7 @@ ul ul a:hover {
 }
 
 .form-field {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .form-field img {
