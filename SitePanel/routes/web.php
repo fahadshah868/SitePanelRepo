@@ -38,6 +38,7 @@ Route::post('/addnetwork','NetworkController@postAddNetwork');
 Route::get('/allnetworks','NetworkController@getAllNetworks');
 Route::get('/updatenetwork/{id}','NetworkController@getUpdateNetwork');
 Route::post('/updatenetwork','NetworkController@postUpdateNetwork');
+Route::get('/deletenetwork/{id}','NetworkController@deleteNetwork');
 
 //store routes
 Route::get('/addstore','StoreController@getAddStore');

@@ -12,13 +12,13 @@ class NetworkController extends Controller
         return view('pages.network.addnetwork');
     }
     public function postAddNetwork(Request $request){
-        $is_exists = Network::where('title',$request->networktitle)->exists();
-        if(!$is_exists){
+        $is_network_exists = Network::where('title',$request->networktitle)->exists();
+        if(!$is_network_exists){
             $network = new Network;
             $network->title = $request->networktitle;
             $network->status = $request->networkstatus;
-            $is_saved = $network->save();
-            if($is_saved){
+            $is_network_saved = $network->save();
+            if($is_network_saved){
                 $response = [
                     "status" => "true",
                     "success_message" => "Network Added Successfully"
@@ -55,8 +55,8 @@ class NetworkController extends Controller
         if(strcasecmp($network->title, $request->networktitle) == 0){
             $network->title = $request->networktitle;
             $network->status = $request->networkstatus;
-            $is_updated = $network->save();
-            if($is_updated){
+            $is_network_updated = $network->save();
+            if($is_network_updated){
                 Session::flash('updatenetwork_successmessage','Network Updated Successfully');
                 $response = [
                     "status" => "true",
@@ -73,12 +73,12 @@ class NetworkController extends Controller
             }
         }
         else{
-            $is_exists = Network::where('title', $request->networktitle)->exists();
-            if(!$is_exists){
+            $is_network_exists = Network::where('title', $request->networktitle)->exists();
+            if(!$is_network_exists){
                 $network->title = $request->networktitle;
                 $network->status = $request->networkstatus;
-                $is_updated = $network->save();
-                if($is_updated){
+                $is_network_updated = $network->save();
+                if($is_network_updated){
                     Session::flash('updatenetwork_successmessage','Network Updated Successfully');
                     $response = [
                         "status" => "true",
@@ -101,6 +101,24 @@ class NetworkController extends Controller
                 ];
                 return response()->json($response);
             }
+        }
+    }
+    public function deleteNetwork($id){
+        $network = Network::find($id);
+        $is_network_deleted = $network->delete();
+        if($is_network_deleted){
+            $response = [
+                "status" => "true",
+                "success_message" => "Network Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! Network Is Not Deleted Successfully"
+            ];
+            return response()->json($response);
         }
     }
 }

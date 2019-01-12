@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Store;
 use App\Category;
+use App\Network;
 use File;
 use Session;
 
@@ -13,6 +14,7 @@ class StoreController extends Controller
 {
     public function getAddStore(){
         $data['allcategories'] = Category::where('status','active')->get();
+        $data['allnetworks'] = Network::where('status','active')->get();
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
@@ -22,17 +24,14 @@ class StoreController extends Controller
             $is_storesiteurl_exists = Store::where('primary_url',$formdata->storeprimaryurl)->exists();
             if(!$is_storesiteurl_exists){
                 $store = new Store;
-                $store->title = $formdata->storetitle; //set all characters to lowercase except first letter of all words
-                $store->site_url = strtolower($formdata->storesiteurl);
+                $store->title = $formdata->storetitle;
+                $store->details = $formdata->storedetails;
+                $store->primary_url = strtolower($formdata->storeprimaryurl);
+                $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                $store->network_id = $formdata->networkid;
+                $store->network_url = $formdata->storenetworkurl;
                 $store->type = $formdata->storetype;
                 $store->status = $formdata->storestatus;
-                
-                
-                
-                $domain = parse_url($formdata->storesiteurl);
-                $domain = strtolower($domain['host']);
-                $domain = str_replace("www.","",$domain);
-                $store->store_url = $domain;
                 //upload file and save path into db
                 if($request->hasFile('storelogo')){
                     if(!File::exists(public_path("images/store"))){
@@ -41,7 +40,7 @@ class StoreController extends Controller
                     $storelogo = $request->file('storelogo');
                     $resized_store_logo = Image::make($storelogo);
                     $resized_store_logo->resize(200, 200);
-                    $store_logo_name = $domain."-coupons.".$storelogo->getClientOriginalExtension();
+                    $store_logo_name = strtolower($formdata->storesecondaryurl)."-coupons.".$storelogo->getClientOriginalExtension();
                     $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;

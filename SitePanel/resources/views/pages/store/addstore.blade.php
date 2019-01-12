@@ -56,10 +56,11 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network</div>
-                        <select class="form-control" id="network" name="network">
+                        <select class="form-control" id="networkid" name="networkid">
                             <option value="">Select Network</option>
-                            <option value="cj">cj</option>
-                            <option value="shareasale">shareasale</option>
+                            @foreach($allnetworks as $network)
+                            <option value="{{$network->id}}">{{$network->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -159,13 +160,13 @@
                 var _storedetails = $("#storedetails").val();
                 var _storeprimaryurl = $("#storeprimaryurl").val();
                 var _storesecondaryurl = $("#storesecondaryurl").val();
-                var _network = $("#network").val();
+                var _networkid = $("#networkid").val();
                 var _networkurl = $("#networkurl").val();
                 var _storetype = $("#storetype").val();
                 var _storestatus = $("#storestatus").val();
                 var _storelogo = $("#storelogo")[0].files[0];
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, network: _network, networkurl: _networkurl, storetype: _storetype, storestatus: _storestatus});
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, networkurl: _networkurl, storetype: _storetype, storestatus: _storestatus});
                 alert(_jsondata);
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);

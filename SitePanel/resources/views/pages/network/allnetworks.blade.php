@@ -135,7 +135,7 @@
                                 contentType: "application/json",
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allusers");
+                                        $("#panel-body-container").load("/allnetworks");
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);
