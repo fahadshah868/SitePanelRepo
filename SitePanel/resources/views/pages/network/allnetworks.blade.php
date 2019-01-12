@@ -1,14 +1,12 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Stores<span class="viewitems-main-heading-count">({{ $storescount }})</span></div>
+        <div class="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count">({{ $networkscount }})</span></div>
         <div class="viewitems-header-searchbar-container">
             <div class="viewitems-header-searchbar-filter">
                 <select class="form-control" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
-                    <option value="0">Store Title</option>
-                    <option value="1">Store Site Url</option>
-                    <option value="2">Store Type</option>
-                    <option value="3">Store Status</option>
+                    <option value="0">Network Title</option>
+                    <option value="1">Netowrk Status</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -17,6 +15,10 @@
         </div>
     </div>
     <hr>
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong id="alert-success-message-area"></strong>
+    </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
@@ -25,28 +27,22 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
-                    <th>Store Title</th>
-                    <th>Store Site Link</th>
-                    <th>Store Type</th>
-                    <th>Store Status</th>
-                    <th>Store Logo</th>
+                    <th>Network Title</th>
+                    <th>Network Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="tablebody">
-                @if(count($allstores) > 0)
-                    @foreach($allstores as $store)
-                        <tr>
-                            <td>{{ $store->title }}</td>
-                            <td>{{ $store->site_url }}</td>
-                            <td>{{ $store->type }}</td>
-                            <td>{{ $store->status }}</td>
-                            <td><img src="{{ asset($store->logo_url) }}"/></td>
-                            <td>
-                                <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storesiteurl='{{$store->site_url}}' data-storetype='{{$store->type}}' data-storestatus='{{$store->status}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
-                            </td>
-                        </tr>
+                @if(count($allnetworks) > 0)
+                    @foreach($allnetworks as $network)
+                    <tr>
+                        <td>{{ $network->title }}</td>
+                        <td>{{ $network->status }}</td>
+                        <td>
+                            <a href="/updatenetwork/{{$network->id}}" id="updatenetwork" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                            <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                        </td>
+                    </tr>
                     @endforeach
                 @endif
             </tbody>
@@ -56,6 +52,12 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        if('{{ Session::has("updatenetwork_successmessage") }}'){
+            $("#alert-success-message-area").html('{{ Session::get("updatenetwork_successmessage") }}');
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alert-success").slideUp(500);
+            });
+        }
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();
@@ -65,16 +67,10 @@
             filterTable();
             if(column != ""){
                 if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Store Title');
+                    $("#searchbar").attr('placeholder','Search Network Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Store Site URL');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Store Type');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Store Status');
+                    $("#searchbar").attr('placeholder','Search Network Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");
@@ -107,21 +103,19 @@
                     tr[i].style.display = "";
                 }
             }
-        }
+        } 
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatestore"){
+            if($(this).attr("id") == "updatenetwork"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deletestore"){
+            else if($(this).attr("id") == "deletenetwork"){
                 var url = $(this).attr("href");
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
-                    "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
-                    "<b>Store Site Url:</b>  "+$(this).data("storesiteurl")+"<br>"+
-                    "<b>Store Type:</b>  "+$(this).data("storetype")+"<br>"+
-                    "<b>Store Status:</b>  "+$(this).data("storestatus")+"<br>",
+                    "<b>Network Title:</b>  "+$(this).data("networktitle")+"<br>"+
+                    "<b>Network Status:</b>  "+$(this).data("networkstatus"),
                     buttons: {
                         confirm: {
                             label: 'Delete',
@@ -139,10 +133,9 @@
                                 url: url,
                                 dataType: "json",
                                 contentType: "application/json",
-                                cache: false,
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allstores");
+                                        $("#panel-body-container").load("/allusers");
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);

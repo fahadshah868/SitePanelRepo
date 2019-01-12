@@ -62,7 +62,7 @@
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();
             var index = parseInt(column)+1;
-            $("#tableview td, #tableview th").removeClass("highlighted-column");
+            $("#tableview td, #tableview th").removeClass("highlight-column");
             $("#searchbar").val("");
             filterTable();
             if(column != ""){
@@ -73,7 +73,7 @@
                     $("#searchbar").attr('placeholder','Search Offertype Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
-                $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlighted-column");
+                $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");
             }
             else{
                 $("#viewitems-header-searchbar").css("display","none");

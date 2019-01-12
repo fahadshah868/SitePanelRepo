@@ -16,7 +16,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Title</div>
-                        <input type="text" class="form-control" id="networktitle" name="networktitle" placeholder="cj, shareasale"/>
+                        <input type="text" class="form-control" id="networktitle" name="networktitle" placeholder="cj, shareasale, clickbank"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Add Store" class="btn btn-primary form-button"/>
+            <input type="submit" value="Add Network" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
@@ -49,13 +49,13 @@
                 networkstatus: "required"
             },
             messages: {
-                networktitle: "please netwrok title",
+                networktitle: "please enter netwrok title",
                 networkstatus: "please select network status"
             },
             submitHandler: function(form) {
                 var _networktitle = $("#networktitle").val();
                 var _networkstatus = $("#networkstatus").val();
-                var _jsondata = JSON.stringify({networktitle: _networktitle, networkstatus: _networkstatus});
+                var _jsondata = JSON.stringify({networktitle: _networktitle, networkstatus: _networkstatus, _token: '{{ csrf_token() }}'});
                 $("#addnetworkform").trigger("reset");
                 $(".alert").css("display","none");
                 $.ajax({

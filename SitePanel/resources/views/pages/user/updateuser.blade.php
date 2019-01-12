@@ -2,7 +2,7 @@
         <div class="form-main-heading">Update User</div>
         <hr>
         <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <a href="#" class="close" aria-label="close">&times;</a>
             <strong id="alert-danger-message-area"></strong>
         </div>
         <form id="updateuserform" action="/updateuser" method="POST">
@@ -60,6 +60,9 @@
     </div>
     <script>
         $(document).ready(function(){
+            $(".close").click(function(){
+                $(".alert").slideUp();
+            });
             $("#backtousers").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
@@ -86,6 +89,7 @@
                     var _userrole = $("#userrole").val();
                     var _userstatus = $("#userstatus").val();
                     var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
+                    $(".alert").css("display","none");
                     $.ajax({
                         method: 'POST',
                         url: '/updateuser',

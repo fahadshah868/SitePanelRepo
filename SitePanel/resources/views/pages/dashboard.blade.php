@@ -47,9 +47,23 @@
                     </li>
                     @endif
                     <li>
+                        <a href="#networksuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fas fa-sitemap"></i>
+                            Network
+                        </a>
+                        <ul class="collapse list-unstyled" id="networksuboptions">
+                            <li>
+                                <a href="/addnetwork" class="sidebar-suboption">Add Network</a>
+                            </li>
+                            <li>
+                                <a href="/allnetworks" class="sidebar-suboption">View Networks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-store-alt"></i>
-                            Stores
+                            Store
                         </a>
                         <ul class="collapse list-unstyled" id="storesuboptions">
                             <li>
@@ -63,7 +77,7 @@
                     <li>
                         <a href="#categorysuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-tag"></i>
-                            Categoies
+                            Category
                         </a>
                         <ul class="collapse list-unstyled" id="categorysuboptions">
                             <li>

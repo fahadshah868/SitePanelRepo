@@ -32,6 +32,13 @@ Route::get('/deleteuser/{id}','UserController@deleteUser');
 Route::get('/updateprofile','ProfileController@getUpdateProfile');
 Route::post('/updateprofile','ProfileController@postUpdateProfile');
 
+//network
+Route::get('/addnetwork','NetworkController@getAddNetwork');
+Route::post('/addnetwork','NetworkController@postAddNetwork');
+Route::get('/allnetworks','NetworkController@getAllNetworks');
+Route::get('/updatenetwork/{id}','NetworkController@getUpdateNetwork');
+Route::post('/updatenetwork','NetworkController@postUpdateNetwork');
+
 //store routes
 Route::get('/addstore','StoreController@getAddStore');
 Route::post('/addstore','StoreController@postAddStore');
