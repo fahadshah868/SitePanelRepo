@@ -6,9 +6,13 @@
                 <select class="form-control" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Store Title</option>
-                    <option value="1">Store Site Url</option>
-                    <option value="2">Store Type</option>
-                    <option value="3">Store Status</option>
+                    <option value="1">Store Details</option>
+                    <option value="2">Store Primary Url</option>
+                    <option value="3">Store Secondary Url</option>
+                    <option value="4">Network</option>
+                    <option value="5">Network Url</option>
+                    <option value="6">Store Type</option>
+                    <option value="7">Store Status</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -26,8 +30,12 @@
             <thead>
                 <tr>
                     <th>Store Title</th>
-                    <th>Store Site Link</th>
-                    <th>Store Type</th>
+                    <th>Store Details</th>
+                    <th>Store Primary Url</th>
+                    <th>Store Secondary Url</th>
+                    <th>Network</th>
+                    <th>Network Url</th>
+                    <th>Store type</th>
                     <th>Store Status</th>
                     <th>Store Logo</th>
                     <th>Actions</th>
@@ -38,13 +46,17 @@
                     @foreach($allstores as $store)
                         <tr>
                             <td>{{ $store->title }}</td>
-                            <td>{{ $store->site_url }}</td>
+                            <td>{{ $store->details }}</td>
+                            <td>{{ $store->primary_url }}</td>
+                            <td>{{ $store->secondary_url }}</td>
+                            <td>{{ $store->network->title }}</td>
+                            <td>{{ $store->network_url }}</td>
                             <td>{{ $store->type }}</td>
                             <td>{{ $store->status }}</td>
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle='{{$store->title}}' data-storesiteurl='{{$store->site_url}}' data-storetype='{{$store->type}}' data-storestatus='{{$store->status}}' id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedetails="{{$store->details}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-storetype="{{$store->type}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -68,12 +80,24 @@
                     $("#searchbar").attr('placeholder','Search Store Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Store Site URL');
+                    $("#searchbar").attr('placeholder','Search Store Details');
                 }
                 else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Store Type');
+                    $("#searchbar").attr('placeholder','Search Store Primary Url');
                 }
                 else if(column == 3){
+                    $("#searchbar").attr('placeholder','Search Store Secondary Url');
+                }
+                else if(column == 4){
+                    $("#searchbar").attr('placeholder','Search Store Network');
+                }
+                else if(column == 5){
+                    $("#searchbar").attr('placeholder','Search Store Network Url');
+                }
+                else if(column == 6){
+                    $("#searchbar").attr('placeholder','Search Store Type');
+                }
+                else if(column == 7){
                     $("#searchbar").attr('placeholder','Search Store Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
@@ -84,7 +108,7 @@
             }
         });
         //client side search filter
-        $("#searchbar").keyup(function(){
+        $("#searchbar").bind('keyup input propertychange',function(){
             filterTable();
         });
         //search/filter table
@@ -119,7 +143,11 @@
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
-                    "<b>Store Site Url:</b>  "+$(this).data("storesiteurl")+"<br>"+
+                    "<b>Store Details Url:</b>  "+$(this).data("storedetails")+"<br>"+
+                    "<b>Store Primary Url:</b>  "+$(this).data("storeprimaryurl")+"<br>"+
+                    "<b>Store Secondary Url:</b>  "+$(this).data("storesecondaryurl")+"<br>"+
+                    "<b>Store Network:</b>  "+$(this).data("storenetwork")+"<br>"+
+                    "<b>Store Network Url:</b>  "+$(this).data("storenetworkurl")+"<br>"+
                     "<b>Store Type:</b>  "+$(this).data("storetype")+"<br>"+
                     "<b>Store Status:</b>  "+$(this).data("storestatus")+"<br>",
                     buttons: {

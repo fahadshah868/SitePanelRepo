@@ -7,6 +7,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Store;
 use App\Category;
 use App\Network;
+use App\StoreCategoryGroup;
 use File;
 use Session;
 
@@ -18,44 +19,64 @@ class StoreController extends Controller
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
+        $is_storecategory_saved = false;
         $formdata = json_decode($request->formdata);
         $is_storetitle_exists = Store::where('title',$formdata->storetitle)->exists();
         if(!$is_storetitle_exists){
-            $is_storesiteurl_exists = Store::where('primary_url',$formdata->storeprimaryurl)->exists();
-            if(!$is_storesiteurl_exists){
-                $store = new Store;
-                $store->title = $formdata->storetitle;
-                $store->details = $formdata->storedetails;
-                $store->primary_url = strtolower($formdata->storeprimaryurl);
-                $store->secondary_url = strtolower($formdata->storesecondaryurl);
-                $store->network_id = $formdata->networkid;
-                $store->network_url = $formdata->storenetworkurl;
-                $store->type = $formdata->storetype;
-                $store->status = $formdata->storestatus;
-                //upload file and save path into db
-                if($request->hasFile('storelogo')){
-                    if(!File::exists(public_path("images/store"))){
-                        File::makeDirectory(public_path("images/store", 0777, true, true));
-                    }
-                    $storelogo = $request->file('storelogo');
-                    $resized_store_logo = Image::make($storelogo);
-                    $resized_store_logo->resize(200, 200);
-                    $store_logo_name = strtolower($formdata->storesecondaryurl)."-coupons.".$storelogo->getClientOriginalExtension();
-                    $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
-                    $store_logo_path = 'images/store/'.$store_logo_name;
-                    $store->logo_url = $store_logo_path;
-                    $is_save = $store->save();
-                    if($is_save){
-                        $response = [
-                            "status" => "true",
-                            "success_message" => "Store Added Successfully"
-                        ];
-                        return response()->json($response);
+            $is_storeprimary_exists = Store::where('primary_url',$formdata->storeprimaryurl)->exists();
+            if(!$is_storeprimary_exists){
+                $is_storenetworkurl_exists = Store::where('network_url',$formdata->storenetworkurl)->exists();
+                if(!$is_storenetworkurl_exists){
+                    $store = new Store;
+                    $store->title = $formdata->storetitle;
+                    $store->details = $formdata->storedetails;
+                    $store->primary_url = strtolower($formdata->storeprimaryurl);
+                    $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                    $store->network_id = $formdata->networkid;
+                    $store->network_url = $formdata->storenetworkurl;
+                    $store->type = $formdata->storetype;
+                    $store->status = $formdata->storestatus;
+                    //upload file and save path into db
+                    if($request->hasFile('storelogo')){
+                        if(!File::exists(public_path("images/store"))){
+                            File::makeDirectory(public_path("images/store", 0777, true, true));
+                        }
+                        $storelogo = $request->file('storelogo');
+                        $resized_store_logo = Image::make($storelogo);
+                        $resized_store_logo->resize(200, 200);
+                        $store_logo_name = strtolower($formdata->storesecondaryurl)."-coupons.".$storelogo->getClientOriginalExtension();
+                        $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
+                        $store_logo_path = 'images/store/'.$store_logo_name;
+                        $store->logo_url = $store_logo_path;
+                        $is_store_save = $store->save();
+                        for($category=0; $category< count($formdata->storecategories); $category++){
+                            $storecategorygroup = new StoreCategoryGroup;
+                            $storecategorygroup->store_id = $store->id;
+                            $storecategorygroup->category_id = $formdata->storecategories[$category];
+                            $is_storecategory_saved = $storecategorygroup->save();
+                            if(!$is_storecategory_saved){
+                                break;
+                            }
+                        }
+                        if($is_store_save && $is_storecategory_saved){
+                            $response = [
+                                "status" => "true",
+                                "success_message" => "Store Added Successfully"
+                            ];
+                            return response()->json($response);
+                        }
+                        else{
+                            $response = [
+                                "status" => "false",
+                                "error_message" => "Error! Store Is Not Added Successfully"
+                            ];
+                            return response()->json($response);
+                        }
                     }
                     else{
                         $response = [
                             "status" => "false",
-                            "error_message" => "Error! Store Is Not Added Successfully"
+                            "error_message" => "Error! Store Logo Not Found"
                         ];
                         return response()->json($response);
                     }
@@ -63,7 +84,7 @@ class StoreController extends Controller
                 else{
                     $response = [
                         "status" => "false",
-                        "error_message" => "Error! Store Logo Not Found"
+                        "error_message" => strtolower($formdata->storenetworkurl)."! This Store Network Url is Already Added"
                     ];
                     return response()->json($response);
                 }
@@ -71,7 +92,7 @@ class StoreController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => strtolower($formdata->storesiteurl)."! This Store Site Url is Already Added"
+                    "error_message" => strtolower($formdata->storeprimaryurl)."! This Store Primary Url is Already Added"
                 ];
                 return response()->json($response);
             }

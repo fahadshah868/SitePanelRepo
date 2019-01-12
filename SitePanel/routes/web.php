@@ -48,6 +48,7 @@ Route::get('/updatestore/{id}','StoreController@getUpdateStore');
 Route::get('/updatestoreform/{id}','StoreController@getUpdateStoreForm');
 Route::post('/updatestoreform','StoreController@postUpdateStoreForm');
 Route::post('/updatestoreimage','StoreController@postUpdateStoreImage');
+Route::get('/allstorecategories','StoreController@getAllStoreCategories');
 Route::get('/deletestore/{id}','StoreController@deleteStore');
 
 //category routes

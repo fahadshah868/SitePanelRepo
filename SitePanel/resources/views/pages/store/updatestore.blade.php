@@ -46,8 +46,32 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Site Url</div>
-                        <input type="text" class="form-control" value="{{ $store->site_url }}" readonly/>
+                        <div class="form-field-heading">Store Details</div>
+                        <textarea class="form-control" readonly>{{ $store->details }}</textarea>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Primary Url</div>
+                        <input type="text" class="form-control" value="{{ $store->primary_url }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Secondary Url</div>
+                        <input type="text" class="form-control" value="{{ $store->secondary_url }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Network</div>
+                        <input type="text" class="form-control" value="{{ $store->network->title }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Network Url</div>
+                        <input type="text" class="form-control" value="{{ $store->network_url }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">

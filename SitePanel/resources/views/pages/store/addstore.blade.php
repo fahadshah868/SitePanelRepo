@@ -67,7 +67,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Url</div>
-                        <input type="text" class="form-control" id="networkurl" name="networkurl" placeholder="network url">
+                        <input type="text" class="form-control" id="storenetworkurl" name="storenetworkurl" placeholder="network url">
                     </div>
                 </div>
             </div>
@@ -161,13 +161,12 @@
                 var _storeprimaryurl = $("#storeprimaryurl").val();
                 var _storesecondaryurl = $("#storesecondaryurl").val();
                 var _networkid = $("#networkid").val();
-                var _networkurl = $("#networkurl").val();
+                var _storenetworkurl = $("#storenetworkurl").val();
                 var _storetype = $("#storetype").val();
                 var _storestatus = $("#storestatus").val();
                 var _storelogo = $("#storelogo")[0].files[0];
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, networkurl: _networkurl, storetype: _storetype, storestatus: _storestatus});
-                alert(_jsondata);
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, storetype: _storetype, storestatus: _storestatus});
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");

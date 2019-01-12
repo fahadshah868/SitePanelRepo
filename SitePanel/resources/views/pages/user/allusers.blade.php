@@ -88,7 +88,7 @@
             }
         });
         //client side search filter
-        $("#searchbar").keyup(function(){
+        $("#searchbar").bind('keyup input propertychange',function(){
             filterTable();
         });
         //search/filter table
