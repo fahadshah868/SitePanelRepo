@@ -21,7 +21,7 @@ class CreateStoresTable extends Migration
             $table->string('secondary_url',191)->unique(); // kohls.com
             $table->bigInteger('network_id')->unsigned();
             $table->foreign('network_id')->references('id')->on('networks')->onDelete('cascade');
-            $table->string('network_url')->unique();
+            $table->string('network_url',191)->unique();
             $table->enum('type',['popular','regular']);
             $table->enum('status',['active','deactive']);
             $table->string('logo_url');

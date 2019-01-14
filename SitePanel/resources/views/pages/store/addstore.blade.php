@@ -136,8 +136,8 @@
                 storedetails: "required",
                 storeprimaryurl: { required: true, url: true },
                 storesecondaryurl: "required",
-                network: "required",
-                networkurl: "required",
+                networkid: "required",
+                storenetworkurl: "required",
                 storetype: "required",
                 storestatus: "required",
                 storelogo: { required: true, validateimage: true }
@@ -148,8 +148,8 @@
                 storedetails: "please enter store details",
                 storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
                 storesecondaryurl: "please enter store secondary url",
-                network: "please select network",
-                networkurl: "please enter netwrok url",
+                networkid: "please select network",
+                storenetworkurl: "please enter netwrok url",
                 storetype: "please select store type",
                 storestatus: "please select store status",
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}

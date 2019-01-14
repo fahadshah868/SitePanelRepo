@@ -72,6 +72,9 @@
                             <li>
                                 <a href="/allstores" class="sidebar-suboption">View Stores</a>
                             </li>
+                            <li>
+                                <a href="/allstorecategories" class="sidebar-suboption">View Store Categories</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

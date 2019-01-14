@@ -10911,6 +10911,12 @@ label.error {
   margin-left: 5px !important;
 }
 
+.viewitems-table-count {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  margin-left: 5px !important;
+}
+
 .btn {
   color: #fff;
 }
