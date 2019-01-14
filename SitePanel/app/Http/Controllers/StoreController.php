@@ -19,7 +19,6 @@ class StoreController extends Controller
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
-        $is_storecategory_saved = false;
         $formdata = json_decode($request->formdata);
         $is_storetitle_exists = Store::where('title',$formdata->storetitle)->exists();
         if(!$is_storetitle_exists){
@@ -48,7 +47,7 @@ class StoreController extends Controller
                         $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
                         $store_logo_path = 'images/store/'.$store_logo_name;
                         $store->logo_url = $store_logo_path;
-                        $is_store_save = $store->save();
+                        $store->save();
                         for($category=0; $category< count($formdata->storecategories); $category++){
                             $storecategorygroup = new StoreCategoryGroup;
                             $storecategorygroup->store_id = $store->id;
@@ -58,20 +57,11 @@ class StoreController extends Controller
                                 break;
                             }
                         }
-                        if($is_store_save && $is_storecategory_saved){
-                            $response = [
-                                "status" => "true",
-                                "success_message" => "Store Added Successfully"
-                            ];
-                            return response()->json($response);
-                        }
-                        else{
-                            $response = [
-                                "status" => "false",
-                                "error_message" => "Error! Store Is Not Added Successfully"
-                            ];
-                            return response()->json($response);
-                        }
+                        $response = [
+                            "status" => "true",
+                            "success_message" => "Store Added Successfully"
+                        ];
+                        return response()->json($response);
                     }
                     else{
                         $response = [
@@ -120,6 +110,163 @@ class StoreController extends Controller
     }
     public function postUpdateStoreForm(Request $request){
         $store = Store::find($request->storeid);
+        // title == title && primaryurl == primaryurl && networkurl == networkurl
+        if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcmpcase($store->network_url, $request->storenetworkurl) == 0){
+            $store->title = $formdata->storetitle;
+            $store->details = $formdata->storedetails;
+            $store->primary_url = strtolower($formdata->storeprimaryurl);
+            $store->secondary_url = strtolower($formdata->storesecondaryurl);
+            $store->network_id = $formdata->networkid;
+            $store->network_url = $formdata->storenetworkurl;
+            $store->type = $formdata->storetype;
+            $store->status = $formdata->storestatus;
+            $store->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "Store Updated Successfully"
+            ];
+            return response()->json($response);
+        }
+        // title != title && primaryurl == primaryurl && secondaryurl == secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcmpcase($store->network_url, $request->storenetworkurl) == 0){
+            $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
+            if(!$is_storetitle_exists){
+                $store->title = $formdata->storetitle;
+                $store->details = $formdata->storedetails;
+                $store->primary_url = strtolower($formdata->storeprimaryurl);
+                $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                $store->network_id = $formdata->networkid;
+                $store->network_url = $formdata->storenetworkurl;
+                $store->type = $formdata->storetype;
+                $store->status = $formdata->storestatus;
+                $store->save();
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Store Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->storetitle."! This Store Title is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+        // title == title && primaryurl != primaryurl && secondaryurl == secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcmpcase($store->network_url, $request->storenetworkurl) == 0){
+            $is_storeprimaryurl_exists = Store::where('primary_url',$request->storeprimaryurl)->exists();
+            if(!$is_storeprimaryurl_exists){
+                $store->title = $formdata->storetitle;
+                $store->details = $formdata->storedetails;
+                $store->primary_url = strtolower($formdata->storeprimaryurl);
+                $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                $store->network_id = $formdata->networkid;
+                $store->network_url = $formdata->storenetworkurl;
+                $store->type = $formdata->storetype;
+                $store->status = $formdata->storestatus;
+                $store->save();
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Store Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->storeprimaryurl."! This Store Primary Url is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+        // title == title && primaryurl == primaryurl && secondaryurl != secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcmpcase($store->network_url, $request->storenetworkurl) != 0){
+            $is_storenetworkurl_exists = Store::where('network_url',$request->storenetworkurl)->exists();
+            if(!$is_storenetworkurl_exists){
+                $store->title = $formdata->storetitle;
+                $store->details = $formdata->storedetails;
+                $store->primary_url = strtolower($formdata->storeprimaryurl);
+                $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                $store->network_id = $formdata->networkid;
+                $store->network_url = $formdata->storenetworkurl;
+                $store->type = $formdata->storetype;
+                $store->status = $formdata->storestatus;
+                $store->save();
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Store Updated Successfully"
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->storenetworkurl."! This Store Network Url is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+        // title != title && primaryurl != primaryurl && secondaryurl == secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcmpcase($store->network_url, $request->storenetworkurl) == 0){
+            $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
+            if(!$is_storetitle_exists){
+                $is_storeprimaryurl_exists = Store::where('primary_url',$request->storeprimaryurl)->exists();
+                if(!$is_storeprimaryurl_exists){
+                    $store->title = $formdata->storetitle;
+                    $store->details = $formdata->storedetails;
+                    $store->primary_url = strtolower($formdata->storeprimaryurl);
+                    $store->secondary_url = strtolower($formdata->storesecondaryurl);
+                    $store->network_id = $formdata->networkid;
+                    $store->network_url = $formdata->storenetworkurl;
+                    $store->type = $formdata->storetype;
+                    $store->status = $formdata->storestatus;
+                    $store->save();
+                    $response = [
+                        "status" => "true",
+                        "success_message" => "Store Updated Successfully"
+                    ];
+                    return response()->json($response);
+                }
+                else{
+                    $response = [
+                        "status" => "false",
+                        "error_message" => $request->storeprimaryurl."! This Store Primary Url is Already Added"
+                    ];
+                    return response()->json($response);
+                }
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->storetitle."! This Store Title is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
+        // title == title && primaryurl != primaryurl && secondaryurl != secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcmpcase($store->network_url, $request->storenetworkurl) != 0){
+
+        }
+        // title != title && primaryurl = primaryurl && secondaryurl != secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcmpcase($store->network_url, $request->storenetworkurl) != 0){
+
+        }
+        // title != title && primaryurl != primaryurl && secondaryurl != secondaryurl
+        else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcmpcase($store->network_url, $request->storenetworkurl) != 0){
+
+        }
+
+
+
+
+
+
+
+
+
+
         //if title == title && siteurl == siteurl
         if(strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->site_url , $request->storesiteurl) == 0){
             $store->title = $request->storetitle;
@@ -302,13 +449,10 @@ class StoreController extends Controller
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
             }
-            $domain = parse_url($store->site_url);
-            $domain = str_replace("www.","",$domain['host']);
-            $domain = strtolower($domain);
             $storelogo = $request->file('storelogo');
             $resized_store_logo = Image::make($storelogo);
             $resized_store_logo->resize(200, 200);
-            $store_logo_name = $domain."-coupons.".$storelogo->getClientOriginalExtension();
+            $store_logo_name = $store->secondary_url."-coupons.".$storelogo->getClientOriginalExtension();
             $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
