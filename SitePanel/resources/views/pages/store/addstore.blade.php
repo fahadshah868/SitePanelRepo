@@ -115,8 +115,8 @@
         $("#storeprimaryurl").bind('keyup input propertychange',function(){
             var value = $("#storeprimaryurl").val();
             if (value.indexOf("http://www.") >= 0){
-                var abc = value.replace("http://www.","");
-                $("#storesecondaryurl").val(abc);
+                var value = value.replace("http://www.","");
+                $("#storesecondaryurl").val(value);
             }
             else{
                 $("#storesecondaryurl").val("");
