@@ -53,6 +53,7 @@ Route::get('/deletestore/{id}','StoreController@deleteStore');
 //store categories
 Route::get('/allstorecategories','StoreCategoryGroupController@getAllStoreCategories');
 Route::get('/updatestorecategories/{id}','StoreCategoryGroupController@getUpdateStoreCategories');
+Route::post('/updatestorecategories','StoreCategoryGroupController@postUpdateStoreCategories');
                                   
 //category routes
 Route::get('/addcategory','CategoryController@getaddCategory');

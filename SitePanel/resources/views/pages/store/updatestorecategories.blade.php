@@ -1,10 +1,6 @@
 <div class="form-main-container">
     <div class="form-main-heading">Update Store Categories</div>
     <hr>
-    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong id="alert-success-message-area"></strong>
-    </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
@@ -12,6 +8,16 @@
     <form id="updatestorecategoriesform" action="#" method="POST" enctype="multipart/form-data">
     @csrf
         <div class="form-container">
+        <div class="row">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <span><b>Categories were:</b> </span>
+                    @foreach($store->storecategorygroup as $storecategory)
+                    {{$storecategory->category->title}}, 
+                    @endforeach
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -25,16 +31,20 @@
                         <div class="form-field-heading">Store Categories</div>
                         <select class="multiselectdropdown" id="storecategories" name="storecategories" multiple data-live-search="true">
                             @foreach($allcategories as $category)
-                                @php $flag = false
+                                @php
+                                $flag = "false"
+                                @endphp
                                 @foreach($store->storecategorygroup as $storecategory)
                                     @if($category->id == $storecategory->category_id)
-                                        $flag = true
+                                        @php
+                                            $flag = "true"
+                                        @endphp
                                         <option value="{{$category->id}}" selected>{{$category->title}}</option>
-                                        break
+                                        @break
                                     @endif
                                 @endforeach
-                                @if($flag == false)
-                                    <option value="{{$category->id}}">{{$category->title}}</option>
+                                @if($flag == "false")
+                                <option value="{{$category->id}}">{{$category->title}}</option>
                                 @endif
                             @endforeach
                         </select>
@@ -67,8 +77,9 @@
                 storecategories: "please select store categories",
             },
             submitHandler: function(form) {
+                var _storeid = $("#storeid").val();
                 var _storecategories = $("#storecategories").val();
-                var _jsondata = JSON.stringify({storecategories: _storecategories});
+                var _jsondata = JSON.stringify({storeid: _storeid, storecategories: _storecategories, _token: "{{ csrf_token() }}"});
                 $("#addstoreform").trigger("reset");
                 $(".alert").css("display","none");
                 $.ajax({
@@ -76,15 +87,11 @@
                     url: "/updatestorecategories",
                     dataType: "json",
                     data: _jsondata,
-                    contentType: false,
-                    processData: false,
+                    contentType: "application/json",
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
-                                $("#alert-success").slideUp(500);
-                            });
+                            $("#panel-body-container").load("/allstorecategories")
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

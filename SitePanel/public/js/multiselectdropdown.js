@@ -1,10 +1,10 @@
 $(document).ready(function(){
     $(".multiselectdropdown").multiselect({
-      nonSelectedText: 'Selected None',
+        nonSelectedText: 'Selected None',
         allSelectedText: 'Selected All',
         enableFiltering: true,
         buttonWidth: '100%',
-        maxHeight: 310,
+        minHeight: 310,
         enableCaseInsensitiveFiltering: true,
         includeSelectAllOption: true,
         buttonClass: 'btn btn-secondary',
@@ -18,5 +18,4 @@ $(document).ready(function(){
                     buttonContainer: '<div class="dropdown"/>',
                     buttonClass: 'btn btn-default'
     });
-    $(".dropdown").addClass("dropup");
 });

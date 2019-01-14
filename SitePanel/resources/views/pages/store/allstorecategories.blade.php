@@ -15,9 +15,9 @@
         </div>
     </div>
     <hr>
-    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong id="alert-danger-message-area"></strong>
+        <strong id="alert-success-message-area"></strong>
     </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
@@ -51,6 +51,12 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        if('{{Session::has("updatestorecategories_successmessage")}}'){
+            $("#alert-success-message-area").html('{{ Session::get("updatestorecategories_successmessage") }}');
+            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alert-success").slideUp(500);
+            });
+        }
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();

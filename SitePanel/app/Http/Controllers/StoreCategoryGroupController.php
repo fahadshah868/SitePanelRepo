@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\StoreCategoryGroup;
 use App\Store;
 use App\Category;
+use Session;
 
 class StoreCategoryGroupController extends Controller
 {
@@ -18,5 +19,21 @@ class StoreCategoryGroupController extends Controller
         $data['allcategories'] = Category::all();
         $data['store'] = Store::find($id);
         return view('pages.store.updatestorecategories',$data);
+    }
+    public function postUpdateStoreCategories(Request $request){
+        $storecategorygroup = StoreCategoryGroup::where('store_id',$request->storeid);
+        $storecategorygroup->delete();
+        for($category=0; $category< count($request->storecategories); $category++){
+            $storecategorygroup = new StoreCategoryGroup;
+            $storecategorygroup->store_id = $request->storeid;
+            $storecategorygroup->category_id = $request->storecategories[$category];
+            $storecategorygroup->save();
+        }
+        Session::flash("updatestorecategories_successmessage","Store Categories Updated Successfully");
+        $response = [
+            "status" => "true",
+            "success_message" => "Store Categories Updated Successfully"
+        ];
+        return response()->json($response);
     }
 }
