@@ -102,9 +102,11 @@ class StoreController extends Controller
             $store->type = $request->storetype;
             $store->status = $request->storestatus;
             $store->save();
+            Session::flash("updatestore_successmessage","Store Updated Successfully");
             $response = [
                 "status" => "true",
-                "success_message" => "Store Updated Successfully"
+                "success_message" => "Store Updated Successfully",
+                "storeid" => $request->storeid
             ];
             return response()->json($response);
         }
@@ -121,9 +123,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -148,9 +152,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -175,9 +181,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -192,7 +200,7 @@ class StoreController extends Controller
         // title != title && primaryurl != primaryurl && secondaryurl == secondaryurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
             $are_storefields_exists = Store::where('title',$request->storetitle)
-                                    ->onwhere('primary_url',$request->storeprimaryurl)
+                                    ->orwhere('primary_url',$request->storeprimaryurl)
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
@@ -204,9 +212,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -221,7 +231,7 @@ class StoreController extends Controller
         // title == title && primaryurl != primaryurl && secondaryurl != secondaryurl
         else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $are_storefields_exists = Store::where('primary_url',$request->storeprimaryurl)
-                                    ->onwhere('network_url',$request->storenetworkurl)
+                                    ->orwhere('network_url',$request->storenetworkurl)
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
@@ -233,9 +243,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -250,7 +262,7 @@ class StoreController extends Controller
         // title != title && primaryurl = primaryurl && secondaryurl != secondaryurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $are_storefields_exists = Store::where('title',$request->storetitle)
-                                    ->onwhere('network_url',$request->storenetworkurl)
+                                    ->orwhere('network_url',$request->storenetworkurl)
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
@@ -262,9 +274,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -292,9 +306,11 @@ class StoreController extends Controller
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
                 $store->save();
+                Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "success_message" => "Store Updated Successfully"
+                    "success_message" => "Store Updated Successfully",
+                    "storeid" => $request->storeid
                 ];
                 return response()->json($response);
             }
@@ -321,23 +337,14 @@ class StoreController extends Controller
             $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
-            $is_save = $store->save();
-            if($is_save){
-                Session::flash("updatestorelogo_successmessage","Store Logo Updated Successfully");
-                $response = [
-                    "status" => "true",
-                    "id" => $formdata->storeid,
-                    "success_message" => "Store Logo Updated Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Error! Store Is Not Updated Successfully"
-                ];
-                return response()->json($response);
-            }
+            $store->save();
+            Session::flash("updatestorelogo_successmessage","Store Logo Updated Successfully");
+            $response = [
+                "status" => "true",
+                "success_message" => "Store Logo Updated Successfully",
+                "storeid" => $formdata->storeid
+            ];
+            return response()->json($response);
         }
         else{
             $response = [
@@ -352,20 +359,11 @@ class StoreController extends Controller
         if(File::exists($store->logo_url)){
             File::delete($store->logo_url);
         }
-        $is_delete = $store->delete();
-        if($is_delete){
-            $response = [
-                "status" => "true",
-                "success_message" => "Store Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
-        else{
-            $response = [
-                "status" => "false",
-                "error_message" => "Error! Store Is Not Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
+        $store->delete();
+        $response = [
+            "status" => "true",
+            "success_message" => "Store Deleted Successfully"
+        ];
+        return response()->json($response);
     }
 }

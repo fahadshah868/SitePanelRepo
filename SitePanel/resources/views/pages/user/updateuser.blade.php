@@ -19,7 +19,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Password</div>
-                            <input type="text" class="form-control" id="password" value="{{$user->password}}" name="password" placeholder="password"/>
+                            <input type="text" class="form-control" id="userpassword" value="{{$user->password}}" name="userpassword" placeholder="password"/>
                         </div>
                     </div>
                 </div>
@@ -72,23 +72,23 @@
             }).validate({
                 rules: {
                     username: "required",
-                    password: "required",
+                    userpassword: "required",
                     userrole: "required",
                     userstatus: "required"
                 },
                 messages: {
                     username: "please enter user name",
-                    password: "please enter user password",
+                    userpassword: "please enter user password",
                     userrole: "Please select user type",
                     userstatus: "Please select user status"
                 },
                 submitHandler: function(form) {
                     var _userid = $("#userid").val();
                     var _username = $("#username").val();
-                    var _password = $("#password").val();
+                    var _userpassword = $("#userpassword").val();
                     var _userrole = $("#userrole").val();
                     var _userstatus = $("#userstatus").val();
-                    var _jsondata = JSON.stringify({userid: _userid, username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
+                    var _jsondata = JSON.stringify({userid: _userid, username: _username, userpassword: _userpassword, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                     $(".alert").css("display","none");
                     $.ajax({
                         method: 'POST',

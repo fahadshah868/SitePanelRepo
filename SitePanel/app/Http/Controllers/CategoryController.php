@@ -33,21 +33,12 @@ class CategoryController extends Controller
                 $category_logo_path = 'images/category/'.$category_logo_name;
                 $category->logo_url = $category_logo_path;
             }
-            $is_save = $category->save();
-            if($is_save){
-                $response = [
-                    "status" => "true",
-                    "success_message" => "Category Added Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Error! Category Is Not Added Successfully"
-                ];
-                return response()->json($response);
-            }
+            $category->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "Category Added Successfully"
+            ];
+            return response()->json($response);
         }
         else{
             $response = [
@@ -77,23 +68,14 @@ class CategoryController extends Controller
             $category->title = $request->categorytitle;
             $category->type = $request->categorytype;
             $category->status = $request->categorystatus;
-            $is_category_updated = $category->save();
-            if($is_category_updated){
-                Session::flash("updatecategory_successmessage","Category Updated Successfully");
-                $response = [
-                    "status" => "true",
-                    "id" => $request->categoryid,
-                    "success_message" => "Category Updated Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Category Is Not Updated Successfully"
-                ];
-                return response()->json($response);
-            }
+            $category->save();
+            Session::flash("updatecategory_successmessage","Category Updated Successfully");
+            $response = [
+                "status" => "true",
+                "id" => $request->categoryid,
+                "success_message" => "Category Updated Successfully"
+            ];
+            return response()->json($response);
         }
         //if(title != title && type == type)
         else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) == 0){
@@ -110,23 +92,14 @@ class CategoryController extends Controller
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
                 }
-                $is_category_updated = $category->save();
-                if($is_category_updated){
-                    Session::flash("updatecategory_successmessage","Category Updated Successfully");
-                    $response = [
-                        "status" => "true",
-                        "id" => $request->categoryid,
-                        "success_message" => "Category Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
-                else{
-                    $response = [
-                        "status" => "false",
-                        "error_message" => "Category Is Not Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
+                $category->save();
+                Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                $response = [
+                    "status" => "true",
+                    "id" => $request->categoryid,
+                    "success_message" => "Category Updated Successfully"
+                ];
+                return response()->json($response);
             }
             else{
                 $response = [
@@ -147,23 +120,14 @@ class CategoryController extends Controller
                     $category->logo_url = null;
                 }
             }
-            $is_category_updated = $category->save();
-            if($is_category_updated){
-                Session::flash("updatecategory_successmessage","Category Updated Successfully");
-                $response = [
-                    "status" => "true",
-                    "id" => $request->categoryid,
-                    "success_message" => "Category Updated Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Category Is Not Updated Successfully"
-                ];
-                return response()->json($response);
-            }
+            $category->save();
+            Session::flash("updatecategory_successmessage","Category Updated Successfully");
+            $response = [
+                "status" => "true",
+                "id" => $request->categoryid,
+                "success_message" => "Category Updated Successfully"
+            ];
+            return response()->json($response);
         }
         //if(title != title && type != type)
         else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) != 0){
@@ -186,23 +150,14 @@ class CategoryController extends Controller
                         $category->logo_url = null;
                     }
                 }
-                $is_category_updated = $category->save();
-                if($is_category_updated){
-                    Session::flash("updatecategory_successmessage","Category Updated Successfully");
-                    $response = [
-                        "status" => "true",
-                        "id" => $request->categoryid,
-                        "success_message" => "Category Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
-                else{
-                    $response = [
-                        "status" => "false",
-                        "error_message" => "Category Is Not Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
+                $category->save();
+                Session::flash("updatecategory_successmessage","Category Updated Successfully");
+                $response = [
+                    "status" => "true",
+                    "id" => $request->categoryid,
+                    "success_message" => "Category Updated Successfully"
+                ];
+                return response()->json($response);
             }
             else{
                 $response = [
@@ -237,23 +192,14 @@ class CategoryController extends Controller
             $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
             $category_logo_path = 'images/category/'.$category_logo_name;
             $category->logo_url = $category_logo_path;
-            $is_categorylogo_updated = $category->save();
-            if($is_categorylogo_updated){
-                Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
-                $response = [
-                    "status" => "true",
-                    "id" => $formdata->categoryid,
-                    "success_message" => "Category Logo ".$categorylogo_message." Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Category Logo Is Not ".$categorylogo_message." Successfully"
-                ];
-                return response()->json($response);
-            }
+            $category->save();
+            Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
+            $response = [
+                "status" => "true",
+                "id" => $formdata->categoryid,
+                "success_message" => "Category Logo ".$categorylogo_message." Successfully"
+            ];
+            return response()->json($response);
         }
         else{
             $response = [
@@ -268,20 +214,11 @@ class CategoryController extends Controller
         if(File::exists($category->logo_url)){
             File::delete($category->logo_url);
         }
-        $is_delete = $category->delete();
-        if($is_delete){
-            $response = [
-                "status" => "true",
-                "success_message" => "Category Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
-        else{
-            $response = [
-                "status" => "false",
-                "error_message" => "Error! Category Is Not Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
+        $category->delete();
+        $response = [
+            "status" => "true",
+            "success_message" => "Category Deleted Successfully"
+        ];
+        return response()->json($response);
     }
 }

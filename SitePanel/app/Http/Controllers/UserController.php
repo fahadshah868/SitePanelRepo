@@ -20,21 +20,12 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
-            $is_user_save = $user->save();
-            if($is_user_save){
-                $response = [
-                    "status" => "true",
-                    "success_message" => "User Registered Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Error! User Is Not Registered Successfully"
-                ];
-                return response()->json($response);
-            }
+            $user->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "User Registered Successfully"
+            ];
+            return response()->json($response);
         }
         else{
             $response = [
@@ -55,14 +46,27 @@ class UserController extends Controller
     }
     public function postUpdateUser(Request $request){
         $user = User::find($request->userid);
-        //if username == username
-        if(strcasecmp($user->username , $request->username) == 0){
+        //if username == username && pwd == pwd
+        if(strcasecmp($user->username , $request->username) == 0 && strcasecmp($user->password , $request->userpassword) == 0){
             $user->username = strtolower($request->username);
-            $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
-            $is_update = $user->save();
-            if($is_update){
+            $user->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "User Updated Successfully"
+            ];
+            Session::flash('updateuser_successmessage','User Updated Successfully');
+            return response()->json($response);
+        }
+        //if username != username && pwd == pwd
+        else if(strcasecmp($user->username , $request->username) != 0 && strcasecmp($user->password , $request->userpassword) == 0){
+            $is_user_exists = User::where('username',$request->username)->exists();
+            if(!$is_user_exists){
+                $user->username = strtolower($request->username);
+                $user->role = $request->userrole;
+                $user->status = $request->userstatus;
+                $user->save();
                 $response = [
                     "status" => "true",
                     "success_message" => "User Updated Successfully"
@@ -73,34 +77,39 @@ class UserController extends Controller
             else{
                 $response = [
                     "status" => "false",
-                    "error_message" => "Error! User Is Not Updated Successfully"
+                    "error_message" => strtolower($request->username)."! This User is Already Registered"
                 ];
                 return response()->json($response);
             }
         }
-        else{
+        //if username == username && pwd != pwd
+        else if(strcasecmp($user->username , $request->username) == 0 && strcasecmp($user->password , $request->userpassword) != 0){
+            $user->username = strtolower($request->username);
+            $user->password = Hash::make($request->userpassword);
+            $user->role = $request->userrole;
+            $user->status = $request->userstatus;
+            $user->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "User Updated Successfully"
+            ];
+            Session::flash('updateuser_successmessage','User Updated Successfully');
+            return response()->json($response);
+        }
+        else if(strcasecmp($user->username , $request->username) != 0 && strcasecmp($user->password , $request->userpassword) != 0){
             $is_user_exists = User::where('username',$request->username)->exists();
             if(!$is_user_exists){
                 $user->username = strtolower($request->username);
-                $user->password = Hash::make($request->password);
+                $user->password = Hash::make($request->userpassword);
                 $user->role = $request->userrole;
                 $user->status = $request->userstatus;
-                $is_update = $user->save();
-                if($is_update){
-                    Session::flash('updateuser_successmessage','User Updated Successfully');
-                    $response = [
-                        "status" => "true",
-                        "success_message" => "User Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
-                else{
-                    $response = [
-                        "status" => "false",
-                        "error_message" => "Error! User Is Not Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
+                $user->save();
+                Session::flash('updateuser_successmessage','User Updated Successfully');
+                $response = [
+                    "status" => "true",
+                    "success_message" => "User Updated Successfully"
+                ];
+                return response()->json($response);
             }
             else{
                 $response = [
@@ -113,20 +122,11 @@ class UserController extends Controller
     }
     public function deleteUser($id){
         $user = User::find($id);
-        $is_user_deleted = $user->delete();
-        if($is_user_deleted){
-            $response = [
-                "status" => "true",
-                "success_message" => "User Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
-        else{
-            $response = [
-                "status" => "false",
-                "error_message" => "Error! User Is Not Deleted Successfully"
-            ];
-            return response()->json($response);
-        }
+        $user->delete();
+        $response = [
+            "status" => "true",
+            "success_message" => "User Deleted Successfully"
+        ];
+        return response()->json($response);
     }
 }

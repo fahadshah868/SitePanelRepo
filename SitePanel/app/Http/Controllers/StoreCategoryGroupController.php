@@ -13,12 +13,12 @@ class StoreCategoryGroupController extends Controller
     public function getAllStoreCategories(){
         $data['allstores'] = Store::all();
         $data['storescount'] = count($data['allstores']);
-        return view('pages.store.allstorecategories', $data);
+        return view('pages.storecategorygroup.allstorecategories', $data);
     }
     public function getUpdateStoreCategories($id){
         $data['allcategories'] = Category::all();
         $data['store'] = Store::find($id);
-        return view('pages.store.updatestorecategories',$data);
+        return view('pages.storecategorygroup.updatestorecategories',$data);
     }
     public function postUpdateStoreCategories(Request $request){
         $storecategorygroup = StoreCategoryGroup::where('store_id',$request->storeid);

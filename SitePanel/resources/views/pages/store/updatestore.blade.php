@@ -151,7 +151,7 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updatestorelogomodal").modal('toggle');
-                            $("#panel-body-container").load("/updatestore/"+data.id);
+                            $("#panel-body-container").load("/updatestore/"+data.storeid);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
