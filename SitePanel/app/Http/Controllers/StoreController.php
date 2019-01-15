@@ -110,7 +110,7 @@ class StoreController extends Controller
             ];
             return response()->json($response);
         }
-        // title != title && primaryurl == primaryurl && secondaryurl == secondaryurl
+        // title != title && primaryurl == primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
             $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
             if(!$is_storetitle_exists){
@@ -139,7 +139,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title == title && primaryurl != primaryurl && secondaryurl == secondaryurl
+        // title == title && primaryurl != primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
             $is_storeprimaryurl_exists = Store::where('primary_url',$request->storeprimaryurl)->exists();
             if(!$is_storeprimaryurl_exists){
@@ -151,6 +151,13 @@ class StoreController extends Controller
                 $store->network_url = $request->storenetworkurl;
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
+                if(File::exists($store->logo_url)){
+                    $extension = File::extension($store->logo_url);
+                    $store_logo_name = strtolower($request->storesecondaryurl)."-coupons.".$extension;
+                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
+                    $store_logo_path = 'images/store/'.$store_logo_name;
+                    $store->logo_url = $store_logo_path;
+                }
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -168,7 +175,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title == title && primaryurl == primaryurl && secondaryurl != secondaryurl
+        // title == title && primaryurl == primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $is_storenetworkurl_exists = Store::where('network_url',$request->storenetworkurl)->exists();
             if(!$is_storenetworkurl_exists){
@@ -197,7 +204,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title != title && primaryurl != primaryurl && secondaryurl == secondaryurl
+        // title != title && primaryurl != primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
             $are_storefields_exists = Store::where('title',$request->storetitle)
                                     ->orwhere('primary_url',$request->storeprimaryurl)
@@ -211,6 +218,13 @@ class StoreController extends Controller
                 $store->network_url = $request->storenetworkurl;
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
+                if(File::exists($store->logo_url)){
+                    $extension = File::extension($store->logo_url);
+                    $store_logo_name = strtolower($request->storesecondaryurl)."-coupons.".$extension;
+                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
+                    $store_logo_path = 'images/store/'.$store_logo_name;
+                    $store->logo_url = $store_logo_path;
+                }
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -228,7 +242,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title == title && primaryurl != primaryurl && secondaryurl != secondaryurl
+        // title == title && primaryurl != primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $are_storefields_exists = Store::where('primary_url',$request->storeprimaryurl)
                                     ->orwhere('network_url',$request->storenetworkurl)
@@ -242,6 +256,13 @@ class StoreController extends Controller
                 $store->network_url = $request->storenetworkurl;
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
+                if(File::exists($store->logo_url)){
+                    $extension = File::extension($store->logo_url);
+                    $store_logo_name = strtolower($request->storesecondaryurl)."-coupons.".$extension;
+                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
+                    $store_logo_path = 'images/store/'.$store_logo_name;
+                    $store->logo_url = $store_logo_path;
+                }
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -259,7 +280,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title != title && primaryurl = primaryurl && secondaryurl != secondaryurl
+        // title != title && primaryurl = primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $are_storefields_exists = Store::where('title',$request->storetitle)
                                     ->orwhere('network_url',$request->storenetworkurl)
@@ -290,7 +311,7 @@ class StoreController extends Controller
                 return response()->json($response);
             }
         }
-        // title != title && primaryurl != primaryurl && secondaryurl != secondaryurl
+        // title != title && primaryurl != primaryurl && networkurl == networkurl
         else if((strcasecmp($store->title , $request->storetitle) != 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) != 0) && strcasecmp($store->network_url, $request->storenetworkurl) != 0){
             $are_storefields_exists = Store::where('title',$request->storetitle)
                                 ->orwhere('primary_url',$request->storeprimaryurl)
@@ -305,6 +326,13 @@ class StoreController extends Controller
                 $store->network_url = $request->storenetworkurl;
                 $store->type = $request->storetype;
                 $store->status = $request->storestatus;
+                if(File::exists($store->logo_url)){
+                    $extension = File::extension($store->logo_url);
+                    $store_logo_name = strtolower($request->storesecondaryurl)."-coupons.".$extension;
+                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
+                    $store_logo_path = 'images/store/'.$store_logo_name;
+                    $store->logo_url = $store_logo_path;
+                }
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
