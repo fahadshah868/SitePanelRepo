@@ -11,11 +11,14 @@
 |
 */
 
-Route::group(['middleware' => ['clearcache']], function () {
-    //login routes
-    Route::get('/', 'LoginController@getLogin');
-    Route::post('/','LoginController@postLogin');
+Route::group(['middleware' => ['clearcache','checklogin']], function () {
+//login routes
+Route::get('/', 'LoginController@getLogin')->name('login');
+Route::post('/authenticate','LoginController@postLogin');
+});
 
+
+Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], function () {
     //dashboard routes
     Route::get('/dashboard',function(){
         return view('pages.dashboard');

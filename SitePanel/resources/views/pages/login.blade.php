@@ -14,7 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <div class="body-main-container">
         <nav class="login-top-navbar"><a href="/">Site Panel</a></nav>
-        <form action="/" method="POST" id="loginform">
+        <form action="/authenticate" method="POST" id="loginform">
             @csrf
             <div class="login-form">
                 @if(Session::has('login_errormessage'))
