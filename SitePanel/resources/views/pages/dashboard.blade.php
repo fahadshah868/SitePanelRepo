@@ -120,6 +120,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#slideroffersuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-shopping-bag"></i>
+                            Slider Offer
+                        </a>
+                        <ul class="collapse list-unstyled" id="slideroffersuboptions">
+                            <li>
+                                <a href="/addproduct" class="sidebar-suboption">Add Slider Offer</a>
+                            </li>
+                            <li>
+                                <a href="/allproducts" class="sidebar-suboption">View Slider Offers</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#productsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-shopping-bag"></i>
                             Product

@@ -50,7 +50,7 @@
                 <div class="col-sm-6">
                 </div>
                 <div class="col-sm-6">
-                    <div class="form-field-checkbox hide-field"  id="offercode-field">
+                    <div class="form-field-checkbox">
                         <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
                     </div>
                 </div>
@@ -137,6 +137,7 @@
             $(".alert").slideUp();
         });
         $("#offer_store").change(function(){
+            $("#offer_category option[value!='']").remove();
             var selectedstoreid = $("#offer_store :selected").val();
             if(selectedstoreid != ""){
                 $.ajax({
@@ -157,26 +158,6 @@
                         alert("Ajax Error! something went wrong...");
                     }
                 });
-            }
-            else{
-                $("#offer_category option[value!='']").remove();
-            }
-        });
-        $("#offertype_bystore").change(function(){
-            $("#offercode").prop('disabled', false);
-            $("#offercode-checkbox").prop("checked", false);
-            var offertype_text = $("#offertype_bystore :selected").text();
-            var offertype_value = $("#offertype_bystore :selected").val();
-            if(offertype_value != ""){
-                if(offertype_text.toUpperCase() == "CODE"){
-                    $("#offercode-field").addClass("hide-field");
-                }
-                else{
-                    $("#offercode-field").removeClass("hide-field");
-                }
-            }
-            else{
-                $("#offercode-field").addClass("hide-field");
             }
         });
         $("#offercode-checkbox").click(function(){
@@ -251,7 +232,6 @@
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
                 var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, offeranchor: _offeranchor, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offertype: _offertype, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
-                alert(_jsondata);
                 $("#addofferform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({

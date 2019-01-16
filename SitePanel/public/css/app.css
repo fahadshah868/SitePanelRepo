@@ -10885,10 +10885,6 @@ label.error {
   height: 16px;
 }
 
-.hide-field {
-  display: none;
-}
-
 @media only screen and (max-width: 750px) {
   .form-container .column {
     width: 100%;

@@ -5,17 +5,18 @@
             <div class="viewitems-header-searchbar-filter">
                 <select class="form-control" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
-                    <option value="0">Offer Title</option>
-                    <option value="1">Offer Type By Store</option>
-                    <option value="2">Offer Code</option>
-                    <option value="3">Offer Details</option>
-                    <option value="4">Store</option>
-                    <option value="5">Category</option>
-                    <option value="6">Offer Starting Date</option>
-                    <option value="7">Offer Expiry Date</option>
-                    <option value="8">Offer Uses</option>
-                    <option value="9">Offer Type</option>
-                    <option value="10">Offer Status</option>
+                    <option value="0">Store</option>
+                    <option value="1">Category</option>
+                    <option value="2">Offer Title</option>
+                    <option value="3">Offer Anchor</option>
+                    <option value="4">Offer Type By Store</option>
+                    <option value="5">Offer Code</option>
+                    <option value="6">Offer Details</option>
+                    <option value="7">Offer Starting Date</option>
+                    <option value="8">Offer Expiry Date</option>
+                    <option value="9">Offer Uses</option>
+                    <option value="10">Offer Type</option>
+                    <option value="11">Offer Status</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -36,12 +37,13 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
+                    <th>Store</th>
+                    <th>Category</th>
                     <th>Title</th>
+                    <th>Anchor</th>
                     <th>Offer Type By Store</th>
                     <th>Code</th>
                     <th>Details</th>
-                    <th>Store</th>
-                    <th>Category</th>
                     <th>Starting Data</th>
                     <th>Expiry Date</th>
                     <th>Uses</th>
@@ -53,28 +55,29 @@
             <tbody id="tablebody">
                 @foreach($alloffers as $offer)
                 <tr>
-                    <td>{{ $offer->title }}</td>
-                    <td>{{ $offer->offer_type->title }}</td>
-                    @if($offer->code != null)
-                    <td>{{ $offer->code }}</td>
-                    @else
-                    <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
-                    @endif
-                    <td>{{ $offer->details }}</td>
                     <td>{{ $offer->store->title }}</td>
                     <td>{{ $offer->category->title }}</td>
+                    <td>{{ $offer->title }}</td>
+                    <td>{{ $offer->anchor }}</td>
+                    <td>{{ $offer->offer_type->title }}</td>
+                    @if($offer->code != null)
+                        <td>{{ $offer->code }}</td>
+                    @else
+                        <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
+                    @endif
+                    <td>{{ $offer->details }}</td>
                     <td>{{ $offer->starting_date }}</td>
                     @if($offer->expiry_date != null)
-                    <td>{{ $offer->expiry_date }}</td>
+                        <td>{{ $offer->expiry_date }}</td>
                     @else
-                    <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
+                        <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                     @endif
                     <td>{{ $offer->uses }}</td>
                     <td>{{ $offer->type }}</td>
                     <td>{{ $offer->status }}</td>
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offertitle="{{ $offer->title }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}" data-offertype="{{ $offer->type }}" data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -100,36 +103,39 @@
             filterTable();
             if(column != ""){
                 if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Offer Title');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Offer Type By Store');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Offer Code');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Offer Details');
-                }
-                else if(column == 4){
                     $("#searchbar").attr('placeholder','Search Store');
                 }
-                else if(column == 5){
+                else if(column == 1){
                     $("#searchbar").attr('placeholder','Search Category');
                 }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search Offer Title');
+                }
+                else if(column == 3){
+                    $("#searchbar").attr('placeholder','Search Offer Anchor');
+                }
+                else if(column == 4){
+                    $("#searchbar").attr('placeholder','Search Offer Type By Store');
+                }
+                else if(column == 5){
+                    $("#searchbar").attr('placeholder','Search Offer Code');
+                }
                 else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Offer Start Date');
+                    $("#searchbar").attr('placeholder','Search Offer Details');
                 }
                 else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
+                    $("#searchbar").attr('placeholder','Search Offer Start Date');
                 }
                 else if(column == 8){
-                    $("#searchbar").attr('placeholder','Search Offer Uses');
+                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
                 }
                 else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search Offer Type');
+                    $("#searchbar").attr('placeholder','Search Offer Uses');
                 }
                 else if(column == 10){
+                    $("#searchbar").attr('placeholder','Search Offer Type');
+                }
+                else if(column == 11){
                     $("#searchbar").attr('placeholder','Search Offer Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
@@ -174,12 +180,13 @@
                 var url = $(this).attr("href");
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
+                    "<b>Store:</b>  "+$(this).data("offerstore")+"<br>"+
+                    "<b>Category:</b>  "+$(this).data("offercategory")+"<br>"+
                     "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
+                    "<b>Offer Anchor:</b>  "+$(this).data("offeranchor")+"<br>"+
                     "<b>Offer Type By Store:</b>  "+$(this).data("offertypebystore")+"<br>"+
                     "<b>Offer Code:</b>  "+$(this).data("offercode")+"<br>"+
                     "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
-                    "<b>Store:</b>  "+$(this).data("offerstore")+"<br>"+
-                    "<b>Category:</b>  "+$(this).data("offercategory")+"<br>"+
                     "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
                     "<b>Offer Expiry Date:</b>  "+$(this).data("offerexpirydate")+"<br>"+
                     "<b>Offer Uses:</b>  "+$(this).data("offeruses")+"<br>"+
