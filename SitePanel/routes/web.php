@@ -79,6 +79,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
 
     //offer routes
     Route::get('/addoffer','OfferController@getAddOffer');
+    Route::get('/getstorecategories/{id}','OfferController@getStoreCategories');
     Route::post('/addoffer','OfferController@postAddOffer');
     Route::get('/alloffers','OfferController@getAllOffers');
     Route::get('/updateoffer/{id}','OfferController@getUpdateOffer');

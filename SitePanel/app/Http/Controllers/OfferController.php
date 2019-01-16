@@ -7,15 +7,19 @@ use App\Store;
 use App\Category;
 use App\OfferType;
 use App\Offer;
+use App\StoreCategoryGroup;
 use Session;
 
 class OfferController extends Controller
 {
     public function getAddOffer(){
         $data['allstores'] = Store::all();
-        $data['allcategories'] = Category::all();
         $data['alloffertypes'] = OfferType::all();
         return view("pages.offer.addoffer",$data);
+    }
+    public function getStoreCategories($id){
+        $data['allstorecategories'] = StoreCategoryGroup::where('store_id',$id)->with('category')->get();
+        return response()->json($data);
     }
     public function postAddOffer(Request $request){
         $is_offer_saved = false;

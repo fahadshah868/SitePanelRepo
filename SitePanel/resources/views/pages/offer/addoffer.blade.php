@@ -11,13 +11,51 @@
     </div>
     <form id="addofferform">
         <div class="form-container">
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Select Store</div>
+                        <select class="form-control" id="offer_store" name="offer_store">
+                            <option value="">Select Store</option>
+                            @foreach($allstores as $store)
+                            <option value="{{$store->id}}">{{$store->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Select Category</div>
+                        <select class="form-control" id="offer_category" name="offer_category">
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Title</div>
-                        <input type="text" class="form-control" id="offertitle" name="offertitle" placeholder="offer"/>
+                        <input type="text" class="form-control" id="offertitle" name="offertitle" placeholder="20% Off on your online order"/>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Anchor</div>
+                        <input type="text" class="form-control" id="offeranchor" name="offeranchor" placeholder="20% Off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field-checkbox hide-field"  id="offercode-field">
+                        <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
@@ -29,16 +67,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-field-checkbox hide-field"  id="offercode-field">
-                        <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Code</div>
                         <input type="text" class="form-control" id="offercode" name="offercode" placeholder="code">
@@ -50,28 +79,6 @@
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
                         <textarea class="form-control" id="offerdetails" name="offerdetails" placeholder="description"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Select Store</div>
-                        <select class="multiselectdropdown" id="offer_stores" name="offer_stores" multiple data-live-search="true">
-                            @foreach($allstores as $store)
-                            <option value="{{$store->id}}">{{$store->title}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Select Category</div>
-                        <select class="multiselectdropdown" id="offer_categories" name="offer_categories" multiple data-live-search="true">
-                            @foreach($allcategories as $category)
-                            <option value="{{$category->id}}">{{$category->title}}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
             </div>
@@ -129,6 +136,32 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        $("#offer_store").change(function(){
+            var selectedstoreid = $("#offer_store :selected").val();
+            if(selectedstoreid != ""){
+                $.ajax({
+                    method: "GET",
+                    url: "/getstorecategories/"+selectedstoreid,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        $.each(data.allstorecategories, function (index, value) {
+                            $('#offer_category')
+                            .append($("<option></option>")
+                            .attr("value",value.category_id)
+                            .text(value.category.title));
+                        });
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+            }
+            else{
+                $("#offer_category option[value!='']").remove();
+            }
+        });
         $("#offertype_bystore").change(function(){
             $("#offercode").prop('disabled', false);
             $("#offercode-checkbox").prop("checked", false);
@@ -167,24 +200,26 @@
             event.preventDefault();
         }).validate({
             rules: {
+                offer_store: "required",
+                offer_category: "required",
                 offertitle: "required",
+                offeranchor: "required",
                 offertype_bystore: "required",
                 offercode: "required",
                 offerdetails: "required",
-                offer_stores: "required",
-                offer_categories: "required",
                 offer_startingdate: "required",
                 offer_expirydate: "required",
                 offertype: "required",
                 offerstatus: "required"
             },
             messages: {
+                offer_store: "please select store",
+                offer_category: "please select category",
                 offertitle: "please enter offer title",
+                offeranchor: "please enter offer anchor",
                 offertype_bystore: "please select offer type",
                 offercode: "please enter offer code",
                 offerdetails: "please enter offer details",
-                offer_stores: "please select store",
-                offer_categories: "please select category",
                 offer_startingdate: "please select starting date",
                 offer_expirydate: "please select expiry date",
                 offertype: "please select offer type",
@@ -193,11 +228,12 @@
             submitHandler: function(form) {
                 var _offercode = "";
                 var _offer_expirydate = "";
+                var _offer_store = $("#offer_store").val();
+                var _offer_category = $("#offer_category").val();
                 var _offertitle = $("#offertitle").val();
+                var _offeranchor = $("#offeranchor").val();
                 var _offertype_bystore = $("#offertype_bystore").val();
                 var _offerdetails = $("#offerdetails").val();
-                var _offer_stores = $("#offer_stores").val();
-                var _offer_categories = $("#offer_categories").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
                 var _offer_expirydate = $("#offer_expirydate").val();
                 var _offertype = $("#offertype").val();
@@ -214,13 +250,13 @@
                 else{
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
-                var _jsondata = JSON.stringify({offertitle: _offertitle, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_stores: _offer_stores, offer_categories: _offer_categories, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offertype: _offertype, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, offeranchor: _offeranchor, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offertype: _offertype, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                alert(_jsondata);
                 $("#addofferform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",
                     url: "/addoffer",
-                    dataType: "json",
                     data: _jsondata,
                     dataType: "json",
                     contentType: "application/json",

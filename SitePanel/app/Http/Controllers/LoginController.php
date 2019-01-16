@@ -16,15 +16,10 @@ class LoginController extends Controller
         $userdata = array(
             'username' => $request->get('username'),
             'password' => $request->get('password'),
+            'status' => 'active',
         );
         if(Auth::attempt($userdata)){
-            if(Auth::User()->status == "active"){
-                return redirect('/dashboard');
-            }
-            else{
-                Session::flash('login_errormessage' , "This Account Has Been Deactivated");
-                return back();
-            }
+            return redirect('/dashboard');
         }
         else{
             Session::flash('login_errormessage' , "Wrong Login Details");

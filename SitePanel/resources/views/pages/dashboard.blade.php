@@ -174,7 +174,7 @@
                 $("#panel-body-container").load("/adduser");
             }
             else{
-                $("#panel-body-container").load("/addstore");
+                $("#panel-body-container").load("/addnetwork");
             }
 
             //when resize browser window
