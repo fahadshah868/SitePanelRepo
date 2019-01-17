@@ -5,7 +5,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="updatestorecategoriesform" action="#" method="POST" enctype="multipart/form-data">
+    <form id="updatestorecategoriesform" action="#" method="#">
     @csrf
         <div class="form-container">
         <div class="row">
@@ -51,8 +51,10 @@
                     </div>
                 </div>
             </div>
-            <a href="/allstorecategories" id="backtostorecategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store Categories</a>
-            <input type="submit" value="Update Store Categories" class="btn btn-primary form-button"/>
+            <div class="form-buttons-container">
+                <a href="/allstorecategories" id="backtostorecategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store Categories</a>
+                <input type="submit" value="Update Store Categories" class="btn btn-primary form-button"/>
+            </div>
         </div>
     </form>
 </div>
@@ -80,7 +82,6 @@
                 var _storeid = $("#storeid").val();
                 var _storecategories = $("#storecategories").val();
                 var _jsondata = JSON.stringify({storeid: _storeid, storecategories: _storecategories, _token: "{{ csrf_token() }}"});
-                $("#addstoreform").trigger("reset");
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

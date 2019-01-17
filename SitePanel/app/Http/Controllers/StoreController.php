@@ -76,7 +76,7 @@ class StoreController extends Controller
         }
     }
     public function getAllStores(){
-        $data['allstores'] = Store::all();
+        $data['allstores'] = Store::orderBy('id', 'DESC')->get();
         $data['storescount'] = count($data['allstores']);
         return view('pages.store.allstores', $data);
     }

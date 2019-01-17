@@ -5,7 +5,7 @@
             <a href="#" class="close" aria-label="close">&times;</a>
             <strong id="alert-danger-message-area"></strong>
         </div>
-        <form id="updatenetworkform" action="#" method="POST">
+        <form id="updatenetworkform" action="#" method="#">
             @csrf
             <div class="form-container">
                 <div class="row">
@@ -31,8 +31,15 @@
                         </div>
                     </div>
                 </div>
-                <a href="/allnetworks" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
-                <input type="submit" value="Update Network" class="btn btn-primary form-button"/>
+                <div class="form-buttons-container">
+                    <div>
+                        <a href="/allnetworks" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
+                        <input type="submit" value="Update Network" class="btn btn-primary form-button"/>
+                    </div>
+                    <div>
+                        <a href="#" id="resetupdatenetworkform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -44,6 +51,10 @@
             $("#backtonetworks").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
+            });
+            $("#resetupdatenetworkform").click(function(){
+                event.preventDefault();
+                $("#updatenetworkform").trigger("reset");
             });
             $("#updatenetworkform").submit(function(event){
                 event.preventDefault();

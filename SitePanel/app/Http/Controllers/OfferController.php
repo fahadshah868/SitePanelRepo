@@ -18,18 +18,20 @@ class OfferController extends Controller
     }
     public function postAddOffer(Request $request){
         $offer = new Offer;
-        $offer->title = $request->offertitle;
-        $offer->anchor = $request->offeranchor;
+        $offer->title = ucwords($request->offertitle);
+        $offer->anchor = strtoupper($request->offeranchor);
         $offer->offer_type_id = $request->offertype_bystore;
         $offer->code = $request->offercode;
-        $offer->details = $request->offerdetails;
+        $offer->details = ucfirst($request->offerdetails);
         $offer->store_id = $request->offer_store;
         $offer->category_id = $request->offer_category;
         $offer->starting_date = $request->offer_startingdate;
         $offer->expiry_date = $request->offer_expirydate;
-        $offer->type = $request->offertype;
+        $offer->is_popular = $request->offer_is_popular;
+        $offer->display_at_home = $request->offer_display_at_home;
+        $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
-        $is_offer_saved = $offer->save();
+        $offer->save();
         $response = [
             "status" => "true",
             "success_message" => "Offer Added Successfully"
@@ -37,7 +39,7 @@ class OfferController extends Controller
         return response()->json($response);
     }
     public function getAllOffers(){
-        $data['alloffers'] = Offer::all();
+        $data['alloffers'] = Offer::orderBy('id', 'DESC')->get();
         $data['offerscount'] = count($data['alloffers']);
         return view('pages.offer.alloffers',$data);
     }
@@ -50,8 +52,8 @@ class OfferController extends Controller
     }
     public function postUpdateOffer(Request $request){
         $offer = Offer::find($request->offerid);
-        $offer->title = $request->offertitle;
-        $offer->anchor = $request->offeranchor;
+        $offer->title = ucwords($request->offertitle);
+        $offer->anchor = strtoupper($request->offeranchor);
         $offer->offer_type_id = $request->offertype_bystore;
         $offer->code = $request->offercode;
         $offer->details = $request->offerdetails;

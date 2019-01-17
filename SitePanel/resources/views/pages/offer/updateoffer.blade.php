@@ -5,7 +5,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="updateofferform">
+    <form id="updateofferform" method="#" method="#">
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-6">
@@ -201,8 +201,15 @@
                     </div>
                 </div>
             </div>
-            <a href="/alloffers" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
-            <input type="submit" value="Update Offer" class="btn btn-primary form-button"/>
+            <div class="form-buttons-container">
+                <div>
+                    <a href="/alloffers" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
+                    <input type="submit" value="Update Offer" class="btn btn-primary form-button"/>
+                </div>
+                <div>
+                    <a href="#" id="resetupdateofferform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -211,6 +218,10 @@
     $(document).ready(function(){
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#resetupdateofferform").click(function(){
+            event.preventDefault();
+            $("#updateofferform").trigger("reset");
         });
         $("#offer_store").change(function(){
             if( $('#offer_category').has('option').val() != "" ) {

@@ -42,7 +42,7 @@ class NetworkController extends Controller
         }
     }
     public function getAllNetworks(){
-        $data['allnetworks'] = Network::all();
+        $data['allnetworks'] = Network::orderBy('id', 'DESC')->get();
         $data['networkscount'] = count($data['allnetworks']);
         return view('pages.network.allnetworks',$data);
     }

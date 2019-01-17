@@ -9,7 +9,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="adduserform" action="/adduser" method="POST">
+    <form id="adduserform" action="#" method="#">
         @csrf
         <div class="form-container">
             <div class="row">

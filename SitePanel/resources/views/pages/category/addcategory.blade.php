@@ -9,7 +9,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="addcategoryform">
+    <form id="addcategoryform" action="#" method="#">
         <div class="form-container">
             <div class="row">
                 <div class="col-sm-12">

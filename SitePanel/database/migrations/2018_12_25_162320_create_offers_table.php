@@ -28,7 +28,9 @@ class CreateOffersTable extends Migration
             $table->date('starting_date');
             $table->date('expiry_date')->nullable();
             $table->bigInteger('uses')->nullable();
-            $table->enum('type',['regular','popular']);
+            $table->enum('is_popular',['yes','no']);
+            $table->enum('display_at_home',['yes','no']);
+            $table->enum('is_verified',['yes','no']);
             $table->enum('status',['active','deactive']);
             $table->timestamps();
         });

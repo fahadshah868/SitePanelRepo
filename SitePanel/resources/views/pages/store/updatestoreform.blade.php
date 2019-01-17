@@ -5,7 +5,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="updatestoreform" action="/updatestoreform" method="POST" enctype="multipart/form-data">
+    <form id="updatestoreform" action="#" method="#">
     @csrf
         <div class="form-container">
             <div class="row">
@@ -91,8 +91,15 @@
                     </div>
                 </div>
             </div>
-            <a href="/updatestore/{{$store->id}}" id="backtostore" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store</a>
-            <input type="submit" value="Update Store" class="btn btn-primary form-button"/>
+            <div class="form-buttons-container">
+                <div>
+                    <a href="/updatestore/{{$store->id}}" id="backtostore" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store</a>
+                    <input type="submit" value="Update Store" class="btn btn-primary form-button"/>
+                </div>
+                <div>
+                    <a href="#" id="resetupdatestoreform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -104,6 +111,10 @@
         $("#backtostore").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
+        });
+        $("#resetupdatestoreform").click(function(){
+            event.preventDefault();
+            $("#updatestoreform").trigger("reset");
         });
         $("#storeprimaryurl").bind('keyup input propertychange',function(){
             var value = $("#storeprimaryurl").val();
@@ -149,7 +160,6 @@
                 var _storetype = $("#storetype").val();
                 var _storestatus = $("#storestatus").val();
                 var _jsondata = JSON.stringify({storeid: _storeid, storetitle: _storetitle, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, storetype: _storetype, storestatus: _storestatus, _token: "{{ csrf_token() }}"});
-                $("#addstoreform").trigger("reset");
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

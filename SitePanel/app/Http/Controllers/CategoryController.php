@@ -49,7 +49,7 @@ class CategoryController extends Controller
          }
     }
     public function getAllCategories(){
-        $data['allcategories'] = Category::all();
+        $data['allcategories'] = Category::orderBy('id', 'DESC')->get();
         $data['categoriescount'] = count($data['allcategories']);
         return view('pages.category.allcategories',$data);
     }

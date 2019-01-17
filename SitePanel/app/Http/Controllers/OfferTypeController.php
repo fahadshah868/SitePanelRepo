@@ -15,7 +15,7 @@ class OfferTypeController extends Controller
         $is_offertypetitle_exists = OfferType::where('title',$request->offertypetitle)->exists();
         if(!$is_offertypetitle_exists){
             $offertype = new OfferType;
-            $offertype->title = $request->offertypetitle;
+            $offertype->title = ucwords($request->offertypetitle);
             $offertype->status = $request->offertypestatus;
             $is_offertype_save = $offertype->save();
             if($is_offertype_save){
@@ -53,7 +53,7 @@ class OfferTypeController extends Controller
     public function postUpdateOfferType(Request $request){
         $offertype = OfferType::find($request->offertypeid);
         if(strcasecmp($offertype->title , $request->offertypetitle) == 0){
-            $offertype->title = $request->offertypetitle;
+            $offertype->title = ucwords($request->offertypetitle);
             $offertype->status = $request->offertypestatus;
             $is_offertype_updated = $offertype->save();
             if($is_offertype_updated){
@@ -75,7 +75,7 @@ class OfferTypeController extends Controller
         else{
             $is_offertype_exists = OfferType::where('title',$request->offertypetitle)->exists();
             if(!$is_offertype_exists){
-                $offertype->title = $request->offertypetitle;
+                $offertype->title = ucwords($request->offertypetitle);
                 $offertype->status = $request->offertypestatus;
                 $is_offertype_updated = $offertype->save();
                 if($is_offertype_updated){

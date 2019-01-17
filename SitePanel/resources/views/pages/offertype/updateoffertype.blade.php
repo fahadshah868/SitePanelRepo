@@ -9,7 +9,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
-    <form id="updateOffertypeform" action="/updateoffertype" method="POST">
+    <form id="updateoffertypeform" action="#" method="#">
         @csrf
         <div class="form-container">
             <div class="row">
@@ -35,8 +35,15 @@
                     </div>
                 </div>
             </div>
-            <a href="/alloffertypes" id="backtooffertypes" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer Types</a>
-            <input type="submit" value="Update Offer Type" class="btn btn-primary form-button"/>
+            <div class="form-buttons-container">
+                <div>
+                    <a href="/alloffertypes" id="backtooffertypes" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer Types</a>
+                    <input type="submit" value="Update Offer Type" class="btn btn-primary form-button"/>
+                </div>
+                <div>
+                    <a href="#" id="resetupdateoffertypeform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -49,7 +56,11 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#updateOffertypeform").submit(function(event){
+        $("#resetupdateoffertypeform").click(function(){
+            event.preventDefault();
+            $("#updateoffertypeform").trigger("reset");
+        });
+        $("#updateoffertypeform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
@@ -65,7 +76,6 @@
                 var _offertypetitle = $("#offertypetitle").val();
                 var _offertypestatus = $("#offertypestatus").val();
                 var _jsondata = JSON.stringify({offertypeid: _offertypeid, offertypetitle: _offertypetitle, offertypestatus: _offertypestatus, _token: '{{ csrf_token() }}'});
-                $("#updateOffertypeform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
                     method: 'POST',

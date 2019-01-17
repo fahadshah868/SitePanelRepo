@@ -10872,6 +10872,23 @@ label.error {
   margin-left: 5px;
 }
 
+.form-buttons-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.fa-undo {
+  margin-right: 5px;
+}
+
 .update-image-button {
   width: 200px;
   margin-top: 20px;
@@ -10893,15 +10910,57 @@ label.error {
   display: none;
 }
 
+.form-field-inline-remarks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
 .form-field-checkbox {
-  margin-top: 10px;
-  margin-bottom: 5px;
+  margin-right: 40px;
+}
+
+.form-field-radiobutton {
+  margin-right: 30px;
+}
+
+.form-field-checkbox-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-field-radiobutton-remarks-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.form-field-checkbox-remarks-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
 }
 
 .form-field-checkbox input[type="checkbox"] {
   margin-right: 5px;
   width: 15px;
   height: 15px;
+  cursor: pointer;
+}
+
+.form-field-radiobutton input[type="radio"] {
+  margin-right: 5px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 750px) {

@@ -5,7 +5,7 @@
             <a href="#" class="close" aria-label="close">&times;</a>
             <strong id="alert-danger-message-area"></strong>
         </div>
-        <form id="updateuserform" action="/updateuser" method="POST">
+        <form id="updateuserform" action="#" method="#">
             @csrf
             <div class="form-container">
                 <div class="row">
@@ -53,8 +53,15 @@
                         </div>
                     </div>
                 </div>
-                <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
-                <input type="submit" value="Update User" class="btn btn-primary form-button"/>
+                <div class="form-buttons-container">
+                    <div>
+                        <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
+                        <input type="submit" value="Update User" class="btn btn-primary form-button"/>
+                    </div>
+                    <div>
+                        <a href="#" id="resetupdateuserform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -66,6 +73,10 @@
             $("#backtousers").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
+            });
+            $("#resetupdateuserform").click(function(){
+                event.preventDefault();
+                $("#updateuserform").trigger("reset");
             });
             $("#updateuserform").submit(function(event){
                 event.preventDefault();

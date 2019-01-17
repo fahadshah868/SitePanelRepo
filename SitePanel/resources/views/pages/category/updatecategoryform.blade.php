@@ -5,7 +5,7 @@
             <a href="#" class="close" aria-label="close">&times;</a>
             <strong id="alert-danger-message-area"></strong>
         </div>
-        <form id="updatecategoryform" action="/updatecategoryform" method="POST" enctype="multipart/form-data">
+        <form id="updatecategoryform" action="#" method="#">
         @csrf
             <div class="form-container">
                 <div class="row">
@@ -47,8 +47,15 @@
                         </div>
                     </div>
                 </div>
-                <a href="/updatecategory/{{$category->id}}" id="backtocategory" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Category</a>
-                <input type="submit" value="Update Category" class="btn btn-primary form-button"/>
+                <div class="form-buttons-container">
+                    <div>
+                        <a href="/updatecategory/{{$category->id}}" id="backtocategory" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Category</a>
+                        <input type="submit" value="Update Category" class="btn btn-primary form-button"/>
+                    </div>
+                    <div>
+                        <a href="#" id="resetupdatecategoryform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -60,6 +67,10 @@
             $("#backtocategory").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
+            });
+            $("#resetupdatecategoryform").click(function(){
+                event.preventDefault();
+                $("#updatecategoryform").trigger("reset");
             });
             $("#updatecategoryform").submit(function(event){
                 event.preventDefault();
