@@ -106,7 +106,7 @@
         </div>
     </form>
 </div>
-<script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
+<script type="text/javascript" src="{{asset('/js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
         $(".close").click(function(){
