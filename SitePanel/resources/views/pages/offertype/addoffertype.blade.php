@@ -16,13 +16,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type Title</div>
-                        <input type="text" class="form-control" id="offertypetitle" name="offertypetitle" placeholder="code, sale, instore etc"/>
+                        <input type="text" class="form-control form-field-text" id="offertypetitle" name="offertypetitle" placeholder="code, sale, instore etc"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type Status</div>
-                        <select class="form-control" id="offertypestatus" name="offertypestatus">
+                        <select class="form-control form-field-text" id="offertypestatus" name="offertypestatus">
                             <option value="">Select Status</option>
                             <option value="active">Active</option>
                             <option value="deactive">Deactive</option>

@@ -12,7 +12,7 @@
                     <div class="form-field">
                         <input type="text" id="offerid" name="offerid" value="{{$offer->id}}" hidden>
                         <div class="form-field-heading">Select Store</div>
-                        <select id="offer_store" name="offer_store" class="form-control">
+                        <select id="offer_store" name="offer_store" class="form-control form-field-text">
                             @foreach($allstores as $store)
                                 @if($store->id == $offer->store_id)
                                 <option value="{{$store->id}}" selected>{{$store->title}}</option>
@@ -26,7 +26,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Category</div>
-                        <select id="offer_category" name="offer_category" class="form-control">
+                        <select id="offer_category" name="offer_category" class="form-control form-field-text">
                             @foreach($allstorecategories as $storecategory)
                                 @if($storecategory->category_id == $offer->category_id)
                                 <option value="{{$storecategory->category_id}}" selected>{{$storecategory->category->title}}</option>
@@ -42,13 +42,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Title</div>
-                        <input type="text" class="form-control" id="offertitle" value="{{$offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
+                        <input type="text" class="form-control form-field-text" id="offertitle" value="{{$offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Anchor</div>
-                        <input type="text" class="form-control" id="offeranchor" value="{{$offer->anchor}}" name="offeranchor" placeholder="20% off"/>
+                        <input type="text" class="form-control form-field-text" id="offeranchor" value="{{$offer->anchor}}" name="offeranchor" placeholder="20% off"/>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control" id="offertype_bystore" name="offertype_bystore">
+                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
                             @foreach($alloffertypes as $offertype)
                                 @if($offer->offer_type_id == $offertype->id)
                                 <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
@@ -80,7 +80,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code">
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code">
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control" id="offertype_bystore" name="offertype_bystore">
+                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
                             @foreach($alloffertypes as $offertype)
                                 @if($offer->offer_type_id == $offertype->id)
                                 <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
@@ -111,7 +111,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control" id="offercode" name="offercode" placeholder="code" disabled>
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" disabled>
                     </div>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
-                        <textarea class="form-control" id="offerdetails" name="offerdetails" placeholder="description">{{$offer->details}}</textarea>
+                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description">{{$offer->details}}</textarea>
                     </div>
                 </div>
             </div>
@@ -137,13 +137,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control" value="{{$offer->starting_date}}"/>
+                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text" value="{{$offer->starting_date}}"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control" value="{{$offer->expiry_date}}"/>
+                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" value="{{$offer->expiry_date}}"/>
                     </div>
                 </div>
             </div>
@@ -160,13 +160,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control" value="{{$offer->starting_date}}"/>
+                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text" value="{{$offer->starting_date}}"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control" disabled/>
+                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" disabled/>
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
-                        <select class="form-control" id="offertype" name="offertype">
+                        <select class="form-control form-field-text" id="offertype" name="offertype">
                             @if($offer->type == "regular")
                             <option value="regular" selected>Regular</option>
                             <option value="popular">Popular</option>
@@ -189,7 +189,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
-                        <select class="form-control" id="offerstatus" name="offerstatus">
+                        <select class="form-control form-field-text" id="offerstatus" name="offerstatus">
                             @if($offer->status == "active")
                             <option value="active" selected>Active</option>
                             <option value="deactive">Deactive</option>

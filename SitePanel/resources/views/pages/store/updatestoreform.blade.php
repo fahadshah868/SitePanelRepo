@@ -13,7 +13,7 @@
                     <div class="form-field">
                         <input type="text" id="storeid" name="storeid" value="{{ $store->id }}" hidden>
                         <div class="form-field-heading">Store Title</div>
-                        <input type="text" class="form-control" id="storetitle" name="storetitle" value="{{ $store->title}}" placeholder="Kohls"/>
+                        <input type="text" class="form-control form-field-text" id="storetitle" name="storetitle" value="{{ $store->title}}" placeholder="Kohls"/>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Details</div>
-                        <textarea class="form-control" id="storedetails" name="storedetails" placeholder="details">{{$store->details}}</textarea>
+                        <textarea class="form-control form-field-textarea" id="storedetails" name="storedetails" placeholder="details">{{$store->details}}</textarea>
                     </div>
                 </div>
             </div>
@@ -29,13 +29,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Primary Url</div>
-                        <input type="text" class="form-control" id="storeprimaryurl" name="storeprimaryurl" value="{{ $store->primary_url }}" placeholder="http://www.kohls.com">
+                        <input type="text" class="form-control form-field-text" id="storeprimaryurl" name="storeprimaryurl" value="{{ $store->primary_url }}" placeholder="http://www.kohls.com">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Secondary Url</div>
-                        <input type="text" class="form-control" id="storesecondaryurl" name="storesecondaryurl" value="{{ $store->secondary_url }}" placeholder="kohls.com" readonly>
+                        <input type="text" class="form-control form-field-text" id="storesecondaryurl" name="storesecondaryurl" value="{{ $store->secondary_url }}" placeholder="kohls.com" readonly>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network</div>
-                        <select class="form-control" id="networkid" name="networkid">
+                        <select class="form-control form-field-text" id="networkid" name="networkid">
                             @foreach($allnetworks as $network)
                                 @if($store->network_id == $network->id)
                                 <option value="{{$network->id}}" selected>{{$network->title}}</option>
@@ -57,7 +57,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Url</div>
-                        <input type="text" class="form-control" id="storenetworkurl" name="storenetworkurl" value="{{ $store->network_url }}" placeholder="network url">
+                        <input type="text" class="form-control form-field-text" id="storenetworkurl" name="storenetworkurl" value="{{ $store->network_url }}" placeholder="network url">
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Type</div>
-                        <select class="form-control" id="storetype" name="storetype">
+                        <select class="form-control form-field-text" id="storetype" name="storetype">
                             @if($store->type == "regular")
                             <option value="regular" selected>Regular</option>
                             <option value="popular">Popular</option>
@@ -79,7 +79,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <select class="form-control" id="storestatus" name="storestatus">
+                        <select class="form-control form-field-text" id="storestatus" name="storestatus">
                             @if($store->status == "active")
                             <option value="active" selected>Active</option>
                             <option value="deactive">Deactive</option>

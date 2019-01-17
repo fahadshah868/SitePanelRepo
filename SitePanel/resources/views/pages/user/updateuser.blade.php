@@ -13,13 +13,13 @@
                         <div class="form-field">
                             <input type="text" id="userid" value="{{$user->id}}" hidden >
                             <div class="form-field-heading">User Name</div>
-                            <input type="text" class="form-control" id="username" value="{{$user->username}}" name="username" placeholder="john"/>
+                            <input type="text" class="form-control form-field-text" id="username" value="{{$user->username}}" name="username" placeholder="john"/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Password</div>
-                            <input type="text" class="form-control" id="userpassword" value="{{$user->password}}" name="userpassword" placeholder="password"/>
+                            <input type="text" class="form-control form-field-text" id="userpassword" value="{{$user->password}}" name="userpassword" placeholder="password"/>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Role</div>
-                            <select class="form-control" id="userrole" name="userrole">
+                            <select class="form-control form-field-text" id="userrole" name="userrole">
                                 @if($user->role == "employee")
                                 <option value="employee" selected>Employee</option>
                                 <option value="admin">Admin</option>
@@ -41,7 +41,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
-                            <select class="form-control" id="userstatus" name="userstatus">
+                            <select class="form-control form-field-text" id="userstatus" name="userstatus">
                                 @if($user->status == "active")
                                 <option value="active" selected>Active</option>
                                 <option value="deactive">Deactive</option>

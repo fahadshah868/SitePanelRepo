@@ -3,7 +3,7 @@
         <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }})</span></div>
         <div class="viewitems-header-searchbar-container">
             <div class="viewitems-header-searchbar-filter">
-                <select class="form-control" id="columnsfilter">
+                <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Store</option>
                     <option value="1">Category</option>

@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Store</div>
-                        <select class="form-control" id="offer_store" name="offer_store">
+                        <select class="form-control form-field-text" id="offer_store" name="offer_store">
                             <option value="">Select Store</option>
                             @foreach($allstores as $store)
                             <option value="{{$store->id}}">{{$store->title}}</option>
@@ -26,7 +26,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Category</div>
-                        <select class="form-control" id="offer_category" name="offer_category">
+                        <select class="form-control form-field-text" id="offer_category" name="offer_category">
                             <option value="">Select Category</option>
                         </select>
                     </div>
@@ -36,13 +36,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Title</div>
-                        <input type="text" class="form-control" id="offertitle" name="offertitle" placeholder="20% Off on your online order"/>
+                        <input type="text" class="form-control form-field-text" id="offertitle" name="offertitle" placeholder="20% Off on your online order"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Anchor</div>
-                        <input type="text" class="form-control" id="offeranchor" name="offeranchor" placeholder="20% Off">
+                        <input type="text" class="form-control form-field-text" id="offeranchor" name="offeranchor" placeholder="20% Off">
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control" id="offertype_bystore" name="offertype_bystore">
+                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
                             <option value="">Select Offer Type</option>
                             @foreach($alloffertypes as $offertype)
                             <option value="{{$offertype->id}}">{{$offertype->title}}</option>
@@ -70,7 +70,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control" id="offercode" name="offercode" placeholder="code">
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code">
                     </div>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
-                        <textarea class="form-control" id="offerdetails" name="offerdetails" placeholder="description"></textarea>
+                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description"></textarea>
                     </div>
                 </div>
             </div>
@@ -94,13 +94,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control"/>
+                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control"/>
+                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text"/>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
-                        <select class="form-control" id="offertype" name="offertype">
+                        <select class="form-control form-field-text" id="offertype" name="offertype">
                             <option value="">Select Type</option>
                             <option value="regular">Regular</option>
                             <option value="popular">Popular</option>
@@ -118,7 +118,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
-                        <select class="form-control" id="offerstatus" name="offerstatus">
+                        <select class="form-control form-field-text" id="offerstatus" name="offerstatus">
                             <option value="">Select Type</option>
                             <option value="active">Active</option>
                             <option value="deactive">Deactive</option>

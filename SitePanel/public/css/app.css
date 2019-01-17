@@ -10511,7 +10511,7 @@ a:hover {
 }
 
 .navbar {
-  padding: 19px 30px 19px 10px;
+  padding: 17px 30px 16px 10px;
   background: #044D6E;
   border: none;
   border-radius: 0;
@@ -10527,12 +10527,16 @@ a:hover {
 }
 
 .nav-item a {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
 }
 
 .nav-item:hover {
   background-color: #033349;
+}
+
+#sidebarCollapse {
+  font-size: 14px !important;
 }
 
 /* ---------------------------------------------------
@@ -10549,8 +10553,8 @@ a:hover {
 }
 
 #sidebar {
-  min-width: 220px;
-  max-width: 220px;
+  min-width: 190px;
+  max-width: 190px;
   background: #044D6E;
   color: #fff;
   -webkit-transition: all 0.3s;
@@ -10558,8 +10562,8 @@ a:hover {
 }
 
 #sidebar.active {
-  min-width: 90px;
-  max-width: 90px;
+  min-width: 80px;
+  max-width: 80px;
   text-align: center;
 }
 
@@ -10573,7 +10577,7 @@ a:hover {
 
 #sidebar ul li a {
   text-align: left;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   padding: 10px;
   display: block;
@@ -10590,7 +10594,7 @@ a:hover {
 #sidebar.active ul li a {
   padding: 20px 10px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 #sidebar.active ul li a i {
@@ -10615,7 +10619,7 @@ a:hover {
 }
 
 #sidebar .sidebar-header {
-  padding: 20px;
+  padding: 15px;
   text-align: center;
   background: #033349;
 }
@@ -10661,7 +10665,7 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-  font-size: 15px !important;
+  font-size: 14px !important;
   font-weight: 500 !important;
   padding-left: 30px !important;
   background-color: #033349;
@@ -10809,12 +10813,27 @@ ul ul a:hover {
 }
 
 .form-main-heading {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 }
 
 .form-field {
   margin-bottom: 10px;
+}
+
+.form-field-text {
+  font-size: 14px !important;
+  padding: 4px 10px !important;
+  height: 33px !important;
+}
+
+.form-field-textarea {
+  font-size: 14px !important;
+  padding: 4px 10px !important;
+}
+
+.form-field-file {
+  font-size: 14px;
 }
 
 .form-field img {
@@ -10830,15 +10849,15 @@ ul ul a:hover {
 }
 
 .form-field-heading {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   margin-bottom: 3px;
 }
 
 .form-button {
   margin-top: 10px;
-  padding: 7px 15px;
-  font-size: 15px;
+  padding: 5px 15px;
+  font-size: 14px;
 }
 
 label.error {
@@ -10875,14 +10894,14 @@ label.error {
 }
 
 .form-field-checkbox {
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 
 .form-field-checkbox input[type="checkbox"] {
   margin-right: 5px;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
 }
 
 @media only screen and (max-width: 750px) {
@@ -10897,7 +10916,7 @@ label.error {
 }
 
 .viewitems-main-heading {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -10917,23 +10936,31 @@ label.error {
   color: #fff;
 }
 
-th,
-td {
+th {
   text-align: center;
   vertical-align: top;
   padding: 10px !important;
   font-size: 13px;
+  font-weight: 700;
+}
+
+td {
+  text-align: center;
+  vertical-align: top;
+  padding: 5px !important;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 td .btn {
-  height: 32px !important;
-  font-size: 12px;
-  font-weight: 500;
+  padding: 7px 10px;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 td img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: 1px solid #d1d1d1;
 }
 
@@ -10974,8 +11001,10 @@ td img {
   background-image: url("/images/searchicon.png");
   background-repeat: no-repeat;
   background-position: 7px 7px;
-  background-size: 22px 22px;
-  padding-left: 38px;
+  background-size: 20px 20px;
+  padding-left: 36px;
+  font-size: 14px !important;
+  height: 33px !important;
 }
 
 .fa-edit {
@@ -10988,15 +11017,6 @@ td img {
 
 .highlight-column {
   background-color: #E1FF8F;
-}
-
-.login-top-navbar {
-  background-color: #044D6E;
-  padding: 30px 0;
-  text-align: center;
-  color: #fff;
-  font-size: 30px;
-  font-weight: 600;
 }
 
 .update-profile-form {
@@ -11015,27 +11035,28 @@ td img {
 .updateprofile-fields-heading {
   font-size: 17px;
   font-weight: 700;
-  margin: 15px 0 3px 0;
+  margin: 12px 0 3px 0;
 }
 
 .update-profile-form input {
-  height: 45px;
+  height: 35px;
+  font-size: 16px;
 }
 
-#loginbutton {
-  margin-top: 15px;
+#updateprofilebutton {
+  margin-top: 18px;
   background-color: #044D6E;
-  height: 40px;
+  height: 35px;
   outline: none;
   color: #fff;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   border: 1px solid #044D6E;
   border-radius: 4px;
   cursor: pointer;
 }
 
-#loginbutton:hover {
+#updateprofilebutton:hover {
   background-color: #033349;
 }
 

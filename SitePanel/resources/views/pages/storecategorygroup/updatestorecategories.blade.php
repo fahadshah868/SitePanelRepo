@@ -23,7 +23,7 @@
                     <div class="form-field">
                         <input type="text" value="{{ $store->id }}" id="storeid" hidden>
                         <div class="form-field-heading">Store Title</div>
-                        <input type="text" class="form-control" id="storetitle" name="storetitle" value="{{ $store->title }}" readonly/>
+                        <input type="text" class="form-control form-field-text" id="storetitle" name="storetitle" value="{{ $store->title }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-6">

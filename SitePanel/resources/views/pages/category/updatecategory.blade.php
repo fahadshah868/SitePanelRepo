@@ -55,19 +55,19 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Title</div>
-                        <input type="text" class="form-control" value="{{ $category->title }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->title }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Type</div>
-                        <input type="text" class="form-control" value="{{ $category->type }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->type }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Status</div>
-                        <input type="text" class="form-control" value="{{ $category->status }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->status }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12" id="updatecategoryactions">

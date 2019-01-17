@@ -15,7 +15,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Title</div>
-                        <input type="text" class="form-control" name="categorytitle" id="categorytitle" placeholder="Baby"/>
+                        <input type="text" class="form-control form-field-text" name="categorytitle" id="categorytitle" placeholder="Baby"/>
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category Type</div>
-                        <select class="form-control" name="categorytype" id="categorytype">
+                        <select class="form-control form-field-text" name="categorytype" id="categorytype">
                             <option value="">Select Type</option>
                             <option value="regular">Regular</option>
                             <option value="popular">Popular</option>
@@ -33,7 +33,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category Status</div>
-                        <select class="form-control" name="categorystatus" id="categorystatus">
+                        <select class="form-control form-field-text" name="categorystatus" id="categorystatus">
                             <option value="">Select Status</option>
                             <option value="active">Active</option>
                             <option value="deactive">Deactive</option>
@@ -46,7 +46,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Category Logo</div>
                         <img src="#" id="imgpath" />
-                        <input type="file" class="hide" name="categorylogo" id="categorylogo"  accept=".png, .jpg, .jpeg"/>
+                        <input type="file" class="form-field-file hide" name="categorylogo" id="categorylogo"  accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>
             </div>
@@ -63,11 +63,13 @@
             var categorytype = $("#categorytype").val();
             if(categorytype.toLowerCase() == "popular"){
                 $("#category-logo-container").css("display","block");
-                $("#categorylogo").attr("class","show");
+                $("#categorylogo").removeClass("hide");
+                $("#categorylogo").addClass("show");
             }
             else{
                 $("#category-logo-container").css("display","none");
-                $("#categorylogo").attr("class","hide");
+                $("#categorylogo").removeClass("show");
+                $("#categorylogo").addClass("hide");
             }
         });
         //custom validation method to check image dimensions

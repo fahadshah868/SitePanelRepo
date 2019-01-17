@@ -18,7 +18,7 @@
             <input type="password" class="form-control" name="newpassword" id="newpassword" placeholder="new password"/>
             <div class="updateprofile-fields-heading">Confirm Password:</div>
             <input type="password" class="form-control" name="confirmpassword" placeholder="confirm password"/>
-            <input type="submit" value="Update Profile" id="loginbutton"/>
+            <input type="submit" value="Update Profile" id="updateprofilebutton"/>
         </div>
     </form>
 </div>

@@ -16,13 +16,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Title</div>
-                        <input type="text" class="form-control" id="storetitle" name="storetitle" placeholder="Kohls"/>
+                        <input type="text" class="form-control form-field-text" id="storetitle" name="storetitle" placeholder="Kohls"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Categories</div>
-                        <select class="multiselectdropdown" id="storecategories" name="storecategories" multiple data-live-search="true">
+                        <select class="multiselectdropdown form-control form-field-text" id="storecategories" name="storecategories" multiple data-live-search="true">
                             @foreach($allcategories as $category)
                             <option value="{{$category->id}}">{{$category->title}}</option>
                             @endforeach
@@ -34,7 +34,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Details</div>
-                        <textarea class="form-control" id="storedetails" name="storedetails" placeholder="details"></textarea>
+                        <textarea class="form-control form-field-textarea" id="storedetails" name="storedetails" placeholder="details"></textarea>
                     </div>
                 </div>
             </div>
@@ -42,13 +42,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Primary Url</div>
-                        <input type="text" class="form-control" id="storeprimaryurl" name="storeprimaryurl" placeholder="http://www.kohls.com">
+                        <input type="text" class="form-control form-field-text" id="storeprimaryurl" name="storeprimaryurl" placeholder="http://www.kohls.com">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Secondary Url</div>
-                        <input type="text" class="form-control" id="storesecondaryurl" name="storesecondaryurl" placeholder="kohls.com" readonly>
+                        <input type="text" class="form-control form-field-text" id="storesecondaryurl" name="storesecondaryurl" placeholder="kohls.com" readonly>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network</div>
-                        <select class="form-control" id="networkid" name="networkid">
+                        <select class="form-control form-field-text" id="networkid" name="networkid">
                             <option value="">Select Network</option>
                             @foreach($allnetworks as $network)
                             <option value="{{$network->id}}">{{$network->title}}</option>
@@ -67,7 +67,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Url</div>
-                        <input type="text" class="form-control" id="storenetworkurl" name="storenetworkurl" placeholder="network url">
+                        <input type="text" class="form-control form-field-text" id="storenetworkurl" name="storenetworkurl" placeholder="network url">
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Type</div>
-                        <select class="form-control" id="storetype" name="storetype">
+                        <select class="form-control form-field-text" id="storetype" name="storetype">
                             <option value="">Select Type</option>
                             <option value="regular">Regular</option>
                             <option value="popular">Popular</option>
@@ -85,7 +85,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <select class="form-control" id="storestatus" name="storestatus">
+                        <select class="form-control form-field-text" id="storestatus" name="storestatus">
                             <option value="">Select Status</option>
                             <option value="active">Active</option>
                             <option value="deactive">Deactive</option>
@@ -98,7 +98,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Store Logo</div>
                         <img src="#" id="imgpath" />
-                        <input type="file" id="storelogo" name="storelogo" accept=".png, .jpg, .jpeg"/>
+                        <input type="file" id="storelogo" name="storelogo" class="form-field-file" accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>
             </div>

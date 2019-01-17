@@ -13,13 +13,13 @@
                         <div class="form-field">
                             <input type="text" id="networkid" value="{{$network->id}}" hidden >
                             <div class="form-field-heading">Network Title</div>
-                            <input type="text" class="form-control" id="networktitle" name="networktitle" value="{{$network->title}}" placeholder="cj, shareasale, clickbank"/>
+                            <input type="text" class="form-control form-field-text" id="networktitle" name="networktitle" value="{{$network->title}}" placeholder="cj, shareasale, clickbank"/>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Network Status</div>
-                            <select class="form-control" id="networkstatus" name="networkstatus">
+                            <select class="form-control form-field-text" id="networkstatus" name="networkstatus">
                                 @if($network->status == "active")
                                 <option value="active" selected>Active</option>
                                 <option value="deactive">Deactive</option>

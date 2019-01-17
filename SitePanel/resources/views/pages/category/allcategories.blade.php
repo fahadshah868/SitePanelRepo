@@ -3,7 +3,7 @@
         <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }})</span></div>
         <div class="viewitems-header-searchbar-container">
             <div class="viewitems-header-searchbar-filter">
-                <select class="form-control" id="columnsfilter">
+                <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Category Title</option>
                     <option value="1">Category Type</option>

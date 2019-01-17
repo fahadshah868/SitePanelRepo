@@ -2,7 +2,7 @@
     overflow-x: auto;   
 }    
 .viewitems-main-heading{
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
 }
 .viewitems-main-heading-count{
@@ -18,20 +18,29 @@
 .btn{
     color: #fff;
 }
-th,td{
+th{
     text-align: center;
     vertical-align: top;
     padding: 10px !important;
     font-size: 13px;
+    font-weight: 700;
+}
+td{
+    text-align: center;
+    vertical-align: top;
+    padding: 5px !important;
+    font-size: 12px;
+    font-weight: 400;
 }
 td .btn{
-    height: 32px !important;
-    font-size: 12px;
-    font-weight: 500;
+    padding: 7px 10px;
+    // height: 28px !important;
+    font-size: 10px;
+    font-weight: 700;
 }
 td img{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border: 1px solid #d1d1d1;
 }
 .viewitems-header-container{
@@ -55,8 +64,10 @@ td img{
     background-image: url('/images/searchicon.png');
     background-repeat: no-repeat;
     background-position: 7px 7px;
-    background-size: 22px 22px;
-    padding-left: 38px;
+    background-size: 20px 20px;
+    padding-left: 36px;
+    font-size: 14px !important;
+    height: 33px !important;
 }
 .fa-edit{
     margin-right: 5px;

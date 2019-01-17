@@ -3,7 +3,7 @@
         <div class="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count">({{ $networkscount }})</span></div>
         <div class="viewitems-header-searchbar-container">
             <div class="viewitems-header-searchbar-filter">
-                <select class="form-control" id="columnsfilter">
+                <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Network Title</option>
                     <option value="1">Netowrk Status</option>

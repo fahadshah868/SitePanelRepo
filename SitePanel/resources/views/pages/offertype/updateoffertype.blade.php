@@ -17,13 +17,13 @@
                     <div class="form-field">
                         <input type="text" value="{{ $offertype->id }}" id="offertypeid" hidden>
                         <div class="form-field-heading">Offer Type Title</div>
-                        <input type="text" class="form-control" id="offertypetitle" value="{{ $offertype->title }}" name="offertypetitle" placeholder="code, sale, instore etc"/>
+                        <input type="text" class="form-control form-field-text" id="offertypetitle" value="{{ $offertype->title }}" name="offertypetitle" placeholder="code, sale, instore etc"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type Status</div>
-                        <select class="form-control" id="offertypestatus" name="offertypestatus">
+                        <select class="form-control form-field-text" id="offertypestatus" name="offertypestatus">
                             @if($offertype->status == "active")
                             <option value="active" selected>Active</option>
                             <option value="deactive">Deactive</option>

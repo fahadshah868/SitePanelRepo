@@ -40,7 +40,7 @@
     text-decoration: none;
 }
 .navbar {
-    padding: 19px 30px 19px 10px;
+    padding: 17px 30px 16px 10px;
     background: #044D6E;
     border: none;
     border-radius: 0;
@@ -52,11 +52,14 @@
     margin-right: 10px;
 }
 .nav-item a{
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
 }
 .nav-item:hover{
     background-color: #033349;
+}
+#sidebarCollapse{
+    font-size: 14px !important;
 }
 
 /* ---------------------------------------------------
@@ -69,16 +72,16 @@
 }
 
 #sidebar {
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 190px;
+    max-width: 190px;
     background: #044D6E;
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar.active {
-    min-width: 90px;
-    max-width: 90px;
+    min-width: 80px;
+    max-width: 80px;
     text-align: center;
 }
 
@@ -92,7 +95,7 @@
 
 #sidebar ul li a {
     text-align: left;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     padding: 10px;
     display: block;
@@ -106,7 +109,7 @@
 #sidebar.active ul li a {
     padding: 20px 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #sidebar.active ul li a i {
@@ -132,7 +135,7 @@
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 15px;
     text-align: center;
     background: #033349;
 }
@@ -172,7 +175,7 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 500 !important;
     padding-left: 30px !important;
     background-color: #033349;

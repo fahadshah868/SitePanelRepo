@@ -16,13 +16,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Title</div>
-                        <input type="text" class="form-control" id="networktitle" name="networktitle" placeholder="cj, shareasale, clickbank"/>
+                        <input type="text" class="form-control form-field-text" id="networktitle" name="networktitle" placeholder="cj, shareasale, clickbank"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Status</div>
-                        <select class="form-control" id="networkstatus" name="networkstatus">
+                        <select class="form-control form-field-text" id="networkstatus" name="networkstatus">
                             <option value="">Select Status</option>
                             <option value="active">Active</option>
                             <option value="deactive">Deactive</option>

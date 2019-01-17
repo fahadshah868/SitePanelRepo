@@ -13,7 +13,7 @@
                         <div class="form-field">
                             <input type="text" id="categoryid" value="{{$category->id}}" hidden>
                             <div class="form-field-heading">Category Title</div>
-                        <input type="text" class="form-control" value="{{ $category->title }}" id="categorytitle" name="categorytitle" placeholder="Baby"/>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->title }}" id="categorytitle" name="categorytitle" placeholder="Baby"/>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Category Type</div>
-                            <select class="form-control" id="categorytype" name="categorytype">
+                            <select class="form-control form-field-text" id="categorytype" name="categorytype">
                                 @if($category->type == "regular")
                                     <option value="regular" selected>Regular</option>
                                     <option value="popular">Popular</option>
@@ -35,7 +35,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Category Status</div>
-                            <select class="form-control" id="categorystatus" name="categorystatus">
+                            <select class="form-control form-field-text" id="categorystatus" name="categorystatus">
                                 @if($category->status == "active")
                                     <option value="active" selected>Active</option>
                                     <option value="deactive">Deactive</option>
