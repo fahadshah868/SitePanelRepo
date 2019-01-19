@@ -10921,7 +10921,7 @@ label.error {
 }
 
 .form-field-checkbox {
-  margin-right: 40px;
+  margin-right: 30px;
 }
 
 .form-field-radiobutton {
@@ -10932,13 +10932,6 @@ label.error {
   margin: 0;
   font-size: 14px;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.form-field-radiobutton-remarks-label {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 400;
   cursor: pointer;
 }
 
@@ -10953,6 +10946,13 @@ label.error {
   margin-right: 5px;
   width: 15px;
   height: 15px;
+  cursor: pointer;
+}
+
+.form-field-radiobutton-remarks-label {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
 }
 

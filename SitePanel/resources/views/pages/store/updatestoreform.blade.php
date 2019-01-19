@@ -20,8 +20,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Details</div>
-                        <textarea class="form-control form-field-textarea" id="storedetails" name="storedetails" placeholder="details">{{$store->details}}</textarea>
+                        <div class="form-field-heading">Store's Description</div>
+                        <textarea class="form-control form-field-textarea" id="storedescription" name="storedescription" placeholder="details">{{$store->details}}</textarea>
                     </div>
                 </div>
             </div>
@@ -64,30 +64,59 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Type</div>
-                        <select class="form-control form-field-text" id="storetype" name="storetype">
-                            @if($store->type == "regular")
-                            <option value="regular" selected>Regular</option>
-                            <option value="popular">Popular</option>
-                            @else
-                            <option value="regular">Regular</option>
-                            <option value="popular" selected>Popular</option>
-                            @endif
-                        </select>
+                        <div class="form-field-heading">Store remarks</div>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    @if($store->is_topstore == "yes")
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes" checked>Top Store
+                                    @else
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes">Top Store
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    @if($store->is_popularstore == "yes")
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes" checked>Popular Store
+                                    @else
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes">Popular Store
+                                    @endif
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <select class="form-control form-field-text" id="storestatus" name="storestatus">
-                            @if($store->status == "active")
-                            <option value="active" selected>Active</option>
-                            <option value="deactive">Deactive</option>
-                            @else
-                            <option value="active">Active</option>
-                            <option value="deactive" selected>Deactive</option>
-                            @endif
-                        </select>
+                        @if($store->status == "active")
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
+                        @else
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="active">Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="deactive" checked>Deactive
+                                </label>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -112,6 +141,17 @@
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
+        
+        $("#is_topstore").change(function(){
+            if($("#is_topstore").prop("checked")){
+                $("#is_popularstore").prop("checked", true);
+            }
+        });
+        $("#is_popularstore").change(function(){
+            if($("#is_popularstore").prop("checked") == false){
+                $("#is_topstore").prop("checked", false);
+            }
+        });
         $("#resetupdatestoreform").click(function(){
             event.preventDefault();
             $("#updatestoreform").trigger("reset");
@@ -131,7 +171,7 @@
         }).validate({
             rules: {
                 storetitle: "required",
-                storedetails: "required",
+                storedescription: "required",
                 storeprimaryurl: { required: true, url: true },
                 storesecondaryurl: "required",
                 networkid: "required",
@@ -141,7 +181,7 @@
             },
             messages: {
                 storetitle: "please enter store title",
-                storedetails: "please enter store details",
+                storedescription: "please enter store details",
                 storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
                 storesecondaryurl: "please enter store secondary url",
                 networkid: "please select network",
@@ -150,16 +190,24 @@
                 storestatus: "please select store status",
             },
             submitHandler: function(form) {
+                var _is_topstore = "no";
+                var _is_popularstore = "no";
                 var _storeid = $("#storeid").val();
                 var _storetitle = $("#storetitle").val();
-                var _storedetails = $("#storedetails").val();
+                var _storedescription = $("#storedescription").val();
                 var _storeprimaryurl = $("#storeprimaryurl").val();
                 var _storesecondaryurl = $("#storesecondaryurl").val();
                 var _networkid = $("#networkid").val();
                 var _storenetworkurl = $("#storenetworkurl").val();
                 var _storetype = $("#storetype").val();
-                var _storestatus = $("#storestatus").val();
-                var _jsondata = JSON.stringify({storeid: _storeid, storetitle: _storetitle, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, storetype: _storetype, storestatus: _storestatus, _token: "{{ csrf_token() }}"});
+                var _storestatus = $("input[name='storestatus']:checked").val();
+                if($("#is_topstore").prop("checked")){
+                    _is_topstore = $("#is_topstore").val();
+                }
+                if($("#is_popularstore").prop("checked")){
+                    _is_popularstore = $("#is_popularstore").val();
+                }
+                var _jsondata = JSON.stringify({storeid: _storeid, storetitle: _storetitle, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus, _token: "{{ csrf_token() }}"});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

@@ -60,8 +60,14 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Category Type</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $category->type }}" readonly/>
+                        <div class="form-field-heading">Is TopCategory</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->is_topcategory }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Is PopularCategory</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->is_popularcategory }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">

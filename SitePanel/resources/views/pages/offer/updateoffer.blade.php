@@ -222,6 +222,18 @@
         $("#resetupdateofferform").click(function(){
             event.preventDefault();
             $("#updateofferform").trigger("reset");
+            if($("#offercode-checkbox").prop("checked")){
+                $("#offercode").prop('disabled', true);
+            }
+            else{
+                $("#offercode").prop('disabled', false);
+            }
+            if($("#expiry-date-checkbox").prop("checked")){
+                $("#offer_expirydate").prop('disabled', true);
+            }
+            else{
+                $("#offer_expirydate").prop('disabled', false);
+            }
         });
         $("#offer_store").change(function(){
             if( $('#offer_category').has('option').val() != "" ) {

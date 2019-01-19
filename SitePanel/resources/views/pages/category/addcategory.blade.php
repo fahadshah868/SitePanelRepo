@@ -20,24 +20,46 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Description</div>
+                        <textarea class="form-control" id="categorydescription" name="categorydescription" placeholder="description about category"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Category Type</div>
-                        <select class="form-control form-field-text" name="categorytype" id="categorytype">
-                            <option value="">Select Type</option>
-                            <option value="regular">Regular</option>
-                            <option value="popular">Popular</option>
-                        </select>
+                        <div class="form-field-heading">Category remarks</div>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes">Top Category
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes">Popular Category
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category Status</div>
-                        <select class="form-control form-field-text" name="categorystatus" id="categorystatus">
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="deactive">Deactive</option>
-                        </select>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="categorystatus" name="categorystatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="categorystatus" name="categorystatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,17 +81,37 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#categorytype").change(function(){
-            var categorytype = $("#categorytype").val();
-            if(categorytype.toLowerCase() == "popular"){
+        $("#is_topcategory").change(function(){
+            if($("#is_topcategory").prop("checked")){
+                $("#is_popularcategory").prop("checked", true);
                 $("#category-logo-container").css("display","block");
                 $("#categorylogo").removeClass("hide");
                 $("#categorylogo").addClass("show");
             }
             else{
+                if($("#is_popularcategory").prop("checked")){
+                    $("#category-logo-container").css("display","block");
+                    $("#categorylogo").removeClass("hide");
+                    $("#categorylogo").addClass("show");
+                }
+                else{
+                    $("#category-logo-container").css("display","none");
+                    $("#categorylogo").removeClass("show");
+                    $("#categorylogo").addClass("hide");
+                }
+            }
+        });
+        $("#is_popularcategory").change(function(){
+            if($("#is_popularcategory").prop("checked") == false){
+                $("#is_topcategory").prop("checked", false);
                 $("#category-logo-container").css("display","none");
                 $("#categorylogo").removeClass("show");
                 $("#categorylogo").addClass("hide");
+            }
+            else{
+                $("#category-logo-container").css("display","block");
+                $("#categorylogo").removeClass("hide");
+                $("#categorylogo").addClass("show");
             }
         });
         //custom validation method to check image dimensions
@@ -83,22 +125,30 @@
             ignore: ".hide",
             rules: {
                 categorytitle: "required",
-                categorytype: "required",
+                categorydescription: "required",
                 categorystatus: "required",
                 categorylogo: { required: true, validateimage: true }
             },
             messages: {
                 categorytitle: "please enter category title",
-                categorytype: "please select category type",
+                categorydescription: "please enter category description",
                 categorystatus: "please select category status",
                 categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
             },
             submitHandler: function(form) {
+                var _is_topcategory = "no";
+                var _is_popularcategory = "no";
                 var _categorytitle = $("#categorytitle").val();
-                var _categorytype = $("#categorytype").val();
-                var _categorystatus = $("#categorystatus").val();
+                var _categorydescription = $("#categorydescription").val();
+                var _categorystatus = $("input[name='categorystatus']:checked").val();
+                if($("#is_topcategory").prop("checked")){
+                    _is_topcategory = $("#is_topcategory").val();
+                }
+                if($("#is_popularcategory").prop("checked")){
+                    _is_popularcategory = $("#is_popularcategory").val();
+                }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({categorytitle: _categorytitle, categorytype: _categorytype, categorystatus: _categorystatus});
+                var _jsondata = JSON.stringify({categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus});
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 if($("#categorylogo").hasClass("show")){

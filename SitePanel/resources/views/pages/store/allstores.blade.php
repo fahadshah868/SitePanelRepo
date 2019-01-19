@@ -11,8 +11,9 @@
                     <option value="3">Store Secondary Url</option>
                     <option value="4">Network</option>
                     <option value="5">Network Url</option>
-                    <option value="6">Store Type</option>
-                    <option value="7">Store Status</option>
+                    <option value="6">Is TopStore</option>
+                    <option value="7">Is PopularStore</option>
+                    <option value="8">Store Status</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -35,7 +36,8 @@
                     <th>Store Secondary Url</th>
                     <th>Network</th>
                     <th>Network Url</th>
-                    <th>Store type</th>
+                    <th>Is TopStore</th>
+                    <th>Is PopularStore</th>
                     <th>Store Status</th>
                     <th>Store Logo</th>
                     <th>Actions</th>
@@ -51,12 +53,13 @@
                             <td>{{ $store->secondary_url }}</td>
                             <td>{{ $store->network->title }}</td>
                             <td>{{ $store->network_url }}</td>
-                            <td>{{ $store->type }}</td>
+                            <td>{{ $store->is_topstore }}</td>
+                            <td>{{ $store->is_popularstore }}</td>
                             <td>{{ $store->status }}</td>
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                            <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedetails="{{$store->details}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-storetype="{{$store->type}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedetails="{{$store->details}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -95,9 +98,12 @@
                     $("#searchbar").attr('placeholder','Search Store Network Url');
                 }
                 else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Store Type');
+                    $("#searchbar").attr('placeholder','Search Top Stores');
                 }
                 else if(column == 7){
+                    $("#searchbar").attr('placeholder','Search Popular Stores');
+                }
+                else if(column == 8){
                     $("#searchbar").attr('placeholder','Search Store Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
@@ -148,7 +154,8 @@
                     "<b>Store Secondary Url:</b>  "+$(this).data("storesecondaryurl")+"<br>"+
                     "<b>Store Network:</b>  "+$(this).data("storenetwork")+"<br>"+
                     "<b>Store Network Url:</b>  "+$(this).data("storenetworkurl")+"<br>"+
-                    "<b>Store Type:</b>  "+$(this).data("storetype")+"<br>"+
+                    "<b>Is TopStore:</b>  "+$(this).data("istopstore")+"<br>"+
+                    "<b>Is PopularStore:</b>  "+$(this).data("ispopularstore")+"<br>"+
                     "<b>Store Status:</b>  "+$(this).data("storestatus")+"<br>",
                     buttons: {
                         confirm: {

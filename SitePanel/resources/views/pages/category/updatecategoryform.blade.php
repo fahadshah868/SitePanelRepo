@@ -18,32 +18,67 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-field">
+                            <div class="form-field-heading">Category Description</div>
+                            <textarea class="form-control" id="categorydescription" name="categorydescription" placeholder="description about category"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-field">
-                            <div class="form-field-heading">Category Type</div>
-                            <select class="form-control form-field-text" id="categorytype" name="categorytype">
-                                @if($category->type == "regular")
-                                    <option value="regular" selected>Regular</option>
-                                    <option value="popular">Popular</option>
-                                @else
-                                    <option value="regular">Regular</option>
-                                    <option value="popular" selected>Popular</option>
-                                @endif
-                            </select>
+                            <div class="form-field-heading">Category remarks</div>
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-checkbox">
+                                    <label class="form-field-checkbox-remarks-label">
+                                        @if($category->is_topcategory == "yes")
+                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes" checked>Top Category
+                                        @else
+                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes">Top Category
+                                        @endif
+                                    </label>
+                                </div>
+                                <div class="form-field-checkbox">
+                                    <label class="form-field-checkbox-remarks-label">
+                                        @if($category->is_popularcategory == "yes")
+                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes" checked>Popular Category
+                                        @else
+                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes">Popular Category
+                                        @endif
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">Category Status</div>
-                            <select class="form-control form-field-text" id="categorystatus" name="categorystatus">
+                            <div class="form-field-inline-remarks">
                                 @if($category->status == "active")
-                                    <option value="active" selected>Active</option>
-                                    <option value="deactive">Deactive</option>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="active" checked>Active
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="deactive">Deactive
+                                    </label>
+                                </div>
                                 @else
-                                    <option value="active">Active</option>
-                                    <option value="deactive" selected>Deactive</option>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="active">Active
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="deactive" checked>Deactive
+                                    </label>
+                                </div>
                                 @endif
-                            </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,25 +107,43 @@
                 event.preventDefault();
                 $("#updatecategoryform").trigger("reset");
             });
+            $("#is_topcategory").change(function(){
+                if($("#is_topcategory").prop("checked")){
+                    $("#is_popularcategory").prop("checked", true);
+                }
+            });
+            $("#is_popularcategory").change(function(){
+                if($("#is_popularcategory").prop("checked") == false){
+                    $("#is_topcategory").prop("checked", false);
+                }
+            });
             $("#updatecategoryform").submit(function(event){
                 event.preventDefault();
             }).validate({
                 rules: {
                     categorytitle: "required",
-                    categorytype: "required",
+                    categorydescription: "required",
                     categorystatus: "required",
                 },
                 messages: {
                     categorytitle: "please enter category title",
-                    categorytype: "please select category type",
+                    categorydescription: "please enter category description",
                     categorystatus: "please select category status",
                 },
                 submitHandler: function(form) {
+                    var _is_topcategory = "no";
+                    var _is_popularcategory = "no";
                     var _categoryid = $("#categoryid").val();
                     var _categorytitle = $("#categorytitle").val();
-                    var _categorytype = $("#categorytype").val();
-                    var _categorystatus = $("#categorystatus").val();
-                    var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categorytype: _categorytype, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
+                    var _categorydescription = $("#categorydescription").val();
+                    var _categorystatus = $("input[name='categorystatus']:checked").val();
+                    if($("#is_topcategory").prop("checked")){
+                        _is_topcategory = $("#is_topcategory").val();
+                    }
+                    if($("#is_popularcategory").prop("checked")){
+                        _is_popularcategory = $("#is_popularcategory").val();
+                    }
+                    var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
                     $(".alert").css("display","none");
                     $.ajax({
                         method: "POST",

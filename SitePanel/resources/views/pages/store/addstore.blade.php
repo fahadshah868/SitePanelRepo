@@ -33,8 +33,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Details</div>
-                        <textarea class="form-control form-field-textarea" id="storedetails" name="storedetails" placeholder="details"></textarea>
+                        <div class="form-field-heading">Store's Description</div>
+                        <textarea class="form-control form-field-textarea" id="storedescription" name="storedescription" placeholder="details"></textarea>
                     </div>
                 </div>
             </div>
@@ -74,22 +74,36 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Type</div>
-                        <select class="form-control form-field-text" id="storetype" name="storetype">
-                            <option value="">Select Type</option>
-                            <option value="regular">Regular</option>
-                            <option value="popular">Popular</option>
-                        </select>
+                        <div class="form-field-heading">Store remarks</div>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes">Top Store
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes">Popular Store
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <select class="form-control form-field-text" id="storestatus" name="storestatus">
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="deactive">Deactive</option>
-                        </select>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="storestatus" name="storestatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,6 +136,16 @@
                 $("#storesecondaryurl").val("");
             }
         });
+        $("#is_topstore").change(function(){
+            if($("#is_topstore").prop("checked")){
+                $("#is_popularstore").prop("checked", true);
+            }
+        });
+        $("#is_popularstore").change(function(){
+            if($("#is_popularstore").prop("checked") == false){
+                $("#is_topstore").prop("checked", false);
+            }
+        });
         //define custom validation method to check image dimensions
         $.validator.addMethod('validateimage', function(value, element) {
         return ($(element).data('imagewidth') || 0) == $(element).data('imageheight');
@@ -133,19 +157,18 @@
             rules: {
                 storetitle: "required",
                 storecategories: "required",
-                storedetails: "required",
+                storedescription: "required",
                 storeprimaryurl: { required: true, url: true },
                 storesecondaryurl: "required",
                 networkid: "required",
                 storenetworkurl: "required",
-                storetype: "required",
                 storestatus: "required",
                 storelogo: { required: true, validateimage: true }
             },
             messages: {
                 storetitle: "please enter store title",
                 storecategories: "please select store categories",
-                storedetails: "please enter store details",
+                storedescription: "please enter store details",
                 storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
                 storesecondaryurl: "please enter store secondary url",
                 networkid: "please select network",
@@ -155,18 +178,25 @@
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
             },
             submitHandler: function(form) {
+                var _is_topstore = "no";
+                var _is_popularstore = "no";
                 var _storetitle = $("#storetitle").val();
                 var _storecategories = $("#storecategories").val();
-                var _storedetails = $("#storedetails").val();
+                var _storedescription = $("#storedescription").val();
                 var _storeprimaryurl = $("#storeprimaryurl").val();
                 var _storesecondaryurl = $("#storesecondaryurl").val();
                 var _networkid = $("#networkid").val();
                 var _storenetworkurl = $("#storenetworkurl").val();
-                var _storetype = $("#storetype").val();
-                var _storestatus = $("#storestatus").val();
+                var _storestatus = $("input[name='storestatus']:checked").val();
                 var _storelogo = $("#storelogo")[0].files[0];
+                if($("#is_topstore").prop("checked")){
+                    _is_topstore = $("#is_topstore").val();
+                }
+                if($("#is_popularstore").prop("checked")){
+                    _is_popularstore = $("#is_popularstore").val();
+                }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedetails: _storedetails, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, storetype: _storetype, storestatus: _storestatus});
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus});
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");

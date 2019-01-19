@@ -51,10 +51,8 @@
                     </div>
                 </div>
             </div>
-            <div class="form-buttons-container">
-                <a href="/allstorecategories" id="backtostorecategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store Categories</a>
-                <input type="submit" value="Update Store Categories" class="btn btn-primary form-button"/>
-            </div>
+            <a href="/allstorecategories" id="backtostorecategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store Categories</a>
+            <input type="submit" value="Update Store Categories" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>

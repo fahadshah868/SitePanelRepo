@@ -72,7 +72,7 @@ label.error{
     flex-direction: row;
 }
 .form-field-checkbox{
-    margin-right: 40px;
+    margin-right: 30px;
 }
 .form-field-radiobutton{
     margin-right: 30px;
@@ -81,12 +81,6 @@ label.error{
     margin: 0;
     font-size: 14px;
     font-weight: 700;
-    cursor: pointer;
-}
-.form-field-radiobutton-remarks-label{
-    margin: 0;
-    font-size: 14px;
-    font-weight: 400;
     cursor: pointer;
 }
 .form-field-checkbox-remarks-label{
@@ -101,7 +95,12 @@ label.error{
     height: 15px;
     cursor: pointer;
 }
-
+.form-field-radiobutton-remarks-label{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+}
 .form-field-radiobutton input[type="radio"]{
     margin-right: 5px;
     width: 15px;

@@ -14,15 +14,16 @@ class CreateStoresTable extends Migration
     public function up()
     {
         Schema::create('stores', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->primarykey();
             $table->string('title',191)->unique();
-            $table->longText('details');
+            $table->longText('description');
             $table->string('primary_url',191)->unique(); // http://www.kohls.com
             $table->string('secondary_url',191)->unique(); // kohls.com
             $table->bigInteger('network_id')->unsigned();
-            $table->foreign('network_id')->references('id')->on('networks')->onDelete('cascade');
+            $table->foreign('network_id')->references('id')->on('networks');
             $table->string('network_url',191)->unique();
-            $table->enum('type',['popular','regular']);
+            $table->enum('is_topstore',['yes','no']);
+            $table->enum('is_popularstore',['yes','no']);
             $table->enum('status',['active','deactive']);
             $table->string('logo_url');
             $table->timestamps();

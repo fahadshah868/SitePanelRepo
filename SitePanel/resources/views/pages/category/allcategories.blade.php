@@ -6,8 +6,9 @@
                 <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Category Title</option>
-                    <option value="1">Category Type</option>
-                    <option value="2">Category Status</option>
+                    <option value="1">Is TopCategory</option>
+                    <option value="2">Is PopularCategory</option>
+                    <option value="3">Category Status</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -21,7 +22,8 @@
             <thead>
                 <tr>
                     <th>Category Title</th>
-                    <th>Category Type</th>
+                    <th>Is TopCategory</th>
+                    <th>Is PopularCategory</th>
                     <th>Category Status</th>
                     <th>Category Logo</th>
                     <th>Actions</th>
@@ -32,7 +34,8 @@
                 @foreach($allcategories as $category)
                     <tr>
                         <td>{{ $category->title }}</td>
-                        <td>{{ $category->type }}</td>
+                        <td>{{ $category->is_topcategory }}</td>
+                        <td>{{ $category->is_popularcategory }}</td>
                         <td>{{ $category->status }}</td>
                         <td>
                             @if($category->type == "regular")
@@ -42,7 +45,7 @@
                             @endif
                         <td>
                             <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorytype='{{$category->type}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -66,9 +69,12 @@
                     $("#searchbar").attr('placeholder','Search Category Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Category Type');
+                    $("#searchbar").attr('placeholder','Search Top Categories');
                 }
                 else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search Popular Categories');
+                }
+                else if(column == 3){
                     $("#searchbar").attr('placeholder','Search Category Status');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
@@ -114,7 +120,8 @@
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Category Title:</b>  "+$(this).data("categorytitle")+"<br>"+
-                    "<b>Category Type:</b>  "+$(this).data("categorytype")+"<br>"+
+                    "<b>Is TopCategory:</b>  "+$(this).data("istopcategory")+"<br>"+
+                    "<b>Is PopularCategory:</b>  "+$(this).data("ispopularcategory")+"<br>"+
                     "<b>Category Status:</b>  "+$(this).data("categorystatus")+"<br>",
                     buttons: {
                         confirm: {

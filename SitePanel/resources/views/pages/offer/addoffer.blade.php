@@ -115,7 +115,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Is Popular
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Top Offer
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
                                 </label>
                             </div>
                             <div class="form-field-checkbox">

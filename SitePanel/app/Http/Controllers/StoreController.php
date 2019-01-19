@@ -27,12 +27,13 @@ class StoreController extends Controller
         if(!$are_storefields_exists){
             $store = new Store;
             $store->title = $formdata->storetitle;
-            $store->details = $formdata->storedetails;
+            $store->description = $formdata->storedescription;
             $store->primary_url = strtolower($formdata->storeprimaryurl);
             $store->secondary_url = strtolower($formdata->storesecondaryurl);
             $store->network_id = $formdata->networkid;
             $store->network_url = $formdata->storenetworkurl;
-            $store->type = $formdata->storetype;
+            $store->is_topstore = $formdata->is_topstore;
+            $store->is_popularstore = $formdata->is_popularstore;
             $store->status = $formdata->storestatus;
             //upload file and save path into db
             if($request->hasFile('storelogo')){
@@ -94,12 +95,13 @@ class StoreController extends Controller
         // title == title && primaryurl == primaryurl && networkurl == networkurl
         if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
             $store->title = $request->storetitle;
-            $store->details = $request->storedetails;
+            $store->description = $request->storedescription;
             $store->primary_url = strtolower($request->storeprimaryurl);
             $store->secondary_url = strtolower($request->storesecondaryurl);
             $store->network_id = $request->networkid;
             $store->network_url = $request->storenetworkurl;
-            $store->type = $request->storetype;
+            $store->is_topstore = $request->is_topstore;
+            $store->is_popularstore = $request->is_popularstore;
             $store->status = $request->storestatus;
             $store->save();
             Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -115,12 +117,13 @@ class StoreController extends Controller
             $is_storetitle_exists = Store::where('title',$request->storetitle)->exists();
             if(!$is_storetitle_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_topstore = $request->is_topstore;
+                $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -144,12 +147,13 @@ class StoreController extends Controller
             $is_storeprimaryurl_exists = Store::where('primary_url',$request->storeprimaryurl)->exists();
             if(!$is_storeprimaryurl_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 if(File::exists($store->logo_url)){
                     $extension = File::extension($store->logo_url);
@@ -180,12 +184,13 @@ class StoreController extends Controller
             $is_storenetworkurl_exists = Store::where('network_url',$request->storenetworkurl)->exists();
             if(!$is_storenetworkurl_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -211,12 +216,13 @@ class StoreController extends Controller
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 if(File::exists($store->logo_url)){
                     $extension = File::extension($store->logo_url);
@@ -249,12 +255,13 @@ class StoreController extends Controller
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 if(File::exists($store->logo_url)){
                     $extension = File::extension($store->logo_url);
@@ -287,12 +294,13 @@ class StoreController extends Controller
                                     ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -319,12 +327,13 @@ class StoreController extends Controller
                                 ->exists();
             if(!$are_storefields_exists){
                 $store->title = $request->storetitle;
-                $store->details = $request->storedetails;
+                $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
                 $store->secondary_url = strtolower($request->storesecondaryurl);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
-                $store->type = $request->storetype;
+                $store->is_popularstore = $request->is_popularstore;
+                $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
                 if(File::exists($store->logo_url)){
                     $extension = File::extension($store->logo_url);

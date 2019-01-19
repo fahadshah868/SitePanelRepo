@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Details</div>
+                        <div class="form-field-heading">Store's Description</div>
                         <textarea class="form-control form-field-textarea" readonly>{{ $store->details }}</textarea>
                     </div>
                 </div>
@@ -76,8 +76,14 @@
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Type</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $store->type }}" readonly/>
+                        <div class="form-field-heading">Is Top Store</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $store->is_topstore }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Is popular Store</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $store->is_popularstore }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">
