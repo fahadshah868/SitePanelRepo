@@ -58,7 +58,9 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field-checkbox">
-                        <input type="checkbox" id="offercode-checkbox"><span class="form-field-heading">Code Not Required</span>
+                        <label class="form-field-checkbox-label">
+                            <input type="checkbox" id="offercode-checkbox">Code Not Required
+                        </label>
                     </div>
                 </div>
             </div>
@@ -86,10 +88,13 @@
             </div>
             @else
             <div class="row">
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                </div>
                 <div class="col-sm-6">
                     <div class="form-field-checkbox">
-                        <input type="checkbox" id="offercode-checkbox" checked><span class="form-field-heading">Code Not Required</span>
+                        <label class="form-field-checkbox-label">
+                            <input type="checkbox" id="offercode-checkbox" checked>Code Not Required
+                        </label>
                     </div>
                 </div>
             </div>
@@ -129,7 +134,9 @@
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6">
                     <div class="form-field-checkbox">
-                        <input type="checkbox" name="expiry-date-checkbox" id="expiry-date-checkbox"><span class="form-field-heading">Expiry Date Not Required</span>
+                        <label class="form-field-checkbox-label">
+                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
+                        </label>
                     </div>
                 </div>
             </div>
@@ -152,7 +159,9 @@
                 <div class="col-sm-6"></div>
                 <div class="col-sm-6">
                     <div class="form-field-checkbox">
-                        <input type="checkbox" name="expiry-date-checkbox" id="expiry-date-checkbox" checked><span class="form-field-heading">Expiry Date Not Required</span>
+                        <label class="form-field-checkbox-label">
+                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox" checked>Expiry Date Not Required
+                        </label>
                     </div>
                 </div>
             </div>
@@ -174,30 +183,66 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Type</div>
-                        <select class="form-control form-field-text" id="offertype" name="offertype">
-                            @if($offer->type == "regular")
-                            <option value="regular" selected>Regular</option>
-                            <option value="popular">Popular</option>
-                            @else
-                            <option value="regular">Regular</option>
-                            <option value="popular" selected>Popular</option>
-                            @endif
-                        </select>
+                        <div class="form-field-heading">Offer Remarks</div>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    @if($offer->is_popular == "yes")
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes" checked>Popular Offer
+                                    @else
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    @if($offer->display_at_home == "yes")
+                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes" checked>Display At Home
+                                    @else
+                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes">Display At Home
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-remarks-label">
+                                    @if($offer->is_verified == "yes")
+                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes" checked>Is Verified
+                                    @else
+                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes">Is Verified 
+                                    @endif
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
-                        <select class="form-control form-field-text" id="offerstatus" name="offerstatus">
+                        <div class="form-field-inline-remarks">
                             @if($offer->status == "active")
-                            <option value="active" selected>Active</option>
-                            <option value="deactive">Deactive</option>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive">Deactive
+                                </label>
+                            </div>
                             @else
-                            <option value="active">Active</option>
-                            <option value="deactive" selected>Deactive</option>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="active">Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive" checked>Deactive
+                                </label>
+                            </div>
                             @endif
-                        </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -316,8 +361,11 @@
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
-                var _offercode = "";
-                var _offer_expirydate = "";
+                var _offercode = null;
+                var _offer_expirydate = null;
+                var _offer_is_popular = "no";
+                var _offer_display_at_home = "no";
+                var _offer_is_verified = "no";
                 var _offer_store = $("#offer_store").val();
                 var _offer_category = $("#offer_category").val();
                 var _offerid = $("#offerid").val();
@@ -328,20 +376,23 @@
                 var _offer_startingdate = $("#offer_startingdate").val();
                 var _offer_expirydate = $("#offer_expirydate").val();
                 var _offertype = $("#offertype").val();
-                var _offerstatus = $("#offerstatus").val();
-                if($("#offercode-checkbox").prop("checked")){
-                    _offercode = null;
-                }
-                else{
+                var _offerstatus = $("input[name='offerstatus']:checked").val();
+                if(!$("#offercode-checkbox").prop("checked")){
                     _offercode = $("#offercode").val();
                 }
-                if($("#expiry-date-checkbox").prop("checked")){
-                    _offer_expirydate = null;
-                }
-                else{
+                if(!$("#expiry-date-checkbox").prop("checked")){
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
-                var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, offeranchor: _offeranchor, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offertype: _offertype, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                if($("#offer-is-popular").prop("checked")){
+                    _offer_is_popular = $("#offer-is-popular").val();
+                }
+                if($("#offer-display-at-home").prop("checked")){
+                    _offer_display_at_home = $("#offer-display-at-home").val();
+                }
+                if($("#offer-is-verified").prop("checked")){
+                    _offer_is_verified = $("#offer-is-verified").val();
+                }
+                var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, offeranchor: _offeranchor, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

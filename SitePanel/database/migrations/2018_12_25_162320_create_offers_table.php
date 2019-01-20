@@ -18,13 +18,13 @@ class CreateOffersTable extends Migration
             $table->longText('title');
             $table->string('anchor');
             $table->bigInteger('offer_type_id')->unsigned();
-            $table->foreign('offer_type_id')->references('id')->on('offer_types')->onDelete('cascade');
+            $table->foreign('offer_type_id')->references('id')->on('offer_types');
             $table->string('code')->nullable();
             $table->longText('details');
             $table->bigInteger('store_id')->unsigned();
-            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
+            $table->foreign('store_id')->references('id')->on('stores');
             $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->date('starting_date');
             $table->date('expiry_date')->nullable();
             $table->bigInteger('uses')->nullable();

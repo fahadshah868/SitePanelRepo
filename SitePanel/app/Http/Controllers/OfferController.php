@@ -61,7 +61,9 @@ class OfferController extends Controller
         $offer->category_id = $request->offer_category;
         $offer->starting_date = $request->offer_startingdate;
         $offer->expiry_date = $request->offer_expirydate;
-        $offer->type = $request->offertype;
+        $offer->is_popular = $request->offer_is_popular;
+        $offer->display_at_home = $request->offer_display_at_home;
+        $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
         $is_offer_saved = $offer->save();
         Session::flash("offerupdated_successmessage","Offer Updated Successfully");

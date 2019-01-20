@@ -80,7 +80,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
-                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description"></textarea>
+                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="details about offer"></textarea>
                     </div>
                 </div>
             </div>
@@ -113,11 +113,6 @@
                     <div class="form-field">
                         <div class="form-field-heading">Offer Remarks</div>
                         <div class="form-field-inline-remarks">
-                            <div class="form-field-checkbox">
-                                <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Top Offer
-                                </label>
-                            </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
@@ -247,7 +242,7 @@
                 var _offertype_bystore = $("#offertype_bystore").val();
                 var _offerdetails = $("#offerdetails").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
-                var _offerstatus = $("#offerstatus").val();
+                var _offerstatus = $("input[name='offerstatus']:checked").val();
                 if(!$("#offercode-checkbox").prop("checked")){
                     _offercode = $("#offercode").val();
                 }
