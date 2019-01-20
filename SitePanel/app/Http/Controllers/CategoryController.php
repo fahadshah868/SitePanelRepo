@@ -19,7 +19,9 @@ class CategoryController extends Controller
         if(!$is_category_exists){
             $category = new Category;
             $category->title = $formdata->categorytitle;
-            $category->type = $formdata->categorytype;
+            $category->description = $formdata->categorydescription;
+            $category->is_topcategory = $formdata->is_topcategory;
+            $category->is_popularcategory = $formdata->is_popularcategory;
             $category->status = $formdata->categorystatus;
             if($request->hasFile('categorylogo')){
                 if(!File::exists(public_path("images/category"))){
@@ -63,10 +65,12 @@ class CategoryController extends Controller
     }
     public function postUpdateCategoryForm(Request $request){
         $category = Category::find($request->categoryid);
-        //if(title == title && type == type)
-        if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->type , $request->categorytype) == 0){
+        //if(title == title && topcategory == topcategory)
+        if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) == 0){
             $category->title = $request->categorytitle;
-            $category->type = $request->categorytype;
+            $category->description = $request->categorydescription;
+            $category->is_topcategory = $request->is_topcategory;
+            $category->is_popularcategory = $request->is_popularcategory;
             $category->status = $request->categorystatus;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
@@ -77,12 +81,14 @@ class CategoryController extends Controller
             ];
             return response()->json($response);
         }
-        //if(title != title && type == type)
-        else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) == 0){
+        //if(title != title && topcategory == topcategory)
+        if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) == 0){
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
-                $category->type = $request->categorytype;
+                $category->description = $request->categorydescription;
+                $category->is_topcategory = $request->is_topcategory;
+                $category->is_popularcategory = $request->is_popularcategory;
                 $category->status = $request->categorystatus;
                 //if file exists on server
                 if(File::exists($category->logo_url)){
@@ -109,12 +115,14 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
         }
-        //if(title == title && type != type)
-        else if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->type , $request->categorytype) != 0){
+       //if(title == title && topcategory != topcategory)
+        if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) != 0){
             $category->title = $request->categorytitle;
-            $category->type = $request->categorytype;
+            $category->description = $request->categorydescription;
+            $category->is_topcategory = $request->is_topcategory;
+            $category->is_popularcategory = $request->is_popularcategory;
             $category->status = $request->categorystatus;
-            if(strcasecmp($request->categorytype , "regular") == 0){
+            if(strcasecmp($request->is_topcategory , "no") == 0){
                 if(!empty($category->logo_url) && File::exists($category->logo_url)){
                     File::delete($category->logo_url);
                     $category->logo_url = null;
@@ -129,12 +137,14 @@ class CategoryController extends Controller
             ];
             return response()->json($response);
         }
-        //if(title != title && type != type)
-        else if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->type , $request->categorytype) != 0){
+       //if(title != title && topcategory != topcategory)
+        if(strcasecmp($category->title , $request->categorytitle) != 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) != 0){
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
-                $category->type = $request->categorytype;
+                $category->description = $request->categorydescription;
+                $category->is_topcategory = $request->is_topcategory;
+                $category->is_popularcategory = $request->is_popularcategory;
                 $category->status = $request->categorystatus;
                 //if file exists on server
                 if(File::exists($category->logo_url)){
@@ -144,7 +154,7 @@ class CategoryController extends Controller
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
                 }
-                if(strcasecmp($category->type , "regular") == 0){
+                if(strcasecmp($request->is_topcategory , "no") == 0){
                     if(!empty($category->logo_url) && File::exists($category->logo_url)){
                         File::delete($category->logo_url);
                         $category->logo_url = null;

@@ -31,7 +31,7 @@
             <thead>
                 <tr>
                     <th>Store Title</th>
-                    <th>Store Details</th>
+                    <th>Store Description</th>
                     <th>Store Primary Url</th>
                     <th>Store Secondary Url</th>
                     <th>Network</th>
@@ -48,7 +48,7 @@
                     @foreach($allstores as $store)
                         <tr>
                             <td>{{ $store->title }}</td>
-                            <td>{{ $store->details }}</td>
+                            <td>{{ $store->description }}</td>
                             <td>{{ $store->primary_url }}</td>
                             <td>{{ $store->secondary_url }}</td>
                             <td>{{ $store->network->title }}</td>
@@ -59,7 +59,7 @@
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedetails="{{$store->details}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -149,7 +149,7 @@
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
-                    "<b>Store Details Url:</b>  "+$(this).data("storedetails")+"<br>"+
+                    "<b>Store Description:</b>  "+$(this).data("storedescription")+"<br>"+
                     "<b>Store Primary Url:</b>  "+$(this).data("storeprimaryurl")+"<br>"+
                     "<b>Store Secondary Url:</b>  "+$(this).data("storesecondaryurl")+"<br>"+
                     "<b>Store Network:</b>  "+$(this).data("storenetwork")+"<br>"+

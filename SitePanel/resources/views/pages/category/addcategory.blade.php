@@ -89,16 +89,9 @@
                 $("#categorylogo").addClass("show");
             }
             else{
-                if($("#is_popularcategory").prop("checked")){
-                    $("#category-logo-container").css("display","block");
-                    $("#categorylogo").removeClass("hide");
-                    $("#categorylogo").addClass("show");
-                }
-                else{
-                    $("#category-logo-container").css("display","none");
-                    $("#categorylogo").removeClass("show");
-                    $("#categorylogo").addClass("hide");
-                }
+                $("#category-logo-container").css("display","none");
+                $("#categorylogo").removeClass("show");
+                $("#categorylogo").addClass("hide");
             }
         });
         $("#is_popularcategory").change(function(){
@@ -107,11 +100,6 @@
                 $("#category-logo-container").css("display","none");
                 $("#categorylogo").removeClass("show");
                 $("#categorylogo").addClass("hide");
-            }
-            else{
-                $("#category-logo-container").css("display","block");
-                $("#categorylogo").removeClass("hide");
-                $("#categorylogo").addClass("show");
             }
         });
         //custom validation method to check image dimensions

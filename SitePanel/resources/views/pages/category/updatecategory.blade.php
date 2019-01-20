@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            @if($category->type == "popular")
+            @if($category->is_topcategory == "yes")
             <div class="update-image-container">
                 <img src="{{asset($category->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
                 @if($category->logo_url == "")
@@ -56,6 +56,12 @@
                     <div class="form-field">
                         <div class="form-field-heading">Category Title</div>
                         <input type="text" class="form-control form-field-text" value="{{ $category->title }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Description</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->description }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">
