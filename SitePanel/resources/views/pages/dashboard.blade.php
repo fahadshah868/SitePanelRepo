@@ -133,6 +133,20 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#blogsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-shopping-bag"></i>
+                            Blog
+                        </a>
+                        <ul class="collapse list-unstyled" id="blogsuboptions">
+                            <li>
+                                <a href="/addblog" class="sidebar-suboption">Add Blog</a>
+                            </li>
+                            <li>
+                                <a href="/allblogs" class="sidebar-suboption">View Blogs</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
 

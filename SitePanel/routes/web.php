@@ -90,6 +90,11 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addcarouseloffer','CarouselOfferController@getAddCarouselOffer');
     Route::post('/addcarouseloffer','CarouselOfferController@postAddCarouselOffer');
     Route::get('/allcarouseloffers','CarouselOfferController@getAllCarouselOffers');
+    Route::get('updatecarouseloffer/{id}','CarouselOfferController@getUpdateCarouselOffer');
+    Route::get('updatecarouselofferform/{id}','CarouselOfferController@getUpdateCarouselOfferForm');
+    Route::post('updatecarouselofferform','CarouselOfferController@postUpdateCarouselOfferForm');
+    Route::post('updatecarouselofferimage','CarouselOfferController@postUpdateCarouselOfferImage');
+    Route::get('/deletecarouseloffer/{id}','CarouselOfferController@deleteCarouselOffer');
 
     //logout
     Route::get('/logout','LogoutController@logout');
