@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
+    protected $table = "stores";
+    protected $primaryKey = "id";
+
     public function network(){
         return $this->belongsTo('App\Network');
     }

@@ -86,9 +86,10 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updateoffer','OfferController@postUpdateOffer');
     Route::get('/deleteoffer/{id}','OfferController@deleteOffer');
 
-    //product routes
-    Route::get('/addproduct','ProductController@addProduct');
-    Route::get('/allproducts','ProductController@getAllProducts');
+    //carousel offer routes
+    Route::get('/addcarouseloffer','CarouselOfferController@getAddCarouselOffer');
+    Route::post('/addcarouseloffer','CarouselOfferController@postAddCarouselOffer');
+    Route::get('/allcarouseloffers','CarouselOfferController@getAllCarouselOffers');
 
     //logout
     Route::get('/logout','LogoutController@logout');

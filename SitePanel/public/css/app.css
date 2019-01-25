@@ -10842,6 +10842,11 @@ ul ul a:hover {
   border: 1px solid #d1d1d1;
 }
 
+.form-field .carouselofferimage {
+  width: 105px;
+  height: 40px;
+}
+
 .updateimage {
   width: 150px;
   height: 150px;

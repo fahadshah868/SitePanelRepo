@@ -104,7 +104,7 @@
         });
         //custom validation method to check image dimensions
         $.validator.addMethod('validateimage', function(value, element) {
-        return ($(element).data('imagewidth') || 0) == $(element).data('imageheight');
+        return ($(element).data('imagewidth') >= 200 && $(element).data('imagewidth') || 0) == $(element).data('imageheight');
         }, "please select the correct image");
         //validation rules
         var validator = $("#addcategoryform").submit(function(event){
@@ -121,7 +121,7 @@
                 categorytitle: "please enter category title",
                 categorydescription: "please enter category description",
                 categorystatus: "please select category status",
-                categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
+                categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },
             submitHandler: function(form) {
                 var _is_topcategory = "no";
@@ -188,7 +188,7 @@
                         var imageheight = image.height;
                         photoinput.data('imagewidth', imagewidth);
                         photoinput.data('imageheight', imageheight);
-                        if(imagewidth === imageheight){
+                        if(imagewidth >= 200 && imagewidth === imageheight){
                             $('#imgpath').attr('src', e.target.result);
                         }
                         validator.element(photoinput);
