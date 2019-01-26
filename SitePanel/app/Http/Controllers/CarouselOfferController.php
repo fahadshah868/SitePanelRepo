@@ -9,6 +9,7 @@ use App\OfferType;
 use App\CarouselOffer;
 use File;
 use Session;
+use Auth;
 
 class CarouselOfferController extends Controller
 {
@@ -18,9 +19,7 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
-        $carouseloffer_lastrow = CarouselOffer::orderBy('id', 'DESC')->first();
-        $imagenumber = $carouseloffer_lastrow->id;
-        $imagenumber = $imagenumber + 1;
+        $imageid = "";
         $formdata = json_decode($request->formdata);
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
@@ -34,13 +33,19 @@ class CarouselOfferController extends Controller
             if(!File::exists(public_path("images/carousel"))){
                 File::makeDirectory(public_path("images/carousel", 0777, true, true));
             }
+            do{
+                $flag = true;
+                $imageid = uniqid();
+                $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($formdata->storetitle)."-".$imageid.'%')->exists();
+            }while($flag);
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(1050, 400);
-            $carousel_image_name = strtolower($formdata->storetitle)."-".$imagenumber.".".$carousel_image->getClientOriginalExtension();
+            $carousel_image_name = strtolower($formdata->storetitle)."-".$imageid.".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
+            $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->save();
         }
         $response = [

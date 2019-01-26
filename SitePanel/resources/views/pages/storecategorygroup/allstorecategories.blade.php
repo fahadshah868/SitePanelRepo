@@ -17,7 +17,7 @@
     </div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
     <div class="viewitems-tableview">

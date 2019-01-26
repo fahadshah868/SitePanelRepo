@@ -25,7 +25,7 @@
     </div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
     <div class="viewitems-tableview">

@@ -12,6 +12,7 @@
                     <option value="4">Offer Starting Date</option>
                     <option value="5">Offer Expiry Date</option>
                     <option value="6">Offer Status</option>
+                    <option value="8">Add/Update By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -21,7 +22,7 @@
     </div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
     <div class="viewitems-tableview">
@@ -35,7 +36,8 @@
                     <th>Starting Date</th>
                     <th>Expiry Date</th>
                     <th>Offer Status</th>
-                    <th>Image URL</th>
+                    <th>Image</th>
+                    <th>Add/Update By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -59,6 +61,7 @@
                             @endif
                             <td>{{ $carouseloffer->status }}</td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carouselofferimage"/></td>
+                            <td>{{ $carouseloffer->form_user->username }}</td>
                             <td>
                                 <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                                 <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->offer_type->title}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -101,6 +104,9 @@
                 }
                 else if(column == 6){
                     $("#searchbar").attr('placeholder','Search Offer Status');
+                }
+                else if(column == 8){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");
