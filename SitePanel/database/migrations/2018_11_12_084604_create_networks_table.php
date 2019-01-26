@@ -17,6 +17,8 @@ class CreateNetworksTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->enum('status',['active','deactive']);
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

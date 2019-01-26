@@ -7,6 +7,7 @@ use App\Category;
 use Intervention\Image\ImageManagerStatic as Image;
 use File;
 use Session;
+use Auth;
 
 class CategoryController extends Controller
 {
@@ -35,6 +36,7 @@ class CategoryController extends Controller
                 $category_logo_path = 'images/category/'.$category_logo_name;
                 $category->logo_url = $category_logo_path;
             }
+            $category->user_id = Auth::User()->id;
             $category->save();
             $response = [
                 "status" => "true",
@@ -72,6 +74,7 @@ class CategoryController extends Controller
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
             $category->status = $request->categorystatus;
+            $category->user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
@@ -98,6 +101,7 @@ class CategoryController extends Controller
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
                 }
+                $category->user_id = Auth::User()->id;
                 $category->save();
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
@@ -128,6 +132,7 @@ class CategoryController extends Controller
                     $category->logo_url = null;
                 }
             }
+            $category->user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
@@ -160,6 +165,7 @@ class CategoryController extends Controller
                         $category->logo_url = null;
                     }
                 }
+                $category->user_id = Auth::User()->id;
                 $category->save();
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
@@ -202,6 +208,7 @@ class CategoryController extends Controller
             $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
             $category_logo_path = 'images/category/'.$category_logo_name;
             $category->logo_url = $category_logo_path;
+            $category->user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
             $response = [
@@ -221,14 +228,23 @@ class CategoryController extends Controller
     }
     public function deleteCategory($id){
         $category = Category::find($id);
-        if(File::exists($category->logo_url)){
-            File::delete($category->logo_url);
+        try{
+            if(File::exists($category->logo_url)){
+                File::delete($category->logo_url);
+            }
+            $category->delete();
+            $response = [
+                "status" => "true",
+                "success_message" => "Category Deleted Successfully"
+            ];
+            return response()->json($response);
         }
-        $category->delete();
-        $response = [
-            "status" => "true",
-            "success_message" => "Category Deleted Successfully"
-        ];
-        return response()->json($response);
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => $category->title."! Sorry, You Cannot Delete This Category Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
 }

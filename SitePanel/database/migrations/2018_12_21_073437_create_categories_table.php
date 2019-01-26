@@ -21,6 +21,8 @@ class CreateCategoriesTable extends Migration
             $table->enum('is_popularcategory',['yes','no']);
             $table->enum('status',['active','deactive']);
             $table->string('logo_url')->nullable();
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

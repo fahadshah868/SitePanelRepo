@@ -12,4 +12,7 @@ class Network extends Model
     public function store(){
         return $this->hasMany('app\Store');
     }
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

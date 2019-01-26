@@ -10,6 +10,7 @@
                     <option value="2">Is TopCategory</option>
                     <option value="3">Is PopularCategory</option>
                     <option value="4">Category Status</option>
+                    <option value="6">User</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -28,6 +29,7 @@
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
                     <th>Category Logo</th>
+                    <th>User</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -42,10 +44,12 @@
                         <td>{{ $category->status }}</td>
                         <td>
                             @if($category->is_topcategory == "yes")
-                            <img src="{{ asset($category->logo_url) }}"/></td>
+                            <img src="{{ asset($category->logo_url) }}"/>
                             @else
                             <b>N/A</b>
                             @endif
+                        </td>
+                        <td>{{ $category->user->username}}</td>
                         <td>
                             <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -82,6 +86,9 @@
                 }
                 else if(column == 4){
                     $("#searchbar").attr('placeholder','Search Category Status');
+                }
+                else if(column == 6){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");

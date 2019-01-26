@@ -7,6 +7,7 @@
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Network Title</option>
                     <option value="1">Netowrk Status</option>
+                    <option value="2">User</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -16,11 +17,11 @@
     </div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
     <div class="viewitems-tableview">
@@ -29,6 +30,7 @@
                 <tr>
                     <th>Network Title</th>
                     <th>Network Status</th>
+                    <th>User</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,6 +40,7 @@
                     <tr>
                         <td>{{ $network->title }}</td>
                         <td>{{ $network->status }}</td>
+                        <td>{{ $network->user->username}}</td>
                         <td>
                             <a href="/updatenetwork/{{$network->id}}" id="updatenetwork" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -52,6 +55,9 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
         if('{{ Session::has("updatenetwork_successmessage") }}'){
             $("#alert-success-message-area").html('{{ Session::get("updatenetwork_successmessage") }}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
@@ -71,6 +77,9 @@
                 }
                 else if(column == 1){
                     $("#searchbar").attr('placeholder','Search Network Status');
+                }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");

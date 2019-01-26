@@ -9,6 +9,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    protected $table = "users";
+    protected $primaryKey = "id";
+
+    public function network(){
+        return $this->hasMany('App\Network');
+    }
+    public function store(){
+        return $this->hasMany('App\Store');
+    }
+    public function category(){
+        return $this->hasMany('App\Category');
+    }
+    public function offer(){
+        return $this->hasMany('App\Offer');
+    }
+    public function carouseloffer(){
+        return $this->hasMany('App\CarouselOffer');
+    }
 
     /**
      * The attributes that are mass assignable.

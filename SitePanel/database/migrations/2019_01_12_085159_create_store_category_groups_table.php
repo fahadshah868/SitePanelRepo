@@ -19,6 +19,8 @@ class CreateStoreCategoryGroupsTable extends Migration
             $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
             $table->bigInteger('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

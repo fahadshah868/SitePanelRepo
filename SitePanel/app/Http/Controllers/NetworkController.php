@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Network;
 use Session;
+use Auth;
 
 class NetworkController extends Controller
 {
@@ -17,21 +18,13 @@ class NetworkController extends Controller
             $network = new Network;
             $network->title = $request->networktitle;
             $network->status = $request->networkstatus;
-            $is_network_saved = $network->save();
-            if($is_network_saved){
-                $response = [
-                    "status" => "true",
-                    "success_message" => "Network Added Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Error! Network Is Not Added Successfully"
-                ];
-                return response()->json($response);
-            }
+            $network->user_id = Auth::User()->id;
+            $network->save();
+            $response = [
+                "status" => "true",
+                "success_message" => "Network Added Successfully"
+            ];
+            return response()->json($response);
         }
         else{
             $response = [
@@ -55,44 +48,22 @@ class NetworkController extends Controller
         if(strcasecmp($network->title, $request->networktitle) == 0){
             $network->title = $request->networktitle;
             $network->status = $request->networkstatus;
-            $is_network_updated = $network->save();
-            if($is_network_updated){
-                Session::flash('updatenetwork_successmessage','Network Updated Successfully');
-                $response = [
-                    "status" => "true",
-                    "success_message" => "Network Updated Successfully"
-                ];
-                return response()->json($response);
-            }
-            else{
-                $response = [
-                    "status" => "false",
-                    "error_message" => "Network Is Not Updated Successfully"
-                ];
-                return response()->json($response);
-            }
+            $network->user_id = Auth::User()->id;
+            $network->save();
         }
         else{
             $is_network_exists = Network::where('title', $request->networktitle)->exists();
             if(!$is_network_exists){
                 $network->title = $request->networktitle;
                 $network->status = $request->networkstatus;
-                $is_network_updated = $network->save();
-                if($is_network_updated){
-                    Session::flash('updatenetwork_successmessage','Network Updated Successfully');
-                    $response = [
-                        "status" => "true",
-                        "success_message" => "Network Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
-                else{
-                    $response = [
-                        "status" => "false",
-                        "error_message" => "Network Is Not Updated Successfully"
-                    ];
-                    return response()->json($response);
-                }
+                $network->user_id = Auth::User()->id;
+                $network->save();
+                Session::flash('updatenetwork_successmessage','Network Updated Successfully');
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Network Updated Successfully"
+                ];
+                return response()->json($response);
             }
             else{
                 $response = [
@@ -105,18 +76,18 @@ class NetworkController extends Controller
     }
     public function deleteNetwork($id){
         $network = Network::find($id);
-        $is_network_deleted = $network->delete();
-        if($is_network_deleted){
+        try{
+            $network->delete();
             $response = [
                 "status" => "true",
                 "success_message" => "Network Deleted Successfully"
             ];
             return response()->json($response);
         }
-        else{
+        catch(\Illuminate\Database\QueryException $ex){
             $response = [
                 "status" => "false",
-                "error_message" => "Error! Network Is Not Deleted Successfully"
+                "error_message" => $network->title."! Sorry, You Cannot Delete This Network Until You Delete Its Child Entries Exists In Other Tables."
             ];
             return response()->json($response);
         }

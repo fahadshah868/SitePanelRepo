@@ -61,6 +61,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#categorysuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-tag"></i>
+                            Category
+                        </a>
+                        <ul class="collapse list-unstyled" id="categorysuboptions">
+                            <li>
+                                <a href="/addcategory" class="sidebar-suboption">Add Category</a>
+                            </li>
+                            <li>
+                                <a href="/allcategories" class="sidebar-suboption">View Categories</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#storesuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-store-alt"></i>
                             Store
@@ -74,20 +88,6 @@
                             </li>
                             <li>
                                 <a href="/allstorecategories" class="sidebar-suboption">View Store Categories</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#categorysuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-tag"></i>
-                            Category
-                        </a>
-                        <ul class="collapse list-unstyled" id="categorysuboptions">
-                            <li>
-                                <a href="/addcategory" class="sidebar-suboption">Add Category</a>
-                            </li>
-                            <li>
-                                <a href="/allcategories" class="sidebar-suboption">View Categories</a>
                             </li>
                         </ul>
                     </li>

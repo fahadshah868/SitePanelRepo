@@ -15,4 +15,7 @@ class Category extends Model
     public function storecategorygroup(){
         return $this->hasMany('App\StoreCategoryGroup');
     }
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

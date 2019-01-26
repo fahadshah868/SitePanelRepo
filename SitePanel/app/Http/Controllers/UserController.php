@@ -122,11 +122,20 @@ class UserController extends Controller
     }
     public function deleteUser($id){
         $user = User::find($id);
-        $user->delete();
-        $response = [
-            "status" => "true",
-            "success_message" => "User Deleted Successfully"
-        ];
-        return response()->json($response);
+        try{
+            $user->delete();
+            $response = [
+                "status" => "true",
+                "success_message" => "User Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => $user->username."! Sorry, You Cannot Delete This User Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
 }
