@@ -8,6 +8,7 @@ use App\OfferType;
 use App\Offer;
 use App\StoreCategoryGroup;
 use Session;
+use Auth;
 
 class OfferController extends Controller
 {
@@ -31,6 +32,7 @@ class OfferController extends Controller
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
+        $offer->user_id = Auth::User()->id;
         $offer->save();
         $response = [
             "status" => "true",
@@ -65,6 +67,7 @@ class OfferController extends Controller
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
+        $offer->user_id = Auth::User()->id;
         $is_offer_saved = $offer->save();
         Session::flash("offerupdated_successmessage","Offer Updated Successfully");
         $response = [

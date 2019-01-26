@@ -10,6 +10,7 @@ use App\Network;
 use App\StoreCategoryGroup;
 use File;
 use Session;
+use Auth;
 
 class StoreController extends Controller
 {
@@ -47,11 +48,14 @@ class StoreController extends Controller
                 $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
                 $store_logo_path = 'images/store/'.$store_logo_name;
                 $store->logo_url = $store_logo_path;
+                $store->form_user_id = Auth::User()->id;
+                $store->image_user_id = Auth::User()->id;
                 $store->save();
                 for($category=0; $category< count($formdata->storecategories); $category++){
                     $storecategorygroup = new StoreCategoryGroup;
                     $storecategorygroup->store_id = $store->id;
                     $storecategorygroup->category_id = $formdata->storecategories[$category];
+                    $storecategorygroup->user_id = Auth::User()->id;
                     $storecategorygroup->save();
                 }
                 $response = [
@@ -103,6 +107,7 @@ class StoreController extends Controller
             $store->is_topstore = $request->is_topstore;
             $store->is_popularstore = $request->is_popularstore;
             $store->status = $request->storestatus;
+            $store->form_user_id = Auth::User()->id;
             $store->save();
             Session::flash("updatestore_successmessage","Store Updated Successfully");
             $response = [
@@ -125,6 +130,7 @@ class StoreController extends Controller
                 $store->is_topstore = $request->is_topstore;
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -162,6 +168,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -192,6 +199,7 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -231,6 +239,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -270,6 +279,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -302,6 +312,7 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -342,6 +353,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
+                $store->form_user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -374,6 +386,7 @@ class StoreController extends Controller
             $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
+            $store->image_user_id = Auth::User()->id;
             $store->save();
             Session::flash("updatestorelogo_successmessage","Store Logo Updated Successfully");
             $response = [
@@ -393,14 +406,24 @@ class StoreController extends Controller
     }
     public function deleteStore($id){
         $store = Store::find($id);
-        if(File::exists($store->logo_url)){
-            File::delete($store->logo_url);
+        try{
+            if(File::exists($store->logo_url)){
+                File::delete($store->logo_url);
+            }
+            $store->delete();
+            $response = [
+                "status" => "true",
+                "success_message" => "Store Deleted Successfully"
+            ];
+            return response()->json($response);
         }
-        $store->delete();
-        $response = [
-            "status" => "true",
-            "success_message" => "Store Deleted Successfully"
-        ];
-        return response()->json($response);
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => $store->title."! Sorry, You Cannot Delete This Store Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
+        
     }
 }

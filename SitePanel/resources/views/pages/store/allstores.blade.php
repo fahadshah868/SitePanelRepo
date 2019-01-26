@@ -14,6 +14,8 @@
                     <option value="6">Is TopStore</option>
                     <option value="7">Is PopularStore</option>
                     <option value="8">Store Status</option>
+                    <option value="10">Add/Update Form By</option>
+                    <option value="11">Add/Update Image By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -40,6 +42,8 @@
                     <th>Is PopularStore</th>
                     <th>Store Status</th>
                     <th>Store Logo</th>
+                    <th>Add/Update Form By</th>
+                    <th>Add/Update Image By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -57,6 +61,8 @@
                             <td>{{ $store->is_popularstore }}</td>
                             <td>{{ $store->status }}</td>
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
+                            <td>{{ $store->form_user->username }}</td>
+                            <td>{{ $store->image_user->username }}</td>
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                                 <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -105,6 +111,12 @@
                 }
                 else if(column == 8){
                     $("#searchbar").attr('placeholder','Search Store Status');
+                }
+                else if(column == 10){
+                    $("#searchbar").attr('placeholder','Search User');
+                }
+                else if(column == 11){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");

@@ -36,7 +36,8 @@ class CategoryController extends Controller
                 $category_logo_path = 'images/category/'.$category_logo_name;
                 $category->logo_url = $category_logo_path;
             }
-            $category->user_id = Auth::User()->id;
+            $category->form_user_id = Auth::User()->id;
+            $category->image_user_id = Auth::User()->id;
             $category->save();
             $response = [
                 "status" => "true",
@@ -74,7 +75,7 @@ class CategoryController extends Controller
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
             $category->status = $request->categorystatus;
-            $category->user_id = Auth::User()->id;
+            $category->form_user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
@@ -101,7 +102,7 @@ class CategoryController extends Controller
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
                 }
-                $category->user_id = Auth::User()->id;
+                $category->form_user_id = Auth::User()->id;
                 $category->save();
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
@@ -132,7 +133,7 @@ class CategoryController extends Controller
                     $category->logo_url = null;
                 }
             }
-            $category->user_id = Auth::User()->id;
+            $category->form_user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
@@ -165,7 +166,7 @@ class CategoryController extends Controller
                         $category->logo_url = null;
                     }
                 }
-                $category->user_id = Auth::User()->id;
+                $category->form_user_id = Auth::User()->id;
                 $category->save();
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
@@ -208,7 +209,7 @@ class CategoryController extends Controller
             $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
             $category_logo_path = 'images/category/'.$category_logo_name;
             $category->logo_url = $category_logo_path;
-            $category->user_id = Auth::User()->id;
+            $category->image_user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
             $response = [

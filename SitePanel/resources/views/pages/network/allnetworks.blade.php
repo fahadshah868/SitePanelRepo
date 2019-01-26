@@ -7,7 +7,7 @@
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Network Title</option>
                     <option value="1">Netowrk Status</option>
-                    <option value="2">User</option>
+                    <option value="2">Add/Update By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -30,7 +30,7 @@
                 <tr>
                     <th>Network Title</th>
                     <th>Network Status</th>
-                    <th>User</th>
+                    <th>Add/Update By</th>
                     <th>Actions</th>
                 </tr>
             </thead>

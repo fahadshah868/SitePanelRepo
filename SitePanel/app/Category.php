@@ -9,13 +9,18 @@ class Category extends Model
     protected $table = "categories";
     protected $primaryKey = "id";
 
+    //has many
     public function offer(){
         return $this->hasMany('App\Offer');
     }
     public function storecategorygroup(){
         return $this->hasMany('App\StoreCategoryGroup');
     }
-    public function user(){
+    //belongs to
+    public function form_user(){
+        return $this->belongsTo('App\User');
+    }
+    public function image_user(){
         return $this->belongsTo('App\User');
     }
 }

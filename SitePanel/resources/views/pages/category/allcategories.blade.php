@@ -10,7 +10,8 @@
                     <option value="2">Is TopCategory</option>
                     <option value="3">Is PopularCategory</option>
                     <option value="4">Category Status</option>
-                    <option value="6">User</option>
+                    <option value="6">Add/Update Form User</option>
+                    <option value="7">Add/Update Image User</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -29,7 +30,8 @@
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
                     <th>Category Logo</th>
-                    <th>User</th>
+                    <th>Add/Update Form By</th>
+                    <th>Add/Update Image By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -49,7 +51,8 @@
                             <b>N/A</b>
                             @endif
                         </td>
-                        <td>{{ $category->user->username}}</td>
+                        <td>{{ $category->form_user->username}}</td>
+                        <td>{{ $category->image_user->username}}</td>
                         <td>
                             <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -88,6 +91,9 @@
                     $("#searchbar").attr('placeholder','Search Category Status');
                 }
                 else if(column == 6){
+                    $("#searchbar").attr('placeholder','Search User');
+                }
+                else if(column == 7){
                     $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");

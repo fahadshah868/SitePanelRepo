@@ -14,11 +14,11 @@
                     <option value="6">Offer Details</option>
                     <option value="7">Offer Starting Date</option>
                     <option value="8">Offer Expiry Date</option>
-                    <option value="9">Offer Uses</option>
-                    <option value="10">Offer Is Popular</option>
-                    <option value="11">Offer Display At Home</option>
-                    <option value="12">Offer Is Verified</option>
-                    <option value="13">Offer Status</option>
+                    <option value="9">Offer Is Popular</option>
+                    <option value="10">Offer Display At Home</option>
+                    <option value="11">Offer Is Verified</option>
+                    <option value="12">Offer Status</option>
+                    <option value="13">Add/Update By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -48,11 +48,11 @@
                     <th>Details</th>
                     <th>Starting Data</th>
                     <th>Expiry Date</th>
-                    <th>Uses</th>
                     <th>Is Popular</th>
                     <th>Display At Home</th>
                     <th>Is Verified</th>
                     <th>Status</th>
+                    <th>Add/Update By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -76,11 +76,11 @@
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                     @endif
-                    <td>{{ $offer->uses }}</td>
                     <td>{{ $offer->is_popular }}</td>
                     <td>{{ $offer->display_at_home }}</td>
                     <td>{{ $offer->is_verified }}</td>
                     <td>{{ $offer->status }}</td>
+                    <td>{{ $offer->user->username }}</td>
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
                         <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}", data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
@@ -136,19 +136,19 @@
                     $("#searchbar").attr('placeholder','Search Offer Expiry Date');
                 }
                 else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search Offer Uses');
-                }
-                else if(column == 10){
                     $("#searchbar").attr('placeholder','Search Offer Is Popular');
                 }
-                else if(column == 11){
+                else if(column == 10){
                     $("#searchbar").attr('placeholder','Search Offer Display At Home');
                 }
-                else if(column == 12){
+                else if(column == 11){
                     $("#searchbar").attr('placeholder','Search Offer Is Verified');
                 }
-                else if(column == 13){
+                else if(column == 12){
                     $("#searchbar").attr('placeholder','Search Offer Status');
+                }
+                else if(column == 13){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");

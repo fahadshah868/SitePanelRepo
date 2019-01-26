@@ -27,6 +27,7 @@ class StoreCategoryGroupController extends Controller
             $storecategorygroup = new StoreCategoryGroup;
             $storecategorygroup->store_id = $request->storeid;
             $storecategorygroup->category_id = $request->storecategories[$category];
+            $storecategorygroup->user_id = Auth::User()->id;
             $storecategorygroup->save();
         }
         Session::flash("updatestorecategories_successmessage","Store Categories Updated Successfully");

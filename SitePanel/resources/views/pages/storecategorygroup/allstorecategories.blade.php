@@ -7,6 +7,7 @@
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Store Title</option>
                     <option value="1">Store Categories</option>
+                    <option value="2">Add/Update By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -25,6 +26,7 @@
                 <tr>
                     <th>Store Title</th>
                     <th>Store Categories</th>
+                    <th>Add/Update By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -38,6 +40,7 @@
                                 {{ $storecategory->category->title }}, 
                             @endforeach
                             </td>
+                            <td>{{ $store->storecategorygroup{0}->user->username }}</td>
                             <td>
                                 <a href="/updatestorecategories/{{$store->id}}" id="updatestorecategories" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             </td>
@@ -70,6 +73,9 @@
                 }
                 else if(column == 1){
                     $("#searchbar").attr('placeholder','Search Store categories');
+                }
+                else if(column == 2){
+                    $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");

@@ -61,7 +61,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Description</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $category->description }}" readonly/>
+                        <textarea class="form-control form-field-textarea" readonly>{{$category->description}}</textarea>
                     </div>
                 </div>
                 <div class="col-sm-12">
