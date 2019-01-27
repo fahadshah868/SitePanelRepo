@@ -13,8 +13,8 @@ use Auth;
 class OfferController extends Controller
 {
     public function getAddOffer(){
-        $data['allstores'] = Store::all();
-        $data['alloffertypes'] = OfferType::all();
+        $data['allstores'] = Store::where('status','active')->get();
+        $data['alloffertypes'] = OfferType::where('status','active')->get();
         return view("pages.offer.addoffer",$data);
     }
     public function postAddOffer(Request $request){
@@ -78,12 +78,21 @@ class OfferController extends Controller
     }
     public function deleteOffer($id){
         $offer = Offer::find($id);
-        $is_offer_deleted = $offer->delete();
-        $response = [
-            "status" => "true",
-            "success_message" => "Offer Deleted Successfully"
-        ];
-        return response()->json($response);
+        try{
+            $is_offer_deleted = $offer->delete();
+            $response = [
+                "status" => "true",
+                "success_message" => "Offer Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => "Sorry, You Cannot Delete This Offer Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
     //retrieve store all categories
     public function getStoreCategories($id){

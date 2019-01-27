@@ -50,9 +50,8 @@
                         <div class="form-field-heading">Offer Type By Store</div>
                         <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
                             <option value="">Select Offer Type</option>
-                            @foreach($alloffertypes as $offertype)
-                            <option value="{{$offertype->id}}">{{$offertype->title}}</option>
-                            @endforeach
+                            <option value="Code">Code</option>
+                            <option value="Sale">Sale</option>
                         </select>
                     </div>
                 </div>

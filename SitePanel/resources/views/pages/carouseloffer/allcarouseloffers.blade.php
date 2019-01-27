@@ -12,7 +12,8 @@
                     <option value="4">Offer Starting Date</option>
                     <option value="5">Offer Expiry Date</option>
                     <option value="6">Offer Status</option>
-                    <option value="8">Add/Update By</option>
+                    <option value="8">Add/Update Form By</option>
+                    <option value="9">Add/Update Image By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -37,7 +38,8 @@
                     <th>Expiry Date</th>
                     <th>Offer Status</th>
                     <th>Image</th>
-                    <th>Add/Update By</th>
+                    <th>Add/Update Form By</th>
+                    <th>Add/Update Image By</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -62,6 +64,7 @@
                             <td>{{ $carouseloffer->status }}</td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carouselofferimage"/></td>
                             <td>{{ $carouseloffer->form_user->username }}</td>
+                            <td>{{ $carouseloffer->image_user->username }}</td>
                             <td>
                                 <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                                 <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->offer_type->title}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
@@ -76,6 +79,9 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();
@@ -106,6 +112,9 @@
                     $("#searchbar").attr('placeholder','Search Offer Status');
                 }
                 else if(column == 8){
+                    $("#searchbar").attr('placeholder','Search User');
+                }
+                else if(column == 9){
                     $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");

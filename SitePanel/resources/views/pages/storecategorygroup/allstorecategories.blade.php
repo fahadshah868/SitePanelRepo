@@ -20,6 +20,10 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -60,6 +64,9 @@
                 $("#alert-success").slideUp(500);
             });
         }
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();

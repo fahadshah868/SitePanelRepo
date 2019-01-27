@@ -424,6 +424,5 @@ class StoreController extends Controller
             ];
             return response()->json($response);
         }
-        
     }
 }

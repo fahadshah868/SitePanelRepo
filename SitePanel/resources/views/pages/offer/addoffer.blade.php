@@ -48,6 +48,11 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
+                    <div class="form-field-checkbox">
+                        <label class="form-field-checkbox-label">
+                            <input type="checkbox" id="discount-type">Free Shipping
+                        </label>
+                    </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field-checkbox">
@@ -60,13 +65,24 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
-                            <option value="">Select Offer Type</option>
-                            @foreach($alloffertypes as $offertype)
-                            <option value="{{$offertype->id}}">{{$offertype->title}}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-field-heading">Offer Type</div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offerremark" name="offerremark">
+                                    <option value="">Select Offer Remark</option>
+                                    <option value="Online">Online</option>
+                                    <option value="Instore">Instore</option>
+                                    <option value="Online & Instore">Online & Instore</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
+                                    <option value="">Select Offer Type</option>
+                                    <option value="Code">Code</option>
+                                    <option value="Sale">Sale</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">

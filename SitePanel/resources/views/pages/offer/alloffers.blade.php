@@ -94,6 +94,9 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
         if('{{ Session::has("offerupdated_successmessage") }}'){
             $("#alert-success-message-area").html('{{ Session::get("offerupdated_successmessage") }}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){

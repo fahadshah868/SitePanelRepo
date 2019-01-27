@@ -7,6 +7,7 @@ use App\StoreCategoryGroup;
 use App\Store;
 use App\Category;
 use Session;
+use Auth;
 
 class StoreCategoryGroupController extends Controller
 {

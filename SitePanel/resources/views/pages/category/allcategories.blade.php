@@ -67,6 +67,9 @@
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $(".close").click(function(){
+            $(".alert").slideUp();
+        });
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();

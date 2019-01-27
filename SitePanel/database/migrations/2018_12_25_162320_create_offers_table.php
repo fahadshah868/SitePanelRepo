@@ -21,8 +21,9 @@ class CreateOffersTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->longText('title');
             $table->string('anchor');
-            $table->bigInteger('offer_type_id')->unsigned();
-            $table->foreign('offer_type_id')->references('id')->on('offer_types');
+            $table->enum('remark',['Online','Instore','Online & Instore']);
+            $table->enum('type',['Code','Sale']);
+            $table->enum('free_shipping',['yes','no']);
             $table->string('code')->nullable();
             $table->longText('details');
             $table->date('starting_date');

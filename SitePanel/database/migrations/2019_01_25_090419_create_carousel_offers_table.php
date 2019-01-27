@@ -18,15 +18,16 @@ class CreateCarouselOffersTable extends Migration
             $table->bigInteger('store_id')->unsigned();
             $table->foreign('store_id')->references('id')->on('stores');
             $table->longText('title');
-            $table->bigInteger('offer_type_id')->unsigned();
-            $table->foreign('offer_type_id')->references('id')->on('offer_types');
+            $table->enum('type',['Code','Sale']);
             $table->string('code')->nullable();
             $table->date('starting_date');
             $table->date('expiry_date')->nullable();
             $table->string('image_url');
             $table->enum('status',['active','deactive']);
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('form_user_id')->unsigned();
+            $table->foreign('form_user_id')->references('id')->on('users');
+            $table->bigInteger('image_user_id')->unsigned();
+            $table->foreign('image_user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

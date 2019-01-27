@@ -14,8 +14,8 @@ use Auth;
 class CarouselOfferController extends Controller
 {
     public function getAddCarouselOffer(){
-        $data['allstores'] = Store::all();
-        $data['alloffertypes'] = OfferType::all();
+        $data['allstores'] = Store::where('status','active')->get();
+        $data['alloffertypes'] = OfferType::where('status','active')->get();
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
@@ -45,7 +45,8 @@ class CarouselOfferController extends Controller
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
-            $carouseloffer->user_id = Auth::User()->id;
+            $carouseloffer->form_user_id = Auth::User()->id;
+            $carouseloffer->image_user_id = Auth::User()->id;
             $carouseloffer->save();
         }
         $response = [
@@ -92,14 +93,23 @@ class CarouselOfferController extends Controller
     }
     public function deleteCarouselOffer($id){
         $carouseloffer = CarouselOffer::find($id);
-        if(File::exists($carouseloffer->image_url)){
-            File::delete($carouseloffer->image_url);
+        try{
+            if(File::exists($carouseloffer->image_url)){
+                File::delete($carouseloffer->image_url);
+            }
+            $carouseloffer->delete();
+            $response = [
+                "status" => "true",
+                "success_message" => "Carousel Offer Deleted Successfully"
+            ];
+            return response()->json($response);
         }
-        $carouseloffer->delete();
-        $response = [
-            "status" => "true",
-            "success_message" => "Carousel Offer Deleted Successfully"
-        ];
-        return response()->json($response);
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => "Sorry, You Cannot Delete This Carousel Offer Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
 }
