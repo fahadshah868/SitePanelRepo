@@ -22,6 +22,7 @@ class CarouselOfferController extends Controller
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
         $carouseloffer->title = $formdata->offertitle;
+        $carouseloffer->type = $formdata->offertype;
         $carouseloffer->code = $formdata->offercode;
         $carouseloffer->starting_date = $formdata->offer_startingdate;
         $carouseloffer->expiry_date = $formdata->offer_expirydate;

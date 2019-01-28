@@ -53,7 +53,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->offer_type->title }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->type }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">

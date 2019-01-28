@@ -453,7 +453,6 @@
                     _free_shipping = $("#free-shipping").val();
                 }
                 var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
-                alert(_jsondata);
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

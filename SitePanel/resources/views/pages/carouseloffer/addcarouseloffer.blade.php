@@ -47,8 +47,8 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
+                        <div class="form-field-heading">Offer Type</div>
+                        <select class="form-control form-field-text" id="offertype" name="offertype">
                             <option value="">Select Offer Type</option>
                             <option value="Code">Code</option>
                             <option value="Sale">Sale</option>
@@ -150,7 +150,7 @@
             rules: {
                 offer_store: "required",
                 offertitle: "required",
-                offertype_bystore: "required",
+                offertype: "required",
                 offercode: "required",
                 offer_startingdate: "required",
                 offer_expirydate: "required",
@@ -160,7 +160,7 @@
             messages: {
                 offer_store: "please select store",
                 offertitle: "please enter offer title",
-                offertype_bystore: "please select offer type",
+                offertype: "please select offer type",
                 offercode: "please enter offer code",
                 offer_startingdate: "please select starting date",
                 offer_expirydate: "please select expiry date",
@@ -173,7 +173,7 @@
                 var _offer_store = $("#offer_store").val();
                 var _storetitle = $("#storetitle").val();
                 var _offertitle = $("#offertitle").val();
-                var _offertype_bystore = $("#offertype_bystore").val();
+                var _offertype = $("#offertype").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
                 var _offerstatus = $("input[name='offerstatus']:checked").val();
                 var _carouselofferimage = $("#carouselofferimage")[0].files[0];
@@ -184,7 +184,7 @@
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype_bystore: _offertype_bystore, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus});
+                var _jsondata = JSON.stringify({offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus});
                 formdata.append("carouselofferimage", _carouselofferimage);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");

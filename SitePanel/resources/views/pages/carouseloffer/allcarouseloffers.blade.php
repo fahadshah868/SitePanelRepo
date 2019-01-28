@@ -49,7 +49,7 @@
                         <tr>
                             <td>{{ $carouseloffer->store->title }}</td>
                             <td>{{ $carouseloffer->title }}</td>
-                            <td>{{ $carouseloffer->offer_type->title }}</td>
+                            <td>{{ $carouseloffer->type }}</td>
                             @if($carouseloffer->code != null)
                                 <td>{{ $carouseloffer->code }}</td>
                             @else
@@ -67,7 +67,7 @@
                             <td>{{ $carouseloffer->image_user->username }}</td>
                             <td>
                                 <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->offer_type->title}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach

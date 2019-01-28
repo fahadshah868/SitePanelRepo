@@ -12,7 +12,6 @@
                     <div class="form-field">
                         <input type="text" id="carouselofferid" value="{{ $carouseloffer->id }}" hidden>
                         <div class="form-field-heading">Select Store</div>
-                        <input type="text" id="storetitle" hidden/>
                         <select class="form-control form-field-text" id="offer_store" name="offer_store">
                             @foreach($allstores as $store)
                                 @if($carouseloffer->store_id == $store->id)
@@ -49,14 +48,14 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
-                            @foreach($alloffertypes as $offertype)
-                                @if($carouseloffer->offer_type_id == $offertype->id)
-                                <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
-                                @else
-                                <option value="{{$offertype->id}}">{{$offertype->title}}</option>
-                                @endif
-                            @endforeach
+                        <select class="form-control form-field-text" id="offertype" name="offertype">
+                            @if($carouseloffer->type == "Code")
+                            <option value="Code" selected>Code</option>
+                            <option value="Sale">Sale</option>
+                            @else
+                            <option value="Code">Code</option>
+                            <option value="Sale" selected>Sale</option>
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -83,14 +82,14 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
-                            @foreach($alloffertypes as $offertype)
-                                @if($carouseloffer->offer_type_id == $offertype->id)
-                                <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
+                        <select class="form-control form-field-text" id="offertype" name="offertype">
+                                @if($carouseloffer->type == "Code")
+                                <option value="Code" selected>Code</option>
+                                <option value="Sale">Sale</option>
                                 @else
-                                <option value="{{$offertype->id}}">{{$offertype->title}}</option>
+                                <option value="Code">Code</option>
+                                <option value="Sale" selected>Sale</option>
                                 @endif
-                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -202,9 +201,6 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#offer_store").change(function(){
-            $("#storetitle").val($("#offer_store option:selected").text());
-        });
         $("#backtocarouseloffer").click(function(){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
@@ -248,19 +244,21 @@
             rules: {
                 offer_store: "required",
                 offertitle: "required",
-                offertype_bystore: "required",
+                offertype: "required",
                 offercode: "required",
                 offer_startingdate: "required",
                 offer_expirydate: "required",
+                carouselofferimage: { required: true, validateimage: true },
                 offerstatus: "required"
             },
             messages: {
                 offer_store: "please select store",
                 offertitle: "please enter offer title",
-                offertype_bystore: "please select offer type",
+                offertype: "please select offer type",
                 offercode: "please enter offer code",
                 offer_startingdate: "please select starting date",
                 offer_expirydate: "please select expiry date",
+                carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 1050 x 400"},
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
@@ -268,9 +266,8 @@
                 var _offer_expirydate = null;
                 var _carouselofferid = $("#carouselofferid").val();
                 var _offer_store = $("#offer_store").val();
-                var _storetitle = $("#storetitle").val();
                 var _offertitle = $("#offertitle").val();
-                var _offertype_bystore = $("#offertype_bystore").val();
+                var _offertype = $("#offertype").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
                 var _offerstatus = $("input[name='offerstatus']:checked").val();
                 if(!$("#offercode-checkbox").prop("checked")){
@@ -279,7 +276,7 @@
                 if(!$("#expiry-date-checkbox").prop("checked")){
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
-                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype_bystore: _offertype_bystore, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
+                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
                 $("#updatecarouselofferform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({
