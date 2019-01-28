@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Store;
-use App\OfferType;
 use App\Offer;
 use App\StoreCategoryGroup;
 use Session;
@@ -14,18 +13,19 @@ class OfferController extends Controller
 {
     public function getAddOffer(){
         $data['allstores'] = Store::where('status','active')->get();
-        $data['alloffertypes'] = OfferType::where('status','active')->get();
         return view("pages.offer.addoffer",$data);
     }
     public function postAddOffer(Request $request){
         $offer = new Offer;
-        $offer->title = ucwords($request->offertitle);
-        $offer->anchor = strtoupper($request->offeranchor);
-        $offer->offer_type_id = $request->offertype_bystore;
-        $offer->code = $request->offercode;
-        $offer->details = ucfirst($request->offerdetails);
         $offer->store_id = $request->offer_store;
         $offer->category_id = $request->offer_category;
+        $offer->title = ucwords($request->offertitle);
+        $offer->free_shipping = $request->free_shipping;
+        $offer->anchor = strtoupper($request->offeranchor);
+        $offer->location = $request->offerlocation;
+        $offer->type = $request->offertype;
+        $offer->code = $request->offercode;
+        $offer->details = ucfirst($request->offerdetails);
         $offer->starting_date = $request->offer_startingdate;
         $offer->expiry_date = $request->offer_expirydate;
         $offer->is_popular = $request->offer_is_popular;
@@ -47,20 +47,21 @@ class OfferController extends Controller
     }
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);
-        $data['alloffertypes'] = OfferType::all();
         $data['allstores'] = Store::all();
         $data['allstorecategories'] = StoreCategoryGroup::where('store_id',$data['offer']->store_id)->with('category')->get();
         return view('pages.offer.updateoffer',$data);
     }
     public function postUpdateOffer(Request $request){
         $offer = Offer::find($request->offerid);
-        $offer->title = ucwords($request->offertitle);
-        $offer->anchor = strtoupper($request->offeranchor);
-        $offer->offer_type_id = $request->offertype_bystore;
-        $offer->code = $request->offercode;
-        $offer->details = $request->offerdetails;
         $offer->store_id = $request->offer_store;
         $offer->category_id = $request->offer_category;
+        $offer->title = ucwords($request->offertitle);
+        $offer->free_shipping = $request->free_shipping;
+        $offer->anchor = strtoupper($request->offeranchor);
+        $offer->location = $request->offerlocation;
+        $offer->type = $request->offertype;
+        $offer->code = $request->offercode;
+        $offer->details = ucfirst($request->offerdetails);
         $offer->starting_date = $request->offer_startingdate;
         $offer->expiry_date = $request->offer_expirydate;
         $offer->is_popular = $request->offer_is_popular;
@@ -68,7 +69,7 @@ class OfferController extends Controller
         $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
         $offer->user_id = Auth::User()->id;
-        $is_offer_saved = $offer->save();
+        $offer->save();
         Session::flash("offerupdated_successmessage","Offer Updated Successfully");
         $response = [
             "status" => "true",

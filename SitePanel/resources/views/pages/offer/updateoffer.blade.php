@@ -41,7 +41,22 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Title</div>
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Offer Title</div>
+                            @if($offer->free_shipping == "yes")
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="free-shipping" value="yes" checked>Free Shipping
+                                </label>
+                            </div>
+                            @else
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="free-shipping" value="yes">Free Shipping
+                                </label>
+                            </div>
+                            @endif
+                        </div>
                         <input type="text" class="form-control form-field-text" id="offertitle" value="{{$offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
                     </div>
                 </div>
@@ -67,16 +82,37 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
-                            @foreach($alloffertypes as $offertype)
-                                @if($offer->offer_type_id == $offertype->id)
-                                <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
-                                @else
-                                <option value="{{$offertype->id}}">{{$offertype->title}}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        <div class="form-field-heading">Offer Type</div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
+                                    @if($offer->location == "Online")
+                                    <option value="Online" selected>Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                    <option value="Online & In-Store">Online & In-Store</option>
+                                    @elseif($offer->location == "In-Store")
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store" selected>In-Store</option>
+                                    <option value="Online & In-Store">Online & In-Store</option>
+                                    @elseif($offer->location == "Online & In-Store")
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                    <option value="Online & In-Store" selected>Online & In-Store</option>
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offertype" name="offertype">
+                                    @if($offer->type == "Code")
+                                    <option value="Code" selected>Code</option>
+                                    <option value="Sale">Sale</option>
+                                    @else
+                                    <option value="Code">Code</option>
+                                    <option value="Sale" selected>Sale</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -101,16 +137,37 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Type By Store</div>
-                        <select class="form-control form-field-text" id="offertype_bystore" name="offertype_bystore">
-                            @foreach($alloffertypes as $offertype)
-                                @if($offer->offer_type_id == $offertype->id)
-                                <option value="{{$offertype->id}}" selected>{{$offertype->title}}</option>
-                                @else
-                                <option value="{{$offertype->id}}">{{$offertype->title}}</option>
-                                @endif
-                            @endforeach
-                        </select>
+                        <div class="form-field-heading">Offer Type</div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
+                                    @if($offer->location == "Online")
+                                    <option value="Online" selected>Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                    <option value="Online & In-Store">Online & In-Store</option>
+                                    @elseif($offer->location == "In-Store")
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store" selected>In-Store</option>
+                                    <option value="Online & In-Store">Online & In-Store</option>
+                                    @elseif($offer->location == "Online & In-Store")
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                    <option value="Online & In-Store" selected>Online & In-Store</option>
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offertype" name="offertype">
+                                    @if($offer->type == "Code")
+                                    <option value="Code" selected>Code</option>
+                                    <option value="Sale">Sale</option>
+                                    @else
+                                    <option value="Code">Code</option>
+                                    <option value="Sale" selected>Sale</option>
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -339,12 +396,12 @@
                 offer_category: "required",
                 offertitle: "required",
                 offeranchor: "required",
-                offertype_bystore: "required",
+                offerlocation: "required",
+                offertype: "required",
                 offercode: "required",
                 offerdetails: "required",
                 offer_startingdate: "required",
                 offer_expirydate: "required",
-                offertype: "required",
                 offerstatus: "required"
             },
             messages: {
@@ -352,12 +409,12 @@
                 offer_category: "please select category",
                 offertitle: "please enter offer title",
                 offeranchor: "please enter offer anchor",
-                offertype_bystore: "please select offer type",
+                offerlocation: "please select offer location",
+                offertype: "please select offer type",
                 offercode: "please enter offer code",
                 offerdetails: "please enter offer details",
                 offer_startingdate: "please select starting date",
                 offer_expirydate: "please select expiry date",
-                offertype: "please select offer type",
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
@@ -366,16 +423,16 @@
                 var _offer_is_popular = "no";
                 var _offer_display_at_home = "no";
                 var _offer_is_verified = "no";
+                var _free_shipping = "no";
+                var _offerid = $("#offerid").val();
                 var _offer_store = $("#offer_store").val();
                 var _offer_category = $("#offer_category").val();
-                var _offerid = $("#offerid").val();
                 var _offertitle = $("#offertitle").val();
                 var _offeranchor = $("#offeranchor").val();
-                var _offertype_bystore = $("#offertype_bystore").val();
+                var _offerlocation = $("#offerlocation").val();
+                var _offertype = $("#offertype").val();
                 var _offerdetails = $("#offerdetails").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
-                var _offer_expirydate = $("#offer_expirydate").val();
-                var _offertype = $("#offertype").val();
                 var _offerstatus = $("input[name='offerstatus']:checked").val();
                 if(!$("#offercode-checkbox").prop("checked")){
                     _offercode = $("#offercode").val();
@@ -392,7 +449,11 @@
                 if($("#offer-is-verified").prop("checked")){
                     _offer_is_verified = $("#offer-is-verified").val();
                 }
-                var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, offeranchor: _offeranchor, offertype_bystore: _offertype_bystore, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                if($("#free-shipping").prop("checked")){
+                    _free_shipping = $("#free-shipping").val();
+                }
+                var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                alert(_jsondata);
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

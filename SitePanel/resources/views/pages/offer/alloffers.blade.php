@@ -9,16 +9,18 @@
                     <option value="1">Category</option>
                     <option value="2">Offer Title</option>
                     <option value="3">Offer Anchor</option>
-                    <option value="4">Offer Type By Store</option>
-                    <option value="5">Offer Code</option>
-                    <option value="6">Offer Details</option>
-                    <option value="7">Offer Starting Date</option>
-                    <option value="8">Offer Expiry Date</option>
-                    <option value="9">Offer Is Popular</option>
-                    <option value="10">Offer Display At Home</option>
-                    <option value="11">Offer Is Verified</option>
-                    <option value="12">Offer Status</option>
-                    <option value="13">Add/Update By</option>
+                    <option value="4">Offer Location</option>
+                    <option value="5">Offer Type</option>
+                    <option value="6">Offer Code</option>
+                    <option value="7">Offer Details</option>
+                    <option value="8">Offer Starting Date</option>
+                    <option value="9">Offer Expiry Date</option>
+                    <option value="10">Free Shipping</option>
+                    <option value="11">Offer Is Popular</option>
+                    <option value="12">Offer Display At Home</option>
+                    <option value="13">Offer Is Verified</option>
+                    <option value="14">Offer Status</option>
+                    <option value="15">Add/Update By</option>
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -43,11 +45,13 @@
                     <th>Category</th>
                     <th>Title</th>
                     <th>Anchor</th>
-                    <th>Offer Type By Store</th>
+                    <th>Offer Location</th>
+                    <th>Offer Type</th>
                     <th>Code</th>
                     <th>Details</th>
                     <th>Starting Data</th>
                     <th>Expiry Date</th>
+                    <th>Free Shipping</th>
                     <th>Is Popular</th>
                     <th>Display At Home</th>
                     <th>Is Verified</th>
@@ -63,7 +67,8 @@
                     <td>{{ $offer->category->title }}</td>
                     <td>{{ $offer->title }}</td>
                     <td>{{ $offer->anchor }}</td>
-                    <td>{{ $offer->offer_type->title }}</td>
+                    <td>{{ $offer->location }}</td>
+                    <td>{{ $offer->type }}</td>
                     @if($offer->code != null)
                         <td>{{ $offer->code }}</td>
                     @else
@@ -76,6 +81,7 @@
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                     @endif
+                    <td>{{ $offer->free_shipping }}</td>
                     <td>{{ $offer->is_popular }}</td>
                     <td>{{ $offer->display_at_home }}</td>
                     <td>{{ $offer->is_verified }}</td>
@@ -83,7 +89,7 @@
                     <td>{{ $offer->user->username }}</td>
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offertypebystore="{{ $offer->offer_type->title }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-offeruses="{{ $offer->uses }}", data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -124,33 +130,39 @@
                     $("#searchbar").attr('placeholder','Search Offer Anchor');
                 }
                 else if(column == 4){
-                    $("#searchbar").attr('placeholder','Search Offer Type By Store');
+                    $("#searchbar").attr('placeholder','Search Offer Location');
                 }
                 else if(column == 5){
-                    $("#searchbar").attr('placeholder','Search Offer Code');
+                    $("#searchbar").attr('placeholder','Search Offer Type');
                 }
                 else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Offer Details');
+                    $("#searchbar").attr('placeholder','Search Offer Code');
                 }
                 else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Offer Start Date');
+                    $("#searchbar").attr('placeholder','Search Offer Details');
                 }
                 else if(column == 8){
-                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
+                    $("#searchbar").attr('placeholder','Search Offer Start Date');
                 }
                 else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search Offer Is Popular');
+                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
                 }
                 else if(column == 10){
-                    $("#searchbar").attr('placeholder','Search Offer Display At Home');
+                    $("#searchbar").attr('placeholder','Search Free Shipping Offer');
                 }
                 else if(column == 11){
-                    $("#searchbar").attr('placeholder','Search Offer Is Verified');
+                    $("#searchbar").attr('placeholder','Search Offer Is Popular');
                 }
                 else if(column == 12){
-                    $("#searchbar").attr('placeholder','Search Offer Status');
+                    $("#searchbar").attr('placeholder','Search Offer Display At Home');
                 }
                 else if(column == 13){
+                    $("#searchbar").attr('placeholder','Search Offer Is Verified');
+                }
+                else if(column == 14){
+                    $("#searchbar").attr('placeholder','Search Offer Status');
+                }
+                else if(column == 15){
                     $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
@@ -199,12 +211,13 @@
                     "<b>Category:</b>  "+$(this).data("offercategory")+"<br>"+
                     "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
                     "<b>Offer Anchor:</b>  "+$(this).data("offeranchor")+"<br>"+
-                    "<b>Offer Type By Store:</b>  "+$(this).data("offertypebystore")+"<br>"+
+                    "<b>Offer Location:</b>  "+$(this).data("offerlocation")+"<br>"+
+                    "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
                     "<b>Offer Code:</b>  "+$(this).data("offercode")+"<br>"+
                     "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
                     "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
                     "<b>Offer Expiry Date:</b>  "+$(this).data("offerexpirydate")+"<br>"+
-                    "<b>Offer Uses:</b>  "+$(this).data("offeruses")+"<br>"+
+                    "<b>Free Shipping:</b>  "+$(this).data("freeshipping")+"<br>"+
                     "<b>Offer Is Popular:</b>  "+$(this).data("offer-is-popular")+"<br>"+
                     "<b>Offer Display At Home:</b>  "+$(this).data("offer-display-at-home")+"<br>"+
                     "<b>Offer Is Verified:</b>  "+$(this).data("offer-is-verified")+"<br>"+

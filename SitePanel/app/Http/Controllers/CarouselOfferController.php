@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Store;
-use App\OfferType;
 use App\CarouselOffer;
 use File;
 use Session;
@@ -15,7 +14,6 @@ class CarouselOfferController extends Controller
 {
     public function getAddCarouselOffer(){
         $data['allstores'] = Store::where('status','active')->get();
-        $data['alloffertypes'] = OfferType::where('status','active')->get();
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
@@ -24,7 +22,6 @@ class CarouselOfferController extends Controller
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
         $carouseloffer->title = $formdata->offertitle;
-        $carouseloffer->offer_type_id = $formdata->offertype_bystore;
         $carouseloffer->code = $formdata->offercode;
         $carouseloffer->starting_date = $formdata->offer_startingdate;
         $carouseloffer->expiry_date = $formdata->offer_expirydate;
@@ -66,7 +63,6 @@ class CarouselOfferController extends Controller
     }
     public function getUpdateCarouselOfferForm($id){
         $data['allstores'] = Store::all();
-        $data['alloffertypes'] = OfferType::all();
         $data['carouseloffer'] = CarouselOffer::find($id);
         return view('pages.carouseloffer.updatecarouselofferform',$data);
     }
@@ -74,7 +70,6 @@ class CarouselOfferController extends Controller
         $carouseloffer = CarouselOffer::find($request->carouselofferid);
         $carouseloffer->store_id = $request->offer_store;
         $carouseloffer->title = $request->offertitle;
-        $carouseloffer->offer_type_id = $request->offertype_bystore;
         $carouseloffer->code = $request->offercode;
         $carouseloffer->starting_date = $request->offer_startingdate;
         $carouseloffer->expiry_date = $request->offer_expirydate;
