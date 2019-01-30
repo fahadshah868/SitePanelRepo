@@ -24,7 +24,7 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" value="{{ $carouseloffer->id }}" id="carouselofferid" name="carouselofferid" hidden>
-                                <img src="#" id="imgpath" class="updateimage" />
+                                <img src="#" id="imgpath" class="carouselofferimage" />
                                 <input type="file" id="carouselofferimage" name="carouselofferimage" accept=".jpg, .jpeg"/>
                             </div>
                             <div class="modal-footer">

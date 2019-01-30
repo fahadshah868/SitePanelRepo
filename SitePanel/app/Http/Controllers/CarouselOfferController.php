@@ -71,10 +71,12 @@ class CarouselOfferController extends Controller
         $carouseloffer = CarouselOffer::find($request->carouselofferid);
         $carouseloffer->store_id = $request->offer_store;
         $carouseloffer->title = $request->offertitle;
+        $carouseloffer->type = $request->offertype;
         $carouseloffer->code = $request->offercode;
         $carouseloffer->starting_date = $request->offer_startingdate;
         $carouseloffer->expiry_date = $request->offer_expirydate;
         $carouseloffer->status = $request->offerstatus;
+        $carouseloffer->form_user_id = Auth::User()->id;
         $carouseloffer->save();
         Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
         $response = [
@@ -85,7 +87,22 @@ class CarouselOfferController extends Controller
         return response()->json($response);
     }
     public function postUpdateCarouselOfferImage(Request $request){
-
+        $formdata = json_decode($request->formdata);
+        $carouseloffer = CarouselOffer::find($formdata->carouselofferid);
+        if($request->hasFile('carouselofferimage')){
+            if(File::exists($carouseloffer->image_url)){
+                File::delete($carouseloffer->image_url);
+            }
+            $carousel_image = $request->file('carouselofferimage');
+            $resized_carousel_image = Image::make($carousel_image);
+            $resized_carousel_image->resize(1050, 400);
+            $carousel_image_name = $carouseloffer->image_url.$carousel_image->getClientOriginalExtension();
+            $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
+            $carousel_image_path = 'images/carousel/'.$carousel_image_name;
+            $carouseloffer->image_url = $carousel_image_path;
+            $carouseloffer->image_user_id = Auth::User()->id;
+            $carouseloffer->save();
+        }
     }
     public function deleteCarouselOffer($id){
         $carouseloffer = CarouselOffer::find($id);
