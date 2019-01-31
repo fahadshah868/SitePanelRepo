@@ -17,7 +17,7 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
-        $imageid = "";
+        $imageid = null;
         $formdata = json_decode($request->formdata);
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
@@ -68,23 +68,57 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.updatecarouselofferform',$data);
     }
     public function postUpdateCarouselOfferForm(Request $request){
+        $imageid = null;
         $carouseloffer = CarouselOffer::find($request->carouselofferid);
-        $carouseloffer->store_id = $request->offer_store;
-        $carouseloffer->title = $request->offertitle;
-        $carouseloffer->type = $request->offertype;
-        $carouseloffer->code = $request->offercode;
-        $carouseloffer->starting_date = $request->offer_startingdate;
-        $carouseloffer->expiry_date = $request->offer_expirydate;
-        $carouseloffer->status = $request->offerstatus;
-        $carouseloffer->form_user_id = Auth::User()->id;
-        $carouseloffer->save();
-        Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
-        $response = [
-            "status" => "true",
-            "carouselofferid" => $request->carouselofferid,
-            "success_message" => "Carousel Offer Updated Successfully"
-        ];
-        return response()->json($response);
+        // store == store
+        if(strcasecmp($carouseloffer->store_id,$request->offer_store) == 0){
+            $carouseloffer->store_id = $request->offer_store;
+            $carouseloffer->title = $request->offertitle;
+            $carouseloffer->type = $request->offertype;
+            $carouseloffer->code = $request->offercode;
+            $carouseloffer->starting_date = $request->offer_startingdate;
+            $carouseloffer->expiry_date = $request->offer_expirydate;
+            $carouseloffer->status = $request->offerstatus;
+            $carouseloffer->form_user_id = Auth::User()->id;
+            $carouseloffer->save();
+            Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
+            $response = [
+                "status" => "true",
+                "carouselofferid" => $request->carouselofferid,
+                "success_message" => "Carousel Offer Updated Successfully"
+            ];
+            return response()->json($response);
+        }
+        else{
+            $carouseloffer->store_id = $request->offer_store;
+            $carouseloffer->title = $request->offertitle;
+            $carouseloffer->type = $request->offertype;
+            $carouseloffer->code = $request->offercode;
+            $carouseloffer->starting_date = $request->offer_startingdate;
+            $carouseloffer->expiry_date = $request->offer_expirydate;
+            $carouseloffer->status = $request->offerstatus;
+            if(File::exists($carouseloffer->image_url)){
+                do{
+                    $flag = true;
+                    $imageid = uniqid();
+                    $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($request->storetitle)."-".$imageid.'%')->exists();
+                }while($flag);
+                $extension = File::extension($carouseloffer->image_url);
+                $carousel_image_name = strtolower($request->storetitle)."-".$imageid.".".$extension;
+                File::move(public_path($carouseloffer->image_url),public_path('images/carousel/'.$carousel_image_name));
+                $carousel_image_path = 'images/carousel/'.$carousel_image_name;
+                $carouseloffer->image_url = $carousel_image_path;
+            }
+            $carouseloffer->form_user_id = Auth::User()->id;
+            $carouseloffer->save();
+            Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
+            $response = [
+                "status" => "true",
+                "carouselofferid" => $request->carouselofferid,
+                "success_message" => "Carousel Offer Updated Successfully"
+            ];
+            return response()->json($response);
+        }
     }
     public function postUpdateCarouselOfferImage(Request $request){
         $formdata = json_decode($request->formdata);
@@ -93,15 +127,30 @@ class CarouselOfferController extends Controller
             if(File::exists($carouseloffer->image_url)){
                 File::delete($carouseloffer->image_url);
             }
+            if(!File::exists(public_path("images/carousel"))){
+                File::makeDirectory(public_path("images/carousel", 0777, true, true));
+            }
+            do{
+                $flag = true;
+                $imageid = uniqid();
+                $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($formdata->storetitle)."-".$imageid.'%')->exists();
+            }while($flag);
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(1050, 400);
-            $carousel_image_name = $carouseloffer->image_url.$carousel_image->getClientOriginalExtension();
+            $carousel_image_name = strtolower($formdata->storetitle)."-".$imageid.".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
             $carouseloffer->image_user_id = Auth::User()->id;
             $carouseloffer->save();
+            Session::flash('updatecarouselofferimage_successmessage','Carousel Offer Image Updated Successfully');
+            $response = [
+                "status" => "true",
+                "carouselofferid" => $formdata->carouselofferid,
+                "success_message" => "Carousel Offer Image Updated Successfully"
+            ];
+            return response()->json($response);
         }
     }
     public function deleteCarouselOffer($id){

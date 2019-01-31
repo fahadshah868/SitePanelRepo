@@ -11,6 +11,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <input type="text" id="carouselofferid" value="{{ $carouseloffer->id }}" hidden>
+                        <input type="text" id="storetitle" hidden/>
                         <div class="form-field-heading">Select Store</div>
                         <select class="form-control form-field-text" id="offer_store" name="offer_store">
                             @foreach($allstores as $store)
@@ -201,6 +202,9 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        $("#offer_store").change(function(){
+            $("#storetitle").val($("#offer_store option:selected").text());
+        });
         $("#backtocarouseloffer").click(function(){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
@@ -266,6 +270,7 @@
                 var _offer_expirydate = null;
                 var _carouselofferid = $("#carouselofferid").val();
                 var _offer_store = $("#offer_store").val();
+                var _storetitle = $("#storetitle").val();
                 var _offertitle = $("#offertitle").val();
                 var _offertype = $("#offertype").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
@@ -276,7 +281,7 @@
                 if(!$("#expiry-date-checkbox").prop("checked")){
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
-                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
+                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
                 $("#updatecarouselofferform").trigger("reset");
                 $(".alert").css('display','none');
                 $.ajax({

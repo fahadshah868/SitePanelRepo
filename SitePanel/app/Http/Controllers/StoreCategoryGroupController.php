@@ -12,7 +12,7 @@ use Auth;
 class StoreCategoryGroupController extends Controller
 {
     public function getAllStoreCategories(){
-        $data['allstores'] = Store::all();
+        $data['allstores'] = Store::orderBy('id', 'DESC')->get();
         $data['storescount'] = count($data['allstores']);
         return view('pages.storecategorygroup.allstorecategories', $data);
     }
