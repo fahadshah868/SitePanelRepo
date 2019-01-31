@@ -28,11 +28,11 @@
             event.preventDefault();
         }).validate({
             rules: {
-                newpassword: {required: true, maxlength: 8},
+                newpassword: {required: true, maxlength: 15},
                 confirmpassword: {required: true, equalTo: "#newpassword"}
             },
             messages: {
-                newpassword: {required: "please enter your new password", maxlength: "your password must have 8 characters"},
+                newpassword: {required: "please enter your new password", maxlength: "your password characters max length is 15"},
                 confirmpassword: {required: "please enter confirm password", equalTo: "password is not match"}
             },
             submitHandler: function(form) {

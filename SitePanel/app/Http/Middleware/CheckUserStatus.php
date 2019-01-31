@@ -20,6 +20,8 @@ class CheckUserStatus
             Auth::logout();
             return redirect('/');
         }
-        return $next($request);
+        else{
+            return $next($request);
+        }
     }
 }
