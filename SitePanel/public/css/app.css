@@ -10527,7 +10527,7 @@ a:hover {
 }
 
 .nav-item a {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -10553,8 +10553,8 @@ a:hover {
 }
 
 #sidebar {
-  min-width: 190px;
-  max-width: 190px;
+  min-width: 170px;
+  max-width: 170px;
   background: #044D6E;
   color: #fff;
   -webkit-transition: all 0.3s;
@@ -10562,8 +10562,8 @@ a:hover {
 }
 
 #sidebar.active {
-  min-width: 80px;
-  max-width: 80px;
+  min-width: 70px;
+  max-width: 70px;
   text-align: center;
 }
 
@@ -10577,7 +10577,7 @@ a:hover {
 
 #sidebar ul li a {
   text-align: left;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   padding: 10px;
   display: block;
@@ -10665,7 +10665,7 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-weight: 500 !important;
   padding-left: 30px !important;
   background-color: #033349;
@@ -11005,24 +11005,30 @@ label.error {
   color: #fff;
 }
 
+thead tr {
+  background-color: #044D6E;
+  color: #fff;
+}
+
 th {
+  border: 1px solid #0b78aa !important;
   text-align: center;
   vertical-align: top;
   padding: 10px !important;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 td {
   text-align: center;
   vertical-align: top;
   padding: 5px !important;
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 500;
 }
 
 td .btn {
-  padding: 5px 10px;
+  padding: 4px 8px;
   font-size: 10px;
   font-weight: 700;
 }
@@ -11090,7 +11096,16 @@ td .carouselofferimage {
 }
 
 .highlight-column {
-  background-color: #E1FF8F;
+  background-color: #D7DBFF;
+}
+
+.highlight-row {
+  background-color: #D7DBFF;
+}
+
+#tablebody tr:hover {
+  background-color: #D7DBFF;
+  cursor: pointer;
 }
 
 .active-item {

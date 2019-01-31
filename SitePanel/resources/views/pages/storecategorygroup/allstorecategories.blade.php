@@ -60,6 +60,7 @@
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
+<script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
         if('{{Session::has("updatestorecategories_successmessage")}}'){
@@ -75,7 +76,7 @@
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();
             var index = parseInt(column)+1;
-            $("#tableview td, #tableview th").removeClass("highlight-column");
+            $("#tablebody td, #tablebody th").removeClass("highlight-column");
             $("#searchbar").val("");
             filterTable();
             if(column != ""){
@@ -89,7 +90,7 @@
                     $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
-                $("#tableview td:nth-child("+index+"), #tableview th:nth-child("+index+")").addClass("highlight-column");
+                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
             }
             else{
                 $("#viewitems-header-searchbar").css("display","none");

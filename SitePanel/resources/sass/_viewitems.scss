@@ -18,22 +18,27 @@
 .btn{
     color: #fff;
 }
+thead tr{
+    background-color: #044D6E;
+    color: #fff;
+}
 th{
+    border: 1px solid #0b78aa !important;
     text-align: center;
     vertical-align: top;
     padding: 10px !important;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: bold;
 }
 td{
     text-align: center;
     vertical-align: top;
     padding: 5px !important;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 11px;
+    font-weight: 500;
 }
 td .btn{
-    padding: 5px 10px;
+    padding: 4px 8px;
     font-size: 10px;
     font-weight: 700;
 }
@@ -79,7 +84,14 @@ td .carouselofferimage{
     margin-right: 5px;
 }
 .highlight-column{
-    background-color: #E1FF8F;
+    background-color: #D7DBFF;
+}
+.highlight-row{
+    background-color: #D7DBFF;
+}
+#tablebody tr:hover{
+    background-color: #D7DBFF;
+    cursor: pointer;
 }
 .active-item{
     color: #117C00;

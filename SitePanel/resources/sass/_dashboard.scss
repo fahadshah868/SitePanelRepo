@@ -52,7 +52,7 @@
     margin-right: 10px;
 }
 .nav-item a{
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
 }
 .nav-item:hover{
@@ -72,16 +72,16 @@
 }
 
 #sidebar {
-    min-width: 190px;
-    max-width: 190px;
+    min-width: 170px;
+    max-width: 170px;
     background: #044D6E;
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar.active {
-    min-width: 80px;
-    max-width: 80px;
+    min-width: 70px;
+    max-width: 70px;
     text-align: center;
 }
 
@@ -95,7 +95,7 @@
 
 #sidebar ul li a {
     text-align: left;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     padding: 10px;
     display: block;
@@ -175,7 +175,7 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: 500 !important;
     padding-left: 30px !important;
     background-color: #033349;
