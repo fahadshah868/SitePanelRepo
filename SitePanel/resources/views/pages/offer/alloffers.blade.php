@@ -85,7 +85,13 @@
                     <td>{{ $offer->is_popular }}</td>
                     <td>{{ $offer->display_at_home }}</td>
                     <td>{{ $offer->is_verified }}</td>
-                    <td>{{ $offer->status }}</td>
+                    <td>
+                        @if($offer->status == "active")
+                        <span class="active-item">{{ $offer->status }}</span>
+                        @else
+                        <span class="deactive-item">{{ $offer->status }}</span>
+                        @endif
+                    </td>
                     <td>{{ $offer->user->username }}</td>
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>

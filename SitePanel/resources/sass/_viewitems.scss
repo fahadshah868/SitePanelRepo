@@ -33,8 +33,7 @@ td{
     font-weight: 400;
 }
 td .btn{
-    padding: 7px 10px;
-    // height: 28px !important;
+    padding: 5px 10px;
     font-size: 10px;
     font-weight: 700;
 }
@@ -81,4 +80,12 @@ td .carouselofferimage{
 }
 .highlight-column{
     background-color: #E1FF8F;
+}
+.active-item{
+    color: #117C00;
+    font-weight: 700;
+}
+.deactive-item{
+    color: #FF0000;
+    font-weight: 700;
 }

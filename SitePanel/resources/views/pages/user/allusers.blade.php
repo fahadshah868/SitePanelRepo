@@ -40,7 +40,13 @@
                     <tr>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->role }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>
+                            @if($user->status == "active")
+                            <span class="active-item">{{ $user->status }}</span>
+                            @else
+                            <span class="deactive-item">{{ $user->status }}</span>
+                            @endif
+                        </td>
                         <td>
                             @if($user->id != Auth::User()->id)
                             <a href="/updateuser/{{$user->id}}" id="updateuser" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>

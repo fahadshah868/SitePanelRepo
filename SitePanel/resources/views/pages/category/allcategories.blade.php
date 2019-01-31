@@ -47,7 +47,13 @@
                         <td>{{ $category->description }}</td>
                         <td>{{ $category->is_topcategory }}</td>
                         <td>{{ $category->is_popularcategory }}</td>
-                        <td>{{ $category->status }}</td>
+                        <td>
+                            @if($category->status == "active")
+                            <span class="active-item">{{ $category->status }}</span>
+                            @else
+                            <span class="deactive-item">{{ $category->status }}</span>
+                            @endif
+                        </td>
                         <td>
                             @if($category->is_topcategory == "yes")
                             <img src="{{ asset($category->logo_url) }}"/>

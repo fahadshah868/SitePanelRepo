@@ -61,7 +61,13 @@
                             @else
                                 <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                             @endif
-                            <td>{{ $carouseloffer->status }}</td>
+                            <td>
+                                @if($carouseloffer->status == "active")
+                                <span class="active-item">{{ $carouseloffer->status }}</span>
+                                @else
+                                <span class="deactive-item">{{ $carouseloffer->status }}</span>
+                                @endif
+                            </td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carouselofferimage"/></td>
                             <td>{{ $carouseloffer->form_user->username }}</td>
                             <td>{{ $carouseloffer->image_user->username }}</td>

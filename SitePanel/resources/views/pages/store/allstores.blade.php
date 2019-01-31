@@ -59,7 +59,13 @@
                             <td>{{ $store->network_url }}</td>
                             <td>{{ $store->is_topstore }}</td>
                             <td>{{ $store->is_popularstore }}</td>
-                            <td>{{ $store->status }}</td>
+                            <td>
+                                @if($store->status == "active")
+                                <span class="active-item">{{ $store->status }}</span>
+                                @else
+                                <span class="deactive-item">{{ $store->status }}</span>
+                                @endif
+                            </td>
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
                             <td>{{ $store->form_user->username }}</td>
                             <td>{{ $store->image_user->username }}</td>

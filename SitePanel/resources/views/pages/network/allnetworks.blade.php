@@ -30,7 +30,9 @@
                 <tr>
                     <th>Network Title</th>
                     <th>Network Status</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -39,8 +41,16 @@
                     @foreach($allnetworks as $network)
                     <tr>
                         <td>{{ $network->title }}</td>
-                        <td>{{ $network->status }}</td>
+                        <td>
+                            @if($network->status == "active")
+                            <span class="active-item">{{ $network->status }}</span>
+                            @else
+                            <span class="deactive-item">{{ $network->status }}</span>
+                            @endif
+                        </td>
+                        @if(Auth::User()->role == "admin")
                         <td>{{ $network->user->username}}</td>
+                        @endif
                         <td>
                             <a href="/updatenetwork/{{$network->id}}" id="updatenetwork" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
