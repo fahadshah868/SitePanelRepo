@@ -76,13 +76,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text" placeholder="select starting date">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text"/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" placeholder="select expiry date"/>
                     </div>
                 </div>
             </div>
@@ -118,8 +118,17 @@
 </div>
 <script>
     $(document).ready(function(){
+        var dateToday = new Date(); 
         $(".close").click(function(){
             $(".alert").slideUp();
+        });
+        $("#offer_startingdate").datepicker({
+            numberOfMonths: 1,
+        });
+        $("#offer_expirydate").datepicker({
+            numberOfMonths: 1,
+            showButtonPanel: true,
+            minDate: dateToday
         });
         $("#offer_store").change(function(){
             $("#storetitle").val($("#offer_store option:selected").text());
