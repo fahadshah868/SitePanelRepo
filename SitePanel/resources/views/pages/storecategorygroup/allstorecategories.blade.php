@@ -30,7 +30,9 @@
                 <tr>
                     <th>Store Title</th>
                     <th>Store Categories</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -44,7 +46,9 @@
                                 {{ $storecategory->category->title }}, 
                             @endforeach
                             </td>
+                            @if(Auth::User()->role == "admin")
                             <td>{{ $store->storecategorygroup{0}->user->username }}</td>
+                            @endif
                             <td>
                                 <a href="/updatestorecategories/{{$store->id}}" id="updatestorecategories" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             </td>

@@ -34,8 +34,10 @@
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
                     <th>Category Logo</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
                     <th>Add/Update Image By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -61,8 +63,10 @@
                             <b>N/A</b>
                             @endif
                         </td>
+                        @if(Auth::User()->role == "admin")
                         <td>{{ $category->form_user->username}}</td>
                         <td>{{ $category->image_user->username}}</td>
+                        @endif
                         <td>
                             <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                             <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>

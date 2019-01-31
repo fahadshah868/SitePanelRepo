@@ -42,8 +42,10 @@
                     <th>Is PopularStore</th>
                     <th>Store Status</th>
                     <th>Store Logo</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
                     <th>Add/Update Image By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -67,8 +69,10 @@
                                 @endif
                             </td>
                             <td><img src="{{ asset($store->logo_url) }}"/></td>
+                            @if(Auth::User()->role == "admin")
                             <td>{{ $store->form_user->username }}</td>
                             <td>{{ $store->image_user->username }}</td>
+                            @endif
                             <td>
                                 <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                                 <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>

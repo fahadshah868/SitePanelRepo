@@ -38,8 +38,10 @@
                     <th>Expiry Date</th>
                     <th>Offer Status</th>
                     <th>Image</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
                     <th>Add/Update Image By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -69,8 +71,10 @@
                                 @endif
                             </td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carouselofferimage"/></td>
+                            @if(Auth::User()->role == "admin")
                             <td>{{ $carouseloffer->form_user->username }}</td>
                             <td>{{ $carouseloffer->image_user->username }}</td>
+                            @endif
                             <td>
                                 <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
                                 <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>

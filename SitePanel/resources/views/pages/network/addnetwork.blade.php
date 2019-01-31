@@ -22,11 +22,18 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Network Status</div>
-                        <select class="form-control form-field-text" id="networkstatus" name="networkstatus">
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="deactive">Deactive</option>
-                        </select>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="networkstatus" name="networkstatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="networkstatus" name="networkstatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -54,7 +61,7 @@
             },
             submitHandler: function(form) {
                 var _networktitle = $("#networktitle").val();
-                var _networkstatus = $("#networkstatus").val();
+                var _networkstatus = $("input[name='networkstatus']:checked").val();
                 var _jsondata = JSON.stringify({networktitle: _networktitle, networkstatus: _networkstatus, _token: '{{ csrf_token() }}'});
                 $("#addnetworkform").trigger("reset");
                 $(".alert").css("display","none");

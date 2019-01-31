@@ -50,6 +50,12 @@ class NetworkController extends Controller
             $network->status = $request->networkstatus;
             $network->user_id = Auth::User()->id;
             $network->save();
+            Session::flash('updatenetwork_successmessage','Network Updated Successfully');
+            $response = [
+                "status" => "true",
+                "success_message" => "Network Updated Successfully"
+            ];
+            return response()->json($response);
         }
         else{
             $is_network_exists = Network::where('title', $request->networktitle)->exists();

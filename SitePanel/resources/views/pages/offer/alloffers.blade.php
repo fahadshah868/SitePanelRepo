@@ -56,7 +56,9 @@
                     <th>Display At Home</th>
                     <th>Is Verified</th>
                     <th>Status</th>
+                    @if(Auth::User()->role == "admin")
                     <th>Add/Update By</th>
+                    @endif
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -92,7 +94,9 @@
                         <span class="deactive-item">{{ $offer->status }}</span>
                         @endif
                     </td>
+                    @if(Auth::User()->role == "admin")
                     <td>{{ $offer->user->username }}</td>
+                    @endif
                     <td>
                         <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
                         <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
