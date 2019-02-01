@@ -116,13 +116,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select starting date" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text"/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select Expiry date" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -174,6 +174,21 @@
 <script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
+        var dateToday = new Date();
+        var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
+            defaultDate: "+1w",
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            minDate: dateToday,
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(selectedDate) {
+                var option = this.id == "offer_startingdate" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            }
+        });
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -211,9 +226,11 @@
         });
         $("#expiry-date-checkbox").click(function(){
             if($("#expiry-date-checkbox").prop("checked")){
+                $("#offer_expirydate").removeClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', true);
             }
             else{
+                $("#offer_expirydate").addClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', false);
             }
         });

@@ -9,6 +9,7 @@ use App\CarouselOffer;
 use File;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class CarouselOfferController extends Controller
 {
@@ -24,8 +25,8 @@ class CarouselOfferController extends Controller
         $carouseloffer->title = $formdata->offertitle;
         $carouseloffer->type = $formdata->offertype;
         $carouseloffer->code = $formdata->offercode;
-        $carouseloffer->starting_date = $formdata->offer_startingdate;
-        $carouseloffer->expiry_date = $formdata->offer_expirydate;
+        $carouseloffer->starting_date = Carbon::parse($formdata->offer_startingdate)->format('Y-m-d');
+        $carouseloffer->expiry_date = Carbon::parse($formdata->offer_expirydate)->format('Y-m-d');
         $carouseloffer->status = $formdata->offerstatus;
         if($request->hasFile('carouselofferimage')){
             if(!File::exists(public_path("images/carousel"))){
@@ -76,8 +77,8 @@ class CarouselOfferController extends Controller
             $carouseloffer->title = $request->offertitle;
             $carouseloffer->type = $request->offertype;
             $carouseloffer->code = $request->offercode;
-            $carouseloffer->starting_date = $request->offer_startingdate;
-            $carouseloffer->expiry_date = $request->offer_expirydate;
+            $carouseloffer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
+            $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
             $carouseloffer->status = $request->offerstatus;
             $carouseloffer->form_user_id = Auth::User()->id;
             $carouseloffer->save();
@@ -94,8 +95,8 @@ class CarouselOfferController extends Controller
             $carouseloffer->title = $request->offertitle;
             $carouseloffer->type = $request->offertype;
             $carouseloffer->code = $request->offercode;
-            $carouseloffer->starting_date = $request->offer_startingdate;
-            $carouseloffer->expiry_date = $request->offer_expirydate;
+            $carouseloffer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
+            $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
             $carouseloffer->status = $request->offerstatus;
             if(File::exists($carouseloffer->image_url)){
                 do{
