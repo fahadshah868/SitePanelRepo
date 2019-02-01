@@ -131,6 +131,36 @@
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
             }
         });
         $(".close").click(function(){
@@ -206,7 +236,10 @@
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 $("#addcarouselofferform").trigger("reset");
-                $("#offer_startingdate , #offer_expirydate").datepicker('setDate', null);
+                $("#offercode").prop('disabled', false);
+                $("#offer_expirydate").addClass("readonly-bg-color");
+                $("#offer_expirydate").prop('disabled', false);
+                $("#offer_startingdate , #offer_expirydate").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

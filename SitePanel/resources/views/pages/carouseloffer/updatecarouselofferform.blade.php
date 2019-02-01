@@ -200,8 +200,16 @@
 <script>
     $(document).ready(function(){
         var dateToday = new Date();
+        $("#offer_startingdate").datepicker({
+            changeYear: true,
+            dateFormat: 'dd-mm-yy',
+            minDate: dateToday,
+            maxDate: "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}",
+        });
+        $("#offer_startingdate").datepicker(
+            'setDate', "{{\Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}",
+        );
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
-            defaultDate: "+1w",
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
