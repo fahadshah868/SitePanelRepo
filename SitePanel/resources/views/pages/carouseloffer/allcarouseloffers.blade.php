@@ -57,9 +57,9 @@
                             @else
                                 <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
                             @endif
-                            <td>{{ \Carbon\Carbon::parse($carouseloffer->starting_date)->format('d/m/Y')}}</td>
+                            <td>{{ \Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}</td>
                             @if($carouseloffer->expiry_date != null)
-                                <td>{{ \Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y') }}</td>
                             @else
                                 <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                             @endif

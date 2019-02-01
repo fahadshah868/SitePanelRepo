@@ -122,6 +122,7 @@
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
             defaultDate: "+1w",
             changeMonth: true,
+            showButtonPanel: true,
             numberOfMonths: 2,
             minDate: dateToday,
             dateFormat: 'dd-mm-yy',
@@ -205,6 +206,7 @@
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 $("#addcarouselofferform").trigger("reset");
+                $("#offer_startingdate , #offer_expirydate").datepicker('setDate', null);
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

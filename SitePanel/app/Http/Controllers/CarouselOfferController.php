@@ -26,7 +26,12 @@ class CarouselOfferController extends Controller
         $carouseloffer->type = $formdata->offertype;
         $carouseloffer->code = $formdata->offercode;
         $carouseloffer->starting_date = Carbon::parse($formdata->offer_startingdate)->format('Y-m-d');
-        $carouseloffer->expiry_date = Carbon::parse($formdata->offer_expirydate)->format('Y-m-d');
+        if($formdata->offer_expirydate != null){
+            $carouseloffer->expiry_date = Carbon::parse($formdata->offer_expirydate)->format('Y-m-d');
+        }
+        else{
+            $carouseloffer->expiry_date = $formdata->offer_expirydate;
+        }
         $carouseloffer->status = $formdata->offerstatus;
         if($request->hasFile('carouselofferimage')){
             if(!File::exists(public_path("images/carousel"))){
@@ -78,7 +83,12 @@ class CarouselOfferController extends Controller
             $carouseloffer->type = $request->offertype;
             $carouseloffer->code = $request->offercode;
             $carouseloffer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-            $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+            if($carouseloffer->expiry_date != null){
+                $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+            }
+            else{
+                $carouseloffer->expiry_date = $request->offer_expirydate;
+            }
             $carouseloffer->status = $request->offerstatus;
             $carouseloffer->form_user_id = Auth::User()->id;
             $carouseloffer->save();

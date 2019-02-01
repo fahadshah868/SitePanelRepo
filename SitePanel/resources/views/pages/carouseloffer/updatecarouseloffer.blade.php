@@ -70,14 +70,14 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Starting Date</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->starting_date }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ \Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y') }}" readonly/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Expiry Date</div>
                         @if($carouseloffer->expiry_date != null)
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->expiry_date }}" readonly/>
+                        <input type="text" class="form-control form-field-text" value="{{ \Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y') }}" readonly/>
                         @else
                         <input type="text" class="form-control form-field-text" value="Soon" style="color: #FF0000; font-weight: 600;" readonly/>
                         @endif
