@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(document).mouseup(function (e){
+    $("#body-main-content").mouseup(function (e){
         var container = $("#tableview tr");
         if (!container.is(e.target) && container.has(e.target).length === 0){
             container.removeClass('highlight-row'); 

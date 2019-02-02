@@ -120,7 +120,7 @@
     $(document).ready(function(){
         var dateToday = new Date();
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
-            defaultDate: "+1w",
+            changeYear: true,
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,

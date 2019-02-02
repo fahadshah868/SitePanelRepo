@@ -200,26 +200,112 @@
 <script>
     $(document).ready(function(){
         var dateToday = new Date();
+        var _maxdate = null;
+        function resetUpdateCarouselForm(){
+            $("#updatecarouselofferform").trigger("reset");
+            if($("#offercode-checkbox").prop("checked")){
+                $("#offercode").prop('disabled', true);
+            }
+            else{
+                $("#offercode").prop('disabled', false);
+            }
+            if($("#expiry-date-checkbox").prop("checked")){
+                $("#offer_expirydate").removeClass("readonly-bg-color");
+                $("#offer_expirydate").prop('disabled', true);
+            }
+            else{
+                $("#offer_expirydate").addClass("readonly-bg-color");
+                $("#offer_expirydate").prop('disabled', false);
+            }
+        }
+        if("{{$carouseloffer->expiry_date}}" != ""){
+            _maxdate = "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}"
+        }
         $("#offer_startingdate").datepicker({
-            changeYear: true,
             dateFormat: 'dd-mm-yy',
-            minDate: dateToday,
-            maxDate: "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}",
-        });
-        $("#offer_startingdate").datepicker(
-            'setDate', "{{\Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}",
-        );
-        var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
+            changeYear: true,
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
             minDate: dateToday,
-            dateFormat: 'dd-mm-yy',
+            maxDate: _maxdate,
             onSelect: function(selectedDate) {
-                var option = this.id == "offer_startingdate" ? "minDate" : "maxDate",
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-                dates.not(this).datepicker("option", option, date);
+                $("#offer_expirydate").datepicker("option","minDate",date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
+        $("#offer_expirydate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            minDate: "{{\Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}",
+            onSelect: function(selectedDate) {
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                $("#offer_startingdate").datepicker("option","maxDate",date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
             }
         });
         $(".close").click(function(){
@@ -252,21 +338,7 @@
         });
         $("#resetupdatecarouselofferform").click(function(){
             event.preventDefault();
-            $("#updatecarouselofferform").trigger("reset");
-            if($("#offercode-checkbox").prop("checked")){
-                $("#offercode").prop('disabled', true);
-            }
-            else{
-                $("#offercode").prop('disabled', false);
-            }
-            if($("#expiry-date-checkbox").prop("checked")){
-                $("#offer_expirydate").removeClass("readonly-bg-color");
-                $("#offer_expirydate").prop('disabled', true);
-            }
-            else{
-                $("#offer_expirydate").addClass("readonly-bg-color");
-                $("#offer_expirydate").prop('disabled', false);
-            }
+            resetUpdateCarouselForm();
         });
         //validation rules
         $("#updatecarouselofferform").submit(function(event){
@@ -309,7 +381,8 @@
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
                 var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
-                $("#updatecarouselofferform").trigger("reset");
+                alert(_jsondata);
+                resetUpdateCarouselForm();
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

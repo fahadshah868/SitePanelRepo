@@ -83,7 +83,7 @@ class CarouselOfferController extends Controller
             $carouseloffer->type = $request->offertype;
             $carouseloffer->code = $request->offercode;
             $carouseloffer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-            if($carouseloffer->expiry_date != null){
+            if($request->offer_expirydate != null){
                 $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
             }
             else{
@@ -106,7 +106,12 @@ class CarouselOfferController extends Controller
             $carouseloffer->type = $request->offertype;
             $carouseloffer->code = $request->offercode;
             $carouseloffer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-            $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+            if($request->offer_expirydate != null){
+                $carouseloffer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+            }
+            else{
+                $carouseloffer->expiry_date = $request->offer_expirydate;
+            }
             $carouseloffer->status = $request->offerstatus;
             if(File::exists($carouseloffer->image_url)){
                 do{
