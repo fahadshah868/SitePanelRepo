@@ -201,13 +201,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text" value="{{$offer->starting_date}}"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" value="{{$offer->expiry_date}}"/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
                     </div>
                 </div>
             </div>
@@ -226,13 +226,13 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="date" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text" value="{{$offer->starting_date}}"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Expiry Date</div>
-                        <input type="date" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" disabled/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" readonly placeholder="select Expiry date" autocomplete="off" disabled/>
                     </div>
                 </div>
             </div>
@@ -318,24 +318,105 @@
 <script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
+        var dateToday = new Date();
+        var _maxdate = null;
+        if("{{$offer->expiry_date}}" != ""){
+            _maxdate = "{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}"
+        }
+        $("#offer_startingdate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            minDate: dateToday,
+            maxDate: _maxdate,
+            onSelect: function(selectedDate) {
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                $("#offer_expirydate").datepicker("option","minDate",date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
+        $("#offer_expirydate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            minDate: "{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}",
+            onSelect: function(selectedDate) {
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                $("#offer_startingdate").datepicker("option","maxDate",date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
         $(".close").click(function(){
             $(".alert").slideUp();
         });
         $("#resetupdateofferform").click(function(){
             event.preventDefault();
-            $("#updateofferform").trigger("reset");
-            if($("#offercode-checkbox").prop("checked")){
-                $("#offercode").prop('disabled', true);
-            }
-            else{
-                $("#offercode").prop('disabled', false);
-            }
-            if($("#expiry-date-checkbox").prop("checked")){
-                $("#offer_expirydate").prop('disabled', true);
-            }
-            else{
-                $("#offer_expirydate").prop('disabled', false);
-            }
+            var offerid = $("#offerid").val();
+            $("#panel-body-container").load("/updateoffer/"+offerid);
         });
         $("#offer_store").change(function(){
             if( $('#offer_category').has('option').val() != "" ) {
@@ -382,8 +463,12 @@
         $("#expiry-date-checkbox").click(function(){
             if($("#expiry-date-checkbox").prop("checked")){
                 $("#offer_expirydate").prop('disabled', true);
+                $("#offer_expirydate").removeClass("readonly-bg-color");
+                $("#offer_expirydate").datepicker('setDate', null);
+                $("#offer_startingdate").datepicker("option" , {maxDate: null});
             }
             else{
+                $("#offer_expirydate").addClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', false);
             }
         });

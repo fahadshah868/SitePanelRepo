@@ -202,6 +202,8 @@
         var dateToday = new Date();
         var _maxdate = null;
         function resetUpdateCarouselForm(){
+            $('#offer_startingdate').datepicker("setDate", "{{\Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}");
+            $('#offer_expirydate').datepicker("setDate", "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}");
             $("#updatecarouselofferform").trigger("reset");
             if($("#offercode-checkbox").prop("checked")){
                 $("#offercode").prop('disabled', true);
@@ -212,6 +214,8 @@
             if($("#expiry-date-checkbox").prop("checked")){
                 $("#offer_expirydate").removeClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', true);
+                $("#offer_expirydate").datepicker('setDate', null);
+                $("#offer_startingdate").datepicker("option" , {maxDate: null});
             }
             else{
                 $("#offer_expirydate").addClass("readonly-bg-color");
@@ -219,7 +223,7 @@
             }
         }
         if("{{$carouseloffer->expiry_date}}" != ""){
-            _maxdate = "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}"
+            _maxdate = "{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}";
         }
         $("#offer_startingdate").datepicker({
             dateFormat: 'dd-mm-yy',
@@ -330,6 +334,8 @@
             if($("#expiry-date-checkbox").prop("checked")){
                 $("#offer_expirydate").removeClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', true);
+                $("#offer_expirydate").datepicker('setDate', null);
+                $("#offer_startingdate").datepicker("option" , {maxDate: null});
             }
             else{
                 $("#offer_expirydate").addClass("readonly-bg-color");
@@ -381,8 +387,6 @@
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
                 var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus, _token: "{{ csrf_token() }}"});
-                alert(_jsondata);
-                resetUpdateCarouselForm();
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",

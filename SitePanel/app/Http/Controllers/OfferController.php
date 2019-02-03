@@ -28,7 +28,12 @@ class OfferController extends Controller
         $offer->code = $request->offercode;
         $offer->details = ucfirst($request->offerdetails);
         $offer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-        $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        if($request->offer_expirydate != null){
+            $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        }
+        else{
+            $offer->expiry_date = $request->offer_expirydate;
+        }
         $offer->is_popular = $request->offer_is_popular;
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;
@@ -64,7 +69,12 @@ class OfferController extends Controller
         $offer->code = $request->offercode;
         $offer->details = ucfirst($request->offerdetails);
         $offer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-        $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        if($request->offer_expirydate != null){
+            $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        }
+        else{
+            $offer->expiry_date = $request->offer_expirydate;
+        }
         $offer->is_popular = $request->offer_is_popular;
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;

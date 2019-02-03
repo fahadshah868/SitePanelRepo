@@ -16,10 +16,10 @@
                     <div class="form-field">
                         <div class="form-field-heading">Select Store</div>
                         <input type="text" id="storetitle" hidden/>
-                        <select class="form-control form-field-text" id="offer_store" name="offer_store">
+                        <select class="form-control" data-live-search="true" id="offer_store" name="offer_store" style="font-size: 14px !important;">
                             <option value="">Select Store</option>
                             @foreach($allstores as $store)
-                            <option value="{{$store->id}}">{{$store->title}}</option>
+                            <option value="{{$store->id}}" data-tokens="{{$store->title}}">{{$store->title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -119,6 +119,7 @@
 <script>
     $(document).ready(function(){
         var dateToday = new Date();
+        $('#offer_store').selectpicker();
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
             changeYear: true,
             changeMonth: true,
@@ -181,6 +182,8 @@
             if($("#expiry-date-checkbox").prop("checked")){
                 $("#offer_expirydate").removeClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', true);
+                $("#offer_expirydate").datepicker('setDate', null);
+                $("#offer_startingdate").datepicker("option" , {maxDate: null});
             }
             else{
                 $("#offer_expirydate").addClass("readonly-bg-color");

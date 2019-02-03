@@ -176,7 +176,7 @@
     $(document).ready(function(){
         var dateToday = new Date();
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
-            defaultDate: "+1w",
+            changeYear: true,
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
@@ -187,6 +187,36 @@
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
             }
         });
         $(".close").click(function(){
@@ -228,6 +258,8 @@
             if($("#expiry-date-checkbox").prop("checked")){
                 $("#offer_expirydate").removeClass("readonly-bg-color");
                 $("#offer_expirydate").prop('disabled', true);
+                $("#offer_expirydate").datepicker('setDate', null);
+                $("#offer_startingdate").datepicker("option" , {maxDate: null});
             }
             else{
                 $("#offer_expirydate").addClass("readonly-bg-color");
@@ -300,6 +332,10 @@
                 }
                 var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
                 $("#addofferform").trigger("reset");
+                $("#offercode").prop('disabled', false);
+                $("#offer_expirydate").addClass("readonly-bg-color");
+                $("#offer_expirydate").prop('disabled', false);
+                $("#offer_startingdate , #offer_expirydate").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",
