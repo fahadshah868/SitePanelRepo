@@ -216,6 +216,27 @@
             }
             else if($(this).attr("id") == "deleteoffer"){
                 var url = $(this).attr("href");
+                var code = null;
+                var expirydate = null;
+                var status = null;
+                if($(this).data("offercode") != ""){
+                    code = $(this).data("offercode")+"<br>";
+                }
+                else{
+                    code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
+                }
+                if($(this).data("offerexpirydate") != ""){
+                    expirydate = $(this).data("offerexpirydate")+"<br>";
+                }
+                else{
+                    expirydate = "<span style='color: #FF0000; font-weight: 600'>Soon</span><br>";
+                }
+                if($(this).data("offerstatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                }
+                else if($(this).data("offerstatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store:</b>  "+$(this).data("offerstore")+"<br>"+
@@ -224,15 +245,15 @@
                     "<b>Offer Anchor:</b>  "+$(this).data("offeranchor")+"<br>"+
                     "<b>Offer Location:</b>  "+$(this).data("offerlocation")+"<br>"+
                     "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
-                    "<b>Offer Code:</b>  "+$(this).data("offercode")+"<br>"+
+                    "<b>Offer Code:</b>  "+code+
                     "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
                     "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
-                    "<b>Offer Expiry Date:</b>  "+$(this).data("offerexpirydate")+"<br>"+
+                    "<b>Offer Expiry Date:</b>  "+expirydate+
                     "<b>Free Shipping:</b>  "+$(this).data("freeshipping")+"<br>"+
                     "<b>Offer Is Popular:</b>  "+$(this).data("offer-is-popular")+"<br>"+
                     "<b>Offer Display At Home:</b>  "+$(this).data("offer-display-at-home")+"<br>"+
                     "<b>Offer Is Verified:</b>  "+$(this).data("offer-is-verified")+"<br>"+
-                    "<b>Offer Status:</b>  "+$(this).data("offerstatus"),
+                    "<b>Offer Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

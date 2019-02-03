@@ -130,11 +130,18 @@
             }
             else if($(this).attr("id") == "deleteuser"){
                 var url = $(this).attr("href");
+                var status = null;
+                if($(this).data("userstatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("userstatus")+"</span><br>";
+                }
+                else if($(this).data("userstatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("userstatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>User:</b>  "+$(this).data("username")+"<br>"+
                     "<b>User Role:</b>  "+$(this).data("userrole")+"<br>"+
-                    "<b>User Status:</b>  "+$(this).data("userstatus"),
+                    "<b>User Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

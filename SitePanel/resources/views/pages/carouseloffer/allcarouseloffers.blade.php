@@ -168,15 +168,36 @@
             }
             else if($(this).attr("id") == "deletecarouseloffer"){
                 var url = $(this).attr("href");
+                var code = null;
+                var expirydate = null;
+                var status = null;
+                if($(this).data("offercode") != ""){
+                    code = $(this).data("offercode")+"<br>";
+                }
+                else{
+                    code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
+                }
+                if($(this).data("offerexpirydate") != ""){
+                    expirydate = $(this).data("offerexpirydate")+"<br>";
+                }
+                else{
+                    expirydate = "<span style='color: #FF0000; font-weight: 600'>Soon</span><br>";
+                }
+                if($(this).data("offerstatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                }
+                else if($(this).data("offerstatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
                     "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
                     "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
-                    "<b>Offer Code:</b>  "+$(this).data("offercode")+"<br>"+
+                    "<b>Offer Code:</b>  "+code+
                     "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
-                    "<b>Offer Expiry Date:</b>  "+$(this).data("offerexpirydate")+"<br>"+
-                    "<b>Offer Status:</b>  "+$(this).data("offerstatus")+"<br>",
+                    "<b>Offer Expiry Date:</b>  "+expirydate+
+                    "<b>Offer Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

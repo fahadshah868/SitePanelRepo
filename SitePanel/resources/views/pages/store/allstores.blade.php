@@ -172,6 +172,13 @@
             }
             else if($(this).attr("id") == "deletestore"){
                 var url = $(this).attr("href");
+                var status = null;
+                if($(this).data("storestatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("storestatus")+"</span><br>";
+                }
+                else if($(this).data("storestatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("storestatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
@@ -182,7 +189,7 @@
                     "<b>Store Network Url:</b>  "+$(this).data("storenetworkurl")+"<br>"+
                     "<b>Is TopStore:</b>  "+$(this).data("istopstore")+"<br>"+
                     "<b>Is PopularStore:</b>  "+$(this).data("ispopularstore")+"<br>"+
-                    "<b>Store Status:</b>  "+$(this).data("storestatus")+"<br>",
+                    "<b>Store Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

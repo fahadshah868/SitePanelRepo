@@ -132,10 +132,17 @@
             }
             else if($(this).attr("id") == "deletenetwork"){
                 var url = $(this).attr("href");
+                var status = null;
+                if($(this).data("networkstatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("networkstatus")+"</span><br>";
+                }
+                else if($(this).data("networkstatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("networkstatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Network Title:</b>  "+$(this).data("networktitle")+"<br>"+
-                    "<b>Network Status:</b>  "+$(this).data("networkstatus"),
+                    "<b>Network Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

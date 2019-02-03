@@ -154,13 +154,20 @@
             }
             else if($(this).attr("id") == "deletecategory"){
                 var url = $(this).attr("href");
+                var status = null;
+                if($(this).data("categorystatus") == "active"){
+                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("categorystatus")+"</span><br>";
+                }
+                else if($(this).data("categorystatus") == "deactive"){
+                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("categorystatus")+"</span><br>";
+                }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Category Title:</b>  "+$(this).data("categorytitle")+"<br>"+
                     "<b>Category Description:</b>  "+$(this).data("categorydescription")+"<br>"+
                     "<b>Is TopCategory:</b>  "+$(this).data("istopcategory")+"<br>"+
                     "<b>Is PopularCategory:</b>  "+$(this).data("ispopularcategory")+"<br>"+
-                    "<b>Category Status:</b>  "+$(this).data("categorystatus")+"<br>",
+                    "<b>Category Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',
