@@ -27,29 +27,65 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Role</div>
-                            <select class="form-control form-field-text" id="userrole" name="userrole">
-                                @if($user->role == "employee")
-                                <option value="employee" selected>Employee</option>
-                                <option value="admin">Admin</option>
-                                @else
-                                <option value="employee">Employee</option>
-                                <option value="admin" selected>Admin</option>
-                                @endif
-                            </select>
+                            @if($user->role == "employee")
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="employee" checked>Employee
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="admin">Admin
+                                    </label>
+                                </div>
+                            </div>
+                            @else
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="employee">Employee
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="admin" checked>Admin
+                                    </label>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
-                            <select class="form-control form-field-text" id="userstatus" name="userstatus">
-                                @if($user->status == "active")
-                                <option value="active" selected>Active</option>
-                                <option value="deactive">Deactive</option>
-                                @else
-                                <option value="active">Active</option>
-                                <option value="deactive" selected>Deactive</option>
-                                @endif
-                            </select>
+                            @if($user->status == "active")
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userstatus" name="userstatus" value="active" checked>Active
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userstatus" name="userstatus" value="deactive">Deactive
+                                    </label>
+                                </div>
+                            </div>
+                            @else
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userstatus" name="userstatus" value="active">Active
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userstatus" name="userstatus" value="deactive" checked>Deactive
+                                    </label>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -97,8 +133,8 @@
                     var _userid = $("#userid").val();
                     var _username = $("#username").val();
                     var _userpassword = $("#userpassword").val();
-                    var _userrole = $("#userrole").val();
-                    var _userstatus = $("#userstatus").val();
+                    var _userrole = $("input[name='userrole']:checked").val();
+                    var _userstatus = $("input[name='userstatus']:checked").val();
                     var _jsondata = JSON.stringify({userid: _userid, username: _username, userpassword: _userpassword, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                     $(".alert").css("display","none");
                     $.ajax({

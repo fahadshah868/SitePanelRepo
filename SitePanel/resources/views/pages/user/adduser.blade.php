@@ -30,21 +30,35 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">User Role</div>
-                        <select class="form-control form-field-text" id="userrole" name="userrole">
-                            <option value="">Select Role</option>
-                            <option value="employee">Employee</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userrole" name="userrole" value="employee" checked>Employee
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userrole" name="userrole" value="admin">Admin
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">User Status</div>
-                        <select class="form-control form-field-text" id="userstatus" name="userstatus">
-                            <option value="">Select Status</option>
-                            <option value="active">Active</option>
-                            <option value="deactive">Deactive</option>
-                        </select>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userstatus" name="userstatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userstatus" name="userstatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,8 +89,8 @@
             submitHandler: function(form) {
                 var _username = $("#username").val();
                 var _password = $("#password").val();
-                var _userrole = $("#userrole").val();
-                var _userstatus = $("#userstatus").val();
+                var _userrole = $("input[name='userrole']:checked").val();
+                var _userstatus = $("input[name='userstatus']:checked").val();
                 var _jsondata = JSON.stringify({username: _username, password: _password, userrole: _userrole, userstatus: _userstatus, _token: '{{ csrf_token() }}'});
                 $("#adduserform").trigger("reset");
                 $(".alert").css('display','none');
