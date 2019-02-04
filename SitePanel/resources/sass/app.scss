@@ -5,6 +5,10 @@
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+//font awesome
+$fa-font-path: "../webfonts";
+@import 'node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import 'node_modules/@fortawesome/fontawesome-free/scss/solid';
 //base
 @import 'base';
 //app layout
@@ -17,3 +21,5 @@
 @import 'viewitems';
 //update profile
 @import 'updateprofile';
+//bootstrap multiselect dropdown
+@import 'bootstrap-multiselect';
