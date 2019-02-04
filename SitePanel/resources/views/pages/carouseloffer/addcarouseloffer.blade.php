@@ -17,7 +17,7 @@
                         <div class="form-field-heading">Select Store</div>
                         <input type="text" id="storetitle" hidden/>
                         <select class="form-control" data-live-search="true" id="offer_store" name="offer_store" style="font-size: 14px !important;">
-                            <option value="">Select Store</option>
+                            <option value=""><b>Select Store</b></option>
                             @foreach($allstores as $store)
                             <option value="{{$store->id}}" data-tokens="{{$store->title}}">{{$store->title}}</option>
                             @endforeach

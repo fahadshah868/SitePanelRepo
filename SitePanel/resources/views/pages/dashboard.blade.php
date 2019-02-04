@@ -18,7 +18,6 @@
     <!-- Bootstrap JS -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script> <!--jquery for bootstrap-->
     <script src="{{asset('js/bootstrap-select.min.js')}}"></script> <!--jquery for single select with search box-->
- 
 
     <div class="body-main-content" id="body-main-content">
         <div class="wrapper">

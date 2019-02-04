@@ -15,10 +15,10 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Store</div>
-                        <select class="form-control form-field-text" id="offer_store" name="offer_store">
+                        <select class="form-control" data-live-search="true" id="offer_store" name="offer_store">
                             <option value="">Select Store</option>
                             @foreach($allstores as $store)
-                            <option value="{{$store->id}}">{{$store->title}}</option>
+                            <option value="{{$store->id}}" data-tokens="{{$store->title}}">{{$store->title}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -26,7 +26,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Category</div>
-                        <select class="form-control form-field-text" id="offer_category" name="offer_category">
+                        <select class="form-control" data-live-search="true" id="offer_category" name="offer_category">
                             <option value="">Select Category</option>
                         </select>
                     </div>
@@ -175,6 +175,8 @@
 <script>
     $(document).ready(function(){
         var dateToday = new Date();
+        $('#offer_store').selectpicker();
+        $('#offer_category').selectpicker();
         var dates = $("#offer_startingdate, #offer_expirydate").datepicker({
             changeYear: true,
             changeMonth: true,
@@ -236,9 +238,10 @@
                         $.each(data.allstorecategories, function (index, value) {
                             $('#offer_category')
                             .append($("<option></option>")
-                            .attr("value",value.category_id)
+                            .attr("value",value.category_id, "data-tokens", value.category.title)
                             .text(value.category.title));
                         });
+                        $('#offer_category').selectpicker('refresh');
                     },
                     error: function(){
                         alert("Ajax Error! something went wrong...");

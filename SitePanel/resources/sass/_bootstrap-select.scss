@@ -20,14 +20,19 @@
      width: 100%;
      z-index: 1;
      text-align: right;
-     white-space: nowrap
+    //  white-space: nowrap;
+     color: #000;
+     font-size: 14px;
  }
- 
+ .dropdown-menu .inner li a{
+     color: #000;
+     font-size: 14px;
+ }
  .bootstrap-select>.dropdown-toggle.bs-placeholder,
  .bootstrap-select>.dropdown-toggle.bs-placeholder:active,
  .bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
  .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
-     color: #999
+     color: #000;
  }
  
  .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-danger,
@@ -54,7 +59,7 @@
  .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:active,
  .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:focus,
  .bootstrap-select>.dropdown-toggle.bs-placeholder.btn-success:hover {
-     color: rgba(255, 255, 255, .5)
+     color: #000;
  }
  
  .bootstrap-select>select {
@@ -98,7 +103,7 @@
  }
  
  .bootstrap-select .dropdown-toggle:focus {
-     outline: thin dotted #333!important;
+     outline: thin dotted #000 !important;
      outline: 5px auto -webkit-focus-ring-color!important;
      outline-offset: -2px
  }
@@ -106,7 +111,8 @@
  .bootstrap-select.form-control {
      margin-bottom: 0;
      padding: 0;
-     border: none
+     border: none;
+     height: 0;
  }
  
  :not(.input-group)>.bootstrap-select.form-control:not([class*=col-]) {
@@ -127,7 +133,12 @@
      display: inline-block;
      margin-left: 0
  }
- 
+ .dropdown-menu .dropdown-item{
+     padding: 5px 12px; 
+ }
+ .dropdown-item.active, .dropdown-item:active{
+     background-color: #d6d6d6;
+ }
  .bootstrap-select.dropdown-menu-right,
  .bootstrap-select[class*=col-].dropdown-menu-right,
  .row .bootstrap-select[class*=col-].dropdown-menu-right {
@@ -237,7 +248,7 @@
  }
  
  .bootstrap-select .dropdown-menu {
-     min-width: 100%;
+     width: 100%;
      -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
      box-sizing: border-box
@@ -259,11 +270,12 @@
  }
  
  .bootstrap-select .dropdown-menu li {
-     position: relative
+     position: relative;
+     padding: 0 9px;
  }
  
  .bootstrap-select .dropdown-menu li.active small {
-     color: #fff
+     color: #000
  }
  
  .bootstrap-select .dropdown-menu li.disabled a {
@@ -275,7 +287,7 @@
      -webkit-user-select: none;
      -moz-user-select: none;
      -ms-user-select: none;
-     user-select: none
+     user-select: none;
  }
  
  .bootstrap-select .dropdown-menu li a.opt {
@@ -334,7 +346,8 @@
  .bootstrap-select.fit-width .dropdown-toggle .caret {
      position: static;
      top: auto;
-     margin-top: -1px
+     margin-top: -1px;
+     right: 10px;
  }
  
  .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
@@ -455,5 +468,7 @@
  .bs-searchbox .form-control {
      margin-bottom: 0;
      width: 100%;
-     float: none
+     height: 30px;
+     float: none;
+     font-size: 14px;
  }

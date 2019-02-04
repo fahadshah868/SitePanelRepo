@@ -18478,14 +18478,20 @@ select.selectpicker {
   width: 100%;
   z-index: 1;
   text-align: right;
-  white-space: nowrap;
+  color: #000;
+  font-size: 14px;
+}
+
+.dropdown-menu .inner li a {
+  color: #000;
+  font-size: 14px;
 }
 
 .bootstrap-select > .dropdown-toggle.bs-placeholder,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:active,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
 .bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
-  color: #999;
+  color: #000;
 }
 
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-danger,
@@ -18512,7 +18518,7 @@ select.selectpicker {
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-success:active,
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-success:focus,
 .bootstrap-select > .dropdown-toggle.bs-placeholder.btn-success:hover {
-  color: rgba(255, 255, 255, 0.5);
+  color: #000;
 }
 
 .bootstrap-select > select {
@@ -18556,7 +18562,7 @@ select.selectpicker {
 }
 
 .bootstrap-select .dropdown-toggle:focus {
-  outline: thin dotted #333 !important;
+  outline: thin dotted #000 !important;
   outline: 5px auto -webkit-focus-ring-color !important;
   outline-offset: -2px;
 }
@@ -18565,6 +18571,7 @@ select.selectpicker {
   margin-bottom: 0;
   padding: 0;
   border: none;
+  height: 0;
 }
 
 :not(.input-group) > .bootstrap-select.form-control:not([class*=col-]) {
@@ -18584,6 +18591,15 @@ select.selectpicker {
   float: none;
   display: inline-block;
   margin-left: 0;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 5px 12px;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #d6d6d6;
 }
 
 .bootstrap-select.dropdown-menu-right,
@@ -18695,7 +18711,7 @@ select.selectpicker {
 }
 
 .bootstrap-select .dropdown-menu {
-  min-width: 100%;
+  width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -18717,10 +18733,11 @@ select.selectpicker {
 
 .bootstrap-select .dropdown-menu li {
   position: relative;
+  padding: 0 9px;
 }
 
 .bootstrap-select .dropdown-menu li.active small {
-  color: #fff;
+  color: #000;
 }
 
 .bootstrap-select .dropdown-menu li.disabled a {
@@ -18791,6 +18808,7 @@ select.selectpicker {
   position: static;
   top: auto;
   margin-top: -1px;
+  right: 10px;
 }
 
 .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
@@ -18907,6 +18925,8 @@ select.selectpicker {
 .bs-searchbox .form-control {
   margin-bottom: 0;
   width: 100%;
+  height: 30px;
   float: none;
+  font-size: 14px;
 }
 
