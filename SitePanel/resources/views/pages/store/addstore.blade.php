@@ -128,12 +128,13 @@
         });
         $("#storeprimaryurl").bind('keyup input propertychange',function(){
             var value = $("#storeprimaryurl").val();
-            if (value.indexOf("http://www.") >= 0){
-                var value = value.replace("http://www.","");
+            if (value.toLowerCase().indexOf("http://www.") >= 0 || value.toLowerCase().indexOf("https://www.") >= 0){
+                var value = value.toLowerCase().replace("http://www.","");
+                value = value.toLowerCase().replace("https://www.","");
                 $("#storesecondaryurl").val(value);
             }
             else{
-                $("#storesecondaryurl").val("");
+                $("#storesecondaryurl").val(null);
             }
         });
         $("#is_topstore").change(function(){

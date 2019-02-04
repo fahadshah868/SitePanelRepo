@@ -125,7 +125,7 @@
                 categorylogo: { required: true, validateimage: true }
             },
             messages: {
-                categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
+                categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },submitHandler: function(form) {
                 var _categoryid = $("#categoryid").val()
                 var _categorylogo = $("#categorylogo")[0].files[0];

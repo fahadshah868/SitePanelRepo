@@ -135,7 +135,7 @@
                 storelogo: { required: true, validateimage: true }
             },
             messages: {
-                storelogo: {required: "please select store image logo", validateimage: "image width and height must be same e.g 100 x 100 etc"}
+                storelogo: {required: "please select store image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },submitHandler: function(form) {
                 var _storeid = $("#storeid").val()
                 var _storelogo = $("#storelogo")[0].files[0];
