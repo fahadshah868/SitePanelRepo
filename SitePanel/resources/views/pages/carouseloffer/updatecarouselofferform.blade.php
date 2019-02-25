@@ -231,7 +231,6 @@
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
-            minDate: dateToday,
             maxDate: _maxdate,
             onSelect: function(selectedDate) {
                 instance = $(this).data("datepicker"),

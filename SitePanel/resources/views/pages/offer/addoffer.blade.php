@@ -182,7 +182,6 @@
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
-            minDate: dateToday,
             dateFormat: 'dd-mm-yy',
             onSelect: function(selectedDate) {
                 var option = this.id == "offer_startingdate" ? "minDate" : "maxDate",
