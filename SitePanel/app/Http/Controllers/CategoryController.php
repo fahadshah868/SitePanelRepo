@@ -60,7 +60,11 @@ class CategoryController extends Controller
          }
     }
     public function getAllCategories(){
-        $data['allcategories'] = Category::orderBy('id', 'DESC')->get();
+        $data['allcategories'] = Category::orderBy('id', 'DESC')->with(['offer' => function($q){
+            $q->where('starting_date','<=',config('constants.today_date'))
+            ->where('expiry_date','>=',config('constants.today_date'))
+            ->where('status','active');
+        }])->get();
         $data['categoriescount'] = count($data['allcategories']);
         return view('pages.category.allcategories',$data);
     }

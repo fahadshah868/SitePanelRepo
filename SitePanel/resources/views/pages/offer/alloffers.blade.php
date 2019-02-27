@@ -12,15 +12,17 @@
                     <option value="4">Offer Location</option>
                     <option value="5">Offer Type</option>
                     <option value="6">Offer Code</option>
-                    <option value="7">Offer Details</option>
-                    <option value="8">Offer Starting Date</option>
-                    <option value="9">Offer Expiry Date</option>
-                    <option value="10">Free Shipping</option>
-                    <option value="11">Offer Is Popular</option>
-                    <option value="12">Offer Display At Home</option>
-                    <option value="13">Offer Is Verified</option>
-                    <option value="14">Offer Status</option>
+                    <option value="7">Offer Starting Date</option>
+                    <option value="8">Offer Expiry Date</option>
+                    <option value="9">Free Shipping</option>
+                    <option value="10">Offer Is Popular</option>
+                    <option value="11">Offer Display At Home</option>
+                    <option value="12">Offer Is Verified</option>
+                    <option value="13">Offer Status</option>
+                    <option value="14">Offer Remark</option>
+                    @if(Auth::User()->role == "admin")
                     <option value="15">Add/Update By</option>
+                    @endif
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -48,7 +50,6 @@
                     <th>Offer Location</th>
                     <th>Offer Type</th>
                     <th>Code</th>
-                    <th>Details</th>
                     <th>Starting Data</th>
                     <th>Expiry Date</th>
                     <th>Free Shipping</th>
@@ -56,6 +57,7 @@
                     <th>Display At Home</th>
                     <th>Is Verified</th>
                     <th>Status</th>
+                    <th>Remark</th>
                     @if(Auth::User()->role == "admin")
                     <th>Add/Update By</th>
                     @endif
@@ -76,7 +78,6 @@
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
                     @endif
-                    <td>{{ $offer->details }}</td>
                     <td>{{ \Carbon\Carbon::parse($offer->starting_date)->format('d/m/Y') }}</td>
                     @if($offer->expiry_date != null)
                         <td>{{ \Carbon\Carbon::parse($offer->expiry_date)->format('d/m/Y') }}</td>
@@ -93,6 +94,15 @@
                         @else
                         <span class="deactive-item">{{ $offer->status }}</span>
                         @endif
+                    </td>
+                    <td>
+                    @if($offer->starting_date <= config('constants.today_date') && $offer->expiry_date >= config('constants.today_date'))
+                    <span class="available-offer">Available</span>
+                    @elseif($offer->starting_date > config('constants.today_date'))
+                    <span class="pending-offer">Pending</span>
+                    @elseif($offer->expiry_date < config('constants.today_date'))
+                    <span class="expired-offer">Expired</span>
+                    @endif
                     </td>
                     @if(Auth::User()->role == "admin")
                     <td>{{ $offer->user->username }}</td>
@@ -150,28 +160,28 @@
                     $("#searchbar").attr('placeholder','Search Offer Code');
                 }
                 else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Offer Details');
-                }
-                else if(column == 8){
                     $("#searchbar").attr('placeholder','Search Offer Start Date');
                 }
-                else if(column == 9){
+                else if(column == 8){
                     $("#searchbar").attr('placeholder','Search Offer Expiry Date');
                 }
-                else if(column == 10){
+                else if(column == 9){
                     $("#searchbar").attr('placeholder','Search Free Shipping Offer');
                 }
-                else if(column == 11){
+                else if(column == 10){
                     $("#searchbar").attr('placeholder','Search Offer Is Popular');
                 }
-                else if(column == 12){
+                else if(column == 11){
                     $("#searchbar").attr('placeholder','Search Offer Display At Home');
                 }
-                else if(column == 13){
+                else if(column == 12){
                     $("#searchbar").attr('placeholder','Search Offer Is Verified');
                 }
-                else if(column == 14){
+                else if(column == 13){
                     $("#searchbar").attr('placeholder','Search Offer Status');
+                }
+                else if(column == 14){
+                    $("#searchbar").attr('placeholder','Search Offer Remark');
                 }
                 else if(column == 15){
                     $("#searchbar").attr('placeholder','Search User');

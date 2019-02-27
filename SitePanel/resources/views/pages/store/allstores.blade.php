@@ -6,7 +6,7 @@
                 <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Store Title</option>
-                    <option value="1">Store Details</option>
+                    <option value="1">coupons Available</option>
                     <option value="2">Store Primary Url</option>
                     <option value="3">Store Secondary Url</option>
                     <option value="4">Network</option>
@@ -14,8 +14,10 @@
                     <option value="6">Is TopStore</option>
                     <option value="7">Is PopularStore</option>
                     <option value="8">Store Status</option>
+                    @if(Auth::User()->role == "admin")
                     <option value="10">Add/Update Form By</option>
                     <option value="11">Add/Update Image By</option>
+                    @endif
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -33,7 +35,7 @@
             <thead>
                 <tr>
                     <th>Store Title</th>
-                    <th>Store Description</th>
+                    <th>Coupons Available</th>
                     <th>Store Primary Url</th>
                     <th>Store Secondary Url</th>
                     <th>Network</th>
@@ -54,7 +56,7 @@
                     @foreach($allstores as $store)
                         <tr>
                             <td>{{ $store->title }}</td>
-                            <td>{{ $store->description }}</td>
+                            <td>{{ count($store->offer) }}</td>
                             <td>{{ $store->primary_url }}</td>
                             <td>{{ $store->secondary_url }}</td>
                             <td>{{ $store->network->title }}</td>
@@ -103,7 +105,7 @@
                     $("#searchbar").attr('placeholder','Search Store Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Store Details');
+                    $("#searchbar").attr('placeholder','Search Coupons Available');
                 }
                 else if(column == 2){
                     $("#searchbar").attr('placeholder','Search Store Primary Url');

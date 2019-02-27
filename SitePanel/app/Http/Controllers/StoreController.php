@@ -87,7 +87,11 @@ class StoreController extends Controller
         }
     }
     public function getAllStores(){
-        $data['allstores'] = Store::orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::orderBy('id', 'DESC')->with(['offer' => function($q){
+            $q->where('starting_date','<=',config('constants.today_date'))
+            ->where('expiry_date','>=',config('constants.today_date'))
+            ->where('status','active');
+        }])->get();
         $data['storescount'] = count($data['allstores']);
         return view('pages.store.allstores', $data);
     }

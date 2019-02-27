@@ -6,12 +6,14 @@
                 <select class="form-control form-field-text" id="columnsfilter">
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Category Title</option>
-                    <option value="1">Category Description</option>
+                    <option value="1">Coupons Available</option>
                     <option value="2">Is TopCategory</option>
                     <option value="3">Is PopularCategory</option>
                     <option value="4">Category Status</option>
+                    @if(Auth::User()->role == "admin")
                     <option value="6">Add/Update Form User</option>
                     <option value="7">Add/Update Image User</option>
+                    @endif
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -29,7 +31,7 @@
             <thead>
                 <tr>
                     <th>Category Title</th>
-                    <th>Category Description</th>
+                    <th>Coupons Available</th>
                     <th>Is TopCategory</th>
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
@@ -46,7 +48,7 @@
                 @foreach($allcategories as $category)
                     <tr>
                         <td>{{ $category->title }}</td>
-                        <td>{{ $category->description }}</td>
+                        <td>{{ count($category->offer) }}</td>
                         <td>{{ $category->is_topcategory }}</td>
                         <td>{{ $category->is_popularcategory }}</td>
                         <td>
@@ -97,7 +99,7 @@
                     $("#searchbar").attr('placeholder','Search Category Title');
                 }
                 else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Category Description');
+                    $("#searchbar").attr('placeholder','Search Coupons Available');
                 }
                 else if(column == 2){
                     $("#searchbar").attr('placeholder','Search Top Categories');

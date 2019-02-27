@@ -7,7 +7,9 @@
                     <option value="" selected>Select Column For Search</option>
                     <option value="0">Store Title</option>
                     <option value="1">Store Categories</option>
+                    @if(Auth::User()->role == "admin")
                     <option value="2">Add/Update By</option>
+                    @endif
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">

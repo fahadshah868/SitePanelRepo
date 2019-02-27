@@ -12,8 +12,11 @@
                     <option value="4">Offer Starting Date</option>
                     <option value="5">Offer Expiry Date</option>
                     <option value="6">Offer Status</option>
-                    <option value="8">Add/Update Form By</option>
-                    <option value="9">Add/Update Image By</option>
+                    <option value="7">Offer Remark</option>
+                    @if(Auth::User()->role == "admin")
+                    <option value="9">Add/Update Form By</option>
+                    <option value="10">Add/Update Image By</option>
+                    @endif
                 </select>
             </div>
             <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
@@ -37,6 +40,7 @@
                     <th>Starting Date</th>
                     <th>Expiry Date</th>
                     <th>Offer Status</th>
+                    <th>Offer Remark</th>
                     <th>Image</th>
                     @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
@@ -69,6 +73,15 @@
                                 @else
                                 <span class="deactive-item">{{ $carouseloffer->status }}</span>
                                 @endif
+                            </td>
+                            <td>
+                            @if($carouseloffer->starting_date <= config('constants.today_date') && $offer->expiry_date >= config('constants.today_date'))
+                            <span class="available-offer">Available</span>
+                            @elseif($carouseloffer->starting_date > config('constants.today_date'))
+                            <span class="pending-offer">Pending</span>
+                            @elseif($carouseloffer->expiry_date < config('constants.today_date'))
+                            <span class="expired-offer">Expired</span>
+                            @endif
                             </td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carouselofferimage"/></td>
                             @if(Auth::User()->role == "admin")
@@ -122,10 +135,13 @@
                 else if(column == 6){
                     $("#searchbar").attr('placeholder','Search Offer Status');
                 }
-                else if(column == 8){
-                    $("#searchbar").attr('placeholder','Search User');
+                else if(column == 7){
+                    $("#searchbar").attr('placeholder','Search Offer Remark');
                 }
                 else if(column == 9){
+                    $("#searchbar").attr('placeholder','Search User');
+                }
+                else if(column == 10){
                     $("#searchbar").attr('placeholder','Search User');
                 }
                 $("#viewitems-header-searchbar").css("display","block");
