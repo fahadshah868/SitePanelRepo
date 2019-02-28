@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }})</span></div>
+        <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered-row-count"></span>)</span></div>
         <div class="viewitems-header-searchbar-container">
             <div class="viewitems-header-searchbar-filter">
                 <select class="form-control form-field-text" id="columnsfilter">
@@ -93,7 +93,6 @@
             var index = parseInt(column)+1;
             $("#tablebody td, #tablebody th").removeClass("highlight-column");
             $("#searchbar").val("");
-            filterTable();
             if(column != ""){
                 if(column == 0){
                     $("#searchbar").attr('placeholder','Search Category Title');
@@ -118,14 +117,18 @@
                 }
                 $("#viewitems-header-searchbar").css("display","block");
                 $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
+                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
             }
             else{
                 $("#viewitems-header-searchbar").css("display","none");
+                $("#tableview").find("tr").css("display","");
+                $("#filtered-row-count").html("");
             }
         });
         //client side search filter
         $("#searchbar").bind('keyup input propertychange',function(){
             filterTable();
+            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
         });
         //search/filter table
         function filterTable(){
@@ -136,16 +139,9 @@
             tr = table.find("tr");
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[column];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-                else{
-                    tr[i].style.display = "";
-                }
+                $(td).filter(function() {
+                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
+                });
             }
         }
         //navigation buttons actions
