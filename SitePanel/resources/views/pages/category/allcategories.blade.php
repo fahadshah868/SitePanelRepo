@@ -125,6 +125,7 @@
                         !~category_form_add_update_by_col.indexOf(category_form_add_update_by_val) || 
                         !~category_image_add_update_by_col.indexOf(category_image_add_update_by_val);
             }).hide();
+
             if($("#categorytitle").val() != "" || 
                 $("#istopcategory").val() != "" || 
                 $("#ispopularcategory").val() != "" ||

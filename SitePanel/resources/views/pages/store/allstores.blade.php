@@ -1,30 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Stores<span class="viewitems-main-heading-count">({{ $storescount }}<span id="filtered-row-count"></span>)</span></div>
-        <div class="viewitems-header-searchbar-container">
-            <div class="viewitems-header-searchbar-filter">
-                <select class="form-control form-field-text" id="columnsfilter">
-                    <option value="" selected>Select Column For Search</option>
-                    <option value="0">Store Title</option>
-                    <option value="1">coupons Available</option>
-                    <option value="2">Store Primary Url</option>
-                    <option value="3">Store Secondary Url</option>
-                    <option value="4">Network</option>
-                    <option value="5">Network Url</option>
-                    <option value="6">Is TopStore</option>
-                    <option value="7">Is PopularStore</option>
-                    <option value="8">Store Status</option>
-                    @if(Auth::User()->role == "admin")
-                    <option value="10">Add/Update Form By</option>
-                    <option value="11">Add/Update Image By</option>
-                    @endif
-                </select>
-            </div>
-            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
-                <input type="text" id="searchbar" class="form-control"/>
-            </div>
-        </div>
-    </div>
+    <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $storescount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -35,20 +10,76 @@
             <thead>
                 <tr>
                     <th>Store Title</th>
-                    <th>Coupons Available</th>
                     <th>Store Primary Url</th>
-                    <th>Store Secondary Url</th>
                     <th>Network</th>
                     <th>Network Url</th>
                     <th>Is TopStore</th>
                     <th>Is PopularStore</th>
                     <th>Store Status</th>
-                    <th>Store Logo</th>
                     @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
                     <th>Add/Update Image By</th>
                     @endif
                     <th>Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storetitle" placeholder="Search Store Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storetitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storeprimaryurl" placeholder="Search Primary URL" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storeprimaryurl_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storenetwork" placeholder="Search Network" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storenetwork_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storenetworkurl" placeholder="Search Network URL" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storenetworkurl_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="istopstore" placeholder="Search Top Store" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="istopstore_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="ispopularstore" placeholder="Search Popular Store" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="ispopularstore_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storestatus" placeholder="Search Store Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storestatus_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @if(Auth::User()->role == "admin")
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="store_form_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="store_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="store_image_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="store_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @endif
+                    <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
                 </tr>
             </thead>
             <tbody id="tablebody">
@@ -56,9 +87,7 @@
                     @foreach($allstores as $store)
                         <tr>
                             <td>{{ $store->title }}</td>
-                            <td>{{ count($store->offer) }}</td>
                             <td>{{ $store->primary_url }}</td>
-                            <td>{{ $store->secondary_url }}</td>
                             <td>{{ $store->network->title }}</td>
                             <td>{{ $store->network_url }}</td>
                             <td>{{ $store->is_topstore }}</td>
@@ -70,7 +99,6 @@
                                 <span class="deactive-item">{{ $store->status }}</span>
                                 @endif
                             </td>
-                            <td><img src="{{ asset($store->logo_url) }}"/></td>
                             @if(Auth::User()->role == "admin")
                             <td>{{ $store->form_user->username }}</td>
                             <td>{{ $store->image_user->username }}</td>
@@ -90,78 +118,111 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        function clientSideFilter(){
+            var $rows = $('#tablebody tr');
+            var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var storeprimaryurl_val = $.trim($("#storeprimaryurl").val()).replace(/ +/g, ' ').toLowerCase();
+            var storenetwork_val = $.trim($("#storenetwork").val()).replace(/ +/g, ' ').toLowerCase();
+            var storenetworkurl_val = $.trim($("#storenetworkurl").val()).replace(/ +/g, ' ').toLowerCase();
+            var istopstore_val = $.trim($("#istopstore").val()).replace(/ +/g, ' ').toLowerCase();
+            var ispopularstore_val = $.trim($("#ispopularstore").val()).replace(/ +/g, ' ').toLowerCase();
+            var storestatus_val = $.trim($("#storestatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var store_form_add_update_by_val = $.trim($("#store_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var store_image_add_update_by_val = $.trim($("#store_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function() {
+                var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storeprimaryurl_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storenetwork_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storenetworkurl_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var istopstore_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                var ispopularstore_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storestatus_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                var store_form_add_update_by_col = $(this).find('td:nth-child(8)').text().replace(/\s+/g, ' ').toLowerCase();
+                var store_image_add_update_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~storetitle_col.indexOf(storetitle_val) || 
+                        !~storeprimaryurl_col.indexOf(storeprimaryurl_val) || 
+                        !~storenetwork_col.indexOf(storenetwork_val) || 
+                        !~storenetworkurl_col.indexOf(storenetworkurl_val) || 
+                        !~istopstore_col.indexOf(istopstore_val) || 
+                        !~ispopularstore_col.indexOf(ispopularstore_val) ||
+                        !~storestatus_col.indexOf(storestatus_val) || 
+                        !~store_form_add_update_by_col.indexOf(store_form_add_update_by_val) || 
+                        !~store_image_add_update_by_col.indexOf(store_image_add_update_by_val);
+            }).hide();
+            if($("#storetitle").val() != "" || 
+                $("#storeprimaryurl").val() != "" || 
+                $("#storenetwork").val() != "" ||
+                $("#storenetworkurl").val() != "" || 
+                $("#istopstore").val() != "" || 
+                $("#ispopularstore").val() != "" ||
+                $("#storestatus").val() != "" || 
+                $("#store_form_add_update_by").val() != "" || 
+                $("#store_image_add_update_by").val() != "")
+            {
+                $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
+            }
+            else{
+                $("#filtered_row_count").html("");
+            }
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        //select column for search
-        $("#columnsfilter").change(function(){
-            var column = $("#columnsfilter").val();
-            var index = parseInt(column)+1;
-            $("#tablebody td, #tablebody th").removeClass("highlight-column");
-            $("#searchbar").val("");
-            if(column != ""){
-                if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Store Title');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Coupons Available');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Store Primary Url');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Store Secondary Url');
-                }
-                else if(column == 4){
-                    $("#searchbar").attr('placeholder','Search Store Network');
-                }
-                else if(column == 5){
-                    $("#searchbar").attr('placeholder','Search Store Network Url');
-                }
-                else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Top Stores');
-                }
-                else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Popular Stores');
-                }
-                else if(column == 8){
-                    $("#searchbar").attr('placeholder','Search Store Status');
-                }
-                else if(column == 10){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                else if(column == 11){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                $("#viewitems-header-searchbar").css("display","block");
-                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
-                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
+        //client side filters
+        $(".header-searchbar-filter").bind('keyup input propertychange',function(){
+            clientSideFilter();
+        });
+        $("#clear_all_filters").click(function(){
+            $("#storetitle").val("");
+            $("#storeprimaryurl").val("");
+            $("#storenetwork").val("");
+            $("#storenetworkurl").val("");
+            $("#istopstore").val("");
+            $("#ispopularstore").val("");
+            $("#storestatus").val("");
+            $("#store_form_add_update_by").val("");
+            $("#store_image_add_update_by").val("");
+            clientSideFilter();
+        });
+        
+        $(".header-searchbar-filter-button").click(function(){
+            if($(this).attr("id") == "storetitle_clr_btn"){
+                $("#storetitle").val("");
+                clientSideFilter();
             }
-            else{
-                $("#viewitems-header-searchbar").css("display","none");
-                $("#tableview").find("tr").css("display","");
-                $("#filtered-row-count").html("");
+            else if($(this).attr("id") == "storeprimaryurl_clr_btn"){
+                $("#storeprimaryurl").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "storenetwork_clr_btn"){
+                $("#storenetwork").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "storenetworkurl_clr_btn"){
+                $("#storenetworkurl").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "istopstore_clr_btn"){
+                $("#istopstore").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "ispopularstore_clr_btn"){
+                $("#ispopularstore").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "storestatus_clr_btn"){
+                $("#storestatus").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "store_form_add_update_by_clr_btn"){
+                $("#store_form_add_update_by").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "store_image_add_update_by_clr_btn"){
+                $("#store_image_add_update_by").val("");
+                clientSideFilter();
             }
         });
-        //client side search filter
-        $("#searchbar").bind('keyup input propertychange',function(){
-            filterTable();
-            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
-        });
-        //search/filter table
-        function filterTable(){
-            var filter, table, tr, td, i, column;
-            column = $("#columnsfilter").val();
-            filter = $("#searchbar").val().toUpperCase();
-            table = $("#tableview");
-            tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[column];
-                $(td).filter(function() {
-                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
-                });
-            }
-        }
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
