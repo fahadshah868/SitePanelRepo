@@ -1,26 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered-row-count"></span>)</span></div>
-        <div class="viewitems-header-searchbar-container">
-            <div class="viewitems-header-searchbar-filter">
-                <select class="form-control form-field-text" id="columnsfilter">
-                    <option value="" selected>Select Column For Search</option>
-                    <option value="0">Category Title</option>
-                    <option value="1">Coupons Available</option>
-                    <option value="2">Is TopCategory</option>
-                    <option value="3">Is PopularCategory</option>
-                    <option value="4">Category Status</option>
-                    @if(Auth::User()->role == "admin")
-                    <option value="6">Add/Update Form User</option>
-                    <option value="7">Add/Update Image User</option>
-                    @endif
-                </select>
-            </div>
-            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
-                <input type="text" id="searchbar" class="form-control"/>
-            </div>
-        </div>
-    </div>
+    <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -31,7 +10,6 @@
             <thead>
                 <tr>
                     <th>Category Title</th>
-                    <th>Coupons Available</th>
                     <th>Is TopCategory</th>
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
@@ -42,13 +20,54 @@
                     @endif
                     <th>Actions</th>
                 </tr>
+                <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="categorytitle" placeholder="Search Category Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="categorytitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="istopcategory" placeholder="Search Top Category" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="istopcategory_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="ispopularcategory" placeholder="Search Popular Category" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="ispopularcategory_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="categorystatus" placeholder="Search Category Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="categorystatus_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th></th>
+                    @if(Auth::User()->role == "admin")
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="category_form_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="category_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="category_image_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="category_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @endif
+                    <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
+                </tr>
             </thead>
             <tbody id="tablebody">
             @if(count($allcategories) > 0)
                 @foreach($allcategories as $category)
                     <tr>
                         <td>{{ $category->title }}</td>
-                        <td>{{ count($category->offer) }}</td>
                         <td>{{ $category->is_topcategory }}</td>
                         <td>{{ $category->is_popularcategory }}</td>
                         <td>
@@ -84,66 +103,83 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        function clientSideFilter(){
+            var $rows = $('#tablebody tr');
+            var categorytitle_val = $.trim($("#categorytitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var istopcategory_val = $.trim($("#istopcategory").val()).replace(/ +/g, ' ').toLowerCase();
+            var ispopularcategory_val = $.trim($("#ispopularcategory").val()).replace(/ +/g, ' ').toLowerCase();
+            var categorystatus_val = $.trim($("#categorystatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var category_form_add_update_by_val = $.trim($("#category_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var category_image_add_update_by_val = $.trim($("#category_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function() {
+                var categorytitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var istopcategory_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var ispopularcategory_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var categorystatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var category_form_add_update_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var category_image_add_update_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~categorytitle_col.indexOf(categorytitle_val) || 
+                        !~istopcategory_col.indexOf(istopcategory_val) || 
+                        !~ispopularcategory_col.indexOf(ispopularcategory_val) || 
+                        !~categorystatus_col.indexOf(categorystatus_val) || 
+                        !~category_form_add_update_by_col.indexOf(category_form_add_update_by_val) || 
+                        !~category_image_add_update_by_col.indexOf(category_image_add_update_by_val);
+            }).hide();
+            if($("#categorytitle").val() != "" || 
+                $("#istopcategory").val() != "" || 
+                $("#ispopularcategory").val() != "" ||
+                $("#categorystatus").val() != "" || 
+                $("#category_form_add_update_by").val() != "" || 
+                $("#category_image_add_update_by").val() != "")
+            {
+                $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
+            }
+            else{
+                $("#filtered_row_count").html("");
+            }
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        //select column for search
-        $("#columnsfilter").change(function(){
-            var column = $("#columnsfilter").val();
-            var index = parseInt(column)+1;
-            $("#tablebody td, #tablebody th").removeClass("highlight-column");
-            $("#searchbar").val("");
-            if(column != ""){
-                if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Category Title');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Coupons Available');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Top Categories');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Popular Categories');
-                }
-                else if(column == 4){
-                    $("#searchbar").attr('placeholder','Search Category Status');
-                }
-                else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                $("#viewitems-header-searchbar").css("display","block");
-                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
-                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
+        //client side filters
+        $(".header-searchbar-filter").bind('keyup input propertychange',function(){
+            clientSideFilter();
+        });
+        $("#clear_all_filters").click(function(){
+            $("#categorytitle").val("");
+            $("#istopcategory").val("");
+            $("#ispopularcategory").val("");
+            $("#categorystatus").val("");
+            $("#category_form_add_update_by").val("");
+            $("#category_image_add_update_by").val("");
+            clientSideFilter();
+        });
+        $(".header-searchbar-filter-button").click(function(){
+            if($(this).attr("id") == "categorytitle_clr_btn"){
+                $("#categorytitle").val("");
+                clientSideFilter();
             }
-            else{
-                $("#viewitems-header-searchbar").css("display","none");
-                $("#tableview").find("tr").css("display","");
-                $("#filtered-row-count").html("");
+            else if($(this).attr("id") == "istopcategory_clr_btn"){
+                $("#istopcategory").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "ispopularcategory_clr_btn"){
+                $("#ispopularcategory").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "categorystatus_clr_btn"){
+                $("#categorystatus").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "category_form_add_update_by_clr_btn"){
+                $("#category_form_add_update_by").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "category_image_add_update_by_clr_btn"){
+                $("#category_image_add_update_by").val("");
+                clientSideFilter();
             }
         });
-        //client side search filter
-        $("#searchbar").bind('keyup input propertychange',function(){
-            filterTable();
-            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
-        });
-        //search/filter table
-        function filterTable(){
-            var filter, table, tr, td, i, column;
-            column = $("#columnsfilter").val();
-            filter = $("#searchbar").val().toUpperCase();
-            table = $("#tableview");
-            tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[column];
-                $(td).filter(function() {
-                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
-                });
-            }
-        }
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();

@@ -1,20 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $userscount }}<span id="filtered-row-count"></span>)</span></div>
-        <div class="viewitems-header-searchbar-container">
-            <div class="viewitems-header-searchbar-filter">
-                <select class="form-control form-field-text" id="columnsfilter">
-                    <option value="" selected>Select Column For Search</option>
-                    <option value="0">User Name</option>
-                    <option value="1">User Role</option>
-                    <option value="2">User Status</option>
-                </select>
-            </div>
-            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
-                <input type="text" id="searchbar" class="form-control"/>
-            </div>
-        </div>
-    </div>
+    <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $userscount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -32,6 +17,27 @@
                     <th>User Role</th>
                     <th>User Status</th>
                     <th>Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="username" placeholder="Search User Name" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="username_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="userrole" placeholder="Search User Role" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="userrole_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="userstatus" placeholder="Search User Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="userstatus_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
                 </tr>
             </thead>
             <tbody id="tablebody">
@@ -64,6 +70,25 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        function clientSideFilter(){
+            var $rows = $('#tablebody tr');
+            var username_val = $.trim($("#username").val()).replace(/ +/g, ' ').toLowerCase();
+            var userrole_val = $.trim($("#userrole").val()).replace(/ +/g, ' ').toLowerCase();
+            var userstatus_val = $.trim($("#userstatus").val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function() {
+                var username_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var userrole_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var userstatus_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~username_col.indexOf(username_val) || !~userrole_col.indexOf(userrole_val) || !~userstatus_col.indexOf(userstatus_val);
+            }).hide();
+            if($("#username").val() != "" || $("#userrole").val() != "" || $("#userstatus").val() != ""){
+                $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
+            }
+            else{
+                $("#filtered_row_count").html("");
+            }
+            
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -73,51 +98,30 @@
                 $("#alert-success").slideUp(500);
             });
         }
-        //select column for search
-        $("#columnsfilter").change(function(){
-            var column = $("#columnsfilter").val();
-            var index = parseInt(column)+1;
-            $("#tablebody td, #tablebody th").removeClass("highlight-column");
-            $("#searchbar").val("");
-            if(column != ""){
-                if(column == 0){
-                    $("#searchbar").attr('placeholder','Search User Name');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search User Role');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search User Status');
-                }
-                $("#viewitems-header-searchbar").css("display","block");
-                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
-                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
+        //client side filter
+        $(".header-searchbar-filter").bind('keyup input propertychange',function(){
+            clientSideFilter();
+        });
+        $("#clear_all_filters").click(function(){
+            $("#username").val("");
+            $("#userrole").val("");
+            $("#userstatus").val("");
+            clientSideFilter();
+        });
+        $(".header-searchbar-filter-button").click(function(){
+            if($(this).attr("id") == "username_clr_btn"){
+                $("#username").val("");
+                clientSideFilter();
             }
-            else{
-                $("#viewitems-header-searchbar").css("display","none");
-                $("#tableview").find("tr").css("display","");
-                $("#filtered-row-count").html("");
+            else if($(this).attr("id") == "userrole_clr_btn"){
+                $("#userrole").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "userstatus_clr_btn"){
+                $("#userstatus").val("");
+                clientSideFilter();
             }
         });
-        //client side search filter
-        $("#searchbar").bind('keyup input propertychange',function(){
-            filterTable();
-            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
-        });
-        //search/filter table
-        function filterTable(){
-            var filter, table, tr, td, i, column;
-            column = $("#columnsfilter").val();
-            filter = $("#searchbar").val().toUpperCase();
-            table = $("#tableview");
-            tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[column];
-                $(td).filter(function() {
-                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
-                });
-            }
-        } 
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();

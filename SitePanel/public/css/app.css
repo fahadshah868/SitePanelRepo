@@ -18192,6 +18192,26 @@ label.error {
   font-weight: 700;
 }
 
+.header-searchbar-clear-filters-button {
+  padding: 4px 10px;
+  color: #fff;
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+  outline: none !important;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.header-searchbar-clear-filters-button:hover {
+  background-color: #d1192a;
+}
+
+.header-searchbar-clear-filters-button .fa-times-circle {
+  margin-right: 5px;
+}
+
 .viewitems-main-heading-count {
   font-size: 20px !important;
   font-weight: 500 !important;
@@ -18247,20 +18267,7 @@ td .carouselofferimage {
   height: 40px;
 }
 
-.viewitems-header-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.viewitems-header-searchbar-container {
+.header-searchbar-filter-assets {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -18270,24 +18277,33 @@ td .carouselofferimage {
           flex-direction: row;
 }
 
-.viewitems-header-searchbar-filter {
-  width: 230px;
-  margin-right: 10px;
+.header-searchbar-filter {
+  width: 100%;
+  font-size: 13px;
+  padding: 4px 10px;
+  border: 1px solid #dc3545;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+  position: relative;
 }
 
-.viewitems-header-searchbar {
-  width: 350px;
-  display: none;
+.header-searchbar-filter-button {
+  padding: 4px 12px;
+  margin-left: -5px;
+  font-size: 13px;
+  font-weight: 700;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  outline: none !important;
+  cursor: pointer;
+  color: #fff;
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
 }
 
-.viewitems-header-searchbar-container #searchbar {
-  background-image: url("/images/searchicon.png");
-  background-repeat: no-repeat;
-  background-position: 7px 7px;
-  background-size: 20px 20px;
-  padding-left: 36px;
-  font-size: 14px !important;
-  height: 33px !important;
+.header-searchbar-filter-button:hover {
+  background-color: #d1192a;
 }
 
 .fa-edit {
