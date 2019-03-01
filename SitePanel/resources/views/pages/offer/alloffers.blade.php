@@ -1,35 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered-row-count"></span>)</span></div>
-        <div class="viewitems-header-searchbar-container">
-            <div class="viewitems-header-searchbar-filter">
-                <select class="form-control form-field-text" id="columnsfilter">
-                    <option value="" selected>Select Column For Search</option>
-                    <option value="0">Store</option>
-                    <option value="1">Category</option>
-                    <option value="2">Offer Title</option>
-                    <option value="3">Offer Anchor</option>
-                    <option value="4">Offer Location</option>
-                    <option value="5">Offer Type</option>
-                    <option value="6">Offer Code</option>
-                    <option value="7">Offer Starting Date</option>
-                    <option value="8">Offer Expiry Date</option>
-                    <option value="9">Free Shipping</option>
-                    <option value="10">Offer Is Popular</option>
-                    <option value="11">Offer Display At Home</option>
-                    <option value="12">Offer Is Verified</option>
-                    <option value="13">Offer Status</option>
-                    <option value="14">Offer Remark</option>
-                    @if(Auth::User()->role == "admin")
-                    <option value="15">Add/Update By</option>
-                    @endif
-                </select>
-            </div>
-            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
-                <input type="text" id="searchbar" class="form-control"/>
-            </div>
-        </div>
-    </div>
+    <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -50,8 +20,6 @@
                     <th>Offer Location</th>
                     <th>Offer Type</th>
                     <th>Code</th>
-                    <th>Starting Data</th>
-                    <th>Expiry Date</th>
                     <th>Free Shipping</th>
                     <th>Is Popular</th>
                     <th>Display At Home</th>
@@ -78,12 +46,12 @@
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
                     @endif
-                    <td>{{ \Carbon\Carbon::parse($offer->starting_date)->format('d/m/Y') }}</td>
+                    <!-- <td>{{ \Carbon\Carbon::parse($offer->starting_date)->format('d/m/Y') }}</td>
                     @if($offer->expiry_date != null)
                         <td>{{ \Carbon\Carbon::parse($offer->expiry_date)->format('d/m/Y') }}</td>
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
-                    @endif
+                    @endif -->
                     <td>{{ $offer->free_shipping }}</td>
                     <td>{{ $offer->is_popular }}</td>
                     <td>{{ $offer->display_at_home }}</td>

@@ -1,5 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
+    <div class="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
