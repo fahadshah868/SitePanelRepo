@@ -157,7 +157,7 @@
                         </div>
                     </div>
                 </nav>
-                <div id="panel-body-container" style="padding: 20px 30px;">
+                <div id="panel-body-container" style="padding: 20px;">
                 </div>
             </div>
         </div>

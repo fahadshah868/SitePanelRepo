@@ -31,6 +31,95 @@
                     @endif
                     <th>Actions</th>
                 </tr>
+                <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storetitle" placeholder="Search Store Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storetitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="categorytitle" placeholder="Search Category Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="categorytitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offertitle" placeholder="Search Offer Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offertitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offeranchor" placeholder="Search Offer Anchor" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offeranchor_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerlocation" placeholder="Search Offer Location" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerlocation_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offertype" placeholder="Search Offer Type" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offertype_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offercode" placeholder="Search Offer Code" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offercode_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="freeshippingoffer" placeholder="Search Free Shipping Offers" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="freeshippingoffer_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="popularoffer" placeholder="Search Popular Offers" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="popularoffer_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="homeoffer" placeholder="Search Home Offers" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="homeoffer_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="verifiedoffer" placeholder="Search Verified Offers" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="verifiedoffer_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerstatus" placeholder="Search Offer Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerstatus_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerremark" placeholder="Search Offer Remark" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerremark_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @if(Auth::User()->role == "admin")
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offer_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @endif
+                    <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
+                </tr>
             </thead>
             <tbody id="tablebody">
                 @foreach($alloffers as $offer)
@@ -89,6 +178,73 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        function clientSideFilter(){
+            var $rows = $('#tablebody tr');
+            var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var categorytitle_val = $.trim($("#categorytitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var offertitle_val = $.trim($("#offertitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var offeranchor_val = $.trim($("#offeranchor").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerlocation_val = $.trim($("#offerlocation").val()).replace(/ +/g, ' ').toLowerCase();
+            var offertype_val = $.trim($("#offertype").val()).replace(/ +/g, ' ').toLowerCase();
+            var offercode_val = $.trim($("#offercode").val()).replace(/ +/g, ' ').toLowerCase();
+            var freeshippingoffer_val = $.trim($("#freeshippingoffer").val()).replace(/ +/g, ' ').toLowerCase();
+            var popularoffer_val = $.trim($("#popularoffer").val()).replace(/ +/g, ' ').toLowerCase();
+            var homeoffer_val = $.trim($("#homeoffer").val()).replace(/ +/g, ' ').toLowerCase();
+            var verifiedoffer_val = $.trim($("#verifiedoffer").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_add_update_by_val = $.trim($("#offer_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function() {
+                var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var categorytitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offertitle_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offeranchor_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerlocation_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offertype_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offercode_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                var freeshippingoffer_col = $(this).find('td:nth-child(8)').text().replace(/\s+/g, ' ').toLowerCase();
+                var popularoffer_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
+                var homeoffer_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
+                var verifiedoffer_col = $(this).find('td:nth-child(11)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerstatus_col = $(this).find('td:nth-child(12)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerremark_col = $(this).find('td:nth-child(13)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_add_update_by_col = $(this).find('td:nth-child(14)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~storetitle_col.indexOf(storetitle_val) || 
+                        !~categorytitle_col.indexOf(categorytitle_val) || 
+                        !~offertitle_col.indexOf(offertitle_val) || 
+                        !~offeranchor_col.indexOf(offeranchor_val) || 
+                        !~offerlocation_col.indexOf(offerlocation_val) || 
+                        !~offertype_col.indexOf(offertype_val) ||
+                        !~offercode_col.indexOf(offercode_val) || 
+                        !~freeshippingoffer_col.indexOf(freeshippingoffer_val) || 
+                        !~popularoffer_col.indexOf(popularoffer_val) ||
+                        !~homeoffer_col.indexOf(homeoffer_val) ||
+                        !~verifiedoffer_col.indexOf(verifiedoffer_val) ||
+                        !~offerstatus_col.indexOf(offerstatus_val) ||
+                        !~offerremark_col.indexOf(offerremark_val) ||
+                        !~offer_add_update_by_col.indexOf(offer_add_update_by_val);
+            }).hide();
+            if($("#storetitle").val() != "" || 
+                $("#categorytitle").val() != "" || 
+                $("#offertitle").val() != "" ||
+                $("#offeranchor").val() != "" || 
+                $("#offerlocation").val() != "" || 
+                $("#offertype").val() != "" ||
+                $("#offercode").val() != "" || 
+                $("#freeshippingoffer").val() != "" || 
+                $("#popularoffer").val() != "" ||
+                $("#homeoffer").val() != "" ||
+                $("#verifiedoffer").val() != "" ||
+                $("#offerstatus").val() != "" ||
+                $("#offerremark").val() != "" ||
+                $("#offer_add_update_by").val() != "")
+            {
+                $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
+            }
+            else{
+                $("#filtered_row_count").html("");
+            }
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -98,6 +254,85 @@
                 $("#alert-success").slideUp(500);
             });
         }
+        //client side filters
+        $(".header-searchbar-filter").bind('keyup input propertychange',function(){
+            clientSideFilter();
+        });
+        $("#clear_all_filters").click(function(){
+            $("#storetitle").val("");
+            $("#categorytitle").val("");
+            $("#offertitle").val("");
+            $("#offeranchor").val("");
+            $("#offerlocation").val("");
+            $("#offertype").val("");
+            $("#offercode").val("");
+            $("#freeshippingoffer").val("");
+            $("#popularoffer").val("");
+            $("#homeoffer").val("");
+            $("#verifiedoffer").val("");
+            $("#offerstatus").val("");
+            $("#offerremark").val("");
+            $("#offer_add_update_by").val("");
+            clientSideFilter();
+        });
+        $(".header-searchbar-filter-button").click(function(){
+            if($(this).attr("id") == "storetitle_clr_btn"){
+                $("#storetitle").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "categorytitle_clr_btn"){
+                $("#categorytitle").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offertitle_clr_btn"){
+                $("#offertitle").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offeranchor_clr_btn"){
+                $("#offeranchor").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerlocation_clr_btn"){
+                $("#offerlocation").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offertype_clr_btn"){
+                $("#offertype").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offercode_clr_btn"){
+                $("#offercode").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "freeshippingoffer_clr_btn"){
+                $("#freeshippingoffer").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "popularoffer_clr_btn"){
+                $("#popularoffer").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "homeoffer_clr_btn"){
+                $("#homeoffer").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "verifiedoffer_clr_btn"){
+                $("#verifiedoffer").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerstatus_clr_btn"){
+                $("#offerstatus").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerremark_clr_btn"){
+                $("#offerremark").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offer_add_update_by_clr_btn"){
+                $("#offer_add_update_by").val("");
+                clientSideFilter();
+            }
+        });
         //select column for search
         $("#columnsfilter").change(function(){
             var column = $("#columnsfilter").val();

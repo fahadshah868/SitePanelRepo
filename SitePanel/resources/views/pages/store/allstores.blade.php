@@ -184,7 +184,6 @@
             $("#store_image_add_update_by").val("");
             clientSideFilter();
         });
-        
         $(".header-searchbar-filter-button").click(function(){
             if($(this).attr("id") == "storetitle_clr_btn"){
                 $("#storetitle").val("");

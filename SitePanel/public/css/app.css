@@ -18193,7 +18193,7 @@ label.error {
 }
 
 .header-searchbar-clear-filters-button {
-  padding: 4px 10px;
+  padding: 2px;
   color: #fff;
   background-color: #dc3545;
   border: 1px solid #dc3545;
@@ -18237,7 +18237,7 @@ th {
   border: 1px solid #0b78aa !important;
   text-align: center;
   vertical-align: top;
-  padding: 10px !important;
+  padding: 5px !important;
   font-size: 12px;
   font-weight: bold;
 }
@@ -18251,9 +18251,13 @@ td {
 }
 
 td .btn {
-  padding: 4px 8px;
+  padding: 2px;
   font-size: 10px;
   font-weight: 700;
+}
+
+td .btn:nth-child(1) {
+  margin-bottom: 2px;
 }
 
 td img {
@@ -18289,8 +18293,7 @@ td .carouselofferimage {
 }
 
 .header-searchbar-filter-button {
-  padding: 4px 12px;
-  margin-left: -5px;
+  padding: 4px;
   font-size: 13px;
   font-weight: 700;
   border-top-right-radius: 5px;
