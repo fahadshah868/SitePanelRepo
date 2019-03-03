@@ -69,19 +69,13 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updatecategoryimage','CategoryController@postUpdateCategoryImage');
     Route::get('/deletecategory/{id}','CategoryController@deleteCategory');
 
-    //offertype routes
-    Route::get('/addoffertype','OfferTypeController@getAddOfferType');
-    Route::post('/addoffertype','OfferTypeController@postAddOfferType');
-    Route::get('/alloffertypes','OfferTypeController@getAllOfferTypes');
-    Route::get('/updateoffertype/{id}','OfferTypeController@getUpdateOfferType');
-    Route::post('/updateoffertype','OfferTypeController@postUpdateOfferType');
-    Route::get('/deleteoffertype/{id}','OfferTypeController@deleteOfferType');
-
     //offer routes
     Route::get('/addoffer','OfferController@getAddOffer');
     Route::get('/getstorecategories/{id}','OfferController@getStoreCategories');
     Route::post('/addoffer','OfferController@postAddOffer');
+    Route::get('/todayalloffers','OfferController@getTodayAllOffers');
     Route::get('/alloffers','OfferController@getAllOffers');
+    Route::get('/filteredoffers/{datefrom}/{dateto}','OfferController@getFilteredOffers');
     Route::get('/updateoffer/{id}','OfferController@getUpdateOffer');
     Route::post('/updateoffer','OfferController@postUpdateOffer');
     Route::get('/deleteoffer/{id}','OfferController@deleteOffer');

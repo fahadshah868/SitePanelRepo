@@ -8,6 +8,7 @@ class Network extends Model
 {
     protected $table = "networks";
     protected $primaryKey = "id";
+    public $timestamps = true;
 
     //has many
     public function store(){

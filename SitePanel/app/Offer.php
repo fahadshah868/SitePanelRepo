@@ -8,6 +8,7 @@ class Offer extends Model
 {
     protected $table = "offers";
     protected $primaryKey = "id";
+    public $timestamps = true;
 
     public function store(){
         return $this->belongsTo('App\Store');

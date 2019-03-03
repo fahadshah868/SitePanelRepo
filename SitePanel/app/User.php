@@ -11,6 +11,7 @@ class User extends Authenticatable
     use Notifiable;
     protected $table = "users";
     protected $primaryKey = "id";
+    public $timestamps = true;
 
     public function network(){
         return $this->hasMany('App\Network');

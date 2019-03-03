@@ -8,6 +8,7 @@ class Category extends Model
 {
     protected $table = "categories";
     protected $primaryKey = "id";
+    public $timestamps = true;
 
     //has many
     public function offer(){

@@ -1,9 +1,33 @@
 .viewitems-tableview{
     overflow-x: auto;   
 }
+.viewitems-header-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .viewitems-main-heading{
     font-size: 20px;
     font-weight: 700;
+}
+.date-filter-container{
+    display: flex;
+    flex-direction: row;
+}
+.all-offers-filter{
+    font-size: 13px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+.date-range-offer-filter{
+    font-size: 13px;
+    font-weight: 500;
+}
+.date-range-offer-filter .fa-calendar-alt{
+    margin-right: 5px;
+}
+.all-offers-filter .fa-list{
+    margin-right: 5px;
 }
 .header-searchbar-clear-filters-button{
     padding: 2px;
@@ -105,6 +129,9 @@ td .carouselofferimage{
 }
 .fa-trash{
     margin-right: 5px;
+}
+.offer_datefrom{
+    margin-right: 10px;
 }
 .highlight-column{
     background-color: #D7DBFF;

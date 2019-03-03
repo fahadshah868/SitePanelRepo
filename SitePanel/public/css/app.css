@@ -18187,9 +18187,51 @@ label.error {
   overflow-x: auto;
 }
 
+.viewitems-header-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .viewitems-main-heading {
   font-size: 20px;
   font-weight: 700;
+}
+
+.date-filter-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.all-offers-filter {
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.date-range-offer-filter {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.date-range-offer-filter .fa-calendar-alt {
+  margin-right: 5px;
+}
+
+.all-offers-filter .fa-list {
+  margin-right: 5px;
 }
 
 .header-searchbar-clear-filters-button {
@@ -18315,6 +18357,10 @@ td .carouselofferimage {
 
 .fa-trash {
   margin-right: 5px;
+}
+
+.offer_datefrom {
+  margin-right: 10px;
 }
 
 .highlight-column {

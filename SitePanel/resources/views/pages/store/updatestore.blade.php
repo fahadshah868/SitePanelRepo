@@ -10,7 +10,7 @@
             <div class="update-image-container">
                 <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
                 <button id="updatestorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatestorelogomodal">Update Image<i class="fa fa-forward"></i></button>
-            </div>            
+            </div>
             {{--popup to update image--}}
             <div class="modal fade" id="updatestorelogomodal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">

@@ -1,5 +1,37 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
+    <div class="viewitems-header-container">
+        <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="date-filter-container" id="date-filter-container">
+            <a href="/alloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
+            <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            {{--popup to update image--}}
+            <div class="modal fade" id="daterangemodal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="daterangeofferfilterform" action="#" method="#">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="padding: 30px;">
+                                <div class="date-filter-container">
+                                    <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control offer_datefrom readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                    <input type="text" id="offer_dateto" name="offer_dateto" class="form-control offer_dateto readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success form-button" id="cancel_modal_button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
+                                <input type="submit" class="btn btn-primary form-button" value="Search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- end popup --}}
+        </div>
+    </div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -153,7 +185,7 @@
                         @endif
                     </td>
                     <td>
-                    @if($offer->starting_date <= config('constants.today_date') && $offer->expiry_date >= config('constants.today_date'))
+                    @if($offer->starting_date <= config('constants.today_date') && ($offer->expiry_date >= config('constants.today_date') || $offer->expiry_date == null))
                     <span class="available-offer">Available</span>
                     @elseif($offer->starting_date > config('constants.today_date'))
                     <span class="pending-offer">Pending</span>
@@ -248,6 +280,49 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        var dates = $("#offer_datefrom, #offer_dateto").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(selectedDate) {
+                var option = this.id == "offer_datefrom" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
         if('{{ Session::has("offerupdated_successmessage") }}'){
             $("#alert-success-message-area").html('{{ Session::get("offerupdated_successmessage") }}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
@@ -333,90 +408,62 @@
                 clientSideFilter();
             }
         });
-        //select column for search
-        $("#columnsfilter").change(function(){
-            var column = $("#columnsfilter").val();
-            var index = parseInt(column)+1;
-            $("#tablebody td, #tablebody th").removeClass("highlight-column");
-            $("#searchbar").val("");
-            if(column != ""){
-                if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Store');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Category');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Offer Title');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Offer Anchor');
-                }
-                else if(column == 4){
-                    $("#searchbar").attr('placeholder','Search Offer Location');
-                }
-                else if(column == 5){
-                    $("#searchbar").attr('placeholder','Search Offer Type');
-                }
-                else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Offer Code');
-                }
-                else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Offer Start Date');
-                }
-                else if(column == 8){
-                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
-                }
-                else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search Free Shipping Offer');
-                }
-                else if(column == 10){
-                    $("#searchbar").attr('placeholder','Search Offer Is Popular');
-                }
-                else if(column == 11){
-                    $("#searchbar").attr('placeholder','Search Offer Display At Home');
-                }
-                else if(column == 12){
-                    $("#searchbar").attr('placeholder','Search Offer Is Verified');
-                }
-                else if(column == 13){
-                    $("#searchbar").attr('placeholder','Search Offer Status');
-                }
-                else if(column == 14){
-                    $("#searchbar").attr('placeholder','Search Offer Remark');
-                }
-                else if(column == 15){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                $("#viewitems-header-searchbar").css("display","block");
-                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
-                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
-            }
-            else{
-                $("#viewitems-header-searchbar").css("display","none");
-                $("#tableview").find("tr").css("display","");
-                $("#filtered-row-count").html("");
-            }
+        $("#date-filter-container a").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
         });
-        //client side search filter
-        $("#searchbar").bind('keyup input propertychange',function(){
-            filterTable();
-            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
+        //filter offer by date range
+        $("#cancel_modal_button").click(function(){
+            $("#daterangeofferfilterform").trigger("reset");
+            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
         });
-        //search/filter table
-        function filterTable(){
-            var filter, table, tr, td, i, column;
-            column = $("#columnsfilter").val();
-            filter = $("#searchbar").val().toUpperCase();
-            table = $("#tableview");
-            tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[column];
-                $(td).filter(function() {
-                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
+        $("#daterangeofferfilterform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                offer_datefrom: "required",
+                offer_dateto: "required",
+            },
+            messages: {
+                offer_datefrom: "please select from date",
+                offer_dateto: "please select to date",
+            },
+            submitHandler: function(form) {
+                var _offer_datefrom = $("#offer_datefrom").val();
+                var _offer_dateto = $("#offer_dateto").val();
+                $("#daterangeofferfilterform").trigger("reset");
+                $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: "GET",
+                    url: "/filteredoffers/"+offer_datefrom+"/"+offer_dateto,
+                    data: null,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        $("#daterangemodal").modal('toggle');
+                        $("#tablebody").empty();
+                        $.each(data.filteredoffers, function (index, value) {
+                            var html = "<tr>"+
+                            "<td></td>"+
+                            "</tr>";
+                            $("#tablebody").append();
+
+
+                            $('#offer_category')
+                            .append($("<option></option>")
+                            .attr("value",value.category_id)
+                            .text(value.category.title));
+                        });
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
                 });
+                return false;
             }
-        } 
+        });
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();

@@ -46,10 +46,20 @@ class OfferController extends Controller
         ];
         return response()->json($response);
     }
+    public function getTodayAllOffers(){
+        $data['alloffers'] = Offer::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['offerscount'] = count($data['alloffers']);
+        return view('pages.offer.alloffers',$data);
+    }
     public function getAllOffers(){
         $data['alloffers'] = Offer::orderBy('id', 'DESC')->get();
         $data['offerscount'] = count($data['alloffers']);
         return view('pages.offer.alloffers',$data);
+    }
+    public function getFilteredOffers($datefrom, $dateto){
+        $response['filteredoffers'] = Offer::whereBetween('created_at',array($datefrom,$dateto))->orderBy('id', 'DESC')->get();
+        $response['offerscount'] = count($response['alloffers']);
+        return response()->json($response);
     }
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);

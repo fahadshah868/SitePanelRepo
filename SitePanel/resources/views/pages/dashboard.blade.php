@@ -99,7 +99,7 @@
                                 <a href="/addoffer" class="sidebar-suboption">Add Offer</a>
                             </li>
                             <li>
-                                <a href="/alloffers" class="sidebar-suboption">View Offers</a>
+                                <a href="/todayalloffers" class="sidebar-suboption">View Today Offers</a>
                             </li>
                         </ul>
                     </li>

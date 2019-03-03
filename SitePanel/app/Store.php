@@ -8,6 +8,7 @@ class Store extends Model
 {
     protected $table = "stores";
     protected $primaryKey = "id";
+    public $timestamps = true;
 
     //has many
     public function offer(){
