@@ -57,8 +57,10 @@ class OfferController extends Controller
         return view('pages.offer.alloffers',$data);
     }
     public function getFilteredOffers($datefrom, $dateto){
-        $response['filteredoffers'] = Offer::whereBetween('created_at',array($datefrom,$dateto))->orderBy('id', 'DESC')->get();
-        $response['offerscount'] = count($response['alloffers']);
+        $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])->orderBy('id','DESC')->with('store','category','user')->get();
+        $response['offerscount'] = count($response['filteredoffers']);
+        $response['datefrom'] = $datefrom;
+        $response['dateto'] = $dateto;
         return response()->json($response);
     }
     public function getUpdateOffer($id){

@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/alloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
             <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
@@ -42,6 +42,7 @@
         <strong id="alert-danger-message-area"></strong>
     </div>
     <div class="viewitems-tableview">
+        <input type="text" value="{{config('constants.today_date')}}" id="today_date" hidden>
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
@@ -167,12 +168,6 @@
                     @else
                         <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
                     @endif
-                    <!-- <td>{{ \Carbon\Carbon::parse($offer->starting_date)->format('d/m/Y') }}</td>
-                    @if($offer->expiry_date != null)
-                        <td>{{ \Carbon\Carbon::parse($offer->expiry_date)->format('d/m/Y') }}</td>
-                    @else
-                        <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
-                    @endif -->
                     <td>{{ $offer->free_shipping }}</td>
                     <td>{{ $offer->is_popular }}</td>
                     <td>{{ $offer->display_at_home }}</td>
@@ -210,6 +205,7 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        var today_date = $("#today_date").val();
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
@@ -436,7 +432,7 @@
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filteredoffers/"+offer_datefrom+"/"+offer_dateto,
+                    url: "/filteredoffers/"+_offer_datefrom+"/"+_offer_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",
@@ -444,17 +440,49 @@
                     success: function(data){
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
+                        $("#viewitems-main-heading-count").html("("+data.offerscount+")");
                         $.each(data.filteredoffers, function (index, value) {
                             var html = "<tr>"+
-                            "<td></td>"+
+                            "<td>"+value.store.title+"</td>"+
+                            "<td>"+value.category.title+"</td>"+
+                            "<td>"+value.title+"</td>"+
+                            "<td>"+value.anchor+"</td>"+
+                            "<td>"+value.location+"</td>"+
+                            "<td>"+value.type+"</td>"
+                            if(value.code != null){
+                                html = html + "<td>"+value.code+"</td>"
+                            }
+                            else{
+                                html = html + "<td><span style='color: #FF0000; font-weight: 600;'>Not Required</span></td>"
+                            }
+                            html  = html +
+                            "<td>"+value.free_shipping+"</td>"+
+                            "<td>"+value.is_popular+"</td>"+
+                            "<td>"+value.display_at_home+"</td>"+
+                            "<td>"+value.is_verified+"</td>"
+                            if(value.status == "active"){
+                                html = html + "<td><span class='active-item'>"+value.status+"</span></td>"
+                            }
+                            else{
+                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                            }
+                            if(value.starting_date <= today_date && (value.expiry_date >= today_date || value.expiry_date == null)){
+                                html = html + "<td><span class='available-offer'>Available</span></td>"
+                            }
+                            else if(value.starting_date > today_date){
+                                html = html + "<td><span class='pending-offer'>Pending</span></td>"
+                            }
+                            else if(value.expiry_date < today_date){
+                                html = html + "<td><span class='expired-offer'>Expired</span></td>"
+                            }
+                            html = html +
+                            "<td>"+value.user.username+"</td>"+
+                            "<td>"+
+                                "<a href='/updateoffer/"+value.id+"' id='updateoffer' class='btn btn-primary'>Update</a>"+
+                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"', data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"', data-offer-display-at-home='"+value.display_at_home+"', data-offer-is-verified='"+value.is_verified+"', data-offerstatus='"+value.status+"' class='btn btn-danger'>Delete</a>"+
+                            "</td>"+
                             "</tr>";
-                            $("#tablebody").append();
-
-
-                            $('#offer_category')
-                            .append($("<option></option>")
-                            .attr("value",value.category_id)
-                            .text(value.category.title));
+                            $("#tablebody").append(html);
                         });
                     },
                     error: function(){
