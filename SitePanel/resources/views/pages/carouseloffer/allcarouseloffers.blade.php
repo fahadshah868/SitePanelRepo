@@ -1,29 +1,43 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Carousel Offers<span class="viewitems-main-heading-count">({{ $carouselofferscount }}<span id="filtered-row-count"></span>)</span></div>
-        <div class="viewitems-header-searchbar-container">
-            <div class="viewitems-header-searchbar-filter">
-                <select class="form-control form-field-text" id="columnsfilter">
-                    <option value="" selected>Select Column For Search</option>
-                    <option value="0">Store Title</option>
-                    <option value="1">Offer Title</option>
-                    <option value="2">Offer Type</option>
-                    <option value="3">Offer Code</option>
-                    <option value="4">Offer Starting Date</option>
-                    <option value="5">Offer Expiry Date</option>
-                    <option value="6">Offer Status</option>
-                    <option value="7">Offer Remark</option>
-                    @if(Auth::User()->role == "admin")
-                    <option value="9">Add/Update Form By</option>
-                    <option value="10">Add/Update Image By</option>
-                    @endif
-                </select>
+<div class="viewitems-header-container">
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $carouselofferscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="date-filter-container" id="date-filter-container">
+            <a href="/allcarouseloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
+            <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            {{--popup to update image--}}
+            <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="daterangeofferfilterform" action="#" method="#">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="padding: 30px;">
+                                <div class="date-filter-container">
+                                    <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control offer_datefrom readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                    <input type="text" id="offer_dateto" name="offer_dateto" class="form-control offer_dateto readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success form-button" id="cancel_modal_button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
+                                <input type="submit" class="btn btn-primary form-button" value="Search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="viewitems-header-searchbar" id="viewitems-header-searchbar">
-                <input type="text" id="searchbar" class="form-control"/>
-            </div>
+            {{-- end popup --}}
         </div>
     </div>
+
+
+
+
+
+
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -35,10 +49,9 @@
                 <tr>
                     <th>Store Title</th>
                     <th>Offer Title</th>
+                    <th>Offer Location</th>
                     <th>Offer Type</th>
                     <th>Offer Code</th>
-                    <th>Starting Date</th>
-                    <th>Expiry Date</th>
                     <th>Offer Status</th>
                     <th>Offer Remark</th>
                     <th>Image</th>
@@ -48,6 +61,66 @@
                     @endif
                     <th>Actions</th>
                 </tr>
+                <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="storetitle" placeholder="Search Store Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storetitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offertitle" placeholder="Search Offer Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offertitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerlocation" placeholder="Search Offer Location" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerlocation_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offertype" placeholder="Search Offer Type" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offertype_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offercode" placeholder="Search Offer Code" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offercode_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerstatus" placeholder="Search Offer Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerstatus_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offerremark" placeholder="Search Offer Remark" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offerremark_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th></th>
+                    @if(Auth::User()->role == "admin")
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offer_form_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offer_image_add_update_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    @endif
+                    <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
+                </tr>
             </thead>
             <tbody id="tablebody">
                 @if(count($allcarouseloffers) > 0)
@@ -55,17 +128,17 @@
                         <tr>
                             <td>{{ $carouseloffer->store->title }}</td>
                             <td>{{ $carouseloffer->title }}</td>
+
+
+                            <td>{{ $carouseloffer->type }}</td>
+                            
+                            
+                            
                             <td>{{ $carouseloffer->type }}</td>
                             @if($carouseloffer->code != null)
                                 <td>{{ $carouseloffer->code }}</td>
                             @else
                                 <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
-                            @endif
-                            <td>{{ \Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}</td>
-                            @if($carouseloffer->expiry_date != null)
-                                <td>{{ \Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y') }}</td>
-                            @else
-                                <td><span style="color: #FF0000; font-weight: 600;">Soon</span></td>
                             @endif
                             <td>
                                 @if($carouseloffer->status == "active")
@@ -89,8 +162,8 @@
                             <td>{{ $carouseloffer->image_user->username }}</td>
                             @endif
                             <td>
-                                <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -103,77 +176,159 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        function clientSideFilter(){
+            var $rows = $('#tablebody tr');
+            var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var offertitle_val = $.trim($("#offertitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerlocation_val = $.trim($("#offerlocation").val()).replace(/ +/g, ' ').toLowerCase();
+            var offertype_val = $.trim($("#offertype").val()).replace(/ +/g, ' ').toLowerCase();
+            var offercode_val = $.trim($("#offercode").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_form_add_update_by_val = $.trim($("#offer_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_image_add_update_by_val = $.trim($("#offer_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            $rows.show().filter(function() {
+                var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offertitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerlocation_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offertype_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offercode_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerstatus_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerremark_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_form_add_update_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_image_add_update_by_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~storetitle_col.indexOf(storetitle_val) || 
+                        !~offertitle_col.indexOf(offertitle_val) || 
+                        !~offerlocation_col.indexOf(offerlocation_val) || 
+                        !~offertype_col.indexOf(offertype_val) ||
+                        !~offercode_col.indexOf(offercode_val) || 
+                        !~offerstatus_col.indexOf(offerstatus_val) ||
+                        !~offerremark_col.indexOf(offerremark_val) ||
+                        !~offer_form_add_update_by_col.indexOf(offer_form_add_update_by_val);
+                        !~offer_image_add_update_by_col.indexOf(offer_image_add_update_by_val);
+            }).hide();
+            if($("#storetitle").val() != "" || 
+                $("#offertitle").val() != "" ||
+                $("#offerlocation").val() != "" || 
+                $("#offertype").val() != "" ||
+                $("#offercode").val() != "" || 
+                $("#offerstatus").val() != "" ||
+                $("#offerremark").val() != "" ||
+                $("#offer_form_add_update_by").val() != "" ||
+                $("#offer_image_add_update_by").val() != "")
+            {
+                $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
+            }
+            else{
+                $("#filtered_row_count").html("");
+            }
+        }
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        //select column for search
-        $("#columnsfilter").change(function(){
-            var column = $("#columnsfilter").val();
-            var index = parseInt(column)+1;
-            $("#tablebody td, #tablebody th").removeClass("highlight-column");
-            $("#searchbar").val("");
-            if(column != ""){
-                if(column == 0){
-                    $("#searchbar").attr('placeholder','Search Store Title');
-                }
-                else if(column == 1){
-                    $("#searchbar").attr('placeholder','Search Offer Title');
-                }
-                else if(column == 2){
-                    $("#searchbar").attr('placeholder','Search Offer Type');
-                }
-                else if(column == 3){
-                    $("#searchbar").attr('placeholder','Search Offer Code');
-                }
-                else if(column == 4){
-                    $("#searchbar").attr('placeholder','Search Offer Starting Date');
-                }
-                else if(column == 5){
-                    $("#searchbar").attr('placeholder','Search Offer Expiry Date');
-                }
-                else if(column == 6){
-                    $("#searchbar").attr('placeholder','Search Offer Status');
-                }
-                else if(column == 7){
-                    $("#searchbar").attr('placeholder','Search Offer Remark');
-                }
-                else if(column == 9){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                else if(column == 10){
-                    $("#searchbar").attr('placeholder','Search User');
-                }
-                $("#viewitems-header-searchbar").css("display","block");
-                $("#tablebody td:nth-child("+index+"), #tablebody th:nth-child("+index+")").addClass("highlight-column");
-                $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
-            }
-            else{
-                $("#viewitems-header-searchbar").css("display","none");
-                $("#tableview").find("tr").css("display","");
-                $("#filtered-row-count").html("");
+        $("#date-filter-container a").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
+        });
+        var dates = $("#offer_datefrom, #offer_dateto").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(selectedDate) {
+                var option = this.id == "offer_datefrom" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
             }
         });
-        //client side search filter
-        $("#searchbar").bind('keyup input propertychange',function(){
-            filterTable();
-            $("#filtered-row-count").html("/"+$('#tablebody tr:visible').length);
+        //client side filters
+        $(".header-searchbar-filter").bind('keyup input propertychange',function(){
+            clientSideFilter();
         });
-        //search/filter table
-        function filterTable(){
-            var filter, table, tr, td, i, column;
-            column = $("#columnsfilter").val();
-            filter = $("#searchbar").val().toUpperCase();
-            table = $("#tableview");
-            tr = table.find("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[column];
-                $(td).filter(function() {
-                    $(tr[i]).toggle($(this).text().toUpperCase().indexOf(filter) > -1)
-                });
+        $("#clear_all_filters").click(function(){
+            $("#storetitle").val("");
+            $("#offertitle").val("");
+            $("#offerlocation").val("");
+            $("#offertype").val("");
+            $("#offercode").val("");
+            $("#offerstatus").val("");
+            $("#offerremark").val("");
+            $("#offer_form_add_update_by").val("");
+            $("#offer_image_add_update_by").val("");
+            clientSideFilter();
+        });
+        $(".header-searchbar-filter-button").click(function(){
+            if($(this).attr("id") == "storetitle_clr_btn"){
+                $("#storetitle").val("");
+                clientSideFilter();
             }
-        }
+            else if($(this).attr("id") == "offertitle_clr_btn"){
+                $("#offertitle").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerlocation_clr_btn"){
+                $("#offerlocation").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offertype_clr_btn"){
+                $("#offertype").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offercode_clr_btn"){
+                $("#offercode").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerstatus_clr_btn"){
+                $("#offerstatus").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offerremark_clr_btn"){
+                $("#offerremark").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offer_form_add_update_by_clr_btn"){
+                $("#offer_form_add_update_by").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "offer_image_add_update_by_clr_btn"){
+                $("#offer_image_add_update_by").val("");
+                clientSideFilter();
+            }
+        });
         //navigation buttons actions
-        $("#tablebody tr td a").click(function(event){
+        $("#tablebody").on("click",".actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "updatecarouseloffer"){
                 $("#panel-body-container").load($(this).attr("href"));

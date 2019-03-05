@@ -113,7 +113,7 @@
                                 <a href="/addcarouseloffer" class="sidebar-suboption">Add Carousel Offer</a>
                             </li>
                             <li>
-                                <a href="/allcarouseloffers" class="sidebar-suboption">View Carousel Offers</a>
+                                <a href="/todayallcarouseloffers" class="sidebar-suboption">View Today Carousel Offers</a>
                             </li>
                         </ul>
                     </li>

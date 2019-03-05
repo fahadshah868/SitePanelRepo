@@ -16,9 +16,6 @@ class Offer extends Model
     public function category(){
         return $this->belongsTo('App\Category');
     }
-    public function offer_type(){
-        return $this->belongsTo('App\OfferType');
-    }
     public function user(){
         return $this->belongsTo('App\User');
     }

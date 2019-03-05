@@ -5,7 +5,7 @@
             <a href="/alloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
             <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
-            <div class="modal fade" id="daterangemodal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
                         <form id="daterangeofferfilterform" action="#" method="#">
@@ -42,7 +42,6 @@
         <strong id="alert-danger-message-area"></strong>
     </div>
     <div class="viewitems-tableview">
-        <input type="text" value="{{config('constants.today_date')}}" id="today_date" hidden>
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
@@ -205,7 +204,6 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
-        var today_date = $("#today_date").val();
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
@@ -411,7 +409,7 @@
         //filter offer by date range
         $("#cancel_modal_button").click(function(){
             $("#daterangeofferfilterform").trigger("reset");
-            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: selectpicker_today_date});
+            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
         });
         $("#daterangeofferfilterform").submit(function(event){
             event.preventDefault();
@@ -467,17 +465,20 @@
                             else{
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
                             }
-                            if(value.starting_date <= today_date && (value.expiry_date >= today_date || value.expiry_date == null)){
+                            if(value.starting_date <= "{{config('constants.today_date')}}" && (value.expiry_date >= "{{config('constants.today_date')}}" || value.expiry_date == null)){
                                 html = html + "<td><span class='available-offer'>Available</span></td>"
                             }
-                            else if(value.starting_date > today_date){
+                            else if(value.starting_date > "{{config('constants.today_date')}}"){
                                 html = html + "<td><span class='pending-offer'>Pending</span></td>"
                             }
-                            else if(value.expiry_date < today_date){
+                            else if(value.expiry_date < "{{config('constants.today_date')}}"){
                                 html = html + "<td><span class='expired-offer'>Expired</span></td>"
                             }
+                            if("{{Auth::User()->role}}" == "admin"){
+                                html = html +
+                                "<td>"+value.user.username+"</td>"
+                            }
                             html = html +
-                            "<td>"+value.user.username+"</td>"+
                             "<td>"+
                                 "<a href='/updateoffer/"+value.id+"' id='updateoffer' class='btn btn-primary'>Update</a>"+
                                 "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.status+"' class='btn btn-danger'>Delete</a>"+
@@ -510,13 +511,13 @@
                 else{
                     code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
                 }
-                if($(this).data("offerstartingdate") <= today_date && ($(this).data("offerexpirydate") >= today_date || $(this).data("offerexpirydate") == null)){
+                if($(this).data("offerstartingdate") <= "{{config('constants.today_date')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.today_date')}}" || $(this).data("offerexpirydate") == null)){
                     offer_remark = "<span class='available-offer'>Available</span><br>"
                 }
-                else if($(this).data("offerstartingdate") > today_date){
+                else if($(this).data("offerstartingdate") > "{{config('constants.today_date')}}"){
                     offer_remark = "<span class='pending-offer'>Pending</span><br>"
                 }
-                else if($(this).data("offerexpirydate") < today_date){
+                else if($(this).data("offerexpirydate") < "{{config('constants.today_date')}}"){
                     offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
                 if($(this).data("offerstatus") == "active"){

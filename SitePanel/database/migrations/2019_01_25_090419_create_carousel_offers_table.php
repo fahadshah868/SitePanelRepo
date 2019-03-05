@@ -18,6 +18,7 @@ class CreateCarouselOffersTable extends Migration
             $table->bigInteger('store_id')->unsigned();
             $table->foreign('store_id')->references('id')->on('stores');
             $table->longText('title');
+            $table->enum('location',['Online','In-Store','Online & In-Store']);
             $table->enum('type',['Code','Sale']);
             $table->string('code')->nullable();
             $table->date('starting_date');

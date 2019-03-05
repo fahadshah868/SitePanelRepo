@@ -83,7 +83,9 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     //carousel offer routes
     Route::get('/addcarouseloffer','CarouselOfferController@getAddCarouselOffer');
     Route::post('/addcarouseloffer','CarouselOfferController@postAddCarouselOffer');
+    Route::get('/todayallcarouseloffers','CarouselOfferController@getTodayAllCarouselOffers');
     Route::get('/allcarouseloffers','CarouselOfferController@getAllCarouselOffers');
+    Route::get('/filteredcarouseloffers','CarouselOfferController@getFilteredCarouselOffers');
     Route::get('updatecarouseloffer/{id}','CarouselOfferController@getUpdateCarouselOffer');
     Route::get('updatecarouselofferform/{id}','CarouselOfferController@getUpdateCarouselOfferForm');
     Route::post('updatecarouselofferform','CarouselOfferController@postUpdateCarouselOfferForm');
