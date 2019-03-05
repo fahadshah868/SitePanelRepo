@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading">All Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/alloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
             <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
@@ -192,8 +192,8 @@
                     <td>{{ $offer->user->username }}</td>
                     @endif
                     <td>
-                        <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary">Update</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger">Delete</a>
+                        <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary actionbutton">Update</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger actionbutton">Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -411,7 +411,7 @@
         //filter offer by date range
         $("#cancel_modal_button").click(function(){
             $("#daterangeofferfilterform").trigger("reset");
-            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
+            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: selectpicker_today_date});
         });
         $("#daterangeofferfilterform").submit(function(event){
             event.preventDefault();
@@ -440,6 +440,7 @@
                     success: function(data){
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
+                        $("#viewitems-main-heading").html(data.mainheading);
                         $("#viewitems-main-heading-count").html("("+data.offerscount+")");
                         $.each(data.filteredoffers, function (index, value) {
                             var html = "<tr>"+
@@ -479,7 +480,7 @@
                             "<td>"+value.user.username+"</td>"+
                             "<td>"+
                                 "<a href='/updateoffer/"+value.id+"' id='updateoffer' class='btn btn-primary'>Update</a>"+
-                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"', data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"', data-offer-display-at-home='"+value.display_at_home+"', data-offer-is-verified='"+value.is_verified+"', data-offerstatus='"+value.status+"' class='btn btn-danger'>Delete</a>"+
+                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.status+"' class='btn btn-danger'>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -493,7 +494,7 @@
             }
         });
         //navigation buttons actions
-        $("#tablebody tr td a").click(function(event){
+        $("#tablebody").on("click",".actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "updateoffer"){
                 $("#panel-body-container").load($(this).attr("href"));
@@ -501,7 +502,7 @@
             else if($(this).attr("id") == "deleteoffer"){
                 var url = $(this).attr("href");
                 var code = null;
-                var expirydate = null;
+                var offer_remark = null;
                 var status = null;
                 if($(this).data("offercode") != ""){
                     code = $(this).data("offercode")+"<br>";
@@ -509,17 +510,20 @@
                 else{
                     code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
                 }
-                if($(this).data("offerexpirydate") != ""){
-                    expirydate = $(this).data("offerexpirydate")+"<br>";
+                if($(this).data("offerstartingdate") <= today_date && ($(this).data("offerexpirydate") >= today_date || $(this).data("offerexpirydate") == null)){
+                    offer_remark = "<span class='available-offer'>Available</span><br>"
                 }
-                else{
-                    expirydate = "<span style='color: #FF0000; font-weight: 600'>Soon</span><br>";
+                else if($(this).data("offerstartingdate") > today_date){
+                    offer_remark = "<span class='pending-offer'>Pending</span><br>"
+                }
+                else if($(this).data("offerexpirydate") < today_date){
+                    offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
                 if($(this).data("offerstatus") == "active"){
-                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span style='color: #117C00; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
                 }
                 else if($(this).data("offerstatus") == "deactive"){
-                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span style='color: #FF0000; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
@@ -531,8 +535,7 @@
                     "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
                     "<b>Offer Code:</b>  "+code+
                     "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
-                    "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
-                    "<b>Offer Expiry Date:</b>  "+expirydate+
+                    "<b>Offer Remark:</b>  "+offer_remark+
                     "<b>Free Shipping:</b>  "+$(this).data("freeshipping")+"<br>"+
                     "<b>Offer Is Popular:</b>  "+$(this).data("offer-is-popular")+"<br>"+
                     "<b>Offer Display At Home:</b>  "+$(this).data("offer-display-at-home")+"<br>"+

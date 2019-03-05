@@ -7,8 +7,8 @@
     justify-content: space-between;
 }
 .viewitems-main-heading{
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 500;
 }
 .date-filter-container{
     display: flex;
@@ -42,6 +42,9 @@
 }
 .header-searchbar-clear-filters-button:hover{
     background-color: #d1192a;
+}
+.filtered_daterange{
+    color: #d1192a;
 }
 .header-searchbar-clear-filters-button .fa-times-circle{
     margin-right: 5px;

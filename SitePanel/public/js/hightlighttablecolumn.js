@@ -5,7 +5,7 @@ $(document).ready(function(){
             container.removeClass('highlight-row'); 
         }
     });
-    $("#tablebody tr").click(function(){
+    $("#tablebody").on("click","tr",function(){
         $("#tablebody tr").removeClass('highlight-row');
         $(this).addClass('highlight-row');
     });
