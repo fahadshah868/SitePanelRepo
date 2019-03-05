@@ -55,7 +55,7 @@
                         </td>
                         <td>
                             @if($user->id != Auth::User()->id)
-                            <a href="/updateuser/{{$user->id}}" id="updateuser" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                            <a href="/viewuser/{{$user->id}}" id="updateuser" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
                             <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-userrole='{{$user->role}}' data-userstatus='{{$user->status}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             @endif
                         </td>

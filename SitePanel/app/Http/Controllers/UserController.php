@@ -40,6 +40,9 @@ class UserController extends Controller
         $data['userscount'] = count($data['allusers']);
         return view('pages.user.allusers', $data);
     }
+    public function getViewUser($id){
+        
+    }
     public function getUpdateUser($id){
         $data['user'] = User::find($id);
         return view('pages.user.updateuser',$data);
