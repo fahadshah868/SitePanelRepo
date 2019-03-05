@@ -48,11 +48,23 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
-                        <select class="form-control form-field-text" id="offertype" name="offertype">
-                            <option value="">Select Offer Type</option>
-                            <option value="Code">Code</option>
-                            <option value="Sale">Sale</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
+                                    <option value="">Select Offer Location</option>
+                                    <option value="Online">Online</option>
+                                    <option value="In-Store">In-Store</option>
+                                    <option value="Online & In-Store">Online & In-Store</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <select class="form-control form-field-text" id="offertype" name="offertype">
+                                    <option value="">Select Offer Type</option>
+                                    <option value="Code">Code</option>
+                                    <option value="Sale">Sale</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -199,6 +211,7 @@
             rules: {
                 offer_store: "required",
                 offertitle: "required",
+                offerlocation: "required",
                 offertype: "required",
                 offercode: "required",
                 offer_startingdate: "required",
@@ -209,6 +222,7 @@
             messages: {
                 offer_store: "please select store",
                 offertitle: "please enter offer title",
+                offerlocation: "please enter offer location",
                 offertype: "please select offer type",
                 offercode: "please enter offer code",
                 offer_startingdate: "please select starting date",
@@ -222,6 +236,7 @@
                 var _offer_store = $("#offer_store").val();
                 var _storetitle = $("#storetitle").val();
                 var _offertitle = $("#offertitle").val();
+                var _offerlocation = $("#offerlocation").val();
                 var _offertype = $("#offertype").val();
                 var _offer_startingdate = $("#offer_startingdate").val();
                 var _offerstatus = $("input[name='offerstatus']:checked").val();
@@ -233,7 +248,7 @@
                     _offer_expirydate = $("#offer_expirydate").val();
                 }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus});
+                var _jsondata = JSON.stringify({offer_store: _offer_store, storetitle: _storetitle, offertitle: _offertitle, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offerstatus: _offerstatus});
                 formdata.append("carouselofferimage", _carouselofferimage);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");

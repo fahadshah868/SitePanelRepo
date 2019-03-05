@@ -8,7 +8,7 @@
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form id="daterangeofferfilterform" action="#" method="#">
+                        <form id="daterangecarouselofferfilterform" action="#" method="#">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -32,12 +32,6 @@
             {{-- end popup --}}
         </div>
     </div>
-
-
-
-
-
-
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -128,12 +122,7 @@
                         <tr>
                             <td>{{ $carouseloffer->store->title }}</td>
                             <td>{{ $carouseloffer->title }}</td>
-
-
-                            <td>{{ $carouseloffer->type }}</td>
-                            
-                            
-                            
+                            <td>{{ $carouseloffer->location }}</td>
                             <td>{{ $carouseloffer->type }}</td>
                             @if($carouseloffer->code != null)
                                 <td>{{ $carouseloffer->code }}</td>
@@ -204,7 +193,7 @@
                         !~offercode_col.indexOf(offercode_val) || 
                         !~offerstatus_col.indexOf(offerstatus_val) ||
                         !~offerremark_col.indexOf(offerremark_val) ||
-                        !~offer_form_add_update_by_col.indexOf(offer_form_add_update_by_val);
+                        !~offer_form_add_update_by_col.indexOf(offer_form_add_update_by_val) ||
                         !~offer_image_add_update_by_col.indexOf(offer_image_add_update_by_val);
             }).hide();
             if($("#storetitle").val() != "" || 
@@ -327,8 +316,87 @@
                 clientSideFilter();
             }
         });
+        $("#daterangecarouselofferfilterform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                offer_datefrom: "required",
+                offer_dateto: "required",
+            },
+            messages: {
+                offer_datefrom: "please select from date",
+                offer_dateto: "please select to date",
+            },
+            submitHandler: function(form) {
+                var _offer_datefrom = $("#offer_datefrom").val();
+                var _offer_dateto = $("#offer_dateto").val();
+                $("#daterangecarouselofferfilterform").trigger("reset");
+                $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: "GET",
+                    url: "/filteredcarouseloffers/"+_offer_datefrom+"/"+_offer_dateto,
+                    data: null,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        $("#daterangemodal").modal('toggle');
+                        $("#tablebody").empty();
+                        $("#viewitems-main-heading").html(data.mainheading);
+                        $("#viewitems-main-heading-count").html("("+data.offerscount+")");
+                        $.each(data.filteredcarouseloffers, function (index, value) {
+                            var html = "<tr>"+
+                            "<td>"+value.store.title+"</td>"+
+                            "<td>"+value.title+"</td>"+
+                            "<td>"+value.location+"</td>"+
+                            "<td>"+value.type+"</td>"
+                            if(value.code != null){
+                                html = html + "<td>"+value.code+"</td>"
+                            }
+                            else{
+                                html = html + "<td><span style='color: #FF0000; font-weight: 600;'>Not Required</span></td>"
+                            }
+                            if(value.status == "active"){
+                                html = html + "<td><span class='active-item'>"+value.status+"</span></td>"
+                            }
+                            else{
+                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                            }
+                            if(value.starting_date <= "{{config('constants.today_date')}}" && (value.expiry_date >= "{{config('constants.today_date')}}" || value.expiry_date == null)){
+                                html = html + "<td><span class='available-offer'>Available</span></td>"
+                            }
+                            else if(value.starting_date > "{{config('constants.today_date')}}"){
+                                html = html + "<td><span class='pending-offer'>Pending</span></td>"
+                            }
+                            else if(value.expiry_date < "{{config('constants.today_date')}}"){
+                                html = html + "<td><span class='expired-offer'>Expired</span></td>"
+                            }
+                            html = html +
+                            "<td><img src='{{ asset('/') }}"+value.image_url+"' class='carouselofferimage'/></td>"
+                            if("{{Auth::User()->role}}" == "admin"){
+                                html = html +
+                                "<td>"+value.form_user.username+"</td>"+
+                                "<td>"+value.image_user.username+"</td>"
+                            }
+                            html = html +
+                            "<td>"+
+                                "<a href='/updatecarouseloffer/"+value.id+"' id='updatecarouseloffer' class='btn btn-primary actionbutton'><i class='fa fa-edit'></i>Update</a>"+
+                                "<a href='/deletecarouseloffer/"+value.id+"' id='deletecarouseloffer' data-offerstore='"+value.store.title+"' data-offertitle='"+value.title+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-offerstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                            "</td>"+
+                            "</tr>";
+                            $("#tablebody").append(html);
+                        });
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
+            }
+        });
         //navigation buttons actions
-        $("#tablebody").on("click",".actionbutton",function(event){
+        $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "updatecarouseloffer"){
                 $("#panel-body-container").load($(this).attr("href"));
@@ -336,34 +404,37 @@
             else if($(this).attr("id") == "deletecarouseloffer"){
                 var url = $(this).attr("href");
                 var code = null;
-                var expirydate = null;
+                var offer_remark = null;
                 var status = null;
-                if($(this).data("offercode") != ""){
+                if($(this).data("offercode") != null && $(this).data("offercode") != ""){
                     code = $(this).data("offercode")+"<br>";
                 }
                 else{
                     code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
                 }
-                if($(this).data("offerexpirydate") != ""){
-                    expirydate = $(this).data("offerexpirydate")+"<br>";
+                if($(this).data("offerstartingdate") <= "{{config('constants.today_date')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.today_date')}}" || $(this).data("offerexpirydate") == null)){
+                    offer_remark = "<span class='available-offer'>Available</span><br>"
                 }
-                else{
-                    expirydate = "<span style='color: #FF0000; font-weight: 600'>Soon</span><br>";
+                else if($(this).data("offerstartingdate") > "{{config('constants.today_date')}}"){
+                    offer_remark = "<span class='pending-offer'>Pending</span><br>"
+                }
+                else if($(this).data("offerexpirydate") < "{{config('constants.today_date')}}"){
+                    offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
                 if($(this).data("offerstatus") == "active"){
-                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span style='color: #117C00; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
                 }
                 else if($(this).data("offerstatus") == "deactive"){
-                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span style='color: #FF0000; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
                     "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
+                    "<b>Offer Location:</b>  "+$(this).data("offerlocation")+"<br>"+
                     "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
                     "<b>Offer Code:</b>  "+code+
-                    "<b>Offer Starting Date:</b>  "+$(this).data("offerstartingdate")+"<br>"+
-                    "<b>Offer Expiry Date:</b>  "+expirydate+
+                    "<b>Offer Remark:</b>  "+offer_remark+
                     "<b>Offer Status:</b>  "+status,
                     buttons: {
                         confirm: {

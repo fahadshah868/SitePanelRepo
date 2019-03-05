@@ -191,8 +191,8 @@
                     <td>{{ $offer->user->username }}</td>
                     @endif
                     <td>
-                        <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary actionbutton">Update</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger actionbutton">Delete</a>
+                        <a href="/updateoffer/{{$offer->id}}" id="updateoffer" class="btn btn-primary actionbutton"><i class="fa fa-edit"></i>Update</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -480,8 +480,8 @@
                             }
                             html = html +
                             "<td>"+
-                                "<a href='/updateoffer/"+value.id+"' id='updateoffer' class='btn btn-primary'>Update</a>"+
-                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.status+"' class='btn btn-danger'>Delete</a>"+
+                                "<a href='/updateoffer/"+value.id+"' id='updateoffer' class='btn btn-primary actionbutton'><i class='fa fa-edit'></i>Update</a>"+
+                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -495,7 +495,7 @@
             }
         });
         //navigation buttons actions
-        $("#tablebody").on("click",".actionbutton",function(event){
+        $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "updateoffer"){
                 $("#panel-body-container").load($(this).attr("href"));
@@ -505,7 +505,7 @@
                 var code = null;
                 var offer_remark = null;
                 var status = null;
-                if($(this).data("offercode") != ""){
+                if($(this).data("offercode") != null && $(this).data("offercode") != ""){
                     code = $(this).data("offercode")+"<br>";
                 }
                 else{

@@ -23,6 +23,7 @@ class CarouselOfferController extends Controller
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
         $carouseloffer->title = $formdata->offertitle;
+        $carouseloffer->location = $formdata->offerlocation;
         $carouseloffer->type = $formdata->offertype;
         $carouseloffer->code = $formdata->offercode;
         $carouseloffer->starting_date = Carbon::parse($formdata->offer_startingdate)->format('Y-m-d');
@@ -62,38 +63,20 @@ class CarouselOfferController extends Controller
     public function getTodayAllCarouselOffers(){
         $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['carouselofferscount'] = count($data['allcarouseloffers']);
-        $data['mainheading'] = "Today's Offers";
+        $data['mainheading'] = "Today's Carousel Offers";
         return view('pages.carouseloffer.allcarouseloffers',$data);
     }
     public function getAllCarouselOffers(){
         $data['allcarouseloffers'] = CarouselOffer::orderBy('id', 'DESC')->get();
         $data['carouselofferscount'] = count($data['allcarouseloffers']);
-        $data['mainheading'] = "All Offers";
+        $data['mainheading'] = "All Carousel Offers";
         return view('pages.carouseloffer.allcarouseloffers',$data);
     }
-
-
-
-
-    
-    public function getFilteredOffers($datefrom, $dateto){
-        $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])->orderBy('id','DESC')->with('store','category','user')->get();
-        $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+    public function getFilteredCarouselOffers($datefrom, $dateto){
+        $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])->orderBy('id','DESC')->with('store','form_user','image_user')->get();
+        $response['mainheading'] = "Carousel Offers (".count($response['filteredcarouseloffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
         return response()->json($response);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function getUpdateCarouselOffer($id){
         $data['carouseloffer'] = CarouselOffer::find($id);
         return view('pages.carouseloffer.updatecarouseloffer',$data);
