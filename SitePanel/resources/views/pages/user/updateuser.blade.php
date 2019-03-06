@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-buttons-container">
                     <div>
-                        <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Users</a>
+                        <a href="/viewuser/{{$user->id}}" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To User</a>
                         <input type="submit" value="Update User" class="btn btn-primary form-button"/>
                     </div>
                     <div>
@@ -147,7 +147,7 @@
                         cache: false,
                         success: function(data){
                             if(data.status == "true"){
-                                $("#panel-body-container").load("/allusers");
+                                $("#panel-body-container").load("/viewuser/"+data.user_id);
                             }
                             else{
                                 $("#alert-danger-message-area").html(data.error_message);

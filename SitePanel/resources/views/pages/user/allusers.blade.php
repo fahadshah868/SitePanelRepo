@@ -48,7 +48,7 @@
                         <td>{{ $user->role }}</td>
                         <td>
                             @if($user->status == "active")
-                            <span class="active-item">{{ $user->status }}</span>
+                            <span class="active-item">_{{ $user->status }}</span>
                             @else
                             <span class="deactive-item">{{ $user->status }}</span>
                             @endif

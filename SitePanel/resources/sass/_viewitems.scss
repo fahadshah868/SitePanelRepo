@@ -33,7 +33,7 @@
     padding: 2px;
     color: #fff;
     background-color: #dc3545;
-    border: 1px solid #dc3545;
+    border: none;
     outline: none !important;
     border-radius: 5px;
     font-size: 12px;
@@ -86,9 +86,6 @@ td .btn{
     font-size: 10px;
     font-weight: 700;
 }
-td .btn:nth-child(1){
-    margin-bottom: 2px;
-}
 td img{
     width: 40px;
     height: 40px;
@@ -128,7 +125,7 @@ td .carouselofferimage{
     background-color: #d1192a;
 }
 .fa-eye{
-    margin-right: 5px;
+    margin-right: 3px;
 }
 .fa-trash{
     margin-right: 5px;

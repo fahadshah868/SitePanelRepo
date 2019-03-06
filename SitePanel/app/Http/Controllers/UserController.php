@@ -41,7 +41,8 @@ class UserController extends Controller
         return view('pages.user.allusers', $data);
     }
     public function getViewUser($id){
-        
+        $data['user'] = User::find($id);
+        return view('pages.user.viewuser', $data);
     }
     public function getUpdateUser($id){
         $data['user'] = User::find($id);
@@ -55,8 +56,10 @@ class UserController extends Controller
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
             $user->save();
+            Session::flash("updateuser_successmessage","User Updated Successfully");
             $response = [
                 "status" => "true",
+                "user_id" => $request->userid,
                 "success_message" => "User Updated Successfully"
             ];
             Session::flash('updateuser_successmessage','User Updated Successfully');
@@ -70,8 +73,10 @@ class UserController extends Controller
                 $user->role = $request->userrole;
                 $user->status = $request->userstatus;
                 $user->save();
+                Session::flash("updateuser_successmessage","User Updated Successfully");
                 $response = [
                     "status" => "true",
+                    "user_id" => $request->userid,
                     "success_message" => "User Updated Successfully"
                 ];
                 Session::flash('updateuser_successmessage','User Updated Successfully');
@@ -92,8 +97,10 @@ class UserController extends Controller
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
             $user->save();
+            Session::flash("updateuser_successmessage","User Updated Successfully");
             $response = [
                 "status" => "true",
+                "user_id" => $request->userid,
                 "success_message" => "User Updated Successfully"
             ];
             Session::flash('updateuser_successmessage','User Updated Successfully');
@@ -110,6 +117,7 @@ class UserController extends Controller
                 Session::flash('updateuser_successmessage','User Updated Successfully');
                 $response = [
                     "status" => "true",
+                    "user_id" => $request->userid,
                     "success_message" => "User Updated Successfully"
                 ];
                 return response()->json($response);

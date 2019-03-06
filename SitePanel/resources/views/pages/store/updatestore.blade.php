@@ -1,5 +1,5 @@
-<div class="form-main-container">
-    <div class="form-main-heading">Update Store</div>
+<div class="viewitems-main-container">
+    <div class="viewitems-main-heading">Update Store</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
