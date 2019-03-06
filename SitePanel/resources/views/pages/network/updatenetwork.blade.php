@@ -49,7 +49,7 @@
                 </div>
                 <div class="form-buttons-container">
                     <div>
-                        <a href="/allnetworks" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
+                        <a href="/viewnetwork/{{$network->id}}" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Network</a>
                         <input type="submit" value="Update Network" class="btn btn-primary form-button"/>
                     </div>
                     <div>
@@ -99,7 +99,7 @@
                         cache: false,
                         success: function(data){
                             if(data.status == "true"){
-                                $("#panel-body-container").load("/allnetworks");
+                                $("#panel-body-container").load("/viewnetwork/"+data.network_id);
                             }
                             else{
                                 $("#alert-danger-message-area").html(data.error_message);

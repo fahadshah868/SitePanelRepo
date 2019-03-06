@@ -39,6 +39,10 @@ class NetworkController extends Controller
         $data['networkscount'] = count($data['allnetworks']);
         return view('pages.network.allnetworks',$data);
     }
+    public function getViewNetworks($id){
+        $data['network'] = Network::find($id);
+        return view('pages.network.viewnetwork',$data);
+    }
     public function getUpdateNetwork($id){
         $data['network'] = Network::find($id);
         return view('pages.network.updatenetwork',$data);
@@ -53,6 +57,7 @@ class NetworkController extends Controller
             Session::flash('updatenetwork_successmessage','Network Updated Successfully');
             $response = [
                 "status" => "true",
+                "network_id" => $request->networkid,
                 "success_message" => "Network Updated Successfully"
             ];
             return response()->json($response);
@@ -67,6 +72,7 @@ class NetworkController extends Controller
                 Session::flash('updatenetwork_successmessage','Network Updated Successfully');
                 $response = [
                     "status" => "true",
+                    "network_id" => $request->networkid,
                     "success_message" => "Network Updated Successfully"
                 ];
                 return response()->json($response);

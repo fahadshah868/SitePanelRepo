@@ -1,14 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
-    <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong id="alert-success-message-area"></strong>
-    </div>
-    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong id="alert-danger-message-area"></strong>
-    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -51,7 +43,7 @@
                         <td>{{ $network->title }}</td>
                         <td>
                             @if($network->status == "active")
-                            <span class="active-item">{{ $network->status }}</span>
+                            <span class="active-item">_{{ $network->status }}</span>
                             @else
                             <span class="deactive-item">{{ $network->status }}</span>
                             @endif
@@ -60,7 +52,7 @@
                         <td>{{ $network->user->username}}</td>
                         @endif
                         <td>
-                            <a href="/updatenetwork/{{$network->id}}" id="updatenetwork" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                            <a href="/viewnetwork/{{$network->id}}" id="viewnetwork" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
                             <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
@@ -96,12 +88,6 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        if('{{ Session::has("updatenetwork_successmessage") }}'){
-            $("#alert-success-message-area").html('{{ Session::get("updatenetwork_successmessage") }}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
-                $("#alert-success").slideUp(500);
-            });
-        }
         //client side filter
         $(".header-searchbar-filter").bind('keyup input propertychange',function(){
             clientSideFilter();
@@ -129,7 +115,7 @@
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatenetwork"){
+            if($(this).attr("id") == "viewnetwork"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deletenetwork"){
