@@ -84,7 +84,7 @@
                 </div>
                 <div class="form-buttons-container">
                     <div>
-                        <a href="/updatecategory/{{$category->id}}" id="backtocategory" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Category</a>
+                        <a href="/viewcategory/{{$category->id}}" id="backtocategory" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Category</a>
                         <input type="submit" value="Update Category" class="btn btn-primary form-button"/>
                     </div>
                     <div>
@@ -155,7 +155,7 @@
                         cache: false,
                         success: function(data){
                             if(data.status == "true"){
-                                $("#panel-body-container").load('/updatecategory/'+data.id);
+                                $("#panel-body-container").load('/viewcategory/'+data.id);
                             }
                             else{
                                 $("#alert-danger-message-area").html(data.error_message);

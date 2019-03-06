@@ -64,6 +64,10 @@ class CategoryController extends Controller
         $data['categoriescount'] = count($data['allcategories']);
         return view('pages.category.allcategories',$data);
     }
+    public function getViewCategory($id){
+        $data['category'] = Category::find($id);
+        return view('pages.category.viewcategory',$data);
+    }
     public function getUpdateCategory($id){
         $data['category'] = Category::find($id);
         return view('pages.category.updatecategory',$data);

@@ -67,12 +67,7 @@
         }
         $("#form-field a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "backtonetworks"){
-                $("#panel-body-container").load("/allnetworks");
-            }
-            else if($(this).attr("id") == "updatenetwork"){
-                $("#panel-body-container").load($(this).attr("href"));
-            }
+            $("#panel-body-container").load($(this).attr("href"));
         });
     });
 </script>

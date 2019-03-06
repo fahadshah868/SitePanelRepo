@@ -39,7 +39,7 @@ class NetworkController extends Controller
         $data['networkscount'] = count($data['allnetworks']);
         return view('pages.network.allnetworks',$data);
     }
-    public function getViewNetworks($id){
+    public function getViewNetwork($id){
         $data['network'] = Network::find($id);
         return view('pages.network.viewnetwork',$data);
     }

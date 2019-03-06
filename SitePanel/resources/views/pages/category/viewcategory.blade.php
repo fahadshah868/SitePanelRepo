@@ -1,5 +1,5 @@
-<div class="form-main-container">
-    <div class="form-main-heading">Update Category</div>
+<div class="viewitems-main-container">
+    <div class="viewitems-main-heading">View Category</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -58,33 +58,77 @@
                         <input type="text" class="form-control form-field-text" value="{{ $category->title }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Description</div>
                         <textarea class="form-control form-field-textarea" readonly>{{$category->description}}</textarea>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Is TopCategory</div>
                         <input type="text" class="form-control form-field-text" value="{{ $category->is_topcategory }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Is PopularCategory</div>
                         <input type="text" class="form-control form-field-text" value="{{ $category->is_popularcategory }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Status</div>
                         <input type="text" class="form-control form-field-text" value="{{ $category->status }}" readonly/>
                     </div>
                 </div>
-                <div class="col-sm-12" id="updatecategoryactions">
-                    <a href="/allcategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Categories</a>
-                    <a href="/updatecategoryform/{{$category->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Form Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->form_user->username }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Image Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->image_user->username }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Created At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($category->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Updated At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($category->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field" id="form-field">
+                        <a href="/allcategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Categories</a>
+                        <a href="/updatecategoryform/{{$category->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,7 +155,7 @@
             $("#updatecategoryimageform").trigger("reset");
             $('#imgpath').attr("src", "");
         });
-        $("#updatecategoryactions a").click(function(event){
+        $("#form-field a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
@@ -147,7 +191,7 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updatecategorylogomodal").modal('toggle');
-                            $("#panel-body-container").load("/updatecategory/"+data.id);
+                            $("#panel-body-container").load("/viewcategory/"+data.id);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);

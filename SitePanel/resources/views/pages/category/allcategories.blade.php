@@ -1,10 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
-    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong id="alert-danger-message-area"></strong>
-    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -89,7 +85,7 @@
                         <td>{{ $category->image_user->username}}</td>
                         @endif
                         <td>
-                            <a href="/updatecategory/{{$category->id}}" id="updatecategory" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                            <a href="/viewcategory/{{$category->id}}" id="viewcategory" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
                             <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
@@ -184,7 +180,7 @@
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatecategory"){
+            if($(this).attr("id") == "viewcategory"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deletecategory"){

@@ -65,12 +65,7 @@
         }
         $("#form-field a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "backtousers"){
-                $("#panel-body-container").load("/allusers");
-            }
-            else if($(this).attr("id") == "updateuser"){
-                $("#panel-body-container").load($(this).attr("href"));
-            }
+            $("#panel-body-container").load($(this).attr("href"));
         });
     });
 </script>

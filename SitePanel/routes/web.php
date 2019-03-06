@@ -41,7 +41,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addnetwork','NetworkController@getAddNetwork');
     Route::post('/addnetwork','NetworkController@postAddNetwork');
     Route::get('/allnetworks','NetworkController@getAllNetworks');
-    Route::get('/viewnetwork/{id}','NetworkController@getViewNetworks');
+    Route::get('/viewnetwork/{id}','NetworkController@getViewNetwork');
     Route::get('/updatenetwork/{id}','NetworkController@getUpdateNetwork');
     Route::post('/updatenetwork','NetworkController@postUpdateNetwork');
     Route::get('/deletenetwork/{id}','NetworkController@deleteNetwork');
@@ -65,6 +65,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addcategory','CategoryController@getaddCategory');
     Route::post('/addcategory','CategoryController@postAddCategory');
     Route::get('/allcategories','CategoryController@getAllCategories');
+    Route::get('/viewcategory/{id}','CategoryController@getViewCategory');
     Route::get('/updatecategory/{id}','CategoryController@getUpdateCategory');
     Route::get('/updatecategoryform/{id}','CategoryController@getUpdateCategoryForm');
     Route::post('/updatecategoryform','CategoryController@postUpdateCategoryForm');
