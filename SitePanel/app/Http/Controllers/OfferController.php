@@ -63,6 +63,10 @@ class OfferController extends Controller
         $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
         return response()->json($response);
     }
+    public function getViewOffer($id){
+        $data['offer'] = Offer::find($id);
+        return view('pages.offer.viewoffer',$data);
+    }
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);
         $data['allstores'] = Store::all();

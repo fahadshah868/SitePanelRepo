@@ -1,5 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">Update Store</div>
+    <div class="viewitems-main-heading">View Store</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -44,57 +44,109 @@
                         <input type="text" class="form-control form-field-text" value="{{ $store->title }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store's Description</div>
                         <textarea class="form-control form-field-textarea" readonly>{{ $store->description }}</textarea>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Primary Url</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->primary_url }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Secondary Url</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->secondary_url }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Network</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->network->title }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Network Url</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->network_url }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Is Top Store</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->is_topstore }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Is popular Store</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->is_popularstore }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
                         <input type="text" class="form-control form-field-text" value="{{ $store->status }}" readonly/>
                     </div>
                 </div>
-                <div class="col-sm-12" id="updatestoreactions">
-                    <a href="/allstores" id="backtostores" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Stores</a>
-                    <a href="/updatestoreform/{{$store->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Form Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $store->form_user->username }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Image Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $store->image_user->username }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Created At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($store->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Updated At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($store->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field" id="viewstore-action-buttons">
+                        <a href="/allstores" id="backtostores" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Stores</a>
+                        <a href="/updatestoreform/{{$store->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,7 +173,7 @@
             $("#updatestoreimageform").trigger("reset");
             $('#imgpath').attr("src", "");
         });
-        $("#updatestoreactions a").click(function(event){
+        $("#viewstore-action-buttons a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
@@ -157,7 +209,7 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updatestorelogomodal").modal('toggle');
-                            $("#panel-body-container").load("/updatestore/"+data.storeid);
+                            $("#panel-body-container").load("/viewstore/"+data.storeid);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);

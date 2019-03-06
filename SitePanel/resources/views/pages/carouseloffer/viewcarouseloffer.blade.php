@@ -1,5 +1,5 @@
 <div class="form-main-container">
-    <div class="form-main-heading">Update Carousel Offer</div>
+    <div class="form-main-heading">View Carousel Offer</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -45,18 +45,30 @@
                         <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->store->title }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Title</div>
                         <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->title }}" readonly/>
                     </div>
                 </div>
-                <div class="col-sm-12">
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Location</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->location }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
                         <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->type }}" readonly/>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Code</div>
@@ -67,13 +79,15 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-sm-12">
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Starting Date</div>
                         <input type="text" class="form-control form-field-text" value="{{ \Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y') }}" readonly/>
                     </div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-3">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Expiry Date</div>
                         @if($carouseloffer->expiry_date != null)
@@ -83,15 +97,71 @@
                         @endif
                     </div>
                 </div>
+                @if($carouseloffer->starting_date <= config('constants.today_date') && ($carouseloffer->expiry_date >= config('constants.today_date') || $carouseloffer->expiry_date == null))
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer life Remark</div>
+                        <input type="text" class="form-control form-field-text available-offer" value="Available" readonly>
+                    </div>
+                </div>
+                @elseif($carouseloffer->starting_date > config('constants.today_date'))
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer life Remark</div>
+                        <input type="text" class="form-control form-field-text pending-offer" value="Pending" readonly>
+                    </div>
+                </div>
+                @elseif($carouseloffer->expiry_date < config('constants.today_date'))
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer life Remark</div>
+                        <input type="text" class="form-control form-field-text expired-offer" value="Expired" readonly>
+                    </div>
+                </div>
+                @endif
+            </div>
+            <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
                         <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->status }}" readonly/>
                     </div>
                 </div>
-                <div class="col-sm-12" id="updatecarouselofferactions">
-                    <a href="/allcarouseloffers" id="backtocarouseloffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offers</a>
-                    <a href="/updatecarouselofferform/{{$carouseloffer->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Form Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->form_user->username }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Image Add/Update By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->image_user->username }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Created At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($carouseloffer->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Offer Updated At</div>
+                        <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($carouseloffer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field" id="viewcarouseloffer-action-buttons">
+                        <a href="/allcarouseloffers" id="backtocarouseloffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offers</a>
+                        <a href="/updatecarouselofferform/{{$carouseloffer->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -118,7 +188,7 @@
             $("#updatecarouselofferimageform").trigger("reset");
             $('#imgpath').attr("src", "");
         });
-        $("#updatecarouselofferactions a").click(function(event){
+        $("#viewcarouseloffer-action-buttons a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });

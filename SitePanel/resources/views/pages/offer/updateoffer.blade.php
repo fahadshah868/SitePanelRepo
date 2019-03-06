@@ -305,7 +305,7 @@
             </div>
             <div class="form-buttons-container">
                 <div>
-                    <a href="/alloffers" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
+                    <a href="/viewoffer/{{$offer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer</a>
                     <input type="submit" value="Update Offer" class="btn btn-primary form-button"/>
                 </div>
                 <div>
@@ -447,9 +447,9 @@
                 });
             }
         });
-        $("#backtooffers").click(function(event){
+        $("#backtooffer").click(function(event){
             event.preventDefault();
-            $("#panel-body-container").load("/alloffers");
+            $("#panel-body-container").load($(this).attr("href"));
         });
         $("#offercode-checkbox").click(function(){
             if($("#offercode-checkbox").prop("checked")){

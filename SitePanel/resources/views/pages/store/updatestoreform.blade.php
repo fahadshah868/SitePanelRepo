@@ -122,7 +122,7 @@
             </div>
             <div class="form-buttons-container">
                 <div>
-                    <a href="/updatestore/{{$store->id}}" id="backtostore" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store</a>
+                    <a href="/viewstore/{{$store->id}}" id="backtostore" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Store</a>
                     <input type="submit" value="Update Store" class="btn btn-primary form-button"/>
                 </div>
                 <div>
@@ -219,7 +219,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load('/updatestore/'+data.storeid);
+                            $("#panel-body-container").load('/viewstore/'+data.storeid);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

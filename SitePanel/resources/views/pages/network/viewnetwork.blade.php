@@ -49,7 +49,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="form-field" id="form-field">
+            <div class="form-field" id="viewnetwork-action-buttons">
                 <a href="/allnetworks" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
                 <a href="/updatenetwork/{{$network->id}}" class="btn btn-primary form-button" id="updatenetwork">Update Network<i class="fa fa-forward"></i></a>
             </div>
@@ -65,7 +65,7 @@
                 $("#alert-success").slideUp(500);
             });
         }
-        $("#form-field a").click(function(event){
+        $("#viewnetwork-action-buttons a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });

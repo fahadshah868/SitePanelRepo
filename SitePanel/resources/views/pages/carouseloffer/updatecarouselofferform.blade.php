@@ -187,7 +187,7 @@
             </div>
             <div class="form-buttons-container">
                 <div>
-                    <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="backtocarouseloffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offer</a>
+                    <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="backtocarouseloffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offer</a>
                     <input type="submit" value="Update Carousel Offer" class="btn btn-primary form-button"/>
                 </div>
                 <div>

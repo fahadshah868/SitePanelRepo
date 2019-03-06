@@ -77,9 +77,9 @@ class CarouselOfferController extends Controller
         $response['mainheading'] = "Carousel Offers (".count($response['filteredcarouseloffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
         return response()->json($response);
     }
-    public function getUpdateCarouselOffer($id){
+    public function getViewCarouselOffer($id){
         $data['carouseloffer'] = CarouselOffer::find($id);
-        return view('pages.carouseloffer.updatecarouseloffer',$data);
+        return view('pages.carouseloffer.viewcarouseloffer',$data);
     }
     public function getUpdateCarouselOfferForm($id){
         $data['allstores'] = Store::all();

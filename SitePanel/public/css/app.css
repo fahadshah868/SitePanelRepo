@@ -18012,8 +18012,8 @@ ul ul a:hover {
 }
 
 .form-main-heading {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 1000;
 }
 
 .form-field {
@@ -18201,8 +18201,8 @@ label.error {
 }
 
 .viewitems-main-heading {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 1000;
 }
 
 .date-filter-container {

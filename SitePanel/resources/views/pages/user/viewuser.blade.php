@@ -47,7 +47,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <div class="form-field" id="form-field">
+            <div class="form-field" id="viewuser-action-buttons">
                 <a href="/allusers" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To users</a>
                 <a href="/updateuser/{{$user->id}}" class="btn btn-primary form-button" id="updateuser">Update User<i class="fa fa-forward"></i></a>
             </div>
@@ -63,7 +63,7 @@
                 $("#alert-success").slideUp(500);
             });
         }
-        $("#form-field a").click(function(event){
+        $("#viewuser-action-buttons a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });

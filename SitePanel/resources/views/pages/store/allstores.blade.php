@@ -104,7 +104,7 @@
                             <td>{{ $store->image_user->username }}</td>
                             @endif
                             <td>
-                                <a href="/updatestore/{{$store->id}}" id="updatestore" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/viewstore/{{$store->id}}" id="viewstore" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
                                 <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
@@ -225,7 +225,7 @@
         //navigation buttons actions
         $("#tablebody tr td a").click(function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatestore"){
+            if($(this).attr("id") == "viewstore"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deletestore"){

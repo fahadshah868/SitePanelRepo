@@ -33,10 +33,6 @@
         </div>
     </div>
     <hr>
-    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
-        <a href="#" class="close" aria-label="close">&times;</a>
-        <strong id="alert-danger-message-area"></strong>
-    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -151,7 +147,7 @@
                             <td>{{ $carouseloffer->image_user->username }}</td>
                             @endif
                             <td>
-                                <a href="/updatecarouseloffer/{{$carouseloffer->id}}" id="updatecarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-edit"></i>Update</a>
+                                <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
                                 <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
@@ -381,7 +377,7 @@
                             }
                             html = html +
                             "<td>"+
-                                "<a href='/updatecarouseloffer/"+value.id+"' id='updatecarouseloffer' class='btn btn-primary actionbutton'><i class='fa fa-edit'></i>Update</a>"+
+                                "<a href='/viewcarouseloffer/"+value.id+"' id='viewcarouseloffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
                                 "<a href='/deletecarouseloffer/"+value.id+"' id='deletecarouseloffer' data-offerstore='"+value.store.title+"' data-offertitle='"+value.title+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-offerstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
@@ -398,7 +394,7 @@
         //navigation buttons actions
         $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
-            if($(this).attr("id") == "updatecarouseloffer"){
+            if($(this).attr("id") == "viewcarouseloffer"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
             else if($(this).attr("id") == "deletecarouseloffer"){
