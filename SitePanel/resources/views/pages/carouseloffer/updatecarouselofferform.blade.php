@@ -396,7 +396,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load("/updatecarouseloffer/"+data.carouselofferid);
+                            $("#panel-body-container").load("/viewcarouseloffer/"+data.carouselofferid);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

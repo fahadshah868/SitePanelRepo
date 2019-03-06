@@ -16,9 +16,49 @@
                                 </button>
                             </div>
                             <div class="modal-body" style="padding: 30px;">
-                                <div class="date-filter-container">
-                                    <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control offer_datefrom readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
-                                    <input type="text" id="offer_dateto" name="offer_dateto" class="form-control offer_dateto readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Remark</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;">New Created Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="both" name="dateremark" style="margin-right: 4px;" checked>Both
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date From</div>
+                                            <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control form-field-text readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date To</div>
+                                            <input type="text" id="offer_dateto" name="offer_dateto" class="form-control form-field-text readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -403,12 +443,15 @@
             rules: {
                 offer_datefrom: "required",
                 offer_dateto: "required",
+                dateremark: "required",
             },
             messages: {
                 offer_datefrom: "please select from date",
                 offer_dateto: "please select to date",
+                dateremark: "please select remark",
             },
             submitHandler: function(form) {
+                var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _offer_datefrom = $("#offer_datefrom").val();
                 var _offer_dateto = $("#offer_dateto").val();
                 $("#daterangeofferfilterform").trigger("reset");
@@ -416,7 +459,7 @@
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filteredoffers/"+_offer_datefrom+"/"+_offer_dateto,
+                    url: "/filteredoffers/"+_dateremark+"/"+_offer_datefrom+"/"+_offer_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",

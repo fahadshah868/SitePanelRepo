@@ -548,7 +548,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load("/alloffers");
+                            $("#panel-body-container").load("/viewoffer/"+data.offer_id);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

@@ -78,7 +78,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/todayalloffers','OfferController@getTodayAllOffers');
     Route::get('/alloffers','OfferController@getAllOffers');
     Route::get('/viewoffer/{id}','OfferController@getViewOffer');
-    Route::get('/filteredoffers/{datefrom}/{dateto}','OfferController@getFilteredOffers');
+    Route::get('/filteredoffers/{dateremark}/{datefrom}/{dateto}','OfferController@getFilteredOffers');
     Route::get('/updateoffer/{id}','OfferController@getUpdateOffer');
     Route::post('/updateoffer','OfferController@postUpdateOffer');
     Route::get('/deleteoffer/{id}','OfferController@deleteOffer');
@@ -88,7 +88,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/addcarouseloffer','CarouselOfferController@postAddCarouselOffer');
     Route::get('/todayallcarouseloffers','CarouselOfferController@getTodayAllCarouselOffers');
     Route::get('/allcarouseloffers','CarouselOfferController@getAllCarouselOffers');
-    Route::get('/filteredcarouseloffers/{datefrom}/{dateto}','CarouselOfferController@getFilteredCarouselOffers');
+    Route::get('/filteredcarouseloffers/{dateremark}/{datefrom}/{dateto}','CarouselOfferController@getFilteredCarouselOffers');
     Route::get('/viewcarouseloffer/{id}','CarouselOfferController@getViewCarouselOffer');
     Route::get('/updatecarouselofferform/{id}','CarouselOfferController@getUpdateCarouselOfferForm');
     Route::post('/updatecarouselofferform','CarouselOfferController@postUpdateCarouselOfferForm');
