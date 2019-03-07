@@ -1,5 +1,78 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">All Categories<span class="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span></div>
+    <div class="viewitems-header-container">
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="date-filter-container" id="date-filter-container">
+            <a href="/todayallcategories" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Categories List"><i class="fas fa-list"></i>Get Today All Categories</a>
+            <a href="/allcategories" class="btn btn-danger viewitems-header-filter-button" title="Get All Categories List"><i class="fas fa-list"></i>Get All Categories</a>
+            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Categories" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            {{--popup to update image--}}
+            <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="daterangecategoryfilterform" action="#" method="#">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="padding: 30px;">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Remark</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="both" name="dateremark" style="margin-right: 4px;">Both
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date From</div>
+                                            <input type="text" id="modal_datefrom" name="modal_datefrom" class="form-control form-field-text readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date To</div>
+                                            <input type="text" id="modal_dateto" name="modal_dateto" class="form-control form-field-text readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success form-button" id="cancel_modal_button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
+                                <input type="submit" class="btn btn-primary form-button" value="Search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- end popup --}}
+        </div>
+    </div>
     <hr>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
@@ -85,8 +158,8 @@
                         <td>{{ $category->image_user->username}}</td>
                         @endif
                         <td>
-                            <a href="/viewcategory/{{$category->id}}" id="viewcategory" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/viewcategory/{{$category->id}}" id="viewcategory" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -138,6 +211,49 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        var dates = $("#modal_datefrom, #modal_dateto").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(selectedDate) {
+                var option = this.id == "modal_datefrom" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
         //client side filters
         $(".header-searchbar-filter").bind('keyup input propertychange',function(){
             clientSideFilter();
@@ -177,8 +293,85 @@
                 clientSideFilter();
             }
         });
+        //filter categories by date range
+        $("#date-filter-container a").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
+        });
+        $("#cancel_modal_button").click(function(){
+            $("#daterangecategoryfilterform").trigger("reset");
+            $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
+        });
+        $("#daterangecategoryfilterform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                modal_datefrom: "required",
+                modal_dateto: "required",
+                dateremark: "required",
+            },
+            messages: {
+                modal_datefrom: "please select from date",
+                modal_dateto: "please select to date",
+                dateremark: "please select remark",
+            },
+            submitHandler: function(form) {
+                var _dateremark = $("input[name='dateremark']:checked"). val();
+                var _modal_datefrom = $("#modal_datefrom").val();
+                var _modal_dateto = $("#modal_dateto").val();
+                $("#daterangecategoryfilterform").trigger("reset");
+                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: "GET",
+                    url: "/filteredcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
+                    data: null,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        $("#daterangemodal").modal('toggle');
+                        $("#tablebody").empty();
+                        $("#viewitems-main-heading").html(data.mainheading);
+                        $.each(data.filteredcategories, function (index, value) {
+                            var html = "<tr>"+
+                            "<td>"+value.title+"</td>"+
+                            "<td>"+value.is_topcategory+"</td>"+
+                            "<td>"+value.is_popularcategory+"</td>"
+                            if(value.status == "active"){
+                                html = html + "<td><span class='active-item'>"+value.status+"</span></td>"
+                            }
+                            else{
+                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                            }
+                            if(value.is_topcategory == "yes"){
+                                html = html + 
+                                "<td><img src='{{asset('/')}}"+value.logo_url+"'></td>"
+                            }
+                            else{
+                                html = html +
+                                "<td><br>N/A</br></td>"
+                            }
+                            html = html +
+                            "<td>"+value.form_user.username+"</td>"+
+                            "<td>"+value.image_user.username+"</td>"+
+                            "<td>"+
+                                "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary'><i class='fa fa-eye'></i>View</a>"+
+                                "<a href='/deletecategory//"+value.id+"' data-categorytitle='{{$category->title}}' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger'><i class='fa fa-trash'></i>Delete</a>"+
+                            "</td>"+
+                            "</tr>";
+                            $("#tablebody").append(html);
+                        });
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
+            }
+        });
         //navigation buttons actions
-        $("#tablebody tr td a").click(function(event){
+        $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "viewcategory"){
                 $("#panel-body-container").load($(this).attr("href"));

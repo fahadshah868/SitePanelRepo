@@ -68,7 +68,7 @@
                                 <a href="/addcategory" class="sidebar-suboption">Add Category</a>
                             </li>
                             <li>
-                                <a href="/allcategories" class="sidebar-suboption">View Categories</a>
+                                <a href="/todayallcategories" class="sidebar-suboption">View Today's Categories</a>
                             </li>
                         </ul>
                     </li>
@@ -99,7 +99,7 @@
                                 <a href="/addoffer" class="sidebar-suboption">Add Offer</a>
                             </li>
                             <li>
-                                <a href="/todayalloffers" class="sidebar-suboption">View Today Offers</a>
+                                <a href="/todayalloffers" class="sidebar-suboption">View Today's Offers</a>
                             </li>
                         </ul>
                     </li>

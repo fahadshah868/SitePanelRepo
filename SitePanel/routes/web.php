@@ -66,6 +66,8 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addcategory','CategoryController@getaddCategory');
     Route::post('/addcategory','CategoryController@postAddCategory');
     Route::get('/allcategories','CategoryController@getAllCategories');
+    Route::get('/todayallcategories','CategoryController@getTodayAllCategories');
+    Route::get('/filteredcategories/{dateremark}/{datefrom}/{dateto}','CategoryController@getFilteredCategories');
     Route::get('/viewcategory/{id}','CategoryController@getViewCategory');
     Route::get('/updatecategoryform/{id}','CategoryController@getUpdateCategoryForm');
     Route::post('/updatecategoryform','CategoryController@postUpdateCategoryForm');

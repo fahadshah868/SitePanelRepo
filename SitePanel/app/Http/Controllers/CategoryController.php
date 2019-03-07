@@ -8,6 +8,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use File;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -63,7 +64,38 @@ class CategoryController extends Controller
     public function getAllCategories(){
         $data['allcategories'] = Category::orderBy('id', 'DESC')->get();
         $data['categoriescount'] = count($data['allcategories']);
+        $data['mainheading'] = "All Categories";
         return view('pages.category.allcategories',$data);
+    }
+    public function getTodayAllCategories(){
+        $data['allcategories'] = Category::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['categoriescount'] = count($data['allcategories']);
+        $data['mainheading'] = "Today's Categories";
+        return view('pages.category.allcategories',$data);
+    }
+    public function getFilteredCategories($dateremark, $datefrom, $dateto){
+        if(strcasecmp($dateremark,"both") == 0 ){
+            $response['filteredcategories'] = Category::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('form_user','image_user')->get();
+            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"created") == 0){
+            $response['filteredcategories'] = Category::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('form_user','image_user')->get();
+            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"updated") == 0){
+            $response['filteredcategories'] = Category::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('form_user','image_user')->get();
+            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
     }
     public function getViewCategory($id){
         $data['category'] = Category::find($id);

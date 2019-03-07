@@ -2,8 +2,8 @@
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
         <div class="date-filter-container" id="date-filter-container">
-            <a href="/allnetworks" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Networks</a>
-            <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            <a href="/allnetworks" class="btn btn-danger viewitems-header-filter-button" title="Get All Networks List"><i class="fas fa-list"></i>Get All Networks</a>
+            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Networks" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -50,13 +50,13 @@
                                     <div class="col-sm-6">
                                         <div class="form-field">
                                             <div class="form-field-heading">Select Date From</div>
-                                            <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control form-field-text readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                            <input type="text" id="modal_datefrom" name="modal_datefrom" class="form-control form-field-text readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-field">
                                             <div class="form-field-heading">Select Date To</div>
-                                            <input type="text" id="offer_dateto" name="offer_dateto" class="form-control form-field-text readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                            <input type="text" id="modal_dateto" name="modal_dateto" class="form-control form-field-text readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
                                         </div>
                                     </div>
                                 </div>
@@ -160,14 +160,14 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        var dates = $("#offer_datefrom, #offer_dateto").datepicker({
+        var dates = $("#modal_datefrom, #modal_dateto").datepicker({
             changeYear: true,
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
             dateFormat: 'dd-mm-yy',
             onSelect: function(selectedDate) {
-                var option = this.id == "offer_datefrom" ? "minDate" : "maxDate",
+                var option = this.id == "modal_datefrom" ? "minDate" : "maxDate",
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
                 dates.not(this).datepicker("option", option, date);
@@ -227,38 +227,38 @@
                 clientSideFilter();
             }
         });
-        //filter offer by date range
+        //filter networks by date range
         $("#date-filter-container a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
         $("#cancel_modal_button").click(function(){
             $("#daterangenetworkfilterform").trigger("reset");
-            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
+            $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
         });
         $("#daterangenetworkfilterform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
-                offer_datefrom: "required",
-                offer_dateto: "required",
+                modal_datefrom: "required",
+                modal_dateto: "required",
                 dateremark: "required",
             },
             messages: {
-                offer_datefrom: "please select from date",
-                offer_dateto: "please select to date",
+                modal_datefrom: "please select from date",
+                modal_dateto: "please select to date",
                 dateremark: "please select remark",
             },
             submitHandler: function(form) {
                 var _dateremark = $("input[name='dateremark']:checked"). val();
-                var _offer_datefrom = $("#offer_datefrom").val();
-                var _offer_dateto = $("#offer_dateto").val();
+                var _modal_datefrom = $("#modal_datefrom").val();
+                var _modal_dateto = $("#modal_dateto").val();
                 $("#daterangenetworkfilterform").trigger("reset");
-                $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
+                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filterednetworks/"+_dateremark+"/"+_offer_datefrom+"/"+_offer_dateto,
+                    url: "/filterednetworks/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",
