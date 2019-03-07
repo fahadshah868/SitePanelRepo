@@ -186,10 +186,10 @@ class CarouselOfferController extends Controller
     public function deleteCarouselOffer($id){
         $carouseloffer = CarouselOffer::find($id);
         try{
+            $carouseloffer->delete();
             if(File::exists($carouseloffer->image_url)){
                 File::delete($carouseloffer->image_url);
             }
-            $carouseloffer->delete();
             $response = [
                 "status" => "true",
                 "success_message" => "Carousel Offer Deleted Successfully"

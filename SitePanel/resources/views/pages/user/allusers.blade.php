@@ -1,6 +1,10 @@
 <div class="viewitems-main-container">
     <div class="viewitems-main-heading">All Users<span class="viewitems-main-heading-count">({{ $userscount }}<span id="filtered_row_count"></span>)</span></div>
     <hr>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>

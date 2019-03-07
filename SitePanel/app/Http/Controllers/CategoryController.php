@@ -79,21 +79,21 @@ class CategoryController extends Controller
             ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('form_user','image_user')->get();
-            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Created & Updated Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
         else if(strcasecmp($dateremark,"created") == 0){
             $response['filteredcategories'] = Category::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('form_user','image_user')->get();
-            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Created Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
         else if(strcasecmp($dateremark,"updated") == 0){
             $response['filteredcategories'] = Category::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('form_user','image_user')->get();
-            $response['mainheading'] = "Filtered Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Updated Categories (".count($response['filteredcategories'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
     }
@@ -289,10 +289,10 @@ class CategoryController extends Controller
     public function deleteCategory($id){
         $category = Category::find($id);
         try{
+            $category->delete();
             if(File::exists($category->logo_url)){
                 File::delete($category->logo_url);
             }
-            $category->delete();
             $response = [
                 "status" => "true",
                 "success_message" => "Category Deleted Successfully"

@@ -73,6 +73,10 @@
         </div>
     </div>
     <hr>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -276,8 +280,11 @@
                             else{
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
                             }
+                            if("{{Auth::User()->role}}" == "admin"){
+                                html = html +
+                                "<td>"+value.user.username+"</td>"
+                            }
                             html = html +
-                            "<td>"+value.user.username+"</td>"+
                             "<td>"+
                                 "<a href='/viewnetwork/"+value.id+"' id='viewnetwork' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
                                 "<a href='/deletenetwork/"+value.id+"' id='deletenetwork' data-networktitle='"+value.title+"' data-networkstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+

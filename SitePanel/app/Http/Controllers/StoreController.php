@@ -11,6 +11,7 @@ use App\StoreCategoryGroup;
 use File;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class StoreController extends Controller
 {
@@ -90,8 +91,48 @@ class StoreController extends Controller
     public function getAllStores(){
         $data['allstores'] = Store::orderBy('id', 'DESC')->get();
         $data['storescount'] = count($data['allstores']);
+        $data['mainheading'] = "All Stores";
         return view('pages.store.allstores', $data);
     }
+    public function getTodayAllStores(){
+        $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['storescount'] = count($data['allstores']);
+        $data['mainheading'] = "Today's Stores";
+        return view('pages.store.allstores',$data);
+    }
+    public function getFilteredStores($dateremark, $datefrom, $dateto){
+        if(strcasecmp($dateremark,"both") == 0 ){
+            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('network','form_user','image_user')->get();
+            $response['mainheading'] = "Created & Updated Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"created") == 0){
+            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('network','form_user','image_user')->get();
+            $response['mainheading'] = "Created Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"updated") == 0){
+            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('network','form_user','image_user')->get();
+            $response['mainheading'] = "Updated Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+    }
+
+
+
+
+
+
+
+
+
     public function getViewStore($id){
         $data['store'] = Store::find($id);
         return view('pages.store.viewstore',$data);
@@ -440,10 +481,11 @@ class StoreController extends Controller
     public function deleteStore($id){
         $store = Store::find($id);
         try{
+            $store->delete();
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
             }
-            $store->delete();
+            
             $response = [
                 "status" => "true",
                 "success_message" => "Store Deleted Successfully"

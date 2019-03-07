@@ -128,7 +128,7 @@ class OfferController extends Controller
     public function deleteOffer($id){
         $offer = Offer::find($id);
         try{
-            $is_offer_deleted = $offer->delete();
+            $offer->delete();
             $response = [
                 "status" => "true",
                 "success_message" => "Offer Deleted Successfully"

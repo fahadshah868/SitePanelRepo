@@ -51,6 +51,8 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addstore','StoreController@getAddStore');
     Route::post('/addstore','StoreController@postAddStore');
     Route::get('/allstores','StoreController@getAllStores');
+    Route::get('/todayallstores','StoreController@getTodayAllStores');
+    Route::get('/filteredstores/{dateremark}/{datefrom}/{dateto}','StoreController@getFilteredStores');
     Route::get('/viewstore/{id}','StoreController@getViewStore');
     Route::get('/updatestoreform/{id}','StoreController@getUpdateStoreForm');
     Route::post('/updatestoreform','StoreController@postUpdateStoreForm');

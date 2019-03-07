@@ -74,6 +74,10 @@
         </div>
     </div>
     <hr>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -339,7 +343,7 @@
                             "<td>"+value.is_topcategory+"</td>"+
                             "<td>"+value.is_popularcategory+"</td>"
                             if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
                             }
                             else{
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
@@ -352,12 +356,15 @@
                                 html = html +
                                 "<td><br>N/A</br></td>"
                             }
+                            if('{{Auth::User()->role}}' == "admin"){
+                                html = html +
+                                "<td>"+value.form_user.username+"</td>"+
+                                "<td>"+value.image_user.username+"</td>"
+                            }
                             html = html +
-                            "<td>"+value.form_user.username+"</td>"+
-                            "<td>"+value.image_user.username+"</td>"+
                             "<td>"+
-                                "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecategory//"+value.id+"' data-categorytitle='{{$category->title}}' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
+                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='{{$category->title}}' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);

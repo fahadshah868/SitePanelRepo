@@ -2,6 +2,7 @@
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
         <div class="date-filter-container" id="date-filter-container">
+            <a href="/todayalloffers" class="btn btn-danger viewitems-header-filter-button" title="Get Today All Offers List"><i class="fas fa-list"></i>Get Today's Offers</a>
             <a href="/alloffers" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
             <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
@@ -73,6 +74,10 @@
         </div>
     </div>
     <hr>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>

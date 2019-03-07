@@ -82,7 +82,7 @@
                                 <a href="/addstore" class="sidebar-suboption">Add Store</a>
                             </li>
                             <li>
-                                <a href="/allstores" class="sidebar-suboption">View Stores</a>
+                                <a href="/todayallstores" class="sidebar-suboption">View Today's Stores</a>
                             </li>
                             <li>
                                 <a href="/allstorecategories" class="sidebar-suboption">View Store Categories</a>

@@ -133,6 +133,7 @@
                     </div>
                 </div>
             </div>
+            @if($store->updated_at != null)
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
@@ -141,6 +142,16 @@
                     </div>
                 </div>
             </div>
+            @else
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Store Updated At</div>
+                        <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field" id="viewstore-action-buttons">
