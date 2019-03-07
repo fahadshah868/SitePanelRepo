@@ -152,7 +152,11 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Updated At</div>
+                        @if($carouseloffer->updated_at != null)
                         <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($carouseloffer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                        @else
+                        <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                        @endif                        
                     </div>
                 </div>
             </div>

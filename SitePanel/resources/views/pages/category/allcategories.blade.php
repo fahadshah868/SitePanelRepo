@@ -350,7 +350,7 @@
                             }
                             if(value.is_topcategory == "yes"){
                                 html = html + 
-                                "<td><img src='{{asset('/')}}"+value.logo_url+"'></td>"
+                                `<td><img src="{{asset("/")}}`+value.logo_url+`"></td>`
                             }
                             else{
                                 html = html +

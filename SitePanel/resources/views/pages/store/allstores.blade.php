@@ -396,7 +396,7 @@
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
                             }
                             html = html +
-                            "<td><img src='{{asset('/')}}"+value.logo_url+"'></td>"
+                            `<td><img src="{{asset("/")}}`+value.logo_url+`"></td>`
                             if('{{Auth::User()->role}}' == "admin"){
                                 html = html +
                                 "<td>"+value.form_user.username+"</td>"+
