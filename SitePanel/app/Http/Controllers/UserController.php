@@ -20,6 +20,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
             $user->status = $request->userstatus;
+            $user->updated_at = null;
             $user->save();
             $response = [
                 "status" => "true",

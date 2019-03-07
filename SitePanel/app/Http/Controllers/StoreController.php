@@ -56,6 +56,7 @@ class StoreController extends Controller
                 $store->logo_url = $store_logo_path;
                 $store->form_user_id = Auth::User()->id;
                 $store->image_user_id = Auth::User()->id;
+                $store->updated_at = null;
                 $store->save();
                 for($category=0; $category< count($formdata->storecategories); $category++){
                     $storecategorygroup = new StoreCategoryGroup;

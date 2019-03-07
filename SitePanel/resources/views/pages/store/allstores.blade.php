@@ -16,6 +16,7 @@
                     <th>Is TopStore</th>
                     <th>Is PopularStore</th>
                     <th>Store Status</th>
+                    <th>Store Logo</th>
                     @if(Auth::User()->role == "admin")
                     <th>Add/Update Form By</th>
                     <th>Add/Update Image By</th>
@@ -65,6 +66,7 @@
                             <button class="header-searchbar-filter-button" id="storestatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
+                    <th></th>
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
@@ -94,11 +96,12 @@
                             <td>{{ $store->is_popularstore }}</td>
                             <td>
                                 @if($store->status == "active")
-                                <span class="active-item">{{ $store->status }}</span>
+                                <span class="active-item">_{{ $store->status }}</span>
                                 @else
                                 <span class="deactive-item">{{ $store->status }}</span>
                                 @endif
                             </td>
+                            <td><img src="{{asset($store->logo_url)}}"></td>
                             @if(Auth::User()->role == "admin")
                             <td>{{ $store->form_user->username }}</td>
                             <td>{{ $store->image_user->username }}</td>

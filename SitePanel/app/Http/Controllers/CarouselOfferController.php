@@ -52,6 +52,7 @@ class CarouselOfferController extends Controller
             $carouseloffer->image_url = $carousel_image_path;
             $carouseloffer->form_user_id = Auth::User()->id;
             $carouseloffer->image_user_id = Auth::User()->id;
+            $carouseloffer->updated_at = null;
             $carouseloffer->save();
         }
         $response = [

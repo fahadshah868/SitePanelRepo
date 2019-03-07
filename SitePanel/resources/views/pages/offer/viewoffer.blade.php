@@ -149,12 +149,21 @@
                 <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($offer->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
             </div>
         </div>
+        @if($offer->updated_at != null)
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer Updated At</div>
                 <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($offer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
             </div>
         </div>
+        @else
+        <div class="col-sm-6">
+            <div class="form-field">
+                <div class="form-field-heading">Offer Updated At</div>
+                <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+            </div>
+        </div>
+        @endif
     </div>
     <div class="row">
         <div class="col-sm-12">

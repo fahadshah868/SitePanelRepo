@@ -127,7 +127,7 @@
                             @endif
                             <td>
                                 @if($carouseloffer->status == "active")
-                                <span class="active-item">{{ $carouseloffer->status }}</span>
+                                <span class="active-item">_{{ $carouseloffer->status }}</span>
                                 @else
                                 <span class="deactive-item">{{ $carouseloffer->status }}</span>
                                 @endif

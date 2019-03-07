@@ -39,6 +39,7 @@ class OfferController extends Controller
         $offer->is_verified = $request->offer_is_verified;
         $offer->status = $request->offerstatus;
         $offer->user_id = Auth::User()->id;
+        $offer->updated_at = null;
         $offer->save();
         $response = [
             "status" => "true",
@@ -76,7 +77,6 @@ class OfferController extends Controller
         }
         else if(strcasecmp($dateremark,"updated") == 0){
             $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->whereNotBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('store','category','user')->get();
             $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";

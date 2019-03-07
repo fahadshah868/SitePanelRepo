@@ -44,6 +44,7 @@ class CategoryController extends Controller
             }
             $category->form_user_id = Auth::User()->id;
             $category->image_user_id = Auth::User()->id;
+            $category->updated_at = null;
             $category->save();
             $response = [
                 "status" => "true",

@@ -27,7 +27,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;">New Created Record
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
                                             </label>
                                         </div>
                                     </div>
@@ -41,7 +41,7 @@
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="both" name="dateremark" style="margin-right: 4px;" checked>Both
+                                                <input type="radio" value="both" name="dateremark" style="margin-right: 4px;">Both
                                             </label>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@
                     <td>{{ $offer->is_verified }}</td>
                     <td>
                         @if($offer->status == "active")
-                        <span class="active-item">{{ $offer->status }}</span>
+                        <span class="active-item">_{{ $offer->status }}</span>
                         @else
                         <span class="deactive-item">{{ $offer->status }}</span>
                         @endif

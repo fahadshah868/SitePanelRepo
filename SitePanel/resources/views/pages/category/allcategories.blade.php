@@ -68,7 +68,7 @@
                         <td>{{ $category->is_popularcategory }}</td>
                         <td>
                             @if($category->status == "active")
-                            <span class="active-item">{{ $category->status }}</span>
+                            <span class="active-item">_{{ $category->status }}</span>
                             @else
                             <span class="deactive-item">{{ $category->status }}</span>
                             @endif

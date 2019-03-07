@@ -19,6 +19,7 @@ class NetworkController extends Controller
             $network->title = $request->networktitle;
             $network->status = $request->networkstatus;
             $network->user_id = Auth::User()->id;
+            $network->updated_at = null;
             $network->save();
             $response = [
                 "status" => "true",
