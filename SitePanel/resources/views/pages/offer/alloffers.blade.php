@@ -2,7 +2,7 @@
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span></div>
         <div class="date-filter-container" id="date-filter-container">
-            <a href="/alloffers" class="btn btn-danger all-offers-filter" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
+            <a href="/alloffers" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
             <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
@@ -428,11 +428,11 @@
                 clientSideFilter();
             }
         });
+        //filter offer by date range
         $("#date-filter-container a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
-        //filter offer by date range
         $("#cancel_modal_button").click(function(){
             $("#daterangeofferfilterform").trigger("reset");
             $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
@@ -468,7 +468,6 @@
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
                         $("#viewitems-main-heading").html(data.mainheading);
-                        $("#viewitems-main-heading-count").html("("+data.offerscount+")");
                         $.each(data.filteredoffers, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.store.title+"</td>"+

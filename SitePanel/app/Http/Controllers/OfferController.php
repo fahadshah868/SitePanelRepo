@@ -65,21 +65,21 @@ class OfferController extends Controller
             ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('store','category','user')->get();
-            $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Filtered Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
         else if(strcasecmp($dateremark,"created") == 0){
             $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('store','category','user')->get();
-            $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Filtered Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
         else if(strcasecmp($dateremark,"updated") == 0){
             $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
             ->orderBy('id','DESC')
             ->with('store','category','user')->get();
-            $response['mainheading'] = "Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            $response['mainheading'] = "Filtered Offers (".count($response['filteredoffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
             return response()->json($response);
         }
     }

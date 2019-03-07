@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Network;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class NetworkController extends Controller
 {
@@ -39,6 +40,30 @@ class NetworkController extends Controller
         $data['allnetworks'] = Network::orderBy('id', 'DESC')->get();
         $data['networkscount'] = count($data['allnetworks']);
         return view('pages.network.allnetworks',$data);
+    }
+    public function getFilteredNetworks($dateremark, $datefrom, $dateto){
+        if(strcasecmp($dateremark,"both") == 0 ){
+            $response['filterednetworks'] = Network::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('user')->get();
+            $response['mainheading'] = "Created & Updated Networks (".count($response['filterednetworks'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"created") == 0){
+            $response['filterednetworks'] = Network::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('user')->get();
+            $response['mainheading'] = "Created Networks (".count($response['filterednetworks'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
+        else if(strcasecmp($dateremark,"updated") == 0){
+            $response['filterednetworks'] = Network::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with('user')->get();
+            $response['mainheading'] = "Updated Networks (".count($response['filterednetworks'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
+            return response()->json($response);
+        }
     }
     public function getViewNetwork($id){
         $data['network'] = Network::find($id);

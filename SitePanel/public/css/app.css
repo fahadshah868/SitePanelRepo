@@ -18215,7 +18215,7 @@ label.error {
           flex-direction: row;
 }
 
-.all-offers-filter {
+.viewitems-header-filter-button {
   font-size: 13px;
   font-weight: 500;
   margin-right: 10px;
@@ -18230,7 +18230,7 @@ label.error {
   margin-right: 5px;
 }
 
-.all-offers-filter .fa-list {
+.viewitems-header-filter-button .fa-list {
   margin-right: 5px;
 }
 

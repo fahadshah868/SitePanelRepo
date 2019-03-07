@@ -41,6 +41,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addnetwork','NetworkController@getAddNetwork');
     Route::post('/addnetwork','NetworkController@postAddNetwork');
     Route::get('/allnetworks','NetworkController@getAllNetworks');
+    Route::get('/filterednetworks/{dateremark}/{datefrom}/{dateto}','NetworkController@getFilteredNetworks');
     Route::get('/viewnetwork/{id}','NetworkController@getViewNetwork');
     Route::get('/updatenetwork/{id}','NetworkController@getUpdateNetwork');
     Route::post('/updatenetwork','NetworkController@postUpdateNetwork');

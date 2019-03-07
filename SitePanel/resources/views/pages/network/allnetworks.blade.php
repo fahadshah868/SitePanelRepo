@@ -1,5 +1,77 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
+    <div class="viewitems-header-container">
+        <div class="viewitems-main-heading" id="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="date-filter-container" id="date-filter-container">
+            <a href="/allnetworks" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Networks</a>
+            <button class="btn btn-danger date-range-offer-filter" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            {{--popup to update image--}}
+            <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form id="daterangenetworkfilterform" action="#" method="#">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="padding: 30px;">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Remark</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-field">
+                                            <label class="form-field-radiobutton-remarks-label">
+                                                <input type="radio" value="both" name="dateremark" style="margin-right: 4px;">Both
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date From</div>
+                                            <input type="text" id="offer_datefrom" name="offer_datefrom" class="form-control form-field-text readonly-bg-color" readonly placeholder="select From date" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-field">
+                                            <div class="form-field-heading">Select Date To</div>
+                                            <input type="text" id="offer_dateto" name="offer_dateto" class="form-control form-field-text readonly-bg-color" readonly placeholder="select to date" autocomplete="off"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success form-button" id="cancel_modal_button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
+                                <input type="submit" class="btn btn-primary form-button" value="Search">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- end popup --}}
+        </div>
+    </div>
     <hr>
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
@@ -52,8 +124,8 @@
                         <td>{{ $network->user->username}}</td>
                         @endif
                         <td>
-                            <a href="/viewnetwork/{{$network->id}}" id="viewnetwork" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/viewnetwork/{{$network->id}}" id="viewnetwork" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                            <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                     @endforeach
@@ -88,6 +160,49 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        var dates = $("#offer_datefrom, #offer_dateto").datepicker({
+            changeYear: true,
+            changeMonth: true,
+            showButtonPanel: true,
+            numberOfMonths: 2,
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(selectedDate) {
+                var option = this.id == "offer_datefrom" ? "minDate" : "maxDate",
+                instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
+                dates.not(this).datepicker("option", option, date);
+            },
+            beforeShow: function( input ) {
+                setTimeout(function() {
+                    var buttonPane = $( input )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            },
+            onChangeMonthYear: function( year, month, instance ) {
+                setTimeout(function() {
+                    var buttonPane = $( instance )
+                        .datepicker( "widget" )
+                        .find( ".ui-datepicker-buttonpane" );
+
+                    $( "<button>", {
+                        text: "Clear",
+                        click: function() {
+                        //Code to clear your date field (text box, read only field etc.) I had to remove the line below and add custom code here
+                            $.datepicker._clearDate( instance.input );
+                        }
+                    }).appendTo( buttonPane ).addClass("ui-datepicker-clear ui-state-default ui-priority-primary ui-corner-all");
+                }, 1 );
+            }
+        });
         //client side filter
         $(".header-searchbar-filter").bind('keyup input propertychange',function(){
             clientSideFilter();
@@ -112,8 +227,74 @@
                 clientSideFilter();
             }
         });
+        //filter offer by date range
+        $("#date-filter-container a").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
+        });
+        $("#cancel_modal_button").click(function(){
+            $("#daterangenetworkfilterform").trigger("reset");
+            $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
+        });
+        $("#daterangenetworkfilterform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                offer_datefrom: "required",
+                offer_dateto: "required",
+                dateremark: "required",
+            },
+            messages: {
+                offer_datefrom: "please select from date",
+                offer_dateto: "please select to date",
+                dateremark: "please select remark",
+            },
+            submitHandler: function(form) {
+                var _dateremark = $("input[name='dateremark']:checked"). val();
+                var _offer_datefrom = $("#offer_datefrom").val();
+                var _offer_dateto = $("#offer_dateto").val();
+                $("#daterangenetworkfilterform").trigger("reset");
+                $("#offer_datefrom , #offer_dateto").datepicker("option" , {minDate: null,maxDate: null});
+                $(".alert").css('display','none');
+                $.ajax({
+                    method: "GET",
+                    url: "/filterednetworks/"+_dateremark+"/"+_offer_datefrom+"/"+_offer_dateto,
+                    data: null,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        $("#daterangemodal").modal('toggle');
+                        $("#tablebody").empty();
+                        $("#viewitems-main-heading").html(data.mainheading);
+                        $.each(data.filterednetworks, function (index, value) {
+                            var html = "<tr>"+
+                            "<td>"+value.title+"</td>"
+                            if(value.status == "active"){
+                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            }
+                            else{
+                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                            }
+                            html = html +
+                            "<td>"+value.user.username+"</td>"+
+                            "<td>"+
+                                "<a href='/viewnetwork/"+value.id+"' id='viewnetwork' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
+                                "<a href='/deletenetwork/"+value.id+"' id='deletenetwork' data-networktitle='"+value.title+"' data-networkstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                            "</td>"+
+                            "</tr>";
+                            $("#tablebody").append(html);
+                        });
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
+            }
+        });
         //navigation buttons actions
-        $("#tablebody tr td a").click(function(event){
+        $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
             if($(this).attr("id") == "viewnetwork"){
                 $("#panel-body-container").load($(this).attr("href"));
