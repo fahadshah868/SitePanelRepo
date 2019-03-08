@@ -364,7 +364,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='{{$category->title}}' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);

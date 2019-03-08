@@ -61,7 +61,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field" id="viewnetwork-action-buttons">
-                <a href="/allnetworks" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
+                <a href="{{Session::get('url')}}" id="backtonetworks" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Networks</a>
                 <a href="/updatenetwork/{{$network->id}}" class="btn btn-primary form-button" id="updatenetwork">Update Network<i class="fa fa-forward"></i></a>
             </div>
         </div>

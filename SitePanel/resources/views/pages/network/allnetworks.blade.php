@@ -1,6 +1,7 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">All Networks<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span>
+        </div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/allnetworks" class="btn btn-danger viewitems-header-filter-button" title="Get All Networks List"><i class="fas fa-list"></i>Get All Networks</a>
             <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Networks" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>

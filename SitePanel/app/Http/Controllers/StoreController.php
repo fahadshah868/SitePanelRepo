@@ -124,15 +124,6 @@ class StoreController extends Controller
             return response()->json($response);
         }
     }
-
-
-
-
-
-
-
-
-
     public function getViewStore($id){
         $data['store'] = Store::find($id);
         return view('pages.store.viewstore',$data);
