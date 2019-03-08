@@ -168,7 +168,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field" id="viewoffer-action-buttons">
-                <a href="/alloffers" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
+                <a href="{{Session::get('url')}}" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offers</a>
                 <a href="/updateoffer/{{$offer->id}}" class="btn btn-primary form-button" id="updateoffer">Update Offer<i class="fa fa-forward"></i></a>
             </div>
         </div>

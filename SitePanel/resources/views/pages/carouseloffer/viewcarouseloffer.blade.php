@@ -163,7 +163,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field" id="viewcarouseloffer-action-buttons">
-                        <a href="/allcarouseloffers" id="backtocarouseloffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offers</a>
+                        <a href="{{Session::get('url')}}" id="backtocarouseloffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Carousel Offers</a>
                         <a href="/updatecarouselofferform/{{$carouseloffer->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
                     </div>
                 </div>

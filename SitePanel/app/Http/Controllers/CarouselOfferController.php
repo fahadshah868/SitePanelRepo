@@ -63,41 +63,80 @@ class CarouselOfferController extends Controller
     }
     public function getTodayAllCarouselOffers(){
         $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
-        $data['carouselofferscount'] = count($data['allcarouseloffers']);
         $data['mainheading'] = "Today's Carousel Offers";
+        $data['carouselofferscount'] = count($data['allcarouseloffers']);
+        $data['filtereddaterange'] = "";
+        Session::put(['url'=>'/todayallcarouseloffers','flag'=>1]);
         return view('pages.carouseloffer.allcarouseloffers',$data);
     }
     public function getAllCarouselOffers(){
         $data['allcarouseloffers'] = CarouselOffer::orderBy('id', 'DESC')->get();
-        $data['carouselofferscount'] = count($data['allcarouseloffers']);
         $data['mainheading'] = "All Carousel Offers";
+        $data['carouselofferscount'] = count($data['allcarouseloffers']);
+        $data['filtereddaterange'] = "";
+        Session::put(['url'=>'/allcarouseloffers','flag'=>1]);
         return view('pages.carouseloffer.allcarouseloffers',$data);
     }
     public function getFilteredCarouselOffers($dateremark, $datefrom, $dateto){
-        if(strcasecmp($dateremark,"both") == 0 ){
-            $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('store','form_user','image_user')->get();
-            $response['mainheading'] = "Created & Updated Offers (".count($response['filteredcarouseloffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
+        Session::put('url','/filteredcarouseloffers/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
+        if(Session::get('flag') == 1){
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $response['mainheading'] = 'Created & Updated Carousel Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredcarouseloffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $response['mainheading'] = 'Created Carousel Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredcarouseloffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $response['mainheading'] = 'Updated Carousel Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredcarouseloffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
         }
-        else if(strcasecmp($dateremark,"created") == 0){
-            $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('store','form_user','image_user')->get();
-            $response['mainheading'] = "Created Offers (".count($response['filteredcarouseloffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
-        }
-        else if(strcasecmp($dateremark,"updated") == 0){
-            $response['filteredcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('store','form_user','image_user')->get();
-            $response['mainheading'] = "Updated Offers (".count($response['filteredcarouseloffers'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
+        else{
+            Session::put('flag',1);
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $data['allcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $data['mainheading'] = "Created & Updated Carousel Offers";
+                $data['carouselofferscount'] = count($data['allcarouseloffers']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.carouseloffer.allcarouseloffers',$data);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $data['allcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $data['mainheading'] = "Created Carousel Offers";
+                $data['carouselofferscount'] = count($data['allcarouseloffers']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.carouseloffer.allcarouseloffers',$data);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $data['allcarouseloffers'] = CarouselOffer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('store','form_user','image_user')->get();
+                $data['mainheading'] = "Updated Carousel Offers";
+                $data['carouselofferscount'] = count($data['allcarouseloffers']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.carouseloffer.allcarouseloffers',$data);
+            }
         }
     }
     public function getViewCarouselOffer($id){
+        Session::put('flag',-1);
         $data['carouseloffer'] = CarouselOffer::find($id);
         return view('pages.carouseloffer.viewcarouseloffer',$data);
     }
