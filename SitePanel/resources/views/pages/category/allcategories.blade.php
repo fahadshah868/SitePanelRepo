@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{ $mainheading }}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/todayallcategories" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Categories List"><i class="fas fa-list"></i>Get Today All Categories</a>
             <a href="/allcategories" class="btn btn-danger viewitems-header-filter-button" title="Get All Categories List"><i class="fas fa-list"></i>Get All Categories</a>

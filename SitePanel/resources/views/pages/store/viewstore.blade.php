@@ -155,7 +155,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field" id="viewstore-action-buttons">
-                        <a href="/allstores" id="backtostores" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Stores</a>
+                        <a href="{{Session::get('url')}}" id="backtostores" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Stores</a>
                         <a href="/updatestoreform/{{$store->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
                     </div>
                 </div>

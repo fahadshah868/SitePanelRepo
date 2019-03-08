@@ -71,6 +71,7 @@ class NetworkController extends Controller
             }
         }
         else{
+            Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
                 $data['allnetworks'] = Network::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])

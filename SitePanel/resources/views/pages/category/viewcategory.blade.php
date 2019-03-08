@@ -137,7 +137,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field" id="viewcategory-action-buttons">
-                        <a href="/allcategories" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Categories</a>
+                        <a href="{{Session::get('url')}}" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Categories</a>
                         <a href="/updatecategoryform/{{$category->id}}" class="btn btn-primary form-button">Update Form<i class="fa fa-forward"></i></a>
                     </div>
                 </div>

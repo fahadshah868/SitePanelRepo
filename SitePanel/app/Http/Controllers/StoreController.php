@@ -90,41 +90,80 @@ class StoreController extends Controller
     }
     public function getAllStores(){
         $data['allstores'] = Store::orderBy('id', 'DESC')->get();
-        $data['storescount'] = count($data['allstores']);
         $data['mainheading'] = "All Stores";
+        $data['storescount'] = count($data['allstores']);
+        $data['filtereddaterange'] = "";
+        Session::put(['url'=>'/allstores','flag'=>1]);
         return view('pages.store.allstores', $data);
     }
     public function getTodayAllStores(){
         $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
-        $data['storescount'] = count($data['allstores']);
         $data['mainheading'] = "Today's Stores";
+        $data['storescount'] = count($data['allstores']);
+        $data['filtereddaterange'] = "";
+        Session::put(['url'=>'/todayallstores','flag'=>1]);
         return view('pages.store.allstores',$data);
     }
     public function getFilteredStores($dateremark, $datefrom, $dateto){
-        if(strcasecmp($dateremark,"both") == 0 ){
-            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('network','form_user','image_user')->get();
-            $response['mainheading'] = "Created & Updated Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
+        Session::put('url','/filteredstores/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
+        if(Session::get('flag') == 1){
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $response['mainheading'] = 'Created & Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $response['mainheading'] = 'Created Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $response['mainheading'] = 'Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
         }
-        else if(strcasecmp($dateremark,"created") == 0){
-            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('network','form_user','image_user')->get();
-            $response['mainheading'] = "Created Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
-        }
-        else if(strcasecmp($dateremark,"updated") == 0){
-            $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-            ->orderBy('id','DESC')
-            ->with('network','form_user','image_user')->get();
-            $response['mainheading'] = "Updated Stores (".count($response['filteredstores'])."<span id='filtered_row_count'></span>) From (<span class='filtered_daterange'>".$datefrom."</span> To <span class='filtered_daterange'>".$dateto."</span>)";
-            return response()->json($response);
+        else{
+            Session::put('flag',1);
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $data['mainheading'] = "Created & Updated Stores";
+                $data['storescount'] = count($data['allstores']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.store.allstores', $data);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $data['mainheading'] = "Created Stores";
+                $data['storescount'] = count($data['allstores']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.store.allstores', $data);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('network','form_user','image_user')->get();
+                $data['mainheading'] = "Updated Stores";
+                $data['storescount'] = count($data['allstores']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.store.allstores', $data);
+            }
         }
     }
     public function getViewStore($id){
+        Session::put('flag',-1);
         $data['store'] = Store::find($id);
         return view('pages.store.viewstore',$data);
     }
