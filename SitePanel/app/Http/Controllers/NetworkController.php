@@ -42,7 +42,7 @@ class NetworkController extends Controller
         $data['networkscount'] = count($data['allnetworks']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/allnetworks','flag'=>1]);
-        return view('pages.network.allnetworks',$data);
+        return view('pages.network.viewnetworks',$data);
     }
     public function getFilteredNetworks($dateremark, $datefrom, $dateto){
         Session::put('url','/filterednetworks/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
@@ -80,7 +80,7 @@ class NetworkController extends Controller
                 $data['mainheading'] = "Created & Updated Networks";
                 $data['networkscount'] = count($data['allnetworks']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.network.allnetworks',$data);
+                return view('pages.network.viewnetworks',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
                 $data['allnetworks'] = Network::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -89,7 +89,7 @@ class NetworkController extends Controller
                 $data['mainheading'] = "Created Networks";
                 $data['networkscount'] = count($data['allnetworks']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.network.allnetworks',$data);
+                return view('pages.network.viewnetworks',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
                 $data['allnetworks'] = Network::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -98,7 +98,7 @@ class NetworkController extends Controller
                 $data['mainheading'] = "Updated Networks";
                 $data['networkscount'] = count($data['allnetworks']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.network.allnetworks',$data);
+                return view('pages.network.viewnetworks',$data);
             }
         }
     }

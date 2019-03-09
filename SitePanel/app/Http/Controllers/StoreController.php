@@ -94,7 +94,7 @@ class StoreController extends Controller
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/allstores','flag'=>1]);
-        return view('pages.store.allstores', $data);
+        return view('pages.store.viewstores', $data);
     }
     public function getTodayAllStores(){
         $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
@@ -102,7 +102,7 @@ class StoreController extends Controller
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/todayallstores','flag'=>1]);
-        return view('pages.store.allstores',$data);
+        return view('pages.store.viewstores',$data);
     }
     public function getFilteredStores($dateremark, $datefrom, $dateto){
         Session::put('url','/filteredstores/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
@@ -140,7 +140,7 @@ class StoreController extends Controller
                 $data['mainheading'] = "Created & Updated Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.allstores', $data);
+                return view('pages.store.viewstores', $data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
                 $data['allstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -149,7 +149,7 @@ class StoreController extends Controller
                 $data['mainheading'] = "Created Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.allstores', $data);
+                return view('pages.store.viewstores', $data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
                 $data['allstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -158,7 +158,7 @@ class StoreController extends Controller
                 $data['mainheading'] = "Updated Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.allstores', $data);
+                return view('pages.store.viewstores', $data);
             }
         }
     }

@@ -39,7 +39,7 @@ class UserController extends Controller
     public function getAllUsers(){
         $data['allusers'] = User::orderBy('id', 'DESC')->get();
         $data['userscount'] = count($data['allusers']);
-        return view('pages.user.allusers', $data);
+        return view('pages.user.viewusers', $data);
     }
     public function getViewUser($id){
         $data['user'] = User::find($id);

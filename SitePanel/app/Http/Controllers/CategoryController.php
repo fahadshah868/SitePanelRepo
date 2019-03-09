@@ -67,7 +67,7 @@ class CategoryController extends Controller
         $data['categoriescount'] = count($data['allcategories']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/allcategories','flag'=>1]);
-        return view('pages.category.allcategories',$data);
+        return view('pages.category.viewcategories',$data);
     }
     public function getTodayAllCategories(){
         $data['allcategories'] = Category::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
@@ -75,7 +75,7 @@ class CategoryController extends Controller
         $data['categoriescount'] = count($data['allcategories']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/todayallcategories','flag'=>1]);
-        return view('pages.category.allcategories',$data);
+        return view('pages.category.viewcategories',$data);
     }
     public function getFilteredCategories($dateremark, $datefrom, $dateto){
         Session::put('url','/filteredcategories/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
@@ -113,7 +113,7 @@ class CategoryController extends Controller
                 $data['mainheading'] = "Created & Updated Categories";
                 $data['categoriescount'] = count($data['allcategories']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.category.allcategories',$data);
+                return view('pages.category.viewcategories',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
                 $data['allcategories'] = Category::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -122,7 +122,7 @@ class CategoryController extends Controller
                 $data['mainheading'] = "Created Categories";
                 $data['categoriescount'] = count($data['allcategories']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.category.allcategories',$data);
+                return view('pages.category.viewcategories',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
                 $data['allcategories'] = Category::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
@@ -131,7 +131,7 @@ class CategoryController extends Controller
                 $data['mainheading'] = "Updated Categories";
                 $data['categoriescount'] = count($data['allcategories']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.category.allcategories',$data);
+                return view('pages.category.viewcategories',$data);
             }
         }
     }
