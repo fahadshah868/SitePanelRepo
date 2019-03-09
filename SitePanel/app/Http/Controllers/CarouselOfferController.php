@@ -242,6 +242,7 @@ class CarouselOfferController extends Controller
         }
     }
     public function deleteCarouselOffer($id){
+        Session::put('flag',-1);
         $carouseloffer = CarouselOffer::find($id);
         try{
             $carouseloffer->delete();
@@ -250,6 +251,7 @@ class CarouselOfferController extends Controller
             }
             $response = [
                 "status" => "true",
+                "url" => Session::get('url'),
                 "success_message" => "Carousel Offer Deleted Successfully"
             ];
             return response()->json($response);

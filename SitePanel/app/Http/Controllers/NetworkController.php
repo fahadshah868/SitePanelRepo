@@ -151,11 +151,13 @@ class NetworkController extends Controller
         }
     }
     public function deleteNetwork($id){
+        Session::put('flag',-1);
         $network = Network::find($id);
         try{
             $network->delete();
             $response = [
                 "status" => "true",
+                "url" => Session::get('url'),
                 "success_message" => "Network Deleted Successfully"
             ];
             return response()->json($response);

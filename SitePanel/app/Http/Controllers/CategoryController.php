@@ -326,6 +326,7 @@ class CategoryController extends Controller
         }
     }
     public function deleteCategory($id){
+        Session::put('flag',-1);
         $category = Category::find($id);
         try{
             $category->delete();
@@ -334,6 +335,7 @@ class CategoryController extends Controller
             }
             $response = [
                 "status" => "true",
+                "url" => Session::get('url'),
                 "success_message" => "Category Deleted Successfully"
             ];
             return response()->json($response);

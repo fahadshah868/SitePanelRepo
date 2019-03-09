@@ -594,7 +594,7 @@
                                 contentType: "application/json",
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/alloffers");
+                                        $("#panel-body-container").load(data.url);
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);

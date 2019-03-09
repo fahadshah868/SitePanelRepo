@@ -509,15 +509,16 @@ class StoreController extends Controller
         }
     }
     public function deleteStore($id){
+        Session::put('flag',-1);
         $store = Store::find($id);
         try{
             $store->delete();
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
             }
-            
             $response = [
                 "status" => "true",
+                "url" => Session::get('url'),
                 "success_message" => "Store Deleted Successfully"
             ];
             return response()->json($response);

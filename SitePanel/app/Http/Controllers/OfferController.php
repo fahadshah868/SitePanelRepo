@@ -165,11 +165,13 @@ class OfferController extends Controller
         return response()->json($response);
     }
     public function deleteOffer($id){
+        Session::put('flag',-1);
         $offer = Offer::find($id);
         try{
             $offer->delete();
             $response = [
                 "status" => "true",
+                "url" => Session::get('url'),
                 "success_message" => "Offer Deleted Successfully"
             ];
             return response()->json($response);

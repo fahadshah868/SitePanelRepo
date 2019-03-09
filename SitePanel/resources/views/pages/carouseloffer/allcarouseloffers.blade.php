@@ -1,5 +1,5 @@
 <div class="viewitems-main-container">
-<div class="viewitems-header-container">
+    <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $carouselofferscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/todayallcarouseloffers" class="btn btn-danger viewitems-header-filter-button" title="Get Today All Carousel Offers List"><i class="fas fa-list"></i>Get Today's Carousel Offers</a>
@@ -178,7 +178,7 @@
                                 @endif
                             </td>
                             <td>
-                            @if($carouseloffer->starting_date <= config('constants.today_date') && $carouseloffer->expiry_date >= config('constants.today_date'))
+                            @if($carouseloffer->starting_date <= config('constants.today_date') && ($carouseloffer->expiry_date >= config('constants.today_date') || $carouseloffer->expiry_date == null))
                             <span class="available-offer">Available</span>
                             @elseif($carouseloffer->starting_date > config('constants.today_date'))
                             <span class="pending-offer">Pending</span>
@@ -499,7 +499,7 @@
                                 cache: false,
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allcarouseloffers");
+                                        $("#panel-body-container").load(data.url);
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);
