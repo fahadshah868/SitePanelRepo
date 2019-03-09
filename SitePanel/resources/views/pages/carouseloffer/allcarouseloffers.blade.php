@@ -388,7 +388,6 @@
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
                         $("#viewitems-main-heading").html(data.mainheading);
-                        $("#viewitems-main-heading-count").html("("+data.offerscount+")");
                         $.each(data.filteredcarouseloffers, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.store.title+"</td>"+

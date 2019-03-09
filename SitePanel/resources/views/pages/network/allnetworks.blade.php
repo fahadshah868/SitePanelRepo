@@ -1,4 +1,5 @@
 <div class="viewitems-main-container">
+"{{Session::get('url')}}"
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $networkscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
@@ -338,7 +339,7 @@
                                 contentType: "application/json",
                                 success: function(data){
                                     if(data.status == "true"){
-                                        $("#panel-body-container").load("/allnetworks");
+                                        $("#panel-body-container").load("{{Session::get('url')}}");
                                     }
                                     else{
                                         $("#alert-danger-message-area").html(data.error_message);
