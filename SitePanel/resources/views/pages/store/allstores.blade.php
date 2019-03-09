@@ -91,8 +91,8 @@
                     <th>Store Status</th>
                     <th>Store Logo</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update Form By</th>
-                    <th>Add/Update Image By</th>
+                    <th>Added/Updated Form By</th>
+                    <th>Added/Updated Image By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -143,14 +143,14 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="store_form_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="store_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="store_form_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="store_form_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="store_image_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="store_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="store_image_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="store_image_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -203,8 +203,8 @@
             var istopstore_val = $.trim($("#istopstore").val()).replace(/ +/g, ' ').toLowerCase();
             var ispopularstore_val = $.trim($("#ispopularstore").val()).replace(/ +/g, ' ').toLowerCase();
             var storestatus_val = $.trim($("#storestatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var store_form_add_update_by_val = $.trim($("#store_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
-            var store_image_add_update_by_val = $.trim($("#store_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var store_form_added_updated_by_val = $.trim($("#store_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var store_image_added_updated_by_val = $.trim($("#store_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var storeprimaryurl_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
@@ -213,8 +213,8 @@
                 var istopstore_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
                 var ispopularstore_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
                 var storestatus_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
-                var store_form_add_update_by_col = $(this).find('td:nth-child(8)').text().replace(/\s+/g, ' ').toLowerCase();
-                var store_image_add_update_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
+                var store_form_added_updated_by_col = $(this).find('td:nth-child(8)').text().replace(/\s+/g, ' ').toLowerCase();
+                var store_image_added_updated_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~storetitle_col.indexOf(storetitle_val) || 
                         !~storeprimaryurl_col.indexOf(storeprimaryurl_val) || 
                         !~storenetwork_col.indexOf(storenetwork_val) || 
@@ -222,8 +222,8 @@
                         !~istopstore_col.indexOf(istopstore_val) || 
                         !~ispopularstore_col.indexOf(ispopularstore_val) ||
                         !~storestatus_col.indexOf(storestatus_val) || 
-                        !~store_form_add_update_by_col.indexOf(store_form_add_update_by_val) || 
-                        !~store_image_add_update_by_col.indexOf(store_image_add_update_by_val);
+                        !~store_form_added_updated_by_col.indexOf(store_form_added_updated_by_val) || 
+                        !~store_image_added_updated_by_col.indexOf(store_image_added_updated_by_val);
             }).hide();
             if($("#storetitle").val() != "" || 
                 $("#storeprimaryurl").val() != "" || 
@@ -232,8 +232,8 @@
                 $("#istopstore").val() != "" || 
                 $("#ispopularstore").val() != "" ||
                 $("#storestatus").val() != "" || 
-                $("#store_form_add_update_by").val() != "" || 
-                $("#store_image_add_update_by").val() != "")
+                $("#store_form_added_updated_by").val() != "" || 
+                $("#store_image_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -299,8 +299,8 @@
             $("#istopstore").val("");
             $("#ispopularstore").val("");
             $("#storestatus").val("");
-            $("#store_form_add_update_by").val("");
-            $("#store_image_add_update_by").val("");
+            $("#store_form_added_updated_by").val("");
+            $("#store_image_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -332,12 +332,12 @@
                 $("#storestatus").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "store_form_add_update_by_clr_btn"){
-                $("#store_form_add_update_by").val("");
+            else if($(this).attr("id") == "store_form_added_updated_by_clr_btn"){
+                $("#store_form_added_updated_by").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "store_image_add_update_by_clr_btn"){
-                $("#store_image_add_update_by").val("");
+            else if($(this).attr("id") == "store_image_added_updated_by_clr_btn"){
+                $("#store_image_added_updated_by").val("");
                 clientSideFilter();
             }
         });

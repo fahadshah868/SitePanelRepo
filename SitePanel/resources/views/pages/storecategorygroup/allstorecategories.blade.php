@@ -16,7 +16,7 @@
                     <th>Store Title</th>
                     <th>Store Categories</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update By</th>
+                    <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -36,8 +36,8 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storecategory_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storecategory_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="storecategory_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="storecategory_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -75,18 +75,18 @@
             var $rows = $('#tablebody tr');
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
             var categorytitle_val = $.trim($("#categorytitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var storecategory_add_update_by_val = $.trim($("#storecategory_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var storecategory_added_updated_by_val = $.trim($("#storecategory_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var categorytitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var storecategory_add_update_by_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storecategory_added_updated_by_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~storetitle_col.indexOf(storetitle_val) || 
                         !~categorytitle_col.indexOf(categorytitle_val) || 
-                        !~storecategory_add_update_by_col.indexOf(storecategory_add_update_by_val)
+                        !~storecategory_added_updated_by_col.indexOf(storecategory_added_updated_by_val)
             }).hide();
             if($("#storetitle").val() != "" || 
                 $("#categorytitle").val() != "" || 
-                $("#storecategory_add_update_by").val() != "")
+                $("#storecategory_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -111,7 +111,7 @@
         $("#clear_all_filters").click(function(){
             $("#storetitle").val("");
             $("#categorytitle").val("");
-            $("#storecategory_add_update_by").val("");
+            $("#storecategory_added_updated_by").val("");
             clientSideFilter();
         });
         
@@ -124,8 +124,8 @@
                 $("#categorytitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "storecategory_add_update_by_clr_btn"){
-                $("#storecategory_add_update_by").val("");
+            else if($(this).attr("id") == "storecategory_added_updated_by_clr_btn"){
+                $("#storecategory_added_updated_by").val("");
                 clientSideFilter();
             }
         });

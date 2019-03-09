@@ -84,7 +84,7 @@
                     <th>Network Title</th>
                     <th>Network Status</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update By</th>
+                    <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -104,8 +104,8 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="network_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="network_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="network_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="network_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -146,14 +146,14 @@
             var $rows = $('#tablebody tr');
             var networktitle_val = $.trim($("#networktitle").val()).replace(/ +/g, ' ').toLowerCase();
             var networkstatus_val = $.trim($("#networkstatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var network_add_update_by_val = $.trim($("#network_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var network_added_updated_by_val = $.trim($("#network_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var networktitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var networkstatus_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var network_add_update_by_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                return !~networktitle_col.indexOf(networktitle_val) || !~networkstatus_col.indexOf(networkstatus_val) || !~network_add_update_by_col.indexOf(network_add_update_by_val);
+                var network_added_updated_by_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~networktitle_col.indexOf(networktitle_val) || !~networkstatus_col.indexOf(networkstatus_val) || !~network_added_updated_by_col.indexOf(network_added_updated_by_val);
             }).hide();
-            if($("#networktitle").val() != "" || $("#networkstatus").val() != "" || $("#network_add_update_by").val() != ""){
+            if($("#networktitle").val() != "" || $("#networkstatus").val() != "" || $("#network_added_updated_by").val() != ""){
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
             else{
@@ -214,7 +214,7 @@
         $("#clear_all_filters").click(function(){
             $("#networktitle").val("");
             $("#networkstatus").val("");
-            $("#network_add_update_by").val("");
+            $("#network_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -226,8 +226,8 @@
                 $("#networkstatus").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "network_add_update_by_clr_btn"){
-                $("#network_add_update_by").val("");
+            else if($(this).attr("id") == "network_added_updated_by_clr_btn"){
+                $("#network_added_updated_by").val("");
                 clientSideFilter();
             }
         });

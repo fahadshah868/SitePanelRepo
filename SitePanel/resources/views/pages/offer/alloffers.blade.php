@@ -96,7 +96,7 @@
                     <th>Status</th>
                     <th>Remark</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update By</th>
+                    <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -182,8 +182,8 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="offer_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -256,7 +256,7 @@
             var verifiedoffer_val = $.trim($("#verifiedoffer").val()).replace(/ +/g, ' ').toLowerCase();
             var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_add_update_by_val = $.trim($("#offer_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_added_updated_by_val = $.trim($("#offer_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var categorytitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
@@ -271,7 +271,7 @@
                 var verifiedoffer_col = $(this).find('td:nth-child(11)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerstatus_col = $(this).find('td:nth-child(12)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerremark_col = $(this).find('td:nth-child(13)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_add_update_by_col = $(this).find('td:nth-child(14)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_added_updated_by_col = $(this).find('td:nth-child(14)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~storetitle_col.indexOf(storetitle_val) || 
                         !~categorytitle_col.indexOf(categorytitle_val) || 
                         !~offertitle_col.indexOf(offertitle_val) || 
@@ -285,7 +285,7 @@
                         !~verifiedoffer_col.indexOf(verifiedoffer_val) ||
                         !~offerstatus_col.indexOf(offerstatus_val) ||
                         !~offerremark_col.indexOf(offerremark_val) ||
-                        !~offer_add_update_by_col.indexOf(offer_add_update_by_val);
+                        !~offer_added_updated_by_col.indexOf(offer_added_updated_by_val);
             }).hide();
             if($("#storetitle").val() != "" || 
                 $("#categorytitle").val() != "" || 
@@ -300,7 +300,7 @@
                 $("#verifiedoffer").val() != "" ||
                 $("#offerstatus").val() != "" ||
                 $("#offerremark").val() != "" ||
-                $("#offer_add_update_by").val() != "")
+                $("#offer_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -372,7 +372,7 @@
             $("#verifiedoffer").val("");
             $("#offerstatus").val("");
             $("#offerremark").val("");
-            $("#offer_add_update_by").val("");
+            $("#offer_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -428,8 +428,8 @@
                 $("#offerremark").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offer_add_update_by_clr_btn"){
-                $("#offer_add_update_by").val("");
+            else if($(this).attr("id") == "offer_added_updated_by_clr_btn"){
+                $("#offer_added_updated_by").val("");
                 clientSideFilter();
             }
         });

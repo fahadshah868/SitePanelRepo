@@ -88,8 +88,8 @@
                     <th>Category Status</th>
                     <th>Category Logo</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update Form By</th>
-                    <th>Add/Update Image By</th>
+                    <th>Added/Updated Form By</th>
+                    <th>Added/Updated Image By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -122,14 +122,14 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="category_form_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="category_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="category_form_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="category_form_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="category_image_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="category_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="category_image_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="category_image_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -182,29 +182,29 @@
             var istopcategory_val = $.trim($("#istopcategory").val()).replace(/ +/g, ' ').toLowerCase();
             var ispopularcategory_val = $.trim($("#ispopularcategory").val()).replace(/ +/g, ' ').toLowerCase();
             var categorystatus_val = $.trim($("#categorystatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var category_form_add_update_by_val = $.trim($("#category_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
-            var category_image_add_update_by_val = $.trim($("#category_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var category_form_added_updated_by_val = $.trim($("#category_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var category_image_added_updated_by_val = $.trim($("#category_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var categorytitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var istopcategory_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
                 var ispopularcategory_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
                 var categorystatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
-                var category_form_add_update_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
-                var category_image_add_update_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                var category_form_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var category_image_added_updated_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~categorytitle_col.indexOf(categorytitle_val) || 
                         !~istopcategory_col.indexOf(istopcategory_val) || 
                         !~ispopularcategory_col.indexOf(ispopularcategory_val) || 
                         !~categorystatus_col.indexOf(categorystatus_val) || 
-                        !~category_form_add_update_by_col.indexOf(category_form_add_update_by_val) || 
-                        !~category_image_add_update_by_col.indexOf(category_image_add_update_by_val);
+                        !~category_form_added_updated_by_col.indexOf(category_form_added_updated_by_val) || 
+                        !~category_image_added_updated_by_col.indexOf(category_image_added_updated_by_val);
             }).hide();
 
             if($("#categorytitle").val() != "" || 
                 $("#istopcategory").val() != "" || 
                 $("#ispopularcategory").val() != "" ||
                 $("#categorystatus").val() != "" || 
-                $("#category_form_add_update_by").val() != "" || 
-                $("#category_image_add_update_by").val() != "")
+                $("#category_form_added_updated_by").val() != "" || 
+                $("#category_image_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -267,8 +267,8 @@
             $("#istopcategory").val("");
             $("#ispopularcategory").val("");
             $("#categorystatus").val("");
-            $("#category_form_add_update_by").val("");
-            $("#category_image_add_update_by").val("");
+            $("#category_form_added_updated_by").val("");
+            $("#category_image_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -288,12 +288,12 @@
                 $("#categorystatus").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "category_form_add_update_by_clr_btn"){
-                $("#category_form_add_update_by").val("");
+            else if($(this).attr("id") == "category_form_added_updated_by_clr_btn"){
+                $("#category_form_added_updated_by").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "category_image_add_update_by_clr_btn"){
-                $("#category_image_add_update_by").val("");
+            else if($(this).attr("id") == "category_image_added_updated_by_clr_btn"){
+                $("#category_image_added_updated_by").val("");
                 clientSideFilter();
             }
         });

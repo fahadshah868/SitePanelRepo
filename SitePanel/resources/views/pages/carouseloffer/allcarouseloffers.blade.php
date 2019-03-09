@@ -91,8 +91,8 @@
                     <th>Offer Remark</th>
                     <th>Image</th>
                     @if(Auth::User()->role == "admin")
-                    <th>Add/Update Form By</th>
-                    <th>Add/Update Image By</th>
+                    <th>Added/Updated Form By</th>
+                    <th>Added/Updated Image By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -143,14 +143,14 @@
                     @if(Auth::User()->role == "admin")
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_form_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_form_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="offer_form_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_form_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_image_add_update_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_image_add_update_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="offer_image_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_image_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -215,8 +215,8 @@
             var offercode_val = $.trim($("#offercode").val()).replace(/ +/g, ' ').toLowerCase();
             var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_form_add_update_by_val = $.trim($("#offer_form_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_image_add_update_by_val = $.trim($("#offer_image_add_update_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_form_added_updated_by_val = $.trim($("#offer_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_image_added_updated_by_val = $.trim($("#offer_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offertitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
@@ -225,8 +225,8 @@
                 var offercode_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerstatus_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerremark_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_form_add_update_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_image_add_update_by_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_form_added_updated_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_image_added_updated_by_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~storetitle_col.indexOf(storetitle_val) || 
                         !~offertitle_col.indexOf(offertitle_val) || 
                         !~offerlocation_col.indexOf(offerlocation_val) || 
@@ -234,8 +234,8 @@
                         !~offercode_col.indexOf(offercode_val) || 
                         !~offerstatus_col.indexOf(offerstatus_val) ||
                         !~offerremark_col.indexOf(offerremark_val) ||
-                        !~offer_form_add_update_by_col.indexOf(offer_form_add_update_by_val) ||
-                        !~offer_image_add_update_by_col.indexOf(offer_image_add_update_by_val);
+                        !~offer_form_added_updated_by_col.indexOf(offer_form_added_updated_by_val) ||
+                        !~offer_image_added_updated_by_col.indexOf(offer_image_added_updated_by_val);
             }).hide();
             if($("#storetitle").val() != "" || 
                 $("#offertitle").val() != "" ||
@@ -244,8 +244,8 @@
                 $("#offercode").val() != "" || 
                 $("#offerstatus").val() != "" ||
                 $("#offerremark").val() != "" ||
-                $("#offer_form_add_update_by").val() != "" ||
-                $("#offer_image_add_update_by").val() != "")
+                $("#offer_form_added_updated_by").val() != "" ||
+                $("#offer_image_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -315,8 +315,8 @@
             $("#offercode").val("");
             $("#offerstatus").val("");
             $("#offerremark").val("");
-            $("#offer_form_add_update_by").val("");
-            $("#offer_image_add_update_by").val("");
+            $("#offer_form_added_updated_by").val("");
+            $("#offer_image_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -348,12 +348,12 @@
                 $("#offerremark").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offer_form_add_update_by_clr_btn"){
-                $("#offer_form_add_update_by").val("");
+            else if($(this).attr("id") == "offer_form_added_updated_by_clr_btn"){
+                $("#offer_form_added_updated_by").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offer_image_add_update_by_clr_btn"){
-                $("#offer_image_add_update_by").val("");
+            else if($(this).attr("id") == "offer_image_added_updated_by_clr_btn"){
+                $("#offer_image_added_updated_by").val("");
                 clientSideFilter();
             }
         });
