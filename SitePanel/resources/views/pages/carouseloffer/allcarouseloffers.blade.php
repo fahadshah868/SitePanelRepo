@@ -168,7 +168,7 @@
                             @if($carouseloffer->code != null)
                                 <td>{{ $carouseloffer->code }}</td>
                             @else
-                                <td><span style="color: #FF0000; font-weight: 600;">Not Required</span></td>
+                                <td><span class="not-required-yet">Not Required</span></td>
                             @endif
                             <td>
                                 @if($carouseloffer->status == "active")
@@ -398,7 +398,7 @@
                                 html = html + "<td>"+value.code+"</td>"
                             }
                             else{
-                                html = html + "<td><span style='color: #FF0000; font-weight: 600;'>Not Required</span></td>"
+                                html = html + "<td><span class='not-required-yet'>Not Required</span></td>"
                             }
                             if(value.status == "active"){
                                 html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
@@ -453,7 +453,7 @@
                     code = $(this).data("offercode")+"<br>";
                 }
                 else{
-                    code = "<span style='color: #FF0000; font-weight: 600'>Not Required</span><br>";
+                    code = "<span class='not-required-yet'>Not Required</span><br>";
                 }
                 if($(this).data("offerstartingdate") <= "{{config('constants.today_date')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.today_date')}}" || $(this).data("offerexpirydate") == null)){
                     offer_remark = "<span class='available-offer'>Available</span><br>"
@@ -465,10 +465,10 @@
                     offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
                 if($(this).data("offerstatus") == "active"){
-                    status = "<span style='color: #117C00; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span class='active-item'>_"+$(this).data("offerstatus")+"</span><br>";
                 }
                 else if($(this).data("offerstatus") == "deactive"){
-                    status = "<span style='color: #FF0000; font-weight: 700'>"+$(this).data("offerstatus")+"</span><br>";
+                    status = "<span class='deactive-item'>"+$(this).data("offerstatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

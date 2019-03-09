@@ -17,7 +17,11 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">Network Status</div>
-                <input type="text" class="form-control form-field-text" value="{{ $network->status }}" readonly/>
+                @if($network->status == "active")
+                <input type="text" class="form-control form-field-text active-item" value="_{{ $network->status }}" readonly/>
+                @else
+                <input type="text" class="form-control form-field-text deactive-item" value="{{ $network->status }}" readonly/>
+                @endif
             </div>
         </div>
     </div>
@@ -53,7 +57,7 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">Network Updated At</div>
-                <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                <input type="text" class="form-control form-field-text not-required-yet" value="Not Yet" readonly/>
             </div>
         </div>
     </div>

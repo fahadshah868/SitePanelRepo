@@ -57,7 +57,7 @@
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer Code</div>
-                <input type="text" class="form-control form-field-text" value="Not Required" style="color: #FF0000; font-weight: 600;" readonly/>
+                <input type="text" class="form-control form-field-text not-required-yet" value="Not Required" readonly/>
             </div>
         </div>
         @endif
@@ -83,7 +83,7 @@
                 @if($offer->expiry_date != null)
                 <input type="text" class="form-control form-field-text" value="{{ \Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y') }}" readonly/>
                 @else
-                <input type="text" class="form-control form-field-text" value="Soon" style="color: #FF0000; font-weight: 600;" readonly/>
+                <input type="text" class="form-control form-field-text not-required-yet" value="Soon" readonly/>
                 @endif
             </div>
         </div>
@@ -132,7 +132,11 @@
         <div class="col-sm-3">
             <div class="form-field">
                 <div class="form-field-heading">Offer Status</div>
-                <input type="text" class="form-control form-field-text" value="{{ $offer->status }}" readonly/>
+                @if($offer->status == "active")
+                <input type="text" class="form-control form-field-text active-item" value="{{ $offer->status }}" readonly/>
+                @else
+                <input type="text" class="form-control form-field-text deactive-item" value="{{ $offer->status }}" readonly/>
+                @endif
             </div>
         </div>
         <div class="col-sm-3">
@@ -160,7 +164,7 @@
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer Updated At</div>
-                <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                <input type="text" class="form-control form-field-text not-required-yet" value="Not Yet" readonly/>
             </div>
         </div>
         @endif

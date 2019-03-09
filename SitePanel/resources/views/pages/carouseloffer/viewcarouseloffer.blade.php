@@ -75,7 +75,7 @@
                         @if($carouseloffer->code != null)
                         <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->code }}" readonly/>
                         @else
-                        <input type="text" class="form-control form-field-text" value="Not Required" style="color: #FF0000; font-weight: 600;" readonly/>
+                        <input type="text" class="form-control form-field-text not-required-yet" value="Not Required" readonly/>
                         @endif
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                         @if($carouseloffer->expiry_date != null)
                         <input type="text" class="form-control form-field-text" value="{{ \Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y') }}" readonly/>
                         @else
-                        <input type="text" class="form-control form-field-text" value="Soon" style="color: #FF0000; font-weight: 600;" readonly/>
+                        <input type="text" class="form-control form-field-text not-required-yet" value="Soon" readonly/>
                         @endif
                     </div>
                 </div>
@@ -124,7 +124,11 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->status }}" readonly/>
+                        @if($carouseloffer->status == "active")
+                        <input type="text" class="form-control form-field-text active-item" value="_{{ $carouseloffer->status }}" readonly/>
+                        @else
+                        <input type="text" class="form-control form-field-text deactive-item" value="{{ $carouseloffer->status }}" readonly/>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -155,7 +159,7 @@
                         @if($carouseloffer->updated_at != null)
                         <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($carouseloffer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
                         @else
-                        <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                        <input type="text" class="form-control form-field-text not-required-yet" value="Not Yet" readonly/>
                         @endif                        
                     </div>
                 </div>

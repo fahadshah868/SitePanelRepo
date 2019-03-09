@@ -428,10 +428,10 @@
                 var url = $(this).attr("href");
                 var status = null;
                 if($(this).data("storestatus") == "active"){
-                    status = "<span style='color: #117C00; font-weight: 600'>"+$(this).data("storestatus")+"</span><br>";
+                    status = "<span class='active-item'>_"+$(this).data("storestatus")+"</span><br>";
                 }
                 else if($(this).data("storestatus") == "deactive"){
-                    status = "<span style='color: #FF0000; font-weight: 600'>"+$(this).data("storestatus")+"</span><br>";
+                    status = "<span class='deactive-item'>"+$(this).data("storestatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

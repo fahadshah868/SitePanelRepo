@@ -105,7 +105,11 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $store->status }}" readonly/>
+                        @if($store->status == "active")
+                        <input type="text" class="form-control form-field-text active-item" value="_{{ $store->status }}" readonly/>
+                        @else
+                        <input type="text" class="form-control form-field-text deactive-item" value="{{ $store->status }}" readonly/>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -147,7 +151,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Updated At</div>
-                        <input type="text" class="form-control form-field-text" value="Not Yet" style="color: #FF0000; font-weight: 600;" readonly/>
+                        <input type="text" class="form-control form-field-text not-required-yet" value="Not Yet" readonly/>
                     </div>
                 </div>
             </div>
