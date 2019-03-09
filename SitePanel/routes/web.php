@@ -100,6 +100,10 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updatecarouselofferimage','CarouselOfferController@postUpdateCarouselOfferImage');
     Route::get('/deletecarouseloffer/{id}','CarouselOfferController@deleteCarouselOffer');
 
+    //blog routes
+    Route::get('/addblog','BlogController@getAddBlog');
+    Route::get('/allblogs','BlogController@getAllBlogs');
+
     //logout
     Route::get('/logout','LogoutController@logout');
 });
