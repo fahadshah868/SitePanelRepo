@@ -102,6 +102,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
 
     //blog routes
     Route::get('/addblog','BlogController@getAddBlog');
+    Route::post('/addblog','BlogController@postAddBlog');
     Route::get('/allblogs','BlogController@getAllBlogs');
 
     //logout
