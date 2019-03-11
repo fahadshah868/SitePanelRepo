@@ -19,6 +19,9 @@ class User extends Authenticatable
     public function store(){
         return $this->hasMany('App\Store');
     }
+    public function blog(){
+        return $this->hasMany('App\Blog');
+    }
     public function category(){
         return $this->hasMany('App\Category');
     }

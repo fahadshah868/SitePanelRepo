@@ -191,6 +191,9 @@
                         if(imagewidth >= 200 && imagewidth === imageheight){
                             $('#imgpath').attr('src', e.target.result);
                         }
+                        else{
+                            $('#imgpath').attr('src', '');
+                        }
                         validator.element(photoinput);
                     };
                 }

@@ -12,10 +12,17 @@
     <form id="addblogform" action="#" method="#">
         <div class="form-container">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Title</div>
-                        <input type="text" class="form-control form-field-text" id="blog_title" name="blog_title" placeholder="Title">
+                        <textarea class="form-control form-field-textarea" id="blog_title" name="blog_title"  placeholder="Title" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Blog Image</div>
+                        <img src="#" id="imgpath" class="blog_image_preview"/>
+                        <input type="file" class="form-field-file" name="blog_image" id="blog_image"  accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>
             </div>
@@ -23,41 +30,46 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Body</div>
-                        <textarea placeholder="Body" id="blog_body" name="blog_body"></textarea>
+                        <textarea id="blog_body" name="blog_body" placeholder="Body"></textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6" id="category-logo-container">
-                    <div class="form-field">
-                        <div class="form-field-heading">Blog Image</div>
-                        <img src="#" id="imgpath" />
-                        <input type="file" class="form-field-file hide" name="blog_image" id="blog_image"  accept=".png, .jpg, .jpeg"/>
+                <div class="col-sm-6">
+                    <input type="submit" value="Add Blog" class="btn btn-primary form-button"/>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field-heading">Blog Status</div>
+                        <div class="form-field-inline-remarks">
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="active" checked>Active
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="deactive">Deactive
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Add Blog" class="btn btn-primary form-button"/>
         </div>
     </form>
 </div>
-
-
-
 <div id="sample"></div>
 <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
 <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script>
 $(document).ready(function(){
-    $('textarea').ckeditor();
-    // $('.textarea').ckeditor(); // if class is prefered.
-
+    $('#blog_body').ckeditor(); // if class is prefered.
     $(".close").click(function(){
         $(".alert").slideUp();
     });
-
     //custom validation method to check image dimensions
     $.validator.addMethod('validateimage', function(value, element) {
-    return ($(element).data('imagewidth') >= 200 && $(element).data('imagewidth') || 0) == $(element).data('imageheight');
+    return ($(element).data('imagewidth') == 900 && $(element).data('imageheight') == 500 || $(element).data('imagewidth')/$(element).data('imageheight') == 1.8 || 0);
     }, "please select the correct image");
     //validation rules
     var validator = $("#addblogform").submit(function(event){
@@ -67,26 +79,27 @@ $(document).ready(function(){
         rules: {
             blog_title: "required",
             blog_body: "required",
-            // blog_image: { required: true, validateimage: true }
+            blogstatus: "required",
+            blog_image: { required: true, validateimage: true }
         },
         messages: {
             blog_title: "please enter blog title",
             blog_body: "please fill blog body",
-            // blog_image: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
+            blogstatus: "please select blog status",
+            blog_image: {required: "please select blog image", validateimage: "image dimensions must be 900 x 500 OR image ratio must be 1.8"}
         },
         submitHandler: function(form) {
             var _blog_title = $("#blog_title").val();
             var _blog_body = $("#blog_body").val();
+            var _blogstatus = $("input[name='blogstatus']:checked").val();
+            var _blog_image = $("#blog_image")[0].files[0];
             var formdata = new FormData();
-            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body});
-            alert(_jsondata);
+            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blogstatus: _blogstatus});
             formdata.append("formdata", _jsondata);
             formdata.append("_token", "{{ csrf_token() }}");
-            if($("#categorylogo").hasClass("show")){
-                var _categorylogo = $("#categorylogo")[0].files[0];
-                formdata.append("categorylogo", _categorylogo);
-            }
+            formdata.append("blog_image", _blog_image);
             $("#addblogform").trigger("reset");
+            $("#blog_body").val("");
             $('#imgpath').attr("src", "");
             $(".alert").css("display","none");
             $.ajax({
@@ -98,19 +111,16 @@ $(document).ready(function(){
                 processData: false,
                 cache: false,
                 success: function(data){
-                    alert(data);
-                    $("#sample").html("hello"+data);
-
-                    // if(data.status == "true"){
-                    //     $("#alert-success-message-area").html(data.success_message);
-                    //     $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
-                    //         $("#alert-success").slideUp(500);
-                    //     });
-                    // }
-                    // else{
-                    //     $("#alert-danger-message-area").html(data.error_message);
-                    //     $("#alert-danger").css("display","block");
-                    // }
+                    if(data.status == "true"){
+                        $("#alert-success-message-area").html(data.success_message);
+                        $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#alert-success").slideUp(500);
+                        });
+                    }
+                    else{
+                        $("#alert-danger-message-area").html(data.error_message);
+                        $("#alert-danger").css("display","block");
+                    }
                 },
                 error: function(){
                     alert("Ajax Error! something went wrong...");
@@ -121,7 +131,7 @@ $(document).ready(function(){
     });
     //set image to imagebox
     function readURL(input) {
-        var photoinput = $("#categorylogo");
+        var photoinput = $("#blog_image");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -132,8 +142,11 @@ $(document).ready(function(){
                     var imageheight = image.height;
                     photoinput.data('imagewidth', imagewidth);
                     photoinput.data('imageheight', imageheight);
-                    if(imagewidth >= 200 && imagewidth === imageheight){
+                    if((imagewidth == 900 && imageheight == 500) || (imagewidth/imageheight == 1.8)){
                         $('#imgpath').attr('src', e.target.result);
+                    }
+                    else{
+                        $('#imgpath').attr('src', '');
                     }
                     validator.element(photoinput);
                 };
@@ -142,7 +155,7 @@ $(document).ready(function(){
         }
     }
     //when select any file
-    $("#categorylogo").change(function(){
+    $("#blog_image").change(function(){
         readURL(this);
     });
 });

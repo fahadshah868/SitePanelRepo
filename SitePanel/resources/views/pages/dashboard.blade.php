@@ -39,7 +39,7 @@
                                 <a href="/adduser" class="sidebar-suboption">Add User</a>
                             </li>
                             <li>
-                                <a href="/allusers" class="sidebar-suboption">View Users</a>
+                                <a href="/allusers" class="sidebar-suboption">View All Users</a>
                             </li>
                         </ul>
                     </li>
@@ -54,7 +54,7 @@
                                 <a href="/addnetwork" class="sidebar-suboption">Add Network</a>
                             </li>
                             <li>
-                                <a href="/allnetworks" class="sidebar-suboption">View Networks</a>
+                                <a href="/allnetworks" class="sidebar-suboption">View All Networks</a>
                             </li>
                         </ul>
                     </li>
@@ -127,7 +127,7 @@
                                 <a href="/addblog" class="sidebar-suboption">Add Blog</a>
                             </li>
                             <li>
-                                <a href="/allblogs" class="sidebar-suboption">View Blogs</a>
+                                <a href="/todayallblogs" class="sidebar-suboption">View Today's Blogs</a>
                             </li>
                         </ul>
                     </li>

@@ -18046,6 +18046,11 @@ ul ul a:hover {
   height: 40px;
 }
 
+.form-field .blog_image_preview {
+  width: 126px;
+  height: 70px;
+}
+
 .modal-body .updateimage {
   width: 150px;
   height: 150px;

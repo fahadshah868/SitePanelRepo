@@ -104,6 +104,8 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/addblog','BlogController@getAddBlog');
     Route::post('/addblog','BlogController@postAddBlog');
     Route::get('/allblogs','BlogController@getAllBlogs');
+    Route::get('/todayallblogs','BlogController@getTodayAllBlogs');
+    Route::get('/filteredblogs/{dateremark}/{datefrom}/{dateto}','BlogController@getFilteredBlogs');
 
     //logout
     Route::get('/logout','LogoutController@logout');
