@@ -131,4 +131,9 @@ class BlogController extends Controller
             }
         }
     }
+    public function getViewBlog($id){
+        Session::put('flag',-1);
+        $data['blog'] = Blog::find($id);
+        return view('pages.blog.viewblog', $data);
+    }
 }
