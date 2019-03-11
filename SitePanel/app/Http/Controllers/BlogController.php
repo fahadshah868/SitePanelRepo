@@ -8,6 +8,7 @@ use Auth;
 use App\Blog;
 use File;
 use Session;
+use Carbon\Carbon;
 
 class BlogController extends Controller
 {
@@ -65,9 +66,69 @@ class BlogController extends Controller
         return view('pages.blog.viewblogs',$data);
     }
     public function getAllBlogs(){
-        return view('pages.blog.viewblogs');
+        $data['allblogs'] = Blog::orderBy('id', 'DESC')->get();
+        $data['mainheading'] = "All Blogs";
+        $data['blogscount'] = count($data['allblogs']);
+        $data['filtereddaterange'] = "";
+        Session::put(['url'=>'/allblogs','flag'=>1]);
+        return view('pages.blog.viewblogs',$data);
     }
     public function getFilteredBlogs($dateremark, $datefrom, $dateto){
-        return view('pages.blog.viewblogs');
+        Session::put('url','/filteredblogs/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
+        if(Session::get('flag') == 1){
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $response['mainheading'] = 'Created & Updated Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $response['mainheading'] = 'Created Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $response['mainheading'] = 'Updated Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
+                return response()->json($response);
+            }
+        }
+        else{
+            Session::put('flag',1);
+            if(strcasecmp($dateremark,"both") == 0 ){
+                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $data['mainheading'] = "Created & Updated Blogs";
+                $data['blogscount'] = count($data['allblogs']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.blog.viewblogs',$data);
+            }
+            else if(strcasecmp($dateremark,"created") == 0){
+                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $data['mainheading'] = "Created Blogs";
+                $data['blogscount'] = count($data['allblogs']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.blog.viewblogs',$data);
+            }
+            else if(strcasecmp($dateremark,"updated") == 0){
+                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                ->orderBy('id','DESC')
+                ->with('form_user','image_user')->get();
+                $data['mainheading'] = "Updated Blogs";
+                $data['blogscount'] = count($data['allblogs']);
+                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+                return view('pages.blog.viewblogs',$data);
+            }
+        }
     }
 }
