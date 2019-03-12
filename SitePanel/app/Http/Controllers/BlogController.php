@@ -169,7 +169,7 @@ class BlogController extends Controller
             do{
                 $flag = true;
                 $imageid = uniqid();
-                $flag = Store::where('logo_url','LIKE','%'."blog-".$imageid.'%')->exists();
+                $flag = Blog::where('image_url','LIKE','%'."blog-".$imageid.'%')->exists();
             }while($flag);
             $blog_image = $request->file('blog_image');
             $resized_blog_image = Image::make($blog_image);

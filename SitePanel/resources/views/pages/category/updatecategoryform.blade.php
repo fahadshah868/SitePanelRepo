@@ -155,7 +155,7 @@
                         cache: false,
                         success: function(data){
                             if(data.status == "true"){
-                                $("#panel-body-container").load('/viewcategory/'+data.id);
+                                $("#panel-body-container").load('/viewcategory/'+data.categoryid);
                             }
                             else{
                                 $("#alert-danger-message-area").html(data.error_message);

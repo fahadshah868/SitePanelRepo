@@ -5,6 +5,10 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
             <div class="update-image-container store_image_preview_container">
@@ -231,6 +235,7 @@
                             });
                         }
                         else{
+                            $("#updateblogimagemodal").modal('toggle');
                             $("#alert-danger-message-area").html(data.error_message);
                             $("#alert-danger").css("display","block");
                         }

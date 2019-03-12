@@ -5,6 +5,10 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
             <div class="update-image-container blog_image_preview_container">
@@ -163,7 +167,7 @@
                 var _blogimage = $("#blogimage")[0].files[0];
                 var _jsondata = JSON.stringify({blogid: _blogid});
                 var formdata = new FormData();
-                formdata.append("blogimage", _blogimage);
+                formdata.append("blog_image", _blogimage);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 $('#imgpath').attr("src", "");
@@ -179,13 +183,14 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updateblogimagemodal").modal('toggle');
-                            $("#panel-body-container").load("/viewblog/"+data.id);
+                            $("#panel-body-container").load("/viewblog/"+data.blogid);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }
                         else{
+                            $("#updateblogimagemodal").modal('toggle');
                             $("#alert-danger-message-area").html(data.error_message);
                             $("#alert-danger").css("display","block");
                         }

@@ -163,7 +163,7 @@ class CategoryController extends Controller
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
                 "status" => "true",
-                "id" => $request->categoryid,
+                "categoryid" => $request->categoryid,
                 "success_message" => "Category Updated Successfully"
             ];
             return response()->json($response);
@@ -195,7 +195,7 @@ class CategoryController extends Controller
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "id" => $request->categoryid,
+                    "categoryid" => $request->categoryid,
                     "success_message" => "Category Updated Successfully"
                 ];
                 return response()->json($response);
@@ -226,7 +226,7 @@ class CategoryController extends Controller
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
             $response = [
                 "status" => "true",
-                "id" => $request->categoryid,
+                "categoryid" => $request->categoryid,
                 "success_message" => "Category Updated Successfully"
             ];
             return response()->json($response);
@@ -264,7 +264,7 @@ class CategoryController extends Controller
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
                 $response = [
                     "status" => "true",
-                    "id" => $request->categoryid,
+                    "categoryid" => $request->categoryid,
                     "success_message" => "Category Updated Successfully"
                 ];
                 return response()->json($response);
@@ -312,7 +312,7 @@ class CategoryController extends Controller
             Session::flash("updatecategorylogo_successmessage","Category Logo ".$categorylogo_message." Successfully");
             $response = [
                 "status" => "true",
-                "id" => $formdata->categoryid,
+                "categoryid" => $formdata->categoryid,
                 "success_message" => "Category Logo ".$categorylogo_message." Successfully"
             ];
             return response()->json($response);

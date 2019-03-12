@@ -5,6 +5,10 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-success-message-area"></strong>
     </div>
+    <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
+        <a href="#" class="close" aria-label="close">&times;</a>
+        <strong id="alert-danger-message-area"></strong>
+    </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
             @if($category->is_topcategory == "yes")
@@ -206,13 +210,14 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updatecategorylogomodal").modal('toggle');
-                            $("#panel-body-container").load("/viewcategory/"+data.id);
+                            $("#panel-body-container").load("/viewcategory/"+data.categoryid);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }
                         else{
+                            $("#updateblogimagemodal").modal('toggle');
                             $("#alert-danger-message-area").html(data.error_message);
                             $("#alert-danger").css("display","block");
                         }
