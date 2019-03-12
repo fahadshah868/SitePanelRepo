@@ -48,7 +48,7 @@ class OfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllOffers(){
-        $data['alloffers'] = Offer::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['alloffers'] = Offer::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Offers";
         $data['offerscount'] = count($data['alloffers']);
         $data['filtereddaterange'] = "";

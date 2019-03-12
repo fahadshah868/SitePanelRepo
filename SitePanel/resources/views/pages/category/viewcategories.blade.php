@@ -28,14 +28,14 @@
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Records
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Records
                                             </label>
                                         </div>
                                     </div>
@@ -152,7 +152,7 @@
                         </td>
                         <td>
                             @if($category->is_topcategory == "yes")
-                            <img src="{{ asset($category->logo_url) }}"/>
+                            <img src="{{ asset($category->logo_url) }}" class="category_image_preview"/>
                             @else
                             <b>N/A</b>
                             @endif
@@ -350,7 +350,7 @@
                             }
                             if(value.is_topcategory == "yes"){
                                 html = html + 
-                                `<td><img src="{{asset("/")}}`+value.logo_url+`"></td>`
+                                `<td><img src="{{asset("/")}}`+value.logo_url+`" class='category_image_preview'></td>`
                             }
                             else{
                                 html = html +

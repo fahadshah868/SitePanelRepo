@@ -58,7 +58,7 @@ class BlogController extends Controller
         }
     }
     public function getTodayAllBlogs(){
-        $data['allblogs'] = Blog::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allblogs'] = Blog::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Blogs";
         $data['blogscount'] = count($data['allblogs']);
         $data['filtereddaterange'] = "";
@@ -135,5 +135,88 @@ class BlogController extends Controller
         Session::put('flag',-1);
         $data['blog'] = Blog::find($id);
         return view('pages.blog.viewblog', $data);
+    }
+    public function getUpdatedBlogForm($id){
+        $data['blog'] = Blog::find($id);
+        return view('pages.blog.updateblogform', $data);
+    }
+    public function postUpdatedBlogForm(Request $request){
+        $blog = Blog::find($request->blogid);
+        $blog->title = $request->blog_title;
+        $blog->body = $request->blog_body;
+        $blog->status = $request->blogstatus;
+        $blog->form_user_id = Auth::User()->id;
+        $blog->save();
+        Session::flash("updateblogform_successmessage","Blog Updated Successfully");
+        $response = [
+            "status" => "true",
+            "success_message" => "Blog Updated Successfully",
+            "blogid" => $request->blogid
+        ];
+        return response()->json($response);
+    }
+    public function postUpdatedBlogImage(Request $request){
+        $imageid = null;
+        $formdata = json_decode($request->formdata);
+        $blog = Blog::find($formdata->blogid);
+        if($request->hasFile('blog_image')){
+            if(!File::exists(public_path("images/blog"))){
+                File::makeDirectory(public_path("images/blog", 0777, true, true));
+            }
+            if(File::exists($blog->image_url)){
+                File::delete($blog->image_url);
+            }
+            do{
+                $flag = true;
+                $imageid = uniqid();
+                $flag = Store::where('logo_url','LIKE','%'."blog-".$imageid.'%')->exists();
+            }while($flag);
+            $blog_image = $request->file('blog_image');
+            $resized_blog_image = Image::make($blog_image);
+            $resized_blog_image->resize(900, 500);
+            $blog_image_name = "blog-".$imageid.".".$blog_image->getClientOriginalExtension();
+            $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
+            $blog_image_path = 'images/blog/'.$blog_image_name;
+            $blog->image_url = $blog_image_path;
+            $blog->image_user_id = Auth::User()->id;
+            $blog->save();
+            Session::flash("updateblogimage_successmessage","Blog Image Updated Successfully");
+            $response = [
+                "status" => "true",
+                "success_message" => "Blog Image Updated Successfully",
+                "blogid" => $formdata->blogid
+            ];
+            return response()->json($response);
+        }
+        else{
+            $response = [
+                "status" => "false",
+                "error_message" => "Error! Blog Image Not Found"
+            ];
+            return response()->json($response);
+        }
+    }
+    public function deleteBlog($id){
+        Session::put('flag',-1);
+        $blog = Blog::find($id);
+        try{
+            $blog->delete();
+            if(File::exists($blog->image_url)){
+                File::delete($blog->image_url);
+            }
+            $response = [
+                "status" => "true",
+                "url" => Session::get('url'),
+                "success_message" => "Blog Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => $blog->title."! Sorry, You Cannot Delete This Blog Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
 }

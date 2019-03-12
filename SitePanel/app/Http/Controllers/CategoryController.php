@@ -70,7 +70,7 @@ class CategoryController extends Controller
         return view('pages.category.viewcategories',$data);
     }
     public function getTodayAllCategories(){
-        $data['allcategories'] = Category::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allcategories'] = Category::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Categories";
         $data['categoriescount'] = count($data['allcategories']);
         $data['filtereddaterange'] = "";

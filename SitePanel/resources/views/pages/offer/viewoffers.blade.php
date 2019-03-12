@@ -28,14 +28,14 @@
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Records
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Records
                                             </label>
                                         </div>
                                     </div>

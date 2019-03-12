@@ -7,8 +7,8 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            <div class="update-image-container">
-                <img src="{{asset($carouseloffer->image_url)}}" style="width: 210px; height: 80px; border: 1px solid #d1d1d1;">
+            <div class="update-image-container carousel_image_preview_container">
+                <img src="{{asset($carouseloffer->image_url)}}" class="carousel_image_preview">
                 <button id="updatecarouselofferimagebutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatecarouselofferimagemodal">Update Image<i class="fa fa-forward"></i></button>
             </div>            
             {{--popup to update image--}}
@@ -25,7 +25,7 @@
                             <div class="modal-body">
                                 <input type="text" value="{{ $carouseloffer->id }}" id="carouselofferid" name="carouselofferid" hidden>
                                 <input type="text" value="{{ $carouseloffer->store->title }}" id="storetitle" hidden>
-                                <img src="#" id="imgpath" class="carouselofferimage" />
+                                <img src="#" id="imgpath" class="carousel_image_preview" />
                                 <input type="file" id="carouselofferimage" name="carouselofferimage" accept=".jpg, .jpeg"/>
                             </div>
                             <div class="modal-footer">

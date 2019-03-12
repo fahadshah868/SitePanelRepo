@@ -111,7 +111,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Logo</div>
-                        <img src="#" id="imgpath" />
+                        <img src="#" id="imgpath" class="store_image_preview"/>
                         <input type="file" id="storelogo" name="storelogo" class="form-field-file" accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>

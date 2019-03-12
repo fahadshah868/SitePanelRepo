@@ -17,12 +17,12 @@
 .form-field-file{
     font-size: 14px;
 }
-.form-field img{
+.form-field .store_image_preview, .form-field .category_image_preview{
     width: 65px;
     height: 65px;
     border: 1px solid #d1d1d1;
 }
-.form-field .carouselofferimage{
+.form-field .carousel_image_preview{
     width: 105px;
     height: 40px;
 }
@@ -30,12 +30,17 @@
     width: 126px;
     height: 70px;
 }
-.modal-body .updateimage{
+.modal-body .store_image_preview, .modal-body .category_image_preview{
     width: 150px;
     height: 150px;
     border: 1px solid #d1d1d1;
 }
-.modal-body .carouselofferimage{
+.modal-body .blog_image_preview{
+    width: 180px;
+    height: 100px;
+    border: 1px solid #d1d1d1;
+}
+.modal-body .carousel_image_preview{
     width: 210px;
     height: 80px;
 }
@@ -65,12 +70,6 @@ label.error{
 }
 .fa-undo{
     margin-right: 5px;
-}
-.update-image-button{
-    width: 200px;
-    margin-top: 20px;
-    padding: 7px 15px;
-    font-size: 15px;
 }
 .update-image-container{
     display: flex;

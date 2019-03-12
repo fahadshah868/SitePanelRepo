@@ -87,14 +87,49 @@ td .btn{
     font-size: 10px;
     font-weight: 700;
 }
-td img{
+td .blog_image_preview{
     width: 90px;
     height: 50px;
     border: 1px solid #d1d1d1;
 }
-td .carouselofferimage{
+td .store_image_preview, td .category_image_preview{
+    width: 55px;
+    height: 55px;
+    border: 1px solid #d1d1d1;
+}
+td .carousel_image_preview{
     width: 105px;
     height: 40px;
+}
+.update-image-container .update-image-button{
+    width: 100%;
+    margin-top: 20px;
+    padding: 7px 15px;
+    font-size: 15px;
+}
+.update-image-container.blog_image_preview_container{
+    width: 225px;
+}
+.update-image-container .blog_image_preview{
+    width: 225px;
+    height: 125px;
+    border: 1px solid #d1d1d1;
+}
+.update-image-container.store_image_preview_container, .update-image-container.category_image_preview_container{
+    width: 200px;
+}
+.update-image-container .store_image_preview, .update-image-container .category_image_preview{
+    width: 200px;
+    height: 200px;
+    border: 1px solid #d1d1d1;
+}
+.update-image-container.carousel_image_preview_container{
+    width: 210px;
+}
+.update-image-container .carousel_image_preview{
+    width: 210px;
+    height: 80px;
+    border: 1px solid #d1d1d1;
 }
 .header-searchbar-filter-assets{
     display: flex;

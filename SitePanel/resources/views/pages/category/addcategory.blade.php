@@ -67,7 +67,7 @@
                 <div class="col-sm-6 category-logo-container" id="category-logo-container">
                     <div class="form-field">
                         <div class="form-field-heading">Category Logo</div>
-                        <img src="#" id="imgpath" />
+                        <img src="#" id="imgpath" class="category_image_preview"/>
                         <input type="file" class="form-field-file hide" name="categorylogo" id="categorylogo"  accept=".png, .jpg, .jpeg"/>
                     </div>
                 </div>

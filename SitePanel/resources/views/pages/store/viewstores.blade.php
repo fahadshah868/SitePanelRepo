@@ -28,14 +28,14 @@
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Record
+                                                <input type="radio" value="created" name="dateremark" style="margin-right: 4px;" checked>New Created Records
                                             </label>
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-field">
                                             <label class="form-field-radiobutton-remarks-label">
-                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Record
+                                                <input type="radio" value="updated" name="dateremark" style="margin-right: 4px;">Updated Records
                                             </label>
                                         </div>
                                     </div>
@@ -174,7 +174,7 @@
                                 <span class="deactive-item">{{ $store->status }}</span>
                                 @endif
                             </td>
-                            <td><img src="{{asset($store->logo_url)}}"></td>
+                            <td><img src="{{asset($store->logo_url)}}" class="store_image_preview"></td>
                             @if(Auth::User()->role == "admin")
                             <td>{{ $store->form_user->username }}</td>
                             <td>{{ $store->image_user->username }}</td>
@@ -396,7 +396,7 @@
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
                             }
                             html = html +
-                            `<td><img src="{{asset("/")}}`+value.logo_url+`"></td>`
+                            `<td><img src="{{asset("/")}}`+value.logo_url+`" class='store_image_preview'></td>`
                             if('{{Auth::User()->role}}' == "admin"){
                                 html = html +
                                 "<td>"+value.form_user.username+"</td>"+

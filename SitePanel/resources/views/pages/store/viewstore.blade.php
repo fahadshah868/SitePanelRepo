@@ -7,8 +7,8 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            <div class="update-image-container">
-                <img src="{{asset($store->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
+            <div class="update-image-container store_image_preview_container">
+                <img src="{{asset($store->logo_url)}}" class="store_image_preview">
                 <button id="updatestorelogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatestorelogomodal">Update Image<i class="fa fa-forward"></i></button>
             </div>
             {{--popup to update image--}}
@@ -24,7 +24,7 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" value="{{ $store->id }}" id="storeid" name="storeid" hidden>
-                                <img src="#" id="imgpath" class="updateimage" />
+                                <img src="#" id="imgpath" class="store_image_preview" />
                                 <input type="file" id="storelogo" name="storelogo" accept=".png, .jpg, .jpeg"/>
                             </div>
                             <div class="modal-footer">

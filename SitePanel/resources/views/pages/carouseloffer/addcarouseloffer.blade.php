@@ -102,7 +102,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Carousel Offer Image</div>
-                        <img src="#" id="imgpath" class="carouselofferimage"/>
+                        <img src="#" id="imgpath" class="carousel_image_preview"/>
                         <input type="file" id="carouselofferimage" name="carouselofferimage" class="form-field-file" accept=".jpg, .jpeg"/>
                     </div>
                 </div>

@@ -62,7 +62,7 @@ class CarouselOfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllCarouselOffers(){
-        $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Carousel Offers";
         $data['carouselofferscount'] = count($data['allcarouseloffers']);
         $data['filtereddaterange'] = "";
@@ -212,11 +212,11 @@ class CarouselOfferController extends Controller
         $formdata = json_decode($request->formdata);
         $carouseloffer = CarouselOffer::find($formdata->carouselofferid);
         if($request->hasFile('carouselofferimage')){
-            if(File::exists($carouseloffer->image_url)){
-                File::delete($carouseloffer->image_url);
-            }
             if(!File::exists(public_path("images/carousel"))){
                 File::makeDirectory(public_path("images/carousel", 0777, true, true));
+            }
+            if(File::exists($carouseloffer->image_url)){
+                File::delete($carouseloffer->image_url);
             }
             do{
                 $flag = true;

@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
             @if($category->is_topcategory == "yes")
-            <div class="update-image-container">
-                <img src="{{asset($category->logo_url)}}" style="width: 200px; height: 200px; border: 1px solid #d1d1d1;">
+            <div class="update-image-container category_image_preview_container">
+                <img src="{{asset($category->logo_url)}}" class="category_image_preview">
                 @if($category->logo_url == "")
                 <button id="updatecategorylogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatecategorylogomodal">Add Image<i class="fa fa-forward"></i></button>
                 @else
@@ -34,7 +34,7 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" value="{{ $category->id }}" id="categoryid" name="categoryid" hidden>
-                                <img src="#" id="imgpath" class="updateimage" />
+                                <img src="#" id="imgpath" class="category_image_preview" />
                                 <input type="file" id="categorylogo" name="categorylogo" accept=".png, .jpg, .jpeg"/>
                             </div>
                             <div class="modal-footer">

@@ -97,7 +97,7 @@ class StoreController extends Controller
         return view('pages.store.viewstores', $data);
     }
     public function getTodayAllStores(){
-        $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orwhereDate('updated_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Stores";
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
@@ -475,6 +475,9 @@ class StoreController extends Controller
         $formdata = json_decode($request->formdata);
         $store = Store::find($formdata->storeid);
         if($request->hasFile('storelogo')){
+            if(!File::exists(public_path("images/store"))){
+                File::makeDirectory(public_path("images/store", 0777, true, true));
+            }
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
             }

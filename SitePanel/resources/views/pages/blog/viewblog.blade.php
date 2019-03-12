@@ -7,12 +7,12 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            <div class="update-image-container">
-                <img src="{{asset($blog->image_url)}}" style="width: 225px; height: 125px; border: 1px solid #d1d1d1;">
+            <div class="update-image-container blog_image_preview_container">
+                <img src="{{asset($blog->image_url)}}" class="blog_image_preview">
                 <button id="updateblogimagebutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updateblogimagemodal">Update Image<i class="fa fa-forward"></i></button>
             </div>
             {{--popup to update image--}}
-            <div class="modal fade" id="updatebloglogomodal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal fade" id="updateblogimagemodal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <form id="updateblogimageform" action="#" method="#">
@@ -24,7 +24,7 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" value="{{ $blog->id }}" id="blogid" name="blogid" hidden>
-                                <img src="#" id="imgpath" class="updateimage" />
+                                <img src="#" id="imgpath" class="blog_image_preview" />
                                 <input type="file" id="blogimage" name="blogimage" accept=".png, .jpg, .jpeg"/>
                             </div>
                             <div class="modal-footer">
@@ -49,7 +49,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Body</div>
-                        <textarea class="form-control form-field-textarea" readonly>{!! $blog->body !!}</textarea>
+                        <textarea class="form-control form-field-textarea" id="blog_body" readonly>{!! $blog->body !!}</textarea>
                     </div>
                 </div>
             </div>
@@ -119,10 +119,13 @@
         </div>
     </div>
 </div>
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script>
     $(document).ready(function(){
-        if('{{Session::has("updateblog_successmessage")}}'){
-            $("#alert-success-message-area").html('{{Session::get("updateblog_successmessage")}}');
+        $('#blog_body').ckeditor(); // if class is prefered.
+        if('{{Session::has("updateblogform_successmessage")}}'){
+            $("#alert-success-message-area").html('{{Session::get("updateblogform_successmessage")}}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
@@ -145,7 +148,7 @@
             $("#panel-body-container").load($(this).attr("href"));
         });
         $.validator.addMethod('validateimage', function(value, element) {
-        return ($(element).data('imagewidth') || 0) == $(element).data('imageheight');
+            return ($(element).data('imagewidth') == 900 && $(element).data('imageheight') == 500 || $(element).data('imagewidth')/$(element).data('imageheight') == 1.8 || 0);
         }, "please select the correct image");
         var validator = $("#updateblogimageform").submit(function(event){
             event.preventDefault();
