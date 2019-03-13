@@ -17693,6 +17693,10 @@ a:hover {
   text-decoration: none;
 }
 
+p {
+  margin: 0;
+}
+
 .alert-success-message {
   display: none;
   text-align: left !important;
@@ -17961,7 +17965,7 @@ ul ul a:hover {
 .login-form {
   margin: auto;
   margin-top: 100px;
-  width: 500px;
+  width: 450px;
   padding: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -17984,14 +17988,16 @@ ul ul a:hover {
   text-align: center;
 }
 
-.login-form input {
-  height: 45px;
+.login-form-field-text {
+  font-size: 14px;
+  padding: 4px 10px;
+  height: 35px;
 }
 
 #loginbutton {
   margin-top: 15px;
+  padding: 4px 10px;
   background-color: #044D6E;
-  height: 40px;
   outline: none;
   color: #fff;
   font-size: 17px;
@@ -18307,6 +18313,26 @@ td .btn {
   padding: 2px;
   font-size: 10px;
   font-weight: 700;
+}
+
+td .blog-title-container {
+  white-space: nowrap;
+  max-width: 250px;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+td .blog-body-container {
+  max-width: 300px;
+  max-height: 50px;
+  overflow: hidden;
+}
+
+td .blog-body-container * {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 td .blog_image_preview {

@@ -12,10 +12,18 @@
     <form id="addblogform" action="#" method="#">
         <div class="form-container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Title</div>
-                        <textarea class="form-control form-field-textarea" id="blog_title" name="blog_title"  placeholder="Title" rows="3"></textarea>
+                        <input type="text" class="form-control form-field-text" id="blog_title" name="blog_title" placeholder="Title">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Blog Author</div>
+                        <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" placeholder="Author">
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -78,22 +86,25 @@ $(document).ready(function(){
         rules: {
             blog_title: "required",
             blog_body: "required",
+            blog_author: "required",
             blogstatus: "required",
             blog_image: { required: true, validateimage: true }
         },
         messages: {
             blog_title: "please enter blog title",
             blog_body: "please fill blog body",
+            blog_author: "please enter blog author",
             blogstatus: "please select blog status",
             blog_image: {required: "please select blog image", validateimage: "image dimensions must be 900 x 500 OR image ratio must be 1.8"}
         },
         submitHandler: function(form) {
             var _blog_title = $("#blog_title").val();
             var _blog_body = $("#blog_body").val();
+            var _blog_author = $("#blog_author").val();
             var _blogstatus = $("input[name='blogstatus']:checked").val();
             var _blog_image = $("#blog_image")[0].files[0];
             var formdata = new FormData();
-            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blogstatus: _blogstatus});
+            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blog_author: _blog_author, blogstatus: _blogstatus});
             formdata.append("formdata", _jsondata);
             formdata.append("_token", "{{ csrf_token() }}");
             formdata.append("blog_image", _blog_image);

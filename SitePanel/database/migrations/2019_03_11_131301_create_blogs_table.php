@@ -17,6 +17,7 @@ class CreateBlogsTable extends Migration
             $table->bigIncrements('id');
             $table->String('title');
             $table->longText('body');
+            $table->String('author');
             $table->enum('status',['active','deactive']);
             $table->String('image_url');
             $table->bigInteger('form_user_id');

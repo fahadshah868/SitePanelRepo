@@ -9,11 +9,19 @@
     @csrf
         <div class="form-container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
                         <input type="text" id="blogid" name="blogid" value="{{ $blog->id }}" hidden>
                         <div class="form-field-heading">Blog Title</div>
-                        <textarea class="form-control form-field-textarea" id="blog_title" name="blog_title" placeholder="Title">{{ $blog->title }}</textarea>
+                        <input type="text" class="form-control form-field-text" id="blog_title" name="blog_title" value="{{ $blog->title }}" placeholder="Title">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Blog Author</div>
+                        <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" value="{{ $blog->author }}" placeholder="Author">
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -72,6 +80,7 @@
 <script>
     $(document).ready(function(){
         $('#blog_body').ckeditor(); // if class is prefered.
+        var blog_body_val = $("#blog_body").val();
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -82,6 +91,7 @@
         $("#resetupdateblogform").click(function(){
             event.preventDefault();
             $("#updateblogform").trigger("reset");
+            $("#blog_body").val(blog_body_val);
         });
         $("#updateblogform").submit(function(event){
             event.preventDefault();
@@ -89,19 +99,22 @@
             rules: {
                 blog_title: "required",
                 blog_body: "required",
+                blog_author: "required",
                 blogstatus: "required",
             },
             messages: {
                 blog_title: "please enter blog title",
                 blog_body: "please fill blog body",
+                blog_author: "please enter blog author",
                 blogstatus: "please select blog status",
             },
             submitHandler: function(form) {
                 var _blogid = $("#blogid").val();
                 var _blog_title = $("#blog_title").val();
                 var _blog_body = $("#blog_body").val();
+                var _blog_author = $("#blog_author").val();
                 var _blogstatus = $("input[name='blogstatus']:checked").val();
-                var _jsondata = JSON.stringify({blogid: _blogid, blog_title: _blog_title, blog_body: _blog_body, blogstatus: _blogstatus, _token: "{{ csrf_token() }}"});
+                var _jsondata = JSON.stringify({blogid: _blogid, blog_title: _blog_title, blog_body: _blog_body, blog_author: _blog_author, blogstatus: _blogstatus, _token: "{{ csrf_token() }}"});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

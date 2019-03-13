@@ -24,9 +24,9 @@
                 </div>
                 @endif
                 <div class="login-fields-heading">User Name:</div>
-                <input type="text" class="form-control" name="username" placeholder="user name"/>
+                <input type="text" class="form-control login-form-field-text" name="username" placeholder="user name"/>
                 <div class="login-fields-heading">Password:</div>
-                <input type="password" class="form-control" name="password" placeholder="password"/>
+                <input type="password" class="form-control login-form-field-text" name="password" placeholder="password"/>
                 <input type="submit" value="Login" id="loginbutton"/>
             </div>
         </form>

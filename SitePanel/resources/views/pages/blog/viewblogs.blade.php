@@ -84,6 +84,7 @@
                 <tr>
                     <th>Blog Title</th>
                     <th>Blog Body</th>
+                    <th>Blog Author</th>
                     <th>Blog Status</th>
                     <th>Blog Image</th>
                     @if(Auth::User()->role == "admin")
@@ -103,6 +104,12 @@
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="blogbody" placeholder="Search Blog Body" autocomplete="off"/>
                             <button class="header-searchbar-filter-button" id="blogbody_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="blogauthor" placeholder="Search Blog Body" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="blogauthor_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
@@ -133,8 +140,9 @@
                 @if(count($allblogs) > 0)
                     @foreach($allblogs as $blog)
                         <tr>
-                            <td>{{ $blog->title }}</td>
-                            <td>{!! $blog->body !!}</td>
+                            <td><div class="blog-title-container">{{ $blog->title }}</div></td>
+                            <td><div class="blog-body-container">{!! $blog->body !!}</div></td>
+                            <td>{{ $blog->author }}</td>
                             <td>
                                 @if($blog->status == "active")
                                 <span class="active-item">_{{ $blog->status }}</span>
@@ -149,7 +157,7 @@
                             @endif
                             <td>
                                 <a href="/viewblog/{{$blog->id}}" id="viewblog" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
-                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}" data-blogstatus="{{$blog->status}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}" data-blogauthor="{{$blog->author}}" data-blogstatus="{{$blog->status}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -166,23 +174,27 @@
             var $rows = $('#tablebody tr');
             var blogtitle_val = $.trim($("#blogtitle").val()).replace(/ +/g, ' ').toLowerCase();
             var blogbody_val = $.trim($("#blogbody").val()).replace(/ +/g, ' ').toLowerCase();
+            var blogauthor_val = $.trim($("#blogauthor").val()).replace(/ +/g, ' ').toLowerCase();
             var blogstatus_val = $.trim($("#blogstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var blog_form_added_updated_by_val = $.trim($("#blog_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             var blog_image_added_updated_by_val = $.trim($("#blog_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var blogtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var blogbody_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blogstatus_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blog_form_added_updated_by_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blog_image_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blogauthor_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blogstatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blog_form_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blog_image_added_updated_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~blogtitle_col.indexOf(blogtitle_val) || 
                         !~blogbody_col.indexOf(blogbody_val) || 
+                        !~blogauthor_col.indexOf(blogauthor_val) || 
                         !~blogstatus_col.indexOf(blogstatus_val) || 
                         !~blog_form_added_updated_by_col.indexOf(blog_form_added_updated_by_val) || 
                         !~blog_image_added_updated_by_col.indexOf(blog_image_added_updated_by_val);
             }).hide();
             if($("#blogtitle").val() != "" || 
                 $("#blogbody").val() != "" || 
+                $("#blogauthor").val() != "" || 
                 $("#blogstatus").val() != "" ||
                 $("#blog_form_added_updated_by").val() != "" || 
                 $("#blog_image_added_updated_by").val() != "")
@@ -246,6 +258,7 @@
         $("#clear_all_filters").click(function(){
             $("#blogtitle").val("");
             $("#blogbody").val("");
+            $("#blogauthor").val("");
             $("#blogstatus").val("");
             $("#blog_form_added_updated_by").val("");
             $("#blog_image_added_updated_by").val("");
@@ -258,6 +271,10 @@
             }
             else if($(this).attr("id") == "blogbody_clr_btn"){
                 $("#blogbody").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "blogauthor_clr_btn"){
+                $("#blogauthor").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "blogstatus_clr_btn"){
@@ -315,8 +332,9 @@
                         $("#viewitems-main-heading").html(data.mainheading);
                         $.each(data.filteredblogs, function (index, value) {
                             var html = "<tr>"+
-                            "<td>"+value.title+"</td>"+
-                            "<td>"+value.body+"</td>"
+                            "<td><div class='blog-title-container'>"+value.title+"</div></td>"+
+                            "<td><div class='blog-body-container'>"+value.body+"</div></td>"+
+                            "<td>"+value.author+"</td>"
                             if(value.status == "active"){
                                 html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
                             }
@@ -333,7 +351,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewblog/"+value.id+"' id='viewblog' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblog/"+value.id+"' data-blogtitle='"+value.title+"' data-blogbody='"+value.body+"' data-blogstatus='"+value.status+"' id='deleteblog' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deleteblog/"+value.id+"' data-blogtitle='"+value.title+"' data-blogbody='"+value.body+"' data-blogauthor='"+value.author+"' data-blogstatus='"+value.status+"' id='deleteblog' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -365,6 +383,7 @@
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Blog Title:</b>  "+$(this).data("blogtitle")+"<br>"+
                     "<b>Blog Body:</b>  "+$(this).data("blogbody")+"<br>"+
+                    "<b>Blog Author:</b>  "+$(this).data("blogauthor")+"<br>"+
                     "<b>Blog Status:</b>  "+status,
                     buttons: {
                         confirm: {

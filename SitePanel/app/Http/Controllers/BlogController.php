@@ -21,6 +21,7 @@ class BlogController extends Controller
         $blog = new Blog;
         $blog->title = $formdata->blog_title;
         $blog->body = $formdata->blog_body;
+        $blog->author = $formdata->blog_author;
         $blog->status = $formdata->blogstatus;
         //upload file and save path into db
         if($request->hasFile('blog_image')){
@@ -144,6 +145,7 @@ class BlogController extends Controller
         $blog = Blog::find($request->blogid);
         $blog->title = $request->blog_title;
         $blog->body = $request->blog_body;
+        $blog->author = $request->blog_author;
         $blog->status = $request->blogstatus;
         $blog->form_user_id = Auth::User()->id;
         $blog->save();

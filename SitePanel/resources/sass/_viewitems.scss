@@ -87,6 +87,23 @@ td .btn{
     font-size: 10px;
     font-weight: 700;
 }
+td .blog-title-container{
+    white-space: nowrap;
+    max-width: 250px;
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+td .blog-body-container{
+    max-width: 300px;
+    max-height: 50px;
+    overflow: hidden;
+}
+td .blog-body-container *{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 td .blog_image_preview{
     width: 90px;
     height: 50px;

@@ -9,7 +9,7 @@
 .login-form{
     margin: auto;
     margin-top: 100px;
-    width: 500px;
+    width: 450px;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -24,13 +24,15 @@
 .alert-danger{
     text-align: center;
 }
-.login-form input{
-    height: 45px;
+.login-form-field-text{
+    font-size: 14px;
+    padding: 4px 10px;
+    height: 35px;
 }
 #loginbutton{
     margin-top: 15px;
+    padding: 4px 10px;
     background-color: #044D6E;
-    height: 40px;
     outline: none;
     color: #fff;
     font-size: 17px;
