@@ -21,7 +21,7 @@
                     <div class="col-sm-12">
                         <div class="form-field">
                             <div class="form-field-heading">Category Description</div>
-                            <textarea class="form-control form-field-textarea" id="categorydescription" name="categorydescription" placeholder="description about category">{{$category->description}}</textarea>
+                            <textarea id="categorydescription" name="categorydescription" placeholder="description about category">{!! $category->description !!}</textarea>
                         </div>
                     </div>
                 </div>
@@ -94,80 +94,83 @@
             </div>
         </form>
     </div>
-    <script>
-        $(document).ready(function(){
-            $(".close").click(function(){
-                $(".alert").slideUp();
-            });
-            $("#backtocategory").click(function(event){
-                event.preventDefault();
-                $("#panel-body-container").load($(this).attr("href"));
-            });
-            $("#resetupdatecategoryform").click(function(){
-                event.preventDefault();
-                $("#updatecategoryform").trigger("reset");
-            });
-            $("#is_topcategory").change(function(){
-                if($("#is_topcategory").prop("checked")){
-                    $("#is_popularcategory").prop("checked", true);
-                }
-            });
-            $("#is_popularcategory").change(function(){
-                if($("#is_popularcategory").prop("checked") == false){
-                    $("#is_topcategory").prop("checked", false);
-                }
-            });
-            $("#updatecategoryform").submit(function(event){
-                event.preventDefault();
-            }).validate({
-                rules: {
-                    categorytitle: "required",
-                    categorydescription: "required",
-                    categorystatus: "required",
-                },
-                messages: {
-                    categorytitle: "please enter category title",
-                    categorydescription: "please enter category description",
-                    categorystatus: "please select category status",
-                },
-                submitHandler: function(form) {
-                    var _is_topcategory = "no";
-                    var _is_popularcategory = "no";
-                    var _categoryid = $("#categoryid").val();
-                    var _categorytitle = $("#categorytitle").val();
-                    var _categorydescription = $("#categorydescription").val();
-                    var _categorystatus = $("input[name='categorystatus']:checked").val();
-                    if($("#is_topcategory").prop("checked")){
-                        _is_topcategory = $("#is_topcategory").val();
-                    }
-                    if($("#is_popularcategory").prop("checked")){
-                        _is_popularcategory = $("#is_popularcategory").val();
-                    }
-                    var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
-                    $(".alert").css("display","none");
-                    $.ajax({
-                        method: "POST",
-                        url: "/updatecategoryform",
-                        dataType: "json",
-                        data: _jsondata,
-                        dataType: "json",
-                        contentType: "application/json",
-                        cache: false,
-                        success: function(data){
-                            if(data.status == "true"){
-                                $("#panel-body-container").load('/viewcategory/'+data.categoryid);
-                            }
-                            else{
-                                $("#alert-danger-message-area").html(data.error_message);
-                                $("#alert-danger").css("display","block");
-                            }
-                        },
-                        error: function(){
-                            alert("Ajax Error! something went wrong...");
-                        }
-                    });
-                    return false;
-                }
-            });
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#categorydescription').ckeditor(); // if class is prefered.
+        $(".close").click(function(){
+            $(".alert").slideUp();
         });
-    </script>
+        $("#backtocategory").click(function(event){
+            event.preventDefault();
+            $("#panel-body-container").load($(this).attr("href"));
+        });
+        $("#resetupdatecategoryform").click(function(){
+            event.preventDefault();
+            $("#updatecategoryform").trigger("reset");
+        });
+        $("#is_topcategory").change(function(){
+            if($("#is_topcategory").prop("checked")){
+                $("#is_popularcategory").prop("checked", true);
+            }
+        });
+        $("#is_popularcategory").change(function(){
+            if($("#is_popularcategory").prop("checked") == false){
+                $("#is_topcategory").prop("checked", false);
+            }
+        });
+        $("#updatecategoryform").submit(function(event){
+            event.preventDefault();
+        }).validate({
+            rules: {
+                categorytitle: "required",
+                categorydescription: "required",
+                categorystatus: "required",
+            },
+            messages: {
+                categorytitle: "please enter category title",
+                categorydescription: "please enter category description",
+                categorystatus: "please select category status",
+            },
+            submitHandler: function(form) {
+                var _is_topcategory = "no";
+                var _is_popularcategory = "no";
+                var _categoryid = $("#categoryid").val();
+                var _categorytitle = $("#categorytitle").val();
+                var _categorydescription = $("#categorydescription").val();
+                var _categorystatus = $("input[name='categorystatus']:checked").val();
+                if($("#is_topcategory").prop("checked")){
+                    _is_topcategory = $("#is_topcategory").val();
+                }
+                if($("#is_popularcategory").prop("checked")){
+                    _is_popularcategory = $("#is_popularcategory").val();
+                }
+                var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
+                $(".alert").css("display","none");
+                $.ajax({
+                    method: "POST",
+                    url: "/updatecategoryform",
+                    dataType: "json",
+                    data: _jsondata,
+                    dataType: "json",
+                    contentType: "application/json",
+                    cache: false,
+                    success: function(data){
+                        if(data.status == "true"){
+                            $("#panel-body-container").load('/viewcategory/'+data.categoryid);
+                        }
+                        else{
+                            $("#alert-danger-message-area").html(data.error_message);
+                            $("#alert-danger").css("display","block");
+                        }
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>

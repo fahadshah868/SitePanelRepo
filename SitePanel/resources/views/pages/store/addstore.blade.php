@@ -34,7 +34,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store's Description</div>
-                        <textarea class="form-control form-field-textarea" id="storedescription" name="storedescription" placeholder="description"></textarea>
+                        <textarea id="storedescription" name="storedescription" placeholder="description"></textarea>
                     </div>
                 </div>
             </div>
@@ -120,9 +120,12 @@
         </div>
     </form>
 </div>
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script type="text/javascript" src="{{asset('/js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
+        $('#storedescription').ckeditor(); // if class is prefered.
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -202,6 +205,7 @@
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 $("#addstoreform").trigger("reset");
+                $("#storedescription").val("");
                 $('#imgpath').attr("src", "");
                 $(".alert").css("display","none");
                 $.ajax({

@@ -53,7 +53,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store's Description</div>
-                        <textarea class="form-control form-field-textarea" readonly>{{ $store->description }}</textarea>
+                        <textarea id="storedescription" readonly>{!! $store->description !!}</textarea>
                     </div>
                 </div>
             </div>
@@ -171,8 +171,11 @@
         </div>
     </div>
 </div>
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script>
     $(document).ready(function(){
+        $('#storedescription').ckeditor(); // if class is prefered.
         if('{{Session::has("updatestore_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatestore_successmessage")}}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){

@@ -67,7 +67,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Description</div>
-                        <textarea class="form-control form-field-textarea" readonly>{{$category->description}}</textarea>
+                        <textarea id="categorydescription" readonly>{!! $category->description !!}</textarea>
                     </div>
                 </div>
             </div>
@@ -153,8 +153,11 @@
         </div>
     </div>
 </div>
+<script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+<script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script>
     $(document).ready(function(){
+        $('#categorydescription').ckeditor(); // if class is prefered.
         if('{{Session::has("updatecategory_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatecategory_successmessage")}}');
             $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
