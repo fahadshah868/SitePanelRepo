@@ -137,6 +137,7 @@
 <script>
     $(document).ready(function(){
         $('#storedescription').ckeditor(); // if class is prefered.
+        var store_description_val = $("#storedescription").val();
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -158,10 +159,11 @@
         $("#resetupdatestoreform").click(function(){
             event.preventDefault();
             $("#updatestoreform").trigger("reset");
+            $("#storedescription").val(store_description_val);
         });
         $("#storeprimaryurl").bind('keyup input propertychange',function(){
             var value = $("#storeprimaryurl").val();
-            if (value.indexOf("http://www.") >= 0){
+            if (value.toLowerCase().indexOf("http://www.") >= 0 || value.toLowerCase().indexOf("https://www.") >= 0){
                 var value = value.replace("http://www.","");
                 $("#storesecondaryurl").val(value);
             }

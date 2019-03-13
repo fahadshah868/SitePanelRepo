@@ -99,6 +99,7 @@
 <script>
     $(document).ready(function(){
         $('#categorydescription').ckeditor(); // if class is prefered.
+        var category_description_val = $("#categorydescription").val();
         $(".close").click(function(){
             $(".alert").slideUp();
         });
@@ -109,6 +110,7 @@
         $("#resetupdatecategoryform").click(function(){
             event.preventDefault();
             $("#updatecategoryform").trigger("reset");
+            $("#categorydescription").val(category_description_val);
         });
         $("#is_topcategory").change(function(){
             if($("#is_topcategory").prop("checked")){
