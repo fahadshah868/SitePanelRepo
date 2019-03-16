@@ -147,6 +147,7 @@
                     formdata.append("categorylogo", _categorylogo);
                 }
                 $("#addcategoryform").trigger("reset");
+                $("#categorydescription").val("");
                 $('#imgpath').attr("src", "");
                 $(".alert").css("display","none");
                 $("#category-logo-container").css("display","none");
