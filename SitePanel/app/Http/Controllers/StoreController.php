@@ -97,7 +97,7 @@ class StoreController extends Controller
         return view('pages.store.viewstores', $data);
     }
     public function getTodayAllStores(){
-        $data['allstores'] = Store::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Stores";
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";

@@ -216,11 +216,11 @@
                         @endif
                     </td>
                     <td>
-                    @if($offer->starting_date <= config('constants.today_date') && ($offer->expiry_date >= config('constants.today_date') || $offer->expiry_date == null))
+                    @if($offer->starting_date <= config('constants.TODAY_DATE') && ($offer->expiry_date >= config('constants.TODAY_DATE') || $offer->expiry_date == null))
                     <span class="available-offer">Available</span>
-                    @elseif($offer->starting_date > config('constants.today_date'))
+                    @elseif($offer->starting_date > config('constants.TODAY_DATE'))
                     <span class="pending-offer">Pending</span>
-                    @elseif($offer->expiry_date < config('constants.today_date'))
+                    @elseif($offer->expiry_date < config('constants.TODAY_DATE'))
                     <span class="expired-offer">Expired</span>
                     @endif
                     </td>
@@ -498,13 +498,13 @@
                             else{
                                 html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
                             }
-                            if(value.starting_date <= "{{config('constants.today_date')}}" && (value.expiry_date >= "{{config('constants.today_date')}}" || value.expiry_date == null)){
+                            if(value.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.expiry_date == null)){
                                 html = html + "<td><span class='available-offer'>Available</span></td>"
                             }
-                            else if(value.starting_date > "{{config('constants.today_date')}}"){
+                            else if(value.starting_date > "{{config('constants.TODAY_DATE')}}"){
                                 html = html + "<td><span class='pending-offer'>Pending</span></td>"
                             }
-                            else if(value.expiry_date < "{{config('constants.today_date')}}"){
+                            else if(value.expiry_date < "{{config('constants.TODAY_DATE')}}"){
                                 html = html + "<td><span class='expired-offer'>Expired</span></td>"
                             }
                             if("{{Auth::User()->role}}" == "admin"){
@@ -544,13 +544,13 @@
                 else{
                     code = "<span class='not-required-yet'>Not Required</span><br>";
                 }
-                if($(this).data("offerstartingdate") <= "{{config('constants.today_date')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.today_date')}}" || $(this).data("offerexpirydate") == null)){
+                if($(this).data("offerstartingdate") <= "{{config('constants.TODAY_DATE')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.TODAY_DATE')}}" || $(this).data("offerexpirydate") == null)){
                     offer_remark = "<span class='available-offer'>Available</span><br>"
                 }
-                else if($(this).data("offerstartingdate") > "{{config('constants.today_date')}}"){
+                else if($(this).data("offerstartingdate") > "{{config('constants.TODAY_DATE')}}"){
                     offer_remark = "<span class='pending-offer'>Pending</span><br>"
                 }
-                else if($(this).data("offerexpirydate") < "{{config('constants.today_date')}}"){
+                else if($(this).data("offerexpirydate") < "{{config('constants.TODAY_DATE')}}"){
                     offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
                 if($(this).data("offerstatus") == "active"){

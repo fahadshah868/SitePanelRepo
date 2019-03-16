@@ -62,7 +62,7 @@ class CarouselOfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllCarouselOffers(){
-        $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allcarouseloffers'] = CarouselOffer::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Carousel Offers";
         $data['carouselofferscount'] = count($data['allcarouseloffers']);
         $data['filtereddaterange'] = "";
