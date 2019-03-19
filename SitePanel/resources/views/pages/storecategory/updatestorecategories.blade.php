@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <span><b>Categories were:</b> </span>
-                    @foreach($store->storecategorygroup as $storecategory)
+                    @foreach($store->storecategory as $storecategory)
                     {{$storecategory->category->title}}, 
                     @endforeach
                 </div>
@@ -34,7 +34,7 @@
                                 @php
                                 $flag = "false"
                                 @endphp
-                                @foreach($store->storecategorygroup as $storecategory)
+                                @foreach($store->storecategory as $storecategory)
                                     @if($category->id == $storecategory->category_id)
                                         @php
                                             $flag = "true"

@@ -27,9 +27,7 @@ class StoreCategoryController extends Controller
         for($category=0; $category< count($request->storecategories); $category++){
             $storecategory = new StoreCategory;
             $storecategory->store_id = $request->storeid;
-            $storecategory->store_title = $request->storeid->title;
             $storecategory->category_id = $request->storecategories[$category];
-            $storecategory->category_title = $request->storecategories[$category]->title;
             $storecategory->user_id = Auth::User()->id;
             $storecategory->save();
         }

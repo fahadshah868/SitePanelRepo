@@ -60,9 +60,9 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/deletestore/{id}','StoreController@deleteStore');
 
     //store categories
-    Route::get('/allstorecategories','StoreCategoryGroupController@getAllStoreCategories');
-    Route::get('/updatestorecategories/{id}','StoreCategoryGroupController@getUpdateStoreCategories');
-    Route::post('/updatestorecategories','StoreCategoryGroupController@postUpdateStoreCategories');
+    Route::get('/allstorecategories','StoreCategoryController@getAllStoreCategories');
+    Route::get('/updatestorecategories/{id}','StoreCategoryController@getUpdateStoreCategories');
+    Route::post('/updatestorecategories','StoreCategoryController@postUpdateStoreCategories');
                                     
     //category routes
     Route::get('/addcategory','CategoryController@getaddCategory');

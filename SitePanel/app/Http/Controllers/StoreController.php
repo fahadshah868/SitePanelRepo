@@ -7,7 +7,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Store;
 use App\Category;
 use App\Network;
-use App\StoreCategoryGroup;
+use App\StoreCategory;
 use File;
 use Session;
 use Auth;
@@ -60,13 +60,11 @@ class StoreController extends Controller
                 $store->updated_at = null;
                 $store->save();
                 for($category=0; $category< count($formdata->storecategories); $category++){
-                    $storecategorygroup = new StoreCategoryGroup;
-                    $storecategorygroup->store_id = $store->id;
-                    $storecategorygroup->store_title = $store->title;
-                    $storecategorygroup->category_id = $formdata->storecategories[$category];
-                    $storecategorygroup->category_title = $formdata->storecategories[$category]->title;
-                    $storecategorygroup->user_id = Auth::User()->id;
-                    $storecategorygroup->save();
+                    $storecategory = new StoreCategory;
+                    $storecategory->store_id = $store->id;
+                    $storecategory->category_id = $formdata->storecategories[$category];
+                    $storecategory->user_id = Auth::User()->id;
+                    $storecategory->save();
                 }
                 $response = [
                     "status" => "true",
