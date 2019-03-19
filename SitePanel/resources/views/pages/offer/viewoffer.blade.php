@@ -87,21 +87,21 @@
                 @endif
             </div>
         </div>
-        @if($offer->starting_date <= config('constants.today_date') && ($offer->expiry_date >= config('constants.today_date') || $offer->expiry_date == null))
+        @if($offer->starting_date <= config('constants.TODAY_DATE') && ($offer->expiry_date >= config('constants.TODAY_DATE') || $offer->expiry_date == null))
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer life Remark</div>
                 <input type="text" class="form-control form-field-text available-offer" value="Available" readonly>
             </div>
         </div>
-        @elseif($offer->starting_date > config('constants.today_date'))
+        @elseif($offer->starting_date > config('constants.TODAY_DATE'))
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer life Remark</div>
                 <input type="text" class="form-control form-field-text pending-offer" value="Pending" readonly>
             </div>
         </div>
-        @elseif($offer->expiry_date < config('constants.today_date'))
+        @elseif($offer->expiry_date < config('constants.TODAY_DATE'))
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer life Remark</div>

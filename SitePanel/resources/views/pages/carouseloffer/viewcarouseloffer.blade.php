@@ -101,21 +101,21 @@
                         @endif
                     </div>
                 </div>
-                @if($carouseloffer->starting_date <= config('constants.today_date') && ($carouseloffer->expiry_date >= config('constants.today_date') || $carouseloffer->expiry_date == null))
+                @if($carouseloffer->starting_date <= config('constants.TODAY_DATE') && ($carouseloffer->expiry_date >= config('constants.TODAY_DATE') || $carouseloffer->expiry_date == null))
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer life Remark</div>
                         <input type="text" class="form-control form-field-text available-offer" value="Available" readonly>
                     </div>
                 </div>
-                @elseif($carouseloffer->starting_date > config('constants.today_date'))
+                @elseif($carouseloffer->starting_date > config('constants.TODAY_DATE'))
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer life Remark</div>
                         <input type="text" class="form-control form-field-text pending-offer" value="Pending" readonly>
                     </div>
                 </div>
-                @elseif($carouseloffer->expiry_date < config('constants.today_date'))
+                @elseif($carouseloffer->expiry_date < config('constants.TODAY_DATE'))
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer life Remark</div>

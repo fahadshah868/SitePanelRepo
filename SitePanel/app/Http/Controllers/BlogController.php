@@ -59,7 +59,7 @@ class BlogController extends Controller
         }
     }
     public function getTodayAllBlogs(){
-        $data['allblogs'] = Blog::whereDate('created_at',config('constants.today_date'))->orderBy('id', 'DESC')->get();
+        $data['allblogs'] = Blog::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Blogs";
         $data['blogscount'] = count($data['allblogs']);
         $data['filtereddaterange'] = "";
