@@ -20,8 +20,10 @@ class CreateBlogsTable extends Migration
             $table->String('author');
             $table->enum('status',['active','deactive']);
             $table->String('image_url');
-            $table->bigInteger('form_user_id');
-            $table->bigInteger('image_user_id');
+            $table->bigInteger('form_user_id')->unsigned();
+            $table->foreign('form_user_id')->references('id')->on('users');
+            $table->bigInteger('image_user_id')->unsigned();
+            $table->foreign('image_user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

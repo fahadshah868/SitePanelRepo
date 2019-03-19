@@ -62,7 +62,9 @@ class StoreController extends Controller
                 for($category=0; $category< count($formdata->storecategories); $category++){
                     $storecategorygroup = new StoreCategoryGroup;
                     $storecategorygroup->store_id = $store->id;
+                    $storecategorygroup->store_title = $store->title;
                     $storecategorygroup->category_id = $formdata->storecategories[$category];
+                    $storecategorygroup->category_title = $formdata->storecategories[$category]->title;
                     $storecategorygroup->user_id = Auth::User()->id;
                     $storecategorygroup->save();
                 }

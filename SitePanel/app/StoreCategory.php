@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StoreCategoryGroup extends Model
+class StoreCategory extends Model
 {
-    protected $table = "store_category_groups";
+    protected $table = "store_categories";
     protected $primaryKey = "id";
     public $timestamps = true;
 
