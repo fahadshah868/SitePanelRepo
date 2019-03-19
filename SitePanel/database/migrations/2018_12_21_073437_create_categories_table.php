@@ -16,6 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id')->primarykey();
             $table->string('title',191)->unique();
+            $table->string('url',191)->unique();
             $table->longText('description');
             $table->enum('is_topcategory',['yes','no']);
             $table->enum('is_popularcategory',['yes','no']);

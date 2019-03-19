@@ -12,10 +12,16 @@
     <form id="addcategoryform" action="#" method="#">
         <div class="form-container">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Category Title</div>
                         <input type="text" class="form-control form-field-text" name="categorytitle" id="categorytitle" placeholder="Baby"/>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Category Url</div>
+                        <input type="text" class="form-control form-field-text" name="categoryurl" id="categoryurl" placeholder="Baby" readonly/>
                     </div>
                 </div>
             </div>
@@ -84,6 +90,10 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
+        $("#categorytitle").bind('keyup input propertychange',function(){
+            var value = $("#categorytitle").val();
+            $("#categoryurl").val(value.replace(/\s/g, ''));
+        });
         $("#is_topcategory").change(function(){
             if($("#is_topcategory").prop("checked")){
                 $("#is_popularcategory").prop("checked", true);
@@ -116,12 +126,14 @@
             ignore: ".hide",
             rules: {
                 categorytitle: "required",
+                categoryurl: "required",
                 categorydescription: "required",
                 categorystatus: "required",
                 categorylogo: { required: true, validateimage: true }
             },
             messages: {
                 categorytitle: "please enter category title",
+                categoryurl: "please enter category url",
                 categorydescription: "please enter category description",
                 categorystatus: "please select category status",
                 categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
@@ -130,6 +142,7 @@
                 var _is_topcategory = "no";
                 var _is_popularcategory = "no";
                 var _categorytitle = $("#categorytitle").val();
+                var _categoryurl = $("#categoryurl").val();
                 var _categorydescription = $("#categorydescription").val();
                 var _categorystatus = $("input[name='categorystatus']:checked").val();
                 if($("#is_topcategory").prop("checked")){
@@ -139,7 +152,8 @@
                     _is_popularcategory = $("#is_popularcategory").val();
                 }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus});
+                var _jsondata = JSON.stringify({categorytitle: _categorytitle, categoryurl: _categoryurl, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus});
+                console.log(_jsondata);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 if($("#categorylogo").hasClass("show")){

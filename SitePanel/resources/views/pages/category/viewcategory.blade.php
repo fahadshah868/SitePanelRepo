@@ -66,6 +66,14 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
+                        <div class="form-field-heading">Category Url</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->url }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
                         <div class="form-field-heading">Category Description</div>
                         <textarea id="categorydescription" readonly>{!! $category->description !!}</textarea>
                     </div>

@@ -22,6 +22,7 @@ class CategoryController extends Controller
         if(!$is_category_exists){
             $category = new Category;
             $category->title = $formdata->categorytitle;
+            $category->url = $formdata->categoryurl;
             $category->description = $formdata->categorydescription;
             $category->is_topcategory = $formdata->is_topcategory;
             $category->is_popularcategory = $formdata->is_popularcategory;
@@ -33,12 +34,12 @@ class CategoryController extends Controller
                 do{
                     $flag = true;
                     $imageid = uniqid();
-                    $flag = Category::where('logo_url','LIKE','%'.strtolower($formdata->categorytitle)."-".$imageid.'%')->exists();
+                    $flag = Category::where('logo_url','LIKE','%'.strtolower($formdata->categoryurl)."-".$imageid.'%')->exists();
                 }while($flag);
                 $categorylogo = $request->file('categorylogo');
                 $resized_category_logo = Image::make($categorylogo);
                 $resized_category_logo->resize(200, 200);
-                $category_logo_name = strtolower($formdata->categorytitle)."-".$imageid.".".$categorylogo->getClientOriginalExtension();
+                $category_logo_name = strtolower($formdata->categoryurl)."-".$imageid.".".$categorylogo->getClientOriginalExtension();
                 $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
                 $category_logo_path = 'images/category/'.$category_logo_name;
                 $category->logo_url = $category_logo_path;
@@ -154,6 +155,7 @@ class CategoryController extends Controller
         //if(title == title && topcategory == topcategory)
         if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) == 0){
             $category->title = $request->categorytitle;
+            $category->url = $request->categoryurl;
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
@@ -173,6 +175,7 @@ class CategoryController extends Controller
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
+                $category->url = $request->categoryurl;
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
@@ -182,10 +185,10 @@ class CategoryController extends Controller
                     do{
                         $flag = true;
                         $imageid = uniqid();
-                        $flag = Category::where('logo_url','LIKE','%'.strtolower($request->categorytitle)."-".$imageid.'%')->exists();
+                        $flag = Category::where('logo_url','LIKE','%'.strtolower($request->categoryurl)."-".$imageid.'%')->exists();
                     }while($flag);
                     $extension = File::extension($category->logo_url);
-                    $category_logo_name = strtolower($request->categorytitle)."-".$imageid.".".$extension;
+                    $category_logo_name = strtolower($request->categoryurl)."-".$imageid.".".$extension;
                     File::move(public_path($category->logo_url),public_path('images/category/'.$category_logo_name));
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
@@ -211,6 +214,7 @@ class CategoryController extends Controller
        //if(title == title && topcategory != topcategory)
         if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) != 0){
             $category->title = $request->categorytitle;
+            $category->url = $request->categoryurl;
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
@@ -236,6 +240,7 @@ class CategoryController extends Controller
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
+                $category->url = $request->categoryurl;
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
@@ -245,10 +250,10 @@ class CategoryController extends Controller
                     do{
                         $flag = true;
                         $imageid = uniqid();
-                        $flag = Category::where('logo_url','LIKE','%'.strtolower($request->categorytitle)."-".$imageid.'%')->exists();
+                        $flag = Category::where('logo_url','LIKE','%'.strtolower($request->categoryurl)."-".$imageid.'%')->exists();
                     }while($flag);
                     $extension = File::extension($category->logo_url);
-                    $category_logo_name = strtolower($request->categorytitle)."-".$imageid.".".$extension;
+                    $category_logo_name = strtolower($request->categoryurl)."-".$imageid.".".$extension;
                     File::move(public_path($category->logo_url),public_path('images/category/'.$category_logo_name));
                     $category_logo_path = 'images/category/'.$category_logo_name;
                     $category->logo_url = $category_logo_path;
@@ -298,12 +303,12 @@ class CategoryController extends Controller
             do{
                 $flag = true;
                 $imageid = uniqid();
-                $flag = Category::where('logo_url','LIKE','%'.strtolower($category->title)."-".$imageid.'%')->exists();
+                $flag = Category::where('logo_url','LIKE','%'.strtolower($category->url)."-".$imageid.'%')->exists();
             }while($flag);
             $categorylogo = $request->file('categorylogo');
             $resized_category_logo = Image::make($categorylogo);
             $resized_category_logo->resize(200, 200);
-            $category_logo_name = strtolower($category->title)."-".$imageid.".".$categorylogo->getClientOriginalExtension();
+            $category_logo_name = strtolower($category->url)."-".$imageid.".".$categorylogo->getClientOriginalExtension();
             $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
             $category_logo_path = 'images/category/'.$category_logo_name;
             $category->logo_url = $category_logo_path;
