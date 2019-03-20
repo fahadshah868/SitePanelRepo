@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Store;
 use App\Offer;
-use App\StoreCategoryGroup;
+use App\StoreCategory;
 use Session;
 use Auth;
 use Carbon\Carbon;
@@ -129,7 +129,7 @@ class OfferController extends Controller
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);
         $data['allstores'] = Store::all();
-        $data['allstorecategories'] = StoreCategoryGroup::where('store_id',$data['offer']->store_id)->with('category')->get();
+        $data['allstorecategories'] = StoreCategory::where('store_id',$data['offer']->store_id)->with('category')->get();
         return view('pages.offer.updateoffer',$data);
     }
     public function postUpdateOffer(Request $request){
@@ -186,7 +186,7 @@ class OfferController extends Controller
     }
     //retrieve store all categories
     public function getStoreCategories($id){
-        $data['allstorecategories'] = StoreCategoryGroup::where('store_id',$id)->with('category')->get();
+        $data['allstorecategories'] = StoreCategory::where('store_id',$id)->with('category')->get();
         return response()->json($data);
     }
 }
