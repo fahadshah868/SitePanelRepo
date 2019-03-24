@@ -16,11 +16,11 @@ class CreateStoreCategoriesTable extends Migration
         Schema::create('store_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('store_id')->unsigned();
-            $table->foreign('store_id')->references('id')->on('stores');
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade');
             $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

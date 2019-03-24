@@ -22,7 +22,7 @@ class CategoryController extends Controller
         if(!$is_category_exists){
             $category = new Category;
             $category->title = $formdata->categorytitle;
-            $category->url = $formdata->categoryurl;
+            $category->url = strtolower($formdata->categoryurl);
             $category->description = $formdata->categorydescription;
             $category->is_topcategory = $formdata->is_topcategory;
             $category->is_popularcategory = $formdata->is_popularcategory;
@@ -155,7 +155,7 @@ class CategoryController extends Controller
         //if(title == title && topcategory == topcategory)
         if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) == 0){
             $category->title = $request->categorytitle;
-            $category->url = $request->categoryurl;
+            $category->url = strtolower($request->categoryurl);
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
@@ -175,7 +175,7 @@ class CategoryController extends Controller
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
-                $category->url = $request->categoryurl;
+                $category->url = strtolower($request->categoryurl);
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
@@ -214,7 +214,7 @@ class CategoryController extends Controller
        //if(title == title && topcategory != topcategory)
         if(strcasecmp($category->title , $request->categorytitle) == 0 && strcasecmp($category->is_topcategory , $request->is_topcategory) != 0){
             $category->title = $request->categorytitle;
-            $category->url = $request->categoryurl;
+            $category->url = strtolower($request->categoryurl);
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
@@ -240,7 +240,7 @@ class CategoryController extends Controller
             $is_category_exists = Category::where("title",$request->categorytitle)->exists();
             if(!$is_category_exists){
                 $category->title = $request->categorytitle;
-                $category->url = $request->categoryurl;
+                $category->url = strtolower($request->categoryurl);
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
