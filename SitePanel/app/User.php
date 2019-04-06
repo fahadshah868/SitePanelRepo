@@ -13,25 +13,25 @@ class User extends Authenticatable
     protected $primaryKey = "id";
     public $timestamps = true;
 
-    public function network(){
+    public function networks(){
         return $this->hasMany('App\Network');
     }
-    public function store(){
+    public function stores(){
         return $this->hasMany('App\Store');
     }
-    public function blog(){
+    public function blogs(){
         return $this->hasMany('App\Blog');
     }
-    public function category(){
+    public function categories(){
         return $this->hasMany('App\Category');
     }
-    public function offer(){
+    public function offers(){
         return $this->hasMany('App\Offer');
     }
-    public function carouseloffer(){
+    public function carouseloffers(){
         return $this->hasMany('App\CarouselOffer');
     }
-    public function storecategorygroup(){
+    public function storecategories(){
         return $this->hasMany('App\StoreCategoryGroup');
     }
     /**
@@ -40,7 +40,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'usertype', 'userstatus',
+        'username', 'password', 'role', 'status',
     ];
 
     /**

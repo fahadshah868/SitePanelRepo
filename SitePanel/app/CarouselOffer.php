@@ -13,10 +13,7 @@ class CarouselOffer extends Model
     public function store(){
         return $this->belongsTo('App\Store');
     }
-    public function form_user(){
-        return $this->belongsTo('App\User');
-    }
-    public function image_user(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
 }

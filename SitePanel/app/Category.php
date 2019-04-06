@@ -11,17 +11,14 @@ class Category extends Model
     public $timestamps = true;
 
     //has many
-    public function offer(){
+    public function offers(){
         return $this->hasMany('App\Offer');
     }
-    public function storecategory(){
+    public function storecategories(){
         return $this->hasMany('App\StoreCategory');
     }
     //belongs to
-    public function form_user(){
-        return $this->belongsTo('App\User');
-    }
-    public function image_user(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
 }

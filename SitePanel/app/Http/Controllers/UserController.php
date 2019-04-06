@@ -37,7 +37,7 @@ class UserController extends Controller
         }
     }
     public function getAllUsers(){
-        $data['allusers'] = User::orderBy('id', 'DESC')->get();
+        $data['allusers'] = User::select('id','username','role','status')->orderBy('id', 'DESC')->get();
         $data['userscount'] = count($data['allusers']);
         return view('pages.user.viewusers', $data);
     }

@@ -11,23 +11,20 @@ class Store extends Model
     public $timestamps = true;
 
     //has many
-    public function offer(){
+    public function offers(){
         return $this->hasMany('App\Offer');
     }
-    public function storecategory(){
+    public function storecategories(){
         return $this->hasMany('App\StoreCategory');
     }
-    public function carouseloffer(){
+    public function carouseloffers(){
         return $this->hasMany('App\CarouselOffer');
     }
     //belongs to
     public function network(){
         return $this->belongsTo('App\Network');
     }
-    public function form_user(){
-        return $this->belongsTo('App\User');
-    }
-    public function image_user(){
+    public function user(){
         return $this->belongsTo('App\User');
     }
 }

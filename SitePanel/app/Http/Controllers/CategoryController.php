@@ -63,7 +63,11 @@ class CategoryController extends Controller
          }
     }
     public function getAllCategories(){
-        $data['allcategories'] = Category::orderBy('id', 'DESC')->get();
+        $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','form_user_id','image_user_id')->orderBy('id', 'DESC')->with(['form_user' => function($q){
+            $q->select('id','username');
+        }, 'image_user' => function($q){
+            $q->select('id','username');
+        }])->get();
         $data['mainheading'] = "All Categories";
         $data['categoriescount'] = count($data['allcategories']);
         $data['filtereddaterange'] = "";

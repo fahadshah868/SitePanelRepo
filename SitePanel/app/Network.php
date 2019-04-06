@@ -11,7 +11,7 @@ class Network extends Model
     public $timestamps = true;
 
     //has many
-    public function store(){
+    public function stores(){
         return $this->hasMany('app\Store');
     }
     //belongs to
