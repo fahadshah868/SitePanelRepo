@@ -48,14 +48,14 @@
                 @if(count($allstores) > 0)
                     @foreach($allstores as $store)
                         <tr>
-                            <td>{{ $store->title }}<span class="viewitems-table-count">({{ count($store->storecategory) }}<span id="filtered-row-count"></span>)</span></td>
+                            <td>{{ $store->title }}<span class="viewitems-table-count">({{ count($store->storecategories) }}<span id="filtered-row-count"></span>)</span></td>
                             <td>
-                            @foreach($store->storecategory as $storecategory)
-                                {{ $storecategory->category->title }}, 
+                            @foreach($store->storecategories as $storecategory)
+                                {{ $storecategory->category->title }},
                             @endforeach
                             </td>
                             @if(Auth::User()->role == "admin")
-                            <td>{{ $store->storecategory{0}->user->username }}</td>
+                            <td>{{ $store->storecategories{0}->user->username }}</td>
                             @endif
                             <td>
                                 <a href="/updatestorecategories/{{$store->id}}" id="updatestorecategories" class="btn btn-primary"><i class="fa fa-edit"></i>Update</a>

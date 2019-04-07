@@ -153,7 +153,6 @@
                 }
                 var formdata = new FormData();
                 var _jsondata = JSON.stringify({categorytitle: _categorytitle, categoryurl: _categoryurl, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus});
-                console.log(_jsondata);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 if($("#categorylogo").hasClass("show")){

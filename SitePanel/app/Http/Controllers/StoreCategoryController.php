@@ -12,13 +12,21 @@ use Auth;
 class StoreCategoryController extends Controller
 {
     public function getAllStoreCategories(){
-        $data['allstores'] = Store::orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::select('id','title')->with(['storecategories' => function($q){
+            $q->select('id','store_id','category_id','user_id')->with(['category' => function($cq){
+                $cq->select('id','title');
+            }, 'user' => function($uq){
+                $uq->select('id','username');
+            }]);
+        }])->orderBy('id', 'DESC')->get();
         $data['storescount'] = count($data['allstores']);
         return view('pages.storecategory.viewstorecategories', $data);
     }
     public function getUpdateStoreCategories($id){
-        $data['allcategories'] = Category::all();
-        $data['store'] = Store::find($id);
+        $data['allcategories'] = Category::select('id','title')->get();
+        $data['store'] = Store::select('id','title')->with(['storecategories' => function($q){
+            $q->select('store_id','category_id');
+        }])->find($id);
         return view('pages.storecategory.updatestorecategories',$data);
     }
     public function postUpdateStoreCategories(Request $request){

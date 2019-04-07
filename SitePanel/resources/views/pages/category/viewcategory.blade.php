@@ -110,16 +110,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Category Form Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $category->form_user->username }}" readonly/>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-field">
-                        <div class="form-field-heading">Category Image Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $category->image_user->username }}" readonly/>
+                        <div class="form-field-heading">Category Added/Updated By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $category->user->username }}" readonly/>
                     </div>
                 </div>
             </div>

@@ -120,16 +120,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Store Form Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $store->form_user->username }}" readonly/>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-field">
-                        <div class="form-field-heading">Store Image Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $store->image_user->username }}" readonly/>
+                        <div class="form-field-heading">Store Added/Updated By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $store->user->username }}" readonly/>
                     </div>
                 </div>
             </div>

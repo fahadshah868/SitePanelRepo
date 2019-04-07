@@ -8,16 +8,6 @@
     <form id="updatestorecategoriesform" action="#" method="#">
     @csrf
         <div class="form-container">
-        <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <span><b>Categories were:</b> </span>
-                    @foreach($store->storecategory as $storecategory)
-                    {{$storecategory->category->title}}, 
-                    @endforeach
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -34,7 +24,7 @@
                                 @php
                                 $flag = "false"
                                 @endphp
-                                @foreach($store->storecategory as $storecategory)
+                                @foreach($store->storecategories as $storecategory)
                                     @if($category->id == $storecategory->category_id)
                                         @php
                                             $flag = "true"

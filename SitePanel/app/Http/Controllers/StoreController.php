@@ -16,8 +16,8 @@ use Carbon\Carbon;
 class StoreController extends Controller
 {
     public function getAddStore(){
-        $data['allcategories'] = Category::where('status','active')->get();
-        $data['allnetworks'] = Network::where('status','active')->get();
+        $data['allcategories'] = Category::select('id','title')->where('status','active')->get();
+        $data['allnetworks'] = Network::select('id','title')->where('status','active')->get();
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
@@ -55,8 +55,7 @@ class StoreController extends Controller
                 $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
                 $store_logo_path = 'images/store/'.$store_logo_name;
                 $store->logo_url = $store_logo_path;
-                $store->form_user_id = Auth::User()->id;
-                $store->image_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->updated_at = null;
                 $store->save();
                 for($category=0; $category< count($formdata->storecategories); $category++){
@@ -89,7 +88,11 @@ class StoreController extends Controller
         }
     }
     public function getAllStores(){
-        $data['allstores'] = Store::orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->with(['network' => function($q){
+            $q->select('id','title');
+        },'user' => function($q){
+            $q->select('id','username');
+        }])->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "All Stores";
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
@@ -97,7 +100,11 @@ class StoreController extends Controller
         return view('pages.store.viewstores', $data);
     }
     public function getTodayAllStores(){
-        $data['allstores'] = Store::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
+        $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->with(['network' => function($q){
+            $q->select('id','title');
+        },'user' => function($q){
+            $q->select('id','username');
+        }])->orderBy('id', 'DESC')->get();
         $data['mainheading'] = "Today's Stores";
         $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
@@ -108,24 +115,36 @@ class StoreController extends Controller
         Session::put('url','/filteredstores/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created & Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
@@ -133,28 +152,40 @@ class StoreController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created & Updated Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
                 return view('pages.store.viewstores', $data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
                 return view('pages.store.viewstores', $data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allstores'] = Store::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('network','form_user','image_user')->get();
+                ->with(['network' => function($q){
+                    $q->select('id','title');
+                },'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Updated Stores";
                 $data['storescount'] = count($data['allstores']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
@@ -164,11 +195,17 @@ class StoreController extends Controller
     }
     public function getViewStore($id){
         Session::put('flag',-1);
-        $data['store'] = Store::find($id);
+        $data['store'] = Store::with(['network' => function($q){
+            $q->select('id','title');
+        },'user' => function($q){
+            $q->select('id','username');
+        }])->find($id);
         return view('pages.store.viewstore',$data);
     }
     public function getUpdateStoreForm($id){
-        $data['store'] = Store::find($id);
+        $data['store'] = Store::with(['network' => function($q){
+            $q->select('id','title');
+        }])->find($id);
         $data['allnetworks'] = Network::all();
         return view('pages.store.updatestoreform',$data);
     }
@@ -186,7 +223,7 @@ class StoreController extends Controller
             $store->is_topstore = $request->is_topstore;
             $store->is_popularstore = $request->is_popularstore;
             $store->status = $request->storestatus;
-            $store->form_user_id = Auth::User()->id;
+            $store->user_id = Auth::User()->id;
             $store->save();
             Session::flash("updatestore_successmessage","Store Updated Successfully");
             $response = [
@@ -209,7 +246,7 @@ class StoreController extends Controller
                 $store->is_topstore = $request->is_topstore;
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -252,7 +289,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -283,7 +320,7 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -328,7 +365,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -373,7 +410,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -406,7 +443,7 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -452,7 +489,7 @@ class StoreController extends Controller
                     $store_logo_path = 'images/store/'.$store_logo_name;
                     $store->logo_url = $store_logo_path;
                 }
-                $store->form_user_id = Auth::User()->id;
+                $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
                 $response = [
@@ -493,7 +530,7 @@ class StoreController extends Controller
             $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
-            $store->image_user_id = Auth::User()->id;
+            $store->user_id = Auth::User()->id;
             $store->save();
             Session::flash("updatestorelogo_successmessage","Store Logo Updated Successfully");
             $response = [

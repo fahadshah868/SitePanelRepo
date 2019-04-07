@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field">
-                <div class="form-field-heading">Network Add/Update By</div>
+                <div class="form-field-heading">Network Added/Updated By</div>
                 <input type="text" class="form-control form-field-text" value="{{ $network->user->username }}" readonly/>
             </div>
         </div>

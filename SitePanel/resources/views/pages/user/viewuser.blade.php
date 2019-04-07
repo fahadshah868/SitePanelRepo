@@ -45,7 +45,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field">
-                <div class="form-field-heading">Store Updated At</div>
+                <div class="form-field-heading">User Updated At</div>
                 <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($user->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
             </div>
         </div>
@@ -54,7 +54,7 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field">
-                <div class="form-field-heading">Store Updated At</div>
+                <div class="form-field-heading">User Updated At</div>
                 <input type="text" class="form-control form-field-text not-required-yet" value="Not Yet" readonly/>
             </div>
         </div>
