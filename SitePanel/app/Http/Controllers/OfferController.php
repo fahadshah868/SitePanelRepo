@@ -13,7 +13,7 @@ use Carbon\Carbon;
 class OfferController extends Controller
 {
     public function getAddOffer(){
-        $data['allstores'] = Store::where('status','active')->get();
+        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
         return view("pages.offer.addoffer",$data);
     }
     public function postAddOffer(Request $request){

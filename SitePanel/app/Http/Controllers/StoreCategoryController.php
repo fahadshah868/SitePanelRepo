@@ -23,7 +23,7 @@ class StoreCategoryController extends Controller
         return view('pages.storecategory.viewstorecategories', $data);
     }
     public function getUpdateStoreCategories($id){
-        $data['allcategories'] = Category::select('id','title')->get();
+        $data['allcategories'] = Category::select('id','title')->where('status',1)->get();
         $data['store'] = Store::select('id','title')->with(['storecategories' => function($q){
             $q->select('store_id','category_id');
         }])->find($id);

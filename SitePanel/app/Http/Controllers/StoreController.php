@@ -16,8 +16,8 @@ use Carbon\Carbon;
 class StoreController extends Controller
 {
     public function getAddStore(){
-        $data['allcategories'] = Category::select('id','title')->where('status','active')->get();
-        $data['allnetworks'] = Network::select('id','title')->where('status','active')->get();
+        $data['allcategories'] = Category::select('id','title')->where('status',1)->get();
+        $data['allnetworks'] = Network::select('id','title')->where('status',1)->get();
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
@@ -206,7 +206,7 @@ class StoreController extends Controller
         $data['store'] = Store::with(['network' => function($q){
             $q->select('id','title');
         }])->find($id);
-        $data['allnetworks'] = Network::all();
+        $data['allnetworks'] = Network::select('id','title')->where('status',1)->get();
         return view('pages.store.updatestoreform',$data);
     }
     public function postUpdateStoreForm(Request $request){
