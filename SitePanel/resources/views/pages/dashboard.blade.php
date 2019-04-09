@@ -91,7 +91,7 @@
                     </li>
                     <li>
                         <a href="#offersuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fa fa-code"></i>
+                            <i class="fas fa-gift"></i>
                             Offer
                         </a>
                         <ul class="collapse list-unstyled" id="offersuboptions">
@@ -105,7 +105,7 @@
                     </li>
                     <li>
                         <a href="#carouseloffersuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-shopping-bag"></i>
+                            <i class="fas fa-gift"></i>
                             Carousel Offer
                         </a>
                         <ul class="collapse list-unstyled" id="carouseloffersuboptions">
@@ -119,7 +119,7 @@
                     </li>
                     <li>
                         <a href="#blogsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-shopping-bag"></i>
+                            <i class="fas fa-blog"></i>
                             Blog
                         </a>
                         <ul class="collapse list-unstyled" id="blogsuboptions">
@@ -128,6 +128,20 @@
                             </li>
                             <li>
                                 <a href="/todayallblogs" class="sidebar-suboption">View Today's Blogs</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#seosuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-won-sign"></i>
+                            SEO
+                        </a>
+                        <ul class="collapse list-unstyled" id="seosuboptions">
+                            <li>
+                                <a href="#" class="sidebar-suboption">Add Keywords</a>
+                            </li>
+                            <li>
+                                <a href="#" class="sidebar-suboption">View Keywords</a>
                             </li>
                         </ul>
                     </li>
