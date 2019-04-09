@@ -17,7 +17,7 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">Network Status</div>
-                @if($network->status == "active")
+                @if(strcasecmp($network->status,"active") == 0)
                 <input type="text" class="form-control form-field-text active-item" value="_{{ $network->status }}" readonly/>
                 @else
                 <input type="text" class="form-control form-field-text deactive-item" value="{{ $network->status }}" readonly/>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    @if(Auth::User()->role == "admin")
+    @if(strcasecmp(Auth::User()->role,"admin") == 0)
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field">

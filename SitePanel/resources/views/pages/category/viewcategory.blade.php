@@ -11,10 +11,10 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            @if($category->is_topcategory == "yes")
+            @if(strcasecmp($category->is_topcategory,"yes") == 0)
             <div class="update-image-container category_image_preview_container">
                 <img src="{{asset($category->logo_url)}}" class="category_image_preview">
-                @if($category->logo_url == "")
+                @if($category->logo_url == null)
                 <button id="updatecategorylogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatecategorylogomodal">Add Image<i class="fa fa-forward"></i></button>
                 @else
                 <button id="updatecategorylogobutton" type="button" class="btn btn-primary update-image-button" data-toggle="modal" data-target="#updatecategorylogomodal">Update Image<i class="fa fa-forward"></i></button>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success form-button" data-dismiss="modal"><i class="fa fa-backward"></i>Cancel</button>
-                                @if($category->logo_url == "")
+                                @if($category->logo_url == null)
                                 <input type="submit" class="btn btn-primary form-button" value="Add">
                                 @else
                                 <input type="submit" class="btn btn-primary form-button" value="Update">
@@ -99,7 +99,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Category Status</div>
-                        @if($category->status == "active")
+                        @if(strcasecmp($category->status,"active") == 0)
                         <input type="text" class="form-control form-field-text active-item" value="_{{ $category->status }}" readonly/>
                         @else
                         <input type="text" class="form-control form-field-text deactive-item" value="{{ $category->status }}" readonly/>

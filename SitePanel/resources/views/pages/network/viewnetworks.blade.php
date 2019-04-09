@@ -83,7 +83,7 @@
                 <tr>
                     <th>Network Title</th>
                     <th>Network Status</th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
@@ -101,7 +101,7 @@
                             <button class="header-searchbar-filter-button" id="networkstatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="network_added_updated_by" placeholder="Search User" autocomplete="off"/>
@@ -118,13 +118,13 @@
                     <tr>
                         <td>{{ $network->title }}</td>
                         <td>
-                            @if($network->status == "active")
+                            @if(strcasecmp($network->status,"active") == 0)
                             <span class="active-item">_{{ $network->status }}</span>
                             @else
                             <span class="deactive-item">{{ $network->status }}</span>
                             @endif
                         </td>
-                        @if(Auth::User()->role == "admin")
+                        @if(strcasecmp(Auth::User()->role,"admin") == 0)
                         <td>{{ $network->user->username}}</td>
                         @endif
                         <td>

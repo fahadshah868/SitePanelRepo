@@ -38,7 +38,7 @@
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-checkbox">
                                     <label class="form-field-checkbox-remarks-label">
-                                        @if($category->is_topcategory == "yes")
+                                        @if(strcasecmp($category->is_topcategory,"yes") == 0)
                                         <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes" checked>Top Category
                                         @else
                                         <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes">Top Category
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-field-checkbox">
                                     <label class="form-field-checkbox-remarks-label">
-                                        @if($category->is_popularcategory == "yes")
+                                        @if(strcasecmp($category->is_popularcategory,"yes") == 0)
                                         <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes" checked>Popular Category
                                         @else
                                         <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes">Popular Category
@@ -61,7 +61,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">Category Status</div>
                             <div class="form-field-inline-remarks">
-                                @if($category->status == "active")
+                                @if(strcasecmp($category->status,"active") == 0)
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
                                         <input type="radio" id="categorystatus" name="categorystatus" value="active" checked>Active

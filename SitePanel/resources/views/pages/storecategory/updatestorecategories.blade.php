@@ -22,18 +22,18 @@
                         <select class="multiselectdropdown" id="storecategories" name="storecategories" multiple data-live-search="true">
                             @foreach($allcategories as $category)
                                 @php
-                                $flag = "false"
+                                $flag = 0
                                 @endphp
                                 @foreach($store->storecategories as $storecategory)
                                     @if($category->id == $storecategory->category_id)
                                         @php
-                                            $flag = "true"
+                                            $flag = 1
                                         @endphp
                                         <option value="{{$category->id}}" selected>{{$category->title}}</option>
                                         @break
                                     @endif
                                 @endforeach
-                                @if($flag == "false")
+                                @if($flag == 0)
                                 <option value="{{$category->id}}">{{$category->title}}</option>
                                 @endif
                             @endforeach

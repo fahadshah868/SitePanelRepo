@@ -157,9 +157,7 @@ class CategoryController extends Controller
         return view('pages.category.viewcategory',$data);
     }
     public function getUpdateCategoryForm($id){
-        $data['category'] = Category::with(['user' => function($q){
-            $q->select('id','username');
-        }])->find($id);
+        $data['category'] = Category::find($id);
         return view('pages.category.updatecategoryform',$data);
     }
     public function postUpdateCategoryForm(Request $request){

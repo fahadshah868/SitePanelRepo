@@ -69,7 +69,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Status</div>
-                        @if($blog->status == "active")
+                        @if(strcasecmp($blog->status,"active") == 0)
                         <input type="text" class="form-control form-field-text active-item" value="_{{ $blog->status }}" readonly/>
                         @else
                         <input type="text" class="form-control form-field-text deactive-item" value="{{ $blog->status }}" readonly/>
@@ -80,16 +80,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Blog Form Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $blog->form_user->username }}" readonly/>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-field">
-                        <div class="form-field-heading">Blog Image Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $blog->image_user->username }}" readonly/>
+                        <div class="form-field-heading">Blog Form Added/Updated By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $blog->user->username }}" readonly/>
                     </div>
                 </div>
             </div>

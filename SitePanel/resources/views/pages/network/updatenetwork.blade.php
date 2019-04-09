@@ -20,7 +20,7 @@
                         <div class="form-field">
                             <div class="form-field-heading">Network Status</div>
                             <div class="form-field-inline-remarks">
-                                @if($network->status == "active")
+                                @if(strcasecmp($network->status,"active") == 0)
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
                                         <input type="radio" id="networkstatus" name="networkstatus" value="active" checked>Active

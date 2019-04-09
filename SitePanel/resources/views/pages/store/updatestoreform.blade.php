@@ -68,7 +68,7 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if($store->is_topstore == "yes")
+                                    @if(strcasecmp($store->is_topstore,"yes") == 0)
                                     <input type="checkbox" id="is_topstore" name="is_topstore" value="yes" checked>Top Store
                                     @else
                                     <input type="checkbox" id="is_topstore" name="is_topstore" value="yes">Top Store
@@ -77,7 +77,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if($store->is_popularstore == "yes")
+                                    @if(strcasecmp($store->is_popularstore,"yes") == 0)
                                     <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes" checked>Popular Store
                                     @else
                                     <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes">Popular Store
@@ -90,7 +90,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        @if($store->status == "active")
+                        @if(strcasecmp($store->status,"active") == 0)
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">

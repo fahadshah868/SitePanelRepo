@@ -27,7 +27,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Role</div>
-                            @if($user->role == "employee")
+                            @if(strcasecmp($user->role,"employee") == 0)
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
@@ -59,7 +59,7 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
-                            @if($user->status == "active")
+                            @if(strcasecmp($user->status,"active") == 0)
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">

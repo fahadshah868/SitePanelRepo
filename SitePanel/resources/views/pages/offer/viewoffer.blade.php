@@ -141,7 +141,7 @@
         </div>
         <div class="col-sm-3">
             <div class="form-field">
-                <div class="form-field-heading">Offer Add/Update By</div>
+                <div class="form-field-heading">Offer Added/Updated By</div>
                 <input type="text" class="form-control form-field-text" value="{{ $offer->user->username }}" readonly/>
             </div>
         </div>

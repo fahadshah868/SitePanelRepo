@@ -95,7 +95,7 @@
                     <th>Is Verified</th>
                     <th>Status</th>
                     <th>Remark</th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
@@ -179,7 +179,7 @@
                             <button class="header-searchbar-filter-button" id="offerremark_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="offer_added_updated_by" placeholder="Search User" autocomplete="off"/>
@@ -209,7 +209,7 @@
                     <td>{{ $offer->display_at_home }}</td>
                     <td>{{ $offer->is_verified }}</td>
                     <td>
-                        @if($offer->status == "active")
+                        @if(strcasecmp($offer->status,"active") == 0)
                         <span class="active-item">_{{ $offer->status }}</span>
                         @else
                         <span class="deactive-item">{{ $offer->status }}</span>
@@ -224,7 +224,7 @@
                     <span class="expired-offer">Expired</span>
                     @endif
                     </td>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <td>{{ $offer->user->username }}</td>
                     @endif
                     <td>

@@ -27,7 +27,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Status</div>
-                        @if($blog->status == "active")
+                        @if(strcasecmp($blog->status,"active") == 0)
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">

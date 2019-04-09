@@ -90,9 +90,8 @@
                     <th>Offer Status</th>
                     <th>Offer Remark</th>
                     <th>Image</th>
-                    @if(Auth::User()->role == "admin")
-                    <th>Added/Updated Form By</th>
-                    <th>Added/Updated Image By</th>
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
+                    <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -140,17 +139,11 @@
                         </div>
                     </th>
                     <th></th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_form_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_form_added_updated_by_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_image_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_image_added_updated_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="offer_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offer_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -171,7 +164,7 @@
                                 <td><span class="not-required-yet">Not Required</span></td>
                             @endif
                             <td>
-                                @if($carouseloffer->status == "active")
+                                @if(strcasecmp($carouseloffer->status,"active") == 0)
                                 <span class="active-item">_{{ $carouseloffer->status }}</span>
                                 @else
                                 <span class="deactive-item">{{ $carouseloffer->status }}</span>
@@ -187,13 +180,12 @@
                             @endif
                             </td>
                             <td><img src="{{ asset($carouseloffer->image_url) }}" class="carousel_image_preview"/></td>
-                            @if(Auth::User()->role == "admin")
-                            <td>{{ $carouseloffer->form_user->username }}</td>
-                            <td>{{ $carouseloffer->image_user->username }}</td>
+                            @if(strcasecmp(Auth::User()->role,"admin") == 0)
+                            <td>{{ $carouseloffer->user->username }}</td>
                             @endif
                             <td>
                                 <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -215,8 +207,7 @@
             var offercode_val = $.trim($("#offercode").val()).replace(/ +/g, ' ').toLowerCase();
             var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_form_added_updated_by_val = $.trim($("#offer_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_image_added_updated_by_val = $.trim($("#offer_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var offer_added_updated_by_val = $.trim($("#offer_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offertitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
@@ -225,8 +216,7 @@
                 var offercode_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerstatus_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
                 var offerremark_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_form_added_updated_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_image_added_updated_by_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offer_added_updated_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~storetitle_col.indexOf(storetitle_val) || 
                         !~offertitle_col.indexOf(offertitle_val) || 
                         !~offerlocation_col.indexOf(offerlocation_val) || 
@@ -234,8 +224,7 @@
                         !~offercode_col.indexOf(offercode_val) || 
                         !~offerstatus_col.indexOf(offerstatus_val) ||
                         !~offerremark_col.indexOf(offerremark_val) ||
-                        !~offer_form_added_updated_by_col.indexOf(offer_form_added_updated_by_val) ||
-                        !~offer_image_added_updated_by_col.indexOf(offer_image_added_updated_by_val);
+                        !~offer_added_updated_by_col.indexOf(offer_added_updated_by_val);
             }).hide();
             if($("#storetitle").val() != "" || 
                 $("#offertitle").val() != "" ||
@@ -244,8 +233,7 @@
                 $("#offercode").val() != "" || 
                 $("#offerstatus").val() != "" ||
                 $("#offerremark").val() != "" ||
-                $("#offer_form_added_updated_by").val() != "" ||
-                $("#offer_image_added_updated_by").val() != "")
+                $("#offer_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -315,8 +303,7 @@
             $("#offercode").val("");
             $("#offerstatus").val("");
             $("#offerremark").val("");
-            $("#offer_form_added_updated_by").val("");
-            $("#offer_image_added_updated_by").val("");
+            $("#offer_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -348,12 +335,8 @@
                 $("#offerremark").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offer_form_added_updated_by_clr_btn"){
-                $("#offer_form_added_updated_by").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "offer_image_added_updated_by_clr_btn"){
-                $("#offer_image_added_updated_by").val("");
+            else if($(this).attr("id") == "offer_added_updated_by_clr_btn"){
+                $("#offer_added_updated_by").val("");
                 clientSideFilter();
             }
         });
@@ -419,8 +402,7 @@
                             `<td><img src="{{ asset("/") }}`+value.image_url+`" class="carousel_image_preview"/></td>`
                             if("{{Auth::User()->role}}" == "admin"){
                                 html = html +
-                                "<td>"+value.form_user.username+"</td>"+
-                                "<td>"+value.image_user.username+"</td>"
+                                "<td>"+value.user.username+"</td>"
                             }
                             html = html +
                             "<td>"+

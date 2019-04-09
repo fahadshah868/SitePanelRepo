@@ -25,7 +25,7 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">User Status</div>
-                @if($user->status == "active")
+                @if(strcasecmp($user->status,"active") == 0)
                 <input type="text" class="form-control form-field-text active-item" value="_{{ $user->status }}" readonly/>
                 @else
                 <input type="text" class="form-control form-field-text deactive-item" value="{{ $user->status }}" readonly/>

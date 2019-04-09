@@ -87,7 +87,7 @@
                     <th>Is PopularCategory</th>
                     <th>Category Status</th>
                     <th>Category Logo</th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
@@ -118,7 +118,7 @@
                         </div>
                     </th>
                     <th></th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="category_added_updated_by" placeholder="Search User" autocomplete="off"/>
@@ -137,20 +137,20 @@
                         <td>{{ $category->is_topcategory }}</td>
                         <td>{{ $category->is_popularcategory }}</td>
                         <td>
-                            @if($category->status == "active")
+                            @if(strcasecmp($category->status,"active") == 0)
                             <span class="active-item">_{{ $category->status }}</span>
                             @else
                             <span class="deactive-item">{{ $category->status }}</span>
                             @endif
                         </td>
                         <td>
-                            @if($category->is_topcategory == "yes")
+                            @if(strcasecmp($category->is_topcategory,"yes") == 0)
                             <img src="{{ asset($category->logo_url) }}" class="category_image_preview"/>
                             @else
                             <b>N/A</b>
                             @endif
                         </td>
-                        @if(Auth::User()->role == "admin")
+                        @if(strcasecmp(Auth::User()->role,"admin") == 0)
                         <td>{{ $category->user->username}}</td>
                         @endif
                         <td>

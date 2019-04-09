@@ -48,7 +48,14 @@ class OfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllOffers(){
-        $data['alloffers'] = Offer::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
+        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','status','starting_date','expiry_date','user_id','store_id','category_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
+        ->with(['store' => function($q){
+            $q->select('id','title');
+        }, 'category' => function($q){
+            $q->select('id','title');
+        }, 'user' => function($q){
+            $q->select('id','username');
+        }])->get();
         $data['mainheading'] = "Today's Offers";
         $data['offerscount'] = count($data['alloffers']);
         $data['filtereddaterange'] = "";
@@ -56,7 +63,14 @@ class OfferController extends Controller
         return view('pages.offer.viewoffers',$data);
     }
     public function getAllOffers(){
-        $data['alloffers'] = Offer::orderBy('id', 'DESC')->get();
+        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','status','starting_date','expiry_date','user_id','store_id','category_id')->orderBy('id', 'DESC')
+        ->with(['store' => function($q){
+            $q->select('id','title');
+        }, 'category' => function($q){
+            $q->select('id','title');
+        }, 'user' => function($q){
+            $q->select('id','username');
+        }])->get();
         $data['mainheading'] = "All Offers";
         $data['offerscount'] = count($data['alloffers']);
         $data['filtereddaterange'] = "";
@@ -70,21 +84,39 @@ class OfferController extends Controller
                 $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created & Updated Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredoffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
                 $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredoffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
                 $response['filteredoffers'] = Offer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Updated Offers<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredoffers']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
@@ -95,7 +127,13 @@ class OfferController extends Controller
                 $data['alloffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created & Updated Offers";
                 $data['offerscount'] = count($data['alloffers']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
@@ -104,7 +142,13 @@ class OfferController extends Controller
             else if(strcasecmp($dateremark,"created") == 0){
                 $data['alloffers'] = Offer::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created Offers";
                 $data['offerscount'] = count($data['alloffers']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
@@ -113,7 +157,13 @@ class OfferController extends Controller
             else if(strcasecmp($dateremark,"updated") == 0){
                 $data['alloffers'] = Offer::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('store','category','user')->get();
+                ->with(['store' => function($q){
+                    $q->select('id','title');
+                }, 'category' => function($q){
+                    $q->select('id','title');
+                }, 'user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Updated Offers";
                 $data['offerscount'] = count($data['alloffers']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
@@ -128,8 +178,10 @@ class OfferController extends Controller
     }
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);
-        $data['allstores'] = Store::all();
-        $data['allstorecategories'] = StoreCategory::where('store_id',$data['offer']->store_id)->with('category')->get();
+        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
+        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
+            $q->select('id','title')->where('status',1);
+        }])->get();
         return view('pages.offer.updateoffer',$data);
     }
     public function postUpdateOffer(Request $request){
@@ -186,7 +238,10 @@ class OfferController extends Controller
     }
     //retrieve store all categories
     public function getStoreCategories($id){
-        $data['allstorecategories'] = StoreCategory::where('store_id',$id)->with('category')->get();
+        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$id)
+        ->with(['category' => function($q){
+            $q->select('id','title');
+        }])->get();
         return response()->json($data);
     }
 }

@@ -128,7 +128,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
-                        @if($carouseloffer->status == "active")
+                        @if(strcasecmp($carouseloffer->status,"active") == 0)
                         <input type="text" class="form-control form-field-text active-item" value="_{{ $carouseloffer->status }}" readonly/>
                         @else
                         <input type="text" class="form-control form-field-text deactive-item" value="{{ $carouseloffer->status }}" readonly/>
@@ -137,16 +137,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
-                        <div class="form-field-heading">Offer Form Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->form_user->username }}" readonly/>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Offer Image Add/Update By</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->image_user->username }}" readonly/>
+                        <div class="form-field-heading">Offer Added/Updated By</div>
+                        <input type="text" class="form-control form-field-text" value="{{ $carouseloffer->user->username }}" readonly/>
                     </div>
                 </div>
             </div>

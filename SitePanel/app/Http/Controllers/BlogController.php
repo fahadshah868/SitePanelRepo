@@ -40,8 +40,7 @@ class BlogController extends Controller
             $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
             $blog_image_path = 'images/blog/'.$blog_image_name;
             $blog->image_url = $blog_image_path;
-            $blog->form_user_id = Auth::User()->id;
-            $blog->image_user_id = Auth::User()->id;
+            $blog->user_id = Auth::User()->id;
             $blog->updated_at = null;
             $blog->save();
             $response = [
@@ -59,7 +58,10 @@ class BlogController extends Controller
         }
     }
     public function getTodayAllBlogs(){
-        $data['allblogs'] = Blog::whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->get();
+        $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
+        ->with(['user' => function($q){
+            $q->select('id','username');
+        }])->get();
         $data['mainheading'] = "Today's Blogs";
         $data['blogscount'] = count($data['allblogs']);
         $data['filtereddaterange'] = "";
@@ -67,7 +69,10 @@ class BlogController extends Controller
         return view('pages.blog.viewblogs',$data);
     }
     public function getAllBlogs(){
-        $data['allblogs'] = Blog::orderBy('id', 'DESC')->get();
+        $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->orderBy('id', 'DESC')
+        ->with(['user' => function($q){
+            $q->select('id','username');
+        }])->get();
         $data['mainheading'] = "All Blogs";
         $data['blogscount'] = count($data['allblogs']);
         $data['filtereddaterange'] = "";
@@ -78,24 +83,30 @@ class BlogController extends Controller
         Session::put('url','/filteredblogs/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created & Updated Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Created Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredblogs'] = Blog::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $response['mainheading'] = 'Updated Blogs<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredblogs']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
                 return response()->json($response);
             }
@@ -103,28 +114,34 @@ class BlogController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created & Updated Blogs";
                 $data['blogscount'] = count($data['allblogs']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
                 return view('pages.blog.viewblogs',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Created Blogs";
                 $data['blogscount'] = count($data['allblogs']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
                 return view('pages.blog.viewblogs',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allblogs'] = Blog::whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
-                ->with('form_user','image_user')->get();
+                ->with(['user' => function($q){
+                    $q->select('id','username');
+                }])->get();
                 $data['mainheading'] = "Updated Blogs";
                 $data['blogscount'] = count($data['allblogs']);
                 $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
@@ -134,7 +151,9 @@ class BlogController extends Controller
     }
     public function getViewBlog($id){
         Session::put('flag',-1);
-        $data['blog'] = Blog::find($id);
+        $data['blog'] = Blog::with(['user' => function($q){
+            $q->select('id','username');
+        }])->find($id);
         return view('pages.blog.viewblog', $data);
     }
     public function getUpdatedBlogForm($id){
@@ -147,7 +166,7 @@ class BlogController extends Controller
         $blog->body = $request->blog_body;
         $blog->author = $request->blog_author;
         $blog->status = $request->blogstatus;
-        $blog->form_user_id = Auth::User()->id;
+        $blog->user_id = Auth::User()->id;
         $blog->save();
         Session::flash("updateblogform_successmessage","Blog Updated Successfully");
         $response = [
@@ -180,7 +199,7 @@ class BlogController extends Controller
             $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
             $blog_image_path = 'images/blog/'.$blog_image_name;
             $blog->image_url = $blog_image_path;
-            $blog->image_user_id = Auth::User()->id;
+            $blog->user_id = Auth::User()->id;
             $blog->save();
             Session::flash("updateblogimage_successmessage","Blog Image Updated Successfully");
             $response = [

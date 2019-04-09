@@ -43,7 +43,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->role }}</td>
                         <td>
-                            @if($user->status == "active")
+                            @if(strcasecmp($user->status,"active") == 0)
                             <span class="active-item">_{{ $user->status }}</span>
                             @else
                             <span class="deactive-item">{{ $user->status }}</span>

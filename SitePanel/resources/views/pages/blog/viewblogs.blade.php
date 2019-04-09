@@ -87,9 +87,8 @@
                     <th>Blog Author</th>
                     <th>Blog Status</th>
                     <th>Blog Image</th>
-                    @if(Auth::User()->role == "admin")
-                    <th>Added/Updated Form By</th>
-                    <th>Added/Updated Image By</th>
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
+                    <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
                 </tr>
@@ -119,17 +118,11 @@
                         </div>
                     </th>
                     <th></th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blog_form_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blog_form_added_updated_by_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blog_image_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blog_image_added_updated_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="blog_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="blog_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -144,16 +137,15 @@
                             <td><div class="blog-body-container">{!! $blog->body !!}</div></td>
                             <td>{{ $blog->author }}</td>
                             <td>
-                                @if($blog->status == "active")
+                                @if(strcasecmp($blog->status,"active") == 0)
                                 <span class="active-item">_{{ $blog->status }}</span>
                                 @else
                                 <span class="deactive-item">{{ $blog->status }}</span>
                                 @endif
                             </td>
                             <td><img class="blog_image_preview" src="{{asset($blog->image_url)}}"></td>
-                            @if(Auth::User()->role == "admin")
-                            <td>{{ $blog->form_user->username }}</td>
-                            <td>{{ $blog->image_user->username }}</td>
+                            @if(strcasecmp(Auth::User()->role,"admin") == 0)
+                            <td>{{ $blog->user->username }}</td>
                             @endif
                             <td>
                                 <a href="/viewblog/{{$blog->id}}" id="viewblog" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
@@ -176,28 +168,24 @@
             var blogbody_val = $.trim($("#blogbody").val()).replace(/ +/g, ' ').toLowerCase();
             var blogauthor_val = $.trim($("#blogauthor").val()).replace(/ +/g, ' ').toLowerCase();
             var blogstatus_val = $.trim($("#blogstatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var blog_form_added_updated_by_val = $.trim($("#blog_form_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
-            var blog_image_added_updated_by_val = $.trim($("#blog_image_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var blog_added_updated_by_val = $.trim($("#blog_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var blogtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var blogbody_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
                 var blogauthor_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
                 var blogstatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blog_form_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blog_image_added_updated_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blog_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~blogtitle_col.indexOf(blogtitle_val) || 
                         !~blogbody_col.indexOf(blogbody_val) || 
                         !~blogauthor_col.indexOf(blogauthor_val) || 
                         !~blogstatus_col.indexOf(blogstatus_val) || 
-                        !~blog_form_added_updated_by_col.indexOf(blog_form_added_updated_by_val) || 
-                        !~blog_image_added_updated_by_col.indexOf(blog_image_added_updated_by_val);
+                        !~blog_added_updated_by_col.indexOf(blog_added_updated_by_val);
             }).hide();
             if($("#blogtitle").val() != "" || 
                 $("#blogbody").val() != "" || 
                 $("#blogauthor").val() != "" || 
                 $("#blogstatus").val() != "" ||
-                $("#blog_form_added_updated_by").val() != "" || 
-                $("#blog_image_added_updated_by").val() != "")
+                $("#blog_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -260,7 +248,7 @@
             $("#blogbody").val("");
             $("#blogauthor").val("");
             $("#blogstatus").val("");
-            $("#blog_form_added_updated_by").val("");
+            $("#blog_added_updated_by").val("");
             $("#blog_image_added_updated_by").val("");
             clientSideFilter();
         });
@@ -281,8 +269,8 @@
                 $("#blogstatus").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "blog_form_added_updated_by_clr_btn"){
-                $("#blog_form_added_updated_by").val("");
+            else if($(this).attr("id") == "blog_added_updated_by_clr_btn"){
+                $("#blog_added_updated_by").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "blog_image_added_updated_by_clr_btn"){
@@ -345,8 +333,7 @@
                             `<td><img src="{{asset("/")}}`+value.image_url+`" class='blog_image_preview'></td>`
                             if('{{Auth::User()->role}}' == "admin"){
                                 html = html +
-                                "<td>"+value.form_user.username+"</td>"+
-                                "<td>"+value.image_user.username+"</td>"
+                                "<td>"+value.user.username+"</td>"
                             }
                             html = html +
                             "<td>"+

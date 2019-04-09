@@ -43,7 +43,7 @@
                     <div class="form-field">
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Offer Title</div>
-                            @if($offer->free_shipping == "yes")
+                            @if(strcasecmp($offer->free_shipping,"yes") == 0)
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
                                     <input type="checkbox" id="free-shipping" value="yes" checked>Free Shipping
@@ -86,15 +86,15 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if($offer->location == "Online")
+                                    @if(strcasecmp($offer->location,"Online") == 0)
                                     <option value="Online" selected>Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif($offer->location == "In-Store")
+                                    @elseif(strcasecmp($offer->location,"In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store" selected>In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif($offer->location == "Online & In-Store")
+                                    @elseif(strcasecmp($offer->location,"Online & In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store" selected>Online & In-Store</option>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if($offer->type == "Code")
+                                    @if(strcasecmp($offer->type,"Code") == 0)
                                     <option value="Code" selected>Code</option>
                                     <option value="Sale">Sale</option>
                                     @else
@@ -141,15 +141,15 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if($offer->location == "Online")
+                                    @if(strcasecmp($offer->location,"Online") == 0)
                                     <option value="Online" selected>Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif($offer->location == "In-Store")
+                                    @elseif(strcasecmp($offer->location,"In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store" selected>In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif($offer->location == "Online & In-Store")
+                                    @elseif(strcasecmp($offer->location,"Online & In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store" selected>Online & In-Store</option>
@@ -158,7 +158,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if($offer->type == "Code")
+                                    @if(strcasecmp($offer->type,"Code") == 0)
                                     <option value="Code" selected>Code</option>
                                     <option value="Sale">Sale</option>
                                     @else
@@ -244,7 +244,7 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if($offer->is_popular == "yes")
+                                    @if(strcasecmp($offer->is_popular,"yes") == 0)
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes" checked>Popular Offer
                                     @else
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
@@ -253,7 +253,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if($offer->display_at_home == "yes")
+                                    @if(strcasecmp($offer->display_at_home,"yes") == 0)
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes" checked>Display At Home
                                     @else
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes">Display At Home
@@ -262,7 +262,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if($offer->is_verified == "yes")
+                                    @if(strcasecmp($offer->is_verified,"yes") == 0)
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes" checked>Is Verified
                                     @else
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes">Is Verified 
@@ -276,7 +276,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
                         <div class="form-field-inline-remarks">
-                            @if($offer->status == "active")
+                            @if(strcasecmp($offer->status,"active") == 0)
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
                                     <input type="radio" id="offerstatus" name="offerstatus" value="active" checked>Active

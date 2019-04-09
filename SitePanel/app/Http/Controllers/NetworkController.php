@@ -124,9 +124,7 @@ class NetworkController extends Controller
         return view('pages.network.viewnetwork',$data);
     }
     public function getUpdateNetwork($id){
-        $data['network'] = Network::with(['user' => function($q){
-            $q->select('id','username');
-        }])->find($id);
+        $data['network'] = Network::find($id);
         return view('pages.network.updatenetwork',$data);
     }
     public function postUpdateNetwork(Request $request){

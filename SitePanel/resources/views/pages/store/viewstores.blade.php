@@ -90,7 +90,7 @@
                     <th>Is PopularStore</th>
                     <th>Store Status</th>
                     <th>Store Logo</th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>Added/Updated By</th>
                     @endif
                     <th>Actions</th>
@@ -139,7 +139,7 @@
                         </div>
                     </th>
                     <th></th>
-                    @if(Auth::User()->role == "admin")
+                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="store_added_updated_by" placeholder="Search User" autocomplete="off"/>
@@ -161,14 +161,14 @@
                             <td>{{ $store->is_topstore }}</td>
                             <td>{{ $store->is_popularstore }}</td>
                             <td>
-                                @if($store->status == "active")
+                                @if(strcasecmp($store->status,"active") == 0)
                                 <span class="active-item">_{{ $store->status }}</span>
                                 @else
                                 <span class="deactive-item">{{ $store->status }}</span>
                                 @endif
                             </td>
                             <td><img src="{{asset($store->logo_url)}}" class="store_image_preview"></td>
-                            @if(Auth::User()->role == "admin")
+                            @if(strcasecmp(Auth::User()->role,"admin") == 0)
                             <td>{{ $store->user->username }}</td>
                             @endif
                             <td>
