@@ -16,7 +16,7 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check() && Auth::User()->status == "active"){
+        if(Auth::check() && Auth::User()->status == 1){
             return redirect('/dashboard');
         }
         else{

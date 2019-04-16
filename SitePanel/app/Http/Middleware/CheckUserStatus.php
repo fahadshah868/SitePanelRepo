@@ -16,7 +16,7 @@ class CheckUserStatus
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::User()->status == "deactive"){
+        if(Auth::User()->status == 2){
             Auth::logout();
             return redirect('/');
         }

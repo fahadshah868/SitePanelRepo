@@ -16,7 +16,7 @@ class LoginController extends Controller
         $userdata = array(
             'username' => $request->get('username'),
             'password' => $request->get('password'),
-            'status' => 'active',
+            'status' => 1,
         );
         if(Auth::attempt($userdata)){
             return redirect('/dashboard');
