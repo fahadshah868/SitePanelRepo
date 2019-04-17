@@ -130,13 +130,13 @@
         $('#blog_body').ckeditor(); // if class is prefered.
         if('{{Session::has("updateblogform_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updateblogform_successmessage")}}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
         else if('{{Session::has("updateblogimage_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updateblogimage_successmessage")}}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
@@ -185,7 +185,7 @@
                             $("#updateblogimagemodal").modal('toggle');
                             $("#panel-body-container").load("/viewblog/"+data.blogid);
                             $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }

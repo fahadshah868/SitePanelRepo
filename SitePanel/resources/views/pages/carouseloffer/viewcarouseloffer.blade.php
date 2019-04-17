@@ -177,13 +177,13 @@
     $(document).ready(function(){
         if('{{Session::has("updatecarouseloffer_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatecarouseloffer_successmessage")}}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
         else if('{{Session::has("updatecarouselofferimage_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updatecarouselofferimage_successmessage")}}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
@@ -233,7 +233,7 @@
                             $("#updatecarouselofferimagemodal").modal('toggle');
                             $("#panel-body-container").load("/updatecarouseloffer/"+data.carouselofferid);
                             $("#alert-success-message-area").html(data.success_message);
-                            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
                             });
                         }

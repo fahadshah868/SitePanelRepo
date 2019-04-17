@@ -74,7 +74,7 @@
     $(document).ready(function(){
         if('{{Session::has("updateuser_successmessage")}}'){
             $("#alert-success-message-area").html('{{Session::get("updateuser_successmessage")}}');
-            $("#alert-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                 $("#alert-success").slideUp(500);
             });
         }
