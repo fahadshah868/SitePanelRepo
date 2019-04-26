@@ -59,12 +59,13 @@ class StoreController extends Controller
                 $store->updated_at = null;
                 $store->save();
                 for($category=0; $category< count($formdata->storecategories); $category++){
-                    $storecategory = new StoreCategory;
-                    $storecategory->store_id = $store->id;
-                    $storecategory->category_id = $formdata->storecategories[$category];
-                    $storecategory->user_id = Auth::User()->id;
-                    $storecategory->save();
+                    $storecategories[] = [
+                        'store_id' => $store->id,
+                        'category_id' => $formdata->storecategories[$category],
+                        'user_id' => Auth::User()->id
+                    ];
                 }
+                StoreCategory::insert($storecategories);
                 $response = [
                     "status" => "true",
                     "success_message" => "Store Added Successfully"

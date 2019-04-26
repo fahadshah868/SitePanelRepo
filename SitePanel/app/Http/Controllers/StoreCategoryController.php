@@ -33,12 +33,13 @@ class StoreCategoryController extends Controller
         $storecategories = StoreCategory::where('store_id',$request->storeid);
         $storecategories->delete();
         for($category=0; $category< count($request->storecategories); $category++){
-            $storecategory = new StoreCategory;
-            $storecategory->store_id = $request->storeid;
-            $storecategory->category_id = $request->storecategories[$category];
-            $storecategory->user_id = Auth::User()->id;
-            $storecategory->save();
+            $storecategorieslist[] = [
+                'store_id' => $request->storeid,
+                'category_id' => $request->storecategories[$category],
+                'user_id' => Auth::User()->id
+            ];
         }
+        StoreCategory::insert($storecategorieslist);
         Session::flash("updatestorecategories_successmessage","Store Categories Updated Successfully");
         $response = [
             "status" => "true",
