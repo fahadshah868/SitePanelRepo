@@ -20,6 +20,8 @@ class BlogController extends Controller
         $formdata = json_decode($request->formdata);
         $blog = new Blog;
         $blog->title = $formdata->blog_title;
+        $url = str_replace(' ', '-', $formdata->blog_title);
+        $blog->url = $url;
         $blog->body = $formdata->blog_body;
         $blog->author = $formdata->blog_author;
         $blog->status = $formdata->blogstatus;
@@ -163,6 +165,8 @@ class BlogController extends Controller
     public function postUpdatedBlogForm(Request $request){
         $blog = Blog::find($request->blogid);
         $blog->title = $request->blog_title;
+        $url = str_replace(' ', '-', $formdata->blog_title);
+        $blog->url = $url;
         $blog->body = $request->blog_body;
         $blog->author = $request->blog_author;
         $blog->status = $request->blogstatus;

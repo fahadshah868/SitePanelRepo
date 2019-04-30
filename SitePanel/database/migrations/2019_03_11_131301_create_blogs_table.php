@@ -16,6 +16,7 @@ class CreateBlogsTable extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
+            $table->string('url',191)->unique();
             $table->longText('body');
             $table->string('author');
             $table->enum('status',['active','deactive']);
