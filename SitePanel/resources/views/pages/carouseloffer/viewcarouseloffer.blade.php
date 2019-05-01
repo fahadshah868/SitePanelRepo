@@ -28,7 +28,6 @@
                             </div>
                             <div class="modal-body">
                                 <input type="text" value="{{ $carouseloffer->id }}" id="carouselofferid" name="carouselofferid" hidden>
-                                <input type="text" value="{{ $carouseloffer->store->title }}" id="storetitle" hidden>
                                 <img src="#" id="imgpath" class="carousel_image_preview" />
                                 <input type="file" id="carouselofferimage" name="carouselofferimage" accept=".jpg, .jpeg"/>
                             </div>
@@ -211,9 +210,8 @@
                 carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 1050 x 400"}
             },submitHandler: function(form) {
                 var _carouselofferid = $("#carouselofferid").val();
-                var _storetitle = $("#storetitle").val();
                 var _carouselofferimage = $("#carouselofferimage")[0].files[0];
-                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid, storetitle: _storetitle});
+                var _jsondata = JSON.stringify({carouselofferid: _carouselofferid});
                 var formdata = new FormData();
                 formdata.append("carouselofferimage", _carouselofferimage);
                 formdata.append("formdata", _jsondata);

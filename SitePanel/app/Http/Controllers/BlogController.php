@@ -16,45 +16,49 @@ class BlogController extends Controller
         return view('pages.blog.addblog');
     }
     public function postAddBlog(Request $request){
-        $imageid = null;
         $formdata = json_decode($request->formdata);
-        $blog = new Blog;
-        $blog->title = $formdata->blog_title;
-        $url = str_replace(' ', '-', $formdata->blog_title);
-        $blog->url = $url;
-        $blog->body = $formdata->blog_body;
-        $blog->author = $formdata->blog_author;
-        $blog->status = $formdata->blogstatus;
-        //upload file and save path into db
-        if($request->hasFile('blog_image')){
-            if(!File::exists(public_path("images/blog"))){
-                File::makeDirectory(public_path("images/blog", 0777, true, true));
+        $blog_exists = Blog::where('title',$formdata->blog_title)->exists();
+        if(!$blog_exists){
+            $blog = new Blog;
+            $blog->title = $formdata->blog_title;
+            $url = str_replace(' ', '-', $formdata->blog_title);
+            $blog->url = $url;
+            $blog->body = $formdata->blog_body;
+            $blog->author = $formdata->blog_author;
+            $blog->status = $formdata->blogstatus;
+            //upload file and save path into db
+            if($request->hasFile('blog_image')){
+                if(!File::exists(public_path("images/blog"))){
+                    File::makeDirectory(public_path("images/blog", 0777, true, true));
+                }
+                $blog_image = $request->file('blog_image');
+                $resized_blog_image = Image::make($blog_image);
+                $resized_blog_image->resize(900, 500);
+                $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
+                $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
+                $blog_image_path = 'images/blog/'.$blog_image_name;
+                $blog->image_url = $blog_image_path;
+                $blog->user_id = Auth::User()->id;
+                $blog->updated_at = null;
+                $blog->save();
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Blog Added Successfully"
+                ];
+                return response()->json($response);
             }
-            do{
-                $flag = true;
-                $imageid = uniqid();
-                $flag = Blog::where('image_url','LIKE','%'."blog-".$imageid.'%')->exists();
-            }while($flag);
-            $blog_image = $request->file('blog_image');
-            $resized_blog_image = Image::make($blog_image);
-            $resized_blog_image->resize(900, 500);
-            $blog_image_name = "blog-".$imageid.".".$blog_image->getClientOriginalExtension();
-            $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
-            $blog_image_path = 'images/blog/'.$blog_image_name;
-            $blog->image_url = $blog_image_path;
-            $blog->user_id = Auth::User()->id;
-            $blog->updated_at = null;
-            $blog->save();
-            $response = [
-                "status" => "true",
-                "success_message" => "Blog Added Successfully"
-            ];
-            return response()->json($response);
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => "Error! Blog Image Not Found"
+                ];
+                return response()->json($response);
+            }
         }
         else{
             $response = [
                 "status" => "false",
-                "error_message" => "Error! Blog Image Not Found"
+                "error_message" => $formdata->blog_title."! This Blog Title Is Already Added"
             ];
             return response()->json($response);
         }
@@ -164,24 +168,52 @@ class BlogController extends Controller
     }
     public function postUpdatedBlogForm(Request $request){
         $blog = Blog::find($request->blogid);
-        $blog->title = $request->blog_title;
-        $url = str_replace(' ', '-', $formdata->blog_title);
-        $blog->url = $url;
-        $blog->body = $request->blog_body;
-        $blog->author = $request->blog_author;
-        $blog->status = $request->blogstatus;
-        $blog->user_id = Auth::User()->id;
-        $blog->save();
-        Session::flash("updateblogform_successmessage","Blog Updated Successfully");
-        $response = [
-            "status" => "true",
-            "success_message" => "Blog Updated Successfully",
-            "blogid" => $request->blogid
-        ];
-        return response()->json($response);
+        if(strcasecmp($blog->title, $request->blog_title) == 0){
+            $blog->title = $request->blog_title;
+            $url = str_replace(' ', '-', $request->blog_title);
+            $blog->url = $url;
+            $blog->body = $request->blog_body;
+            $blog->author = $request->blog_author;
+            $blog->status = $request->blogstatus;
+            $blog->user_id = Auth::User()->id;
+            $blog->save();
+            Session::flash("updateblogform_successmessage","Blog Updated Successfully");
+            $response = [
+                "status" => "true",
+                "success_message" => "Blog Updated Successfully",
+                "blogid" => $request->blogid
+            ];
+            return response()->json($response);
+        }
+        else{
+            $blog_exists = Blog::where('title',$request->blog_title)->exists();
+            if(!$blog_exists){
+                $blog->title = $request->blog_title;
+                $url = str_replace(' ', '-', $request->blog_title);
+                $blog->url = $url;
+                $blog->body = $request->blog_body;
+                $blog->author = $request->blog_author;
+                $blog->status = $request->blogstatus;
+                $blog->user_id = Auth::User()->id;
+                $blog->save();
+                Session::flash("updateblogform_successmessage","Blog Updated Successfully");
+                $response = [
+                    "status" => "true",
+                    "success_message" => "Blog Updated Successfully",
+                    "blogid" => $request->blogid
+                ];
+                return response()->json($response);
+            }
+            else{
+                $response = [
+                    "status" => "false",
+                    "error_message" => $request->blog_title."! This Blog Title Is Already Added"
+                ];
+                return response()->json($response);
+            }
+        }
     }
     public function postUpdatedBlogImage(Request $request){
-        $imageid = null;
         $formdata = json_decode($request->formdata);
         $blog = Blog::find($formdata->blogid);
         if($request->hasFile('blog_image')){
@@ -191,15 +223,10 @@ class BlogController extends Controller
             if(File::exists($blog->image_url)){
                 File::delete($blog->image_url);
             }
-            do{
-                $flag = true;
-                $imageid = uniqid();
-                $flag = Blog::where('image_url','LIKE','%'."blog-".$imageid.'%')->exists();
-            }while($flag);
             $blog_image = $request->file('blog_image');
             $resized_blog_image = Image::make($blog_image);
             $resized_blog_image->resize(900, 500);
-            $blog_image_name = "blog-".$imageid.".".$blog_image->getClientOriginalExtension();
+            $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
             $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
             $blog_image_path = 'images/blog/'.$blog_image_name;
             $blog->image_url = $blog_image_path;

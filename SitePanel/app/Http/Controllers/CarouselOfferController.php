@@ -18,7 +18,6 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
-        $imageid = null;
         $formdata = json_decode($request->formdata);
         $carouseloffer = new CarouselOffer;
         $carouseloffer->store_id = $formdata->offer_store;
@@ -38,15 +37,10 @@ class CarouselOfferController extends Controller
             if(!File::exists(public_path("images/carousel"))){
                 File::makeDirectory(public_path("images/carousel", 0777, true, true));
             }
-            do{
-                $flag = true;
-                $imageid = uniqid();
-                $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($formdata->storetitle)."-".$imageid.'%')->exists();
-            }while($flag);
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(1050, 400);
-            $carousel_image_name = strtolower($formdata->storetitle)."-".$imageid.".".$carousel_image->getClientOriginalExtension();
+            $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
@@ -191,7 +185,6 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.updatecarouselofferform',$data);
     }
     public function postUpdateCarouselOfferForm(Request $request){
-        $imageid = null;
         $carouseloffer = CarouselOffer::find($request->carouselofferid);
         // store == store
         if(strcasecmp($carouseloffer->store_id,$request->offer_store) == 0){
@@ -230,18 +223,6 @@ class CarouselOfferController extends Controller
                 $carouseloffer->expiry_date = $request->offer_expirydate;
             }
             $carouseloffer->status = $request->offerstatus;
-            if(File::exists($carouseloffer->image_url)){
-                do{
-                    $flag = true;
-                    $imageid = uniqid();
-                    $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($request->storetitle)."-".$imageid.'%')->exists();
-                }while($flag);
-                $extension = File::extension($carouseloffer->image_url);
-                $carousel_image_name = strtolower($request->storetitle)."-".$imageid.".".$extension;
-                File::move(public_path($carouseloffer->image_url),public_path('images/carousel/'.$carousel_image_name));
-                $carousel_image_path = 'images/carousel/'.$carousel_image_name;
-                $carouseloffer->image_url = $carousel_image_path;
-            }
             $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->save();
             Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
@@ -263,15 +244,10 @@ class CarouselOfferController extends Controller
             if(File::exists($carouseloffer->image_url)){
                 File::delete($carouseloffer->image_url);
             }
-            do{
-                $flag = true;
-                $imageid = uniqid();
-                $flag = CarouselOffer::where('image_url','LIKE','%'.strtolower($formdata->storetitle)."-".$imageid.'%')->exists();
-            }while($flag);
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(1050, 400);
-            $carousel_image_name = strtolower($formdata->storetitle)."-".$imageid.".".$carousel_image->getClientOriginalExtension();
+            $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;

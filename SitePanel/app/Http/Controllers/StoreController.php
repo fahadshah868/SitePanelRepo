@@ -21,7 +21,6 @@ class StoreController extends Controller
         return View('pages.store.addstore',$data);
     }
     public function postAddStore(Request $request){
-        $imageid = null;
         $formdata = json_decode($request->formdata);
         $are_storefields_exists = Store::where('title',$formdata->storetitle)
                                 ->orwhere('primary_url',$formdata->storeprimaryurl)
@@ -43,15 +42,10 @@ class StoreController extends Controller
                 if(!File::exists(public_path("images/store"))){
                     File::makeDirectory(public_path("images/store", 0777, true, true));
                 }
-                do{
-                    $flag = true;
-                    $imageid = uniqid();
-                    $flag = Store::where('logo_url','LIKE','%'.strtolower($formdata->storesecondaryurl)."-".$imageid.'%')->exists();
-                }while($flag);
                 $storelogo = $request->file('storelogo');
                 $resized_store_logo = Image::make($storelogo);
                 $resized_store_logo->resize(200, 200);
-                $store_logo_name = strtolower($formdata->storesecondaryurl)."-".$imageid.".".$storelogo->getClientOriginalExtension();
+                $store_logo_name = "merchant-".time().".".$storelogo->getClientOriginalExtension();
                 $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
                 $store_logo_path = 'images/store/'.$store_logo_name;
                 $store->logo_url = $store_logo_path;
@@ -211,7 +205,6 @@ class StoreController extends Controller
         return view('pages.store.updatestoreform',$data);
     }
     public function postUpdateStoreForm(Request $request){
-        $imageid = null;
         $store = Store::find($request->storeid);
         // title == title && primaryurl == primaryurl && networkurl == networkurl
         if((strcasecmp($store->title , $request->storetitle) == 0 && strcasecmp($store->primary_url , $request->storeprimaryurl) == 0) && strcasecmp($store->network_url, $request->storenetworkurl) == 0){
@@ -278,18 +271,6 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                if(File::exists($store->logo_url)){
-                    do{
-                        $flag = true;
-                        $imageid = uniqid();
-                        $flag = Store::where('logo_url','LIKE','%'.strtolower($request->storesecondaryurl)."-".$imageid.'%')->exists();
-                    }while($flag);
-                    $extension = File::extension($store->logo_url);
-                    $store_logo_name = strtolower($request->storesecondaryurl)."-".$imageid.".".$extension;
-                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
-                    $store_logo_path = 'images/store/'.$store_logo_name;
-                    $store->logo_url = $store_logo_path;
-                }
                 $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -354,18 +335,6 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                if(File::exists($store->logo_url)){
-                    do{
-                        $flag = true;
-                        $imageid = uniqid();
-                        $flag = Store::where('logo_url','LIKE','%'.strtolower($request->storesecondaryurl)."-".$imageid.'%')->exists();
-                    }while($flag);
-                    $extension = File::extension($store->logo_url);
-                    $store_logo_name = strtolower($request->storesecondaryurl)."-".$imageid.".".$extension;
-                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
-                    $store_logo_path = 'images/store/'.$store_logo_name;
-                    $store->logo_url = $store_logo_path;
-                }
                 $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -399,18 +368,6 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                if(File::exists($store->logo_url)){
-                    do{
-                        $flag = true;
-                        $imageid = uniqid();
-                        $flag = Store::where('logo_url','LIKE','%'.strtolower($request->storesecondaryurl)."-".$imageid.'%')->exists();
-                    }while($flag);
-                    $extension = File::extension($store->logo_url);
-                    $store_logo_name = strtolower($request->storesecondaryurl)."-".$imageid.".".$extension;
-                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
-                    $store_logo_path = 'images/store/'.$store_logo_name;
-                    $store->logo_url = $store_logo_path;
-                }
                 $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -478,18 +435,6 @@ class StoreController extends Controller
                 $store->is_popularstore = $request->is_popularstore;
                 $store->status = $request->storestatus;
                 $store->status = $request->storestatus;
-                if(File::exists($store->logo_url)){
-                    do{
-                        $flag = true;
-                        $imageid = uniqid();
-                        $flag = Store::where('logo_url','LIKE','%'.strtolower($request->storesecondaryurl)."-".$imageid.'%')->exists();
-                    }while($flag);
-                    $extension = File::extension($store->logo_url);
-                    $store_logo_name = strtolower($request->storesecondaryurl)."-".$imageid.".".$extension;
-                    File::move(public_path($store->logo_url),public_path('images/store/'.$store_logo_name));
-                    $store_logo_path = 'images/store/'.$store_logo_name;
-                    $store->logo_url = $store_logo_path;
-                }
                 $store->user_id = Auth::User()->id;
                 $store->save();
                 Session::flash("updatestore_successmessage","Store Updated Successfully");
@@ -519,15 +464,10 @@ class StoreController extends Controller
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
             }
-            do{
-                $flag = true;
-                $imageid = uniqid();
-                $flag = Store::where('logo_url','LIKE','%'.strtolower($store->secondary_url)."-".$imageid.'%')->exists();
-            }while($flag);
             $storelogo = $request->file('storelogo');
             $resized_store_logo = Image::make($storelogo);
             $resized_store_logo->resize(200, 200);
-            $store_logo_name = strtolower($store->secondary_url)."-".$imageid.".".$storelogo->getClientOriginalExtension();
+            $store_logo_name = "merchant-".time().".".$storelogo->getClientOriginalExtension();
             $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
             $store_logo_path = 'images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;

@@ -17,11 +17,11 @@ class CreateStoresTable extends Migration
             $table->bigIncrements('id')->primarykey();
             $table->string('title',191)->unique();
             $table->longText('description');
-            $table->string('primary_url',191)->unique(); // http://www.kohls.com
+            $table->string('primary_url'); // http://www.kohls.com
             $table->string('secondary_url',191)->unique(); // kohls.com
             $table->bigInteger('network_id')->unsigned();
             $table->foreign('network_id')->references('id')->on('networks');
-            $table->string('network_url',191)->unique();
+            $table->string('network_url');
             $table->enum('is_topstore',['yes','no']);
             $table->enum('is_popularstore',['yes','no']);
             $table->enum('status',['active','deactive']);
