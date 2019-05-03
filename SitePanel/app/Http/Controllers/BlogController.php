@@ -271,4 +271,22 @@ class BlogController extends Controller
             return response()->json($response);
         }
     }
+    public function postUploadBlogImage(Request $request){
+        $CKEditor = Input::get('CKEditor');
+        $funcNum = Input::get('CKEditorFuncNum');
+        $message = $blog_image_location = "";
+        if($request->hasFile('upload')){
+            if(!File::exists(public_path("images/blog"))){
+                File::makeDirectory(public_path("images/blog", 0777, true, true));
+            }
+            $blog_image = $request->file('upload');
+            $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
+            $blog_image_location = 'images/blog/'.$blog_image_name;
+            $blog_image->save(public_path($blog_image_location));
+        }
+        else{
+            $message = "File Not Found";
+        }
+        echo '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$blog_image_location.'", "'.$message.'")</script>';
+    }
 }

@@ -125,6 +125,9 @@
 <script type="text/javascript" src="{{asset('/js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
+        jQuery.validator.addMethod("siteurl", function(value, element, param) {
+            return value.match(/^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/);
+        },'please enter a valid url');
         $('#storedescription').ckeditor(); // if class is prefered.
         $(".close").click(function(){
             $(".alert").slideUp();
@@ -162,7 +165,7 @@
                 storetitle: "required",
                 storecategories: "required",
                 storedescription: "required",
-                storeprimaryurl: { required: true, url: true },
+                storeprimaryurl: { required: true, url: true, siteurl: true },
                 storesecondaryurl: "required",
                 networkid: "required",
                 storenetworkurl: "required",
@@ -173,7 +176,7 @@
                 storetitle: "please enter store title",
                 storecategories: "please select store categories",
                 storedescription: "please enter store details",
-                storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
+                storeprimaryurl: { required: "please enter store site url", url: "please enter a valid url", siteurl: "please enter a valid url"},
                 storesecondaryurl: "please enter store secondary url",
                 networkid: "please select network",
                 storenetworkurl: "please enter netwrok url",
