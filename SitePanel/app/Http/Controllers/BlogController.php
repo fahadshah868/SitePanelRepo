@@ -21,8 +21,8 @@ class BlogController extends Controller
         if(!$blog_exists){
             $blog = new Blog;
             $blog->title = $formdata->blog_title;
-            $url = str_replace(' ', '-', $formdata->blog_title);
-            $blog->url = $url;
+            $url = strtolower(str_replace(' ', '-', $formdata->blog_title));
+            $blog->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
             $blog->body = $formdata->blog_body;
             $blog->author = $formdata->blog_author;
             $blog->status = $formdata->blogstatus;
@@ -170,8 +170,8 @@ class BlogController extends Controller
         $blog = Blog::find($request->blogid);
         if(strcasecmp($blog->title, $request->blog_title) == 0){
             $blog->title = $request->blog_title;
-            $url = str_replace(' ', '-', $request->blog_title);
-            $blog->url = $url;
+            $url = strtolower(str_replace(' ', '-', $request->blog_title));
+            $blog->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
             $blog->body = $request->blog_body;
             $blog->author = $request->blog_author;
             $blog->status = $request->blogstatus;
@@ -189,8 +189,8 @@ class BlogController extends Controller
             $blog_exists = Blog::where('title',$request->blog_title)->exists();
             if(!$blog_exists){
                 $blog->title = $request->blog_title;
-                $url = str_replace(' ', '-', $request->blog_title);
-                $blog->url = $url;
+                $url = strtolower(str_replace(' ', '-', $request->blog_title));
+                $blog->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
                 $blog->body = $request->blog_body;
                 $blog->author = $request->blog_author;
                 $blog->status = $request->blogstatus;
