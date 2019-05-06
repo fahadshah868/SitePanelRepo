@@ -9,6 +9,7 @@ use App\Blog;
 use File;
 use Session;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Input;
 
 class BlogController extends Controller
 {
@@ -272,21 +273,27 @@ class BlogController extends Controller
         }
     }
     public function postUploadBlogImage(Request $request){
-        $CKEditor = Input::get('CKEditor');
-        $funcNum = Input::get('CKEditorFuncNum');
+        $CKEditor = $request->input('CKEditor');
+	    $funcNum  = $request->input('CKEditorFuncNum');
         $message = $blog_image_location = "";
-        if($request->hasFile('upload')){
-            if(!File::exists(public_path("images/blog"))){
-                File::makeDirectory(public_path("images/blog", 0777, true, true));
+        if(Input::hasFile('upload')){
+            $file = Input::file('upload');
+            if($file->isValid()){
+                if(!File::exists(public_path("images/blog_body"))){
+                    File::makeDirectory(public_path("images/blog_body", 0777, true, true));
+                }
+                $blog_image = Image::make($file);
+                $blog_image_name = "blog-".time().".".$file->getClientOriginalExtension();
+                $blog_image_location = 'images/blog_body/'.$blog_image_name;
+                $blog_image->save(public_path($blog_image_location));
             }
-            $blog_image = $request->file('upload');
-            $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
-            $blog_image_location = 'images/blog/'.$blog_image_name;
-            $blog_image->save(public_path($blog_image_location));
+            else{
+                $message = 'An error occurred while uploading the file.';
+            }
         }
         else{
-            $message = "File Not Found";
+            $message = 'No file uploaded.';
         }
-        echo '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.$blog_image_location.'", "'.$message.'")</script>';
+        return '<script>window.parent.CKEDITOR.tools.callFunction('.$funcNum.', "'.env('APP_URL').$blog_image_location.'", "'.$message.'")</script>';
     }
 }

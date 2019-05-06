@@ -111,7 +111,7 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updateblogform','BlogController@postUpdatedBlogForm');
     Route::post('/updateblogimage','BlogController@postUpdatedBlogImage');
     Route::get('/deleteblog/{id}','BlogController@deleteBlog');
-    Route::post('/uploadblogimage','BlogController@postUploadBlogImage');
+    Route::post('/uploadblogimage','BlogController@postUploadBlogImage')->name('upload');
 
     //logout
     Route::get('/logout','LogoutController@logout');

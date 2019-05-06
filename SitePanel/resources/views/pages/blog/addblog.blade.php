@@ -70,15 +70,11 @@
 <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
 <script>
 $(document).ready(function(){
-    // CKEDITOR.replace('blog_body',{
-    //     // customData: { 
-    //     //             _token: '{{csrf_token()}}'
-    //     //         },
-    //     // height: 300,
-    //     // filebrowserUploadUrl:'/uploadblogimage',
-    //     // filebrowserImageUploadUrl:'/uploadblogimage'
-    // });
-    $('#blog_body').ckeditor(); // if class is prefered.
+    CKEDITOR.replace('blog_body',{
+        height: 300,
+        filebrowserUploadUrl: '{{ route('upload',['_token' => csrf_token() ]) }}'
+    });
+    // $('#blog_body').ckeditor(); // if class is prefered.
     $(".close").click(function(){
         $(".alert").slideUp();
     });

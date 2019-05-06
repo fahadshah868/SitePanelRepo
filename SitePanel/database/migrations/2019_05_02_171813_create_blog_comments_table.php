@@ -15,10 +15,11 @@ class CreateBlogCommentsTable extends Migration
     {
         Schema::create('blog_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('comment');
+            $table->longText('body');
             $table->String('author');
             $table->String('email');
             $table->enum('is_approved',['yes','no']);
+            $table->enum('status',['yes','no']);
             $table->bigInteger('blog_id')->unsigned();
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
             $table->timestamps();
