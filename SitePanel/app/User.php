@@ -32,7 +32,10 @@ class User extends Authenticatable
         return $this->hasMany('App\CarouselOffer');
     }
     public function storecategories(){
-        return $this->hasMany('App\StoreCategoryGroup');
+        return $this->hasMany('App\StoreCategory');
+    }
+    public function blogcategories(){
+        return $this->hasMany('App\BlogCategory');
     }
     /**
      * The attributes that are mass assignable.

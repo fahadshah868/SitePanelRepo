@@ -100,6 +100,16 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updatecarouselofferimage','CarouselOfferController@postUpdateCarouselOfferImage');
     Route::get('/deletecarouseloffer/{id}','CarouselOfferController@deleteCarouselOffer');
 
+    //blog categories routes
+    Route::get('/addblogcategory','BlogCategoryController@getAddBlogCategory');
+    Route::post('/addblogcategory','BlogCategoryController@postAddBlogCategory');
+    Route::get('/allblogcategories','BlogCategoryController@getAllBlogCategories');
+    Route::get('/filteredblogcategories/{dateremark}/{datefrom}/{dateto}','BlogCategoryController@getFilteredBlogCategories');
+    Route::get('/viewblogcategory/{id}','BlogCategoryController@getViewBlogCategory');
+    Route::get('/updateblogcategory/{id}','BlogCategoryController@getupdateBlogCategory');
+    Route::post('/updateblogcategory','BlogCategoryController@postupdateBlogCategory');
+    Route::get('/deleteblogcategory/{id}','BlogCategoryController@deleteBlogCategory');
+
     //blog routes
     Route::get('/addblog','BlogController@getAddBlog');
     Route::post('/addblog','BlogController@postAddBlog');
@@ -112,6 +122,9 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updateblogimage','BlogController@postUpdatedBlogImage');
     Route::get('/deleteblog/{id}','BlogController@deleteBlog');
     Route::post('/uploadblogimage','BlogController@postUploadBlogImage')->name('upload');
+
+    //blog comments route
+    Route::get('/allblogcomments','BlogCommentController@getAllBlogComments');
 
     //logout
     Route::get('/logout','LogoutController@logout');

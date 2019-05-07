@@ -124,10 +124,19 @@
                         </a>
                         <ul class="collapse list-unstyled" id="blogsuboptions">
                             <li>
+                                <a href="/addblogcategory" class="sidebar-suboption">Add Category</a>
+                            </li>
+                            <li>
+                                <a href="/allblogcategories" class="sidebar-suboption">View All Categories</a>
+                            </li>
+                            <li>
                                 <a href="/addblog" class="sidebar-suboption">Add Blog</a>
                             </li>
                             <li>
                                 <a href="/todayallblogs" class="sidebar-suboption">View Today's Blogs</a>
+                            </li>
+                            <li>
+                                <a href="/todayallblogs" class="sidebar-suboption">View Blog Comments</a>
                             </li>
                         </ul>
                     </li>
