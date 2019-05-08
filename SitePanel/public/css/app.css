@@ -18480,6 +18480,18 @@ td .carousel_image_preview {
   font-weight: 700;
 }
 
+.approved-comment {
+  color: #117C00;
+}
+
+.pending-comment {
+  color: #0000ff;
+}
+
+.rejected-comment {
+  color: #FF0000;
+}
+
 .update-profile-form {
   margin: auto;
   width: 500px;

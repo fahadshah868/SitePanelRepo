@@ -123,6 +123,24 @@
                 </tr>
             </thead>
             <tbody id="tablebody">
+            <tr>
+            <td>asd asd asd asd asd as dasd </td>
+            <td>abcdefgh</td>
+            <td>abcd@gmail.com</td>
+            <td>comsad asd sdfdfvs dfvs dfsdf v adfvs r tgvaw erv asd v srfhwrnaedf gvwrb asdvsdv sfgbwrgv qefvadg bthqag</td>
+            <td>pending</td>
+            <td>
+                            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                <a href="#" id="viewcarouseloffer" class="btn btn-primary actionbutton" style="margin-right: 5px;"><i class="fa fa-check"></i>Approve</a>
+                                <a href="#" id="deletecarouseloffer"class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <a href="#" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                                <a href="#" id="deletecarouseloffer" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            </div>
+                        </td>
+</tr>            
+
                 @if(count($allblogcomments) > 0)
                     @foreach($allblogcomments as $blogcomment)
                     <tr>
@@ -130,15 +148,24 @@
                         <td>{{ $blogcomment->author }}</td>
                         <td>{{ $blogcomment->email }}</td>
                         <td>{{ $blogcomment->body }}</td>
-                        <td id="comment-status">
+                        <td>
                             @if(strcasecmp($blogcomment->status,"pending") == 0)
-                                <a href="/blogcomment/changestatus" id="approve">Approve</a>
-                                <a href="/blogcomment/changestatus" id="reject">Reject</a>
+                                <span class="pending-comment">{{ $blogcomment->status }}</span>
                             @elseif(strcasecmp($blogcomment->status,"approved") == 0)
-                                <span class="active-item">{{ $blogcomment->status }}</span>
+                                <span class="approved-comment">{{ $blogcomment->status }}</span>
                             @elseif(strcasecmp($blogcomment->status,"rejected") == 0)
-                                <span class="deactive-item">{{ $blogcomment->status }}</span>
+                                <span class="rejected-comment">{{ $blogcomment->status }}</span>
                             @endif
+                        </td>
+                        <td>
+                            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            </div>
+                            <div style="display: flex; flex-direction: row;">
+                                <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
