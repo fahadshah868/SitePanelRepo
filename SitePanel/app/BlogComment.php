@@ -11,6 +11,6 @@ class BlogComment extends Model
     public $timestamps = true;
 
     public function blog(){
-        return $this->belongsTo('App\Blog');
+        return $this->belongsTo('App\Blog','blog_id');
     }
 }

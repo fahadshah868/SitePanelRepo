@@ -11,10 +11,10 @@ class Blog extends Model
     public $timestamps = true;
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
     }
     public function blogcategory(){
-        return $this->belongsTo('App\BlogCategory');
+        return $this->belongsTo('App\BlogCategory', 'blog_category_id');
     }
     public function comments(){
         return $this->hasMany('App\BlogComment');

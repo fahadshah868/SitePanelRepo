@@ -22,9 +22,9 @@ class Store extends Model
     }
     //belongs to
     public function network(){
-        return $this->belongsTo('App\Network');
+        return $this->belongsTo('App\Network','network_id');
     }
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
     }
 }

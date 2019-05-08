@@ -142,7 +142,7 @@
                         <tr>
                             <td><div class="blog-title-container">{{ $blog->title }}</div></td>
                             <td><div class="blog-body-container">{!! $blog->body !!}</div></td>
-                            <td>{{ $blog->blogcategory->id }}</td>
+                            <td>{{$blog->blogcategory->title}}</td>
                             <td>{{ $blog->author }}</td>
                             <td>
                                 @if(strcasecmp($blog->status,"active") == 0)
@@ -181,17 +181,20 @@
             $rows.show().filter(function() {
                 var blogtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var blogbody_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blogauthor_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blogstatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blog_added_updated_by_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blogcategory_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blogauthor_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blogstatus_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                var blog_added_updated_by_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~blogtitle_col.indexOf(blogtitle_val) || 
-                        !~blogbody_col.indexOf(blogbody_val) || 
-                        !~blogauthor_col.indexOf(blogauthor_val) || 
-                        !~blogstatus_col.indexOf(blogstatus_val) || 
-                        !~blog_added_updated_by_col.indexOf(blog_added_updated_by_val);
+                    !~blogbody_col.indexOf(blogbody_val) || 
+                    !~blogcategory_col.indexOf(blogcategory_val) || 
+                    !~blogauthor_col.indexOf(blogauthor_val) || 
+                    !~blogstatus_col.indexOf(blogstatus_val) || 
+                    !~blog_added_updated_by_col.indexOf(blog_added_updated_by_val);
             }).hide();
             if($("#blogtitle").val() != "" || 
                 $("#blogbody").val() != "" || 
+                $("#blogcategory").val() != "" || 
                 $("#blogauthor").val() != "" || 
                 $("#blogstatus").val() != "" ||
                 $("#blog_added_updated_by").val() != "")
@@ -255,6 +258,7 @@
         $("#clear_all_filters").click(function(){
             $("#blogtitle").val("");
             $("#blogbody").val("");
+            $("#blogcategory").val("");
             $("#blogauthor").val("");
             $("#blogstatus").val("");
             $("#blog_added_updated_by").val("");
@@ -268,6 +272,10 @@
             }
             else if($(this).attr("id") == "blogbody_clr_btn"){
                 $("#blogbody").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "blogcategory_clr_btn"){
+                $("#blogcategory").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "blogauthor_clr_btn"){
@@ -331,6 +339,7 @@
                             var html = "<tr>"+
                             "<td><div class='blog-title-container'>"+value.title+"</div></td>"+
                             "<td><div class='blog-body-container'>"+value.body+"</div></td>"+
+                            "<td>"+value.blogcategory.title+"</td>"+
                             "<td>"+value.author+"</td>"
                             if(value.status == "active"){
                                 html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"

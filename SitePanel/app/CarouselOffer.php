@@ -11,9 +11,9 @@ class CarouselOffer extends Model
     public $timestamps = true;
 
     public function store(){
-        return $this->belongsTo('App\Store');
+        return $this->belongsTo('App\Store','store_id');
     }
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
     }
 }

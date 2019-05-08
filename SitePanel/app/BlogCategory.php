@@ -11,7 +11,7 @@ class BlogCategory extends Model
     public $timestamps = true;
 
     public function user(){
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User','user_id');
     }
     public function blogs(){
         return $this->hasMany('App\Blog');

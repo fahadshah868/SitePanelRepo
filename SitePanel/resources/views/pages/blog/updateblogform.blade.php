@@ -19,9 +19,27 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Blog Author</div>
-                        <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" value="{{ $blog->author }}" placeholder="Author">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-field">
+                                <div class="form-field-heading">Blog Category</div>
+                                <select class="form-control form-field-text" name="blog_category_id" id="blog_category_id">
+                                    @foreach($blogcategories as $blogcategory)
+                                        @if($blog->blog_category_id == $blogcategory->id)
+                                        <option value="{{$blogcategory->id}}" selected>{{$blogcategory->title}}</option>
+                                        @else
+                                        <option value="{{$blogcategory->id}}">{{$blogcategory->title}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-field">
+                                <div class="form-field-heading">Blog Author</div>
+                                <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" value="{{ $blog->author }}" placeholder="Author">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -99,12 +117,14 @@
             rules: {
                 blog_title: "required",
                 blog_body: "required",
+                blog_category_id: "required",
                 blog_author: "required",
                 blogstatus: "required",
             },
             messages: {
                 blog_title: "please enter blog title",
                 blog_body: "please fill blog body",
+                blog_category_id: "please select category",
                 blog_author: "please enter blog author",
                 blogstatus: "please select blog status",
             },
@@ -112,9 +132,10 @@
                 var _blogid = $("#blogid").val();
                 var _blog_title = $("#blog_title").val();
                 var _blog_body = $("#blog_body").val();
+                var _blog_category_id = $("#blog_category_id").val();
                 var _blog_author = $("#blog_author").val();
                 var _blogstatus = $("input[name='blogstatus']:checked").val();
-                var _jsondata = JSON.stringify({blogid: _blogid, blog_title: _blog_title, blog_body: _blog_body, blog_author: _blog_author, blogstatus: _blogstatus, _token: "{{ csrf_token() }}"});
+                var _jsondata = JSON.stringify({blogid: _blogid, blog_title: _blog_title, blog_body: _blog_body, blog_category_id: _blog_category_id, blog_author: _blog_author, blogstatus: _blogstatus, _token: "{{ csrf_token() }}"});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",
