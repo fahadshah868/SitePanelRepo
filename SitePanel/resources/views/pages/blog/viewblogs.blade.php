@@ -84,6 +84,7 @@
                 <tr>
                     <th>Blog Title</th>
                     <th>Blog Body</th>
+                    <th>Blog Category</th>
                     <th>Blog Author</th>
                     <th>Blog Status</th>
                     <th>Blog Image</th>
@@ -103,6 +104,12 @@
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="blogbody" placeholder="Search Blog Body" autocomplete="off"/>
                             <button class="header-searchbar-filter-button" id="blogbody_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="blogcategory" placeholder="Search Blog category" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="blogcategory_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
@@ -135,6 +142,7 @@
                         <tr>
                             <td><div class="blog-title-container">{{ $blog->title }}</div></td>
                             <td><div class="blog-body-container">{!! $blog->body !!}</div></td>
+                            <td>{{ $blog->blogcategory->id }}</td>
                             <td>{{ $blog->author }}</td>
                             <td>
                                 @if(strcasecmp($blog->status,"active") == 0)
@@ -149,7 +157,7 @@
                             @endif
                             <td>
                                 <a href="/viewblog/{{$blog->id}}" id="viewblog" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
-                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}" data-blogauthor="{{$blog->author}}" data-blogstatus="{{$blog->status}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}"  data-blogauthor="{{$blog->author}}" data-blogstatus="{{$blog->status}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -166,6 +174,7 @@
             var $rows = $('#tablebody tr');
             var blogtitle_val = $.trim($("#blogtitle").val()).replace(/ +/g, ' ').toLowerCase();
             var blogbody_val = $.trim($("#blogbody").val()).replace(/ +/g, ' ').toLowerCase();
+            var blogcategory_val = $.trim($("#blogcategory").val()).replace(/ +/g, ' ').toLowerCase();
             var blogauthor_val = $.trim($("#blogauthor").val()).replace(/ +/g, ' ').toLowerCase();
             var blogstatus_val = $.trim($("#blogstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var blog_added_updated_by_val = $.trim($("#blog_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();

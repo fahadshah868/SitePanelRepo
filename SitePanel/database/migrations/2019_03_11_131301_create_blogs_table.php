@@ -21,6 +21,8 @@ class CreateBlogsTable extends Migration
             $table->string('author');
             $table->enum('status',['active','deactive']);
             $table->string('image_url');
+            $table->bigInteger('blog_category_id')->unsigned();
+            $table->foreign('blog_category_id')->references('id')->on('blog_categories');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

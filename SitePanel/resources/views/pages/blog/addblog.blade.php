@@ -21,9 +21,24 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Blog Author</div>
-                        <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" placeholder="Author">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-field">
+                                <div class="form-field-heading">Blog Category</div>
+                                <select class="form-control form-field-text" name="blog_category_id" id="blog_category_id">
+                                    <option value="">Select Category</option>
+                                    @foreach($blogcategories as $blogcategory)
+                                        <option value="{{$blogcategory->id}}">{{$blogcategory->title}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-field">
+                                <div class="form-field-heading">Blog Author</div>
+                                <input type="text" class="form-control form-field-text" id="blog_author" name="blog_author" placeholder="Author">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -90,6 +105,7 @@ $(document).ready(function(){
         rules: {
             blog_title: "required",
             blog_body: "required",
+            blog_category_id: "required",
             blog_author: "required",
             blogstatus: "required",
             blog_image: { required: true, validateimage: true }
@@ -97,6 +113,7 @@ $(document).ready(function(){
         messages: {
             blog_title: "please enter blog title",
             blog_body: "please fill blog body",
+            blog_category_id: "please select blog category",
             blog_author: "please enter blog author",
             blogstatus: "please select blog status",
             blog_image: {required: "please select blog image", validateimage: "image dimensions must be 900 x 500 OR image ratio must be 1.8"}
@@ -104,11 +121,13 @@ $(document).ready(function(){
         submitHandler: function(form) {
             var _blog_title = $("#blog_title").val();
             var _blog_body = $("#blog_body").val();
+            var _blog_category_id = $("#blog_category_id").val();
             var _blog_author = $("#blog_author").val();
             var _blogstatus = $("input[name='blogstatus']:checked").val();
             var _blog_image = $("#blog_image")[0].files[0];
             var formdata = new FormData();
-            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blog_author: _blog_author, blogstatus: _blogstatus});
+            var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blog_category_id: _blog_category_id, blog_author: _blog_author, blogstatus: _blogstatus});
+            alert(_jsondata);
             formdata.append("formdata", _jsondata);
             formdata.append("_token", "{{ csrf_token() }}");
             formdata.append("blog_image", _blog_image);

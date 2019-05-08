@@ -136,7 +136,7 @@
                                 <a href="/todayallblogs" class="sidebar-suboption">View Today's Blogs</a>
                             </li>
                             <li>
-                                <a href="/todayallblogs" class="sidebar-suboption">View Blog Comments</a>
+                                <a href="/allblogcomments" class="sidebar-suboption">View Blog Comments</a>
                             </li>
                         </ul>
                     </li>

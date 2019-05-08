@@ -13,4 +13,7 @@ class BlogCategory extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+    public function blogs(){
+        return $this->hasMany('App\Blog');
+    }
 }
