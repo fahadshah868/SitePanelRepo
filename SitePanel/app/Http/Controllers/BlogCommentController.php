@@ -16,7 +16,7 @@ class BlogCommentController extends Controller
         }])
         ->orderBy('id','DESC')->get();
         $data['mainheading'] = "All Blog Comments";
-        $data['blogcategoriescount'] = count($data['allblogcomments']);
+        $data['blogcommentscount'] = count($data['allblogcomments']);
         $data['filtereddaterange'] = "";
         Session::put(['url'=>'/allblogcomments','flag'=>1]);
         return view('pages.blogcomment.viewblogcomments',$data);
@@ -103,6 +103,13 @@ class BlogCommentController extends Controller
             }
         }
     }
+    public function getViewBlogComment($id){
+        Session::put('flag',-1);
+        $data['blogcomment'] = BlogComment::with(['blog' => function($q){
+            $q->select('id','title');
+        }])->find($id);
+        return view('pages.blogcomment.viewblogcomment',$data);
+    }
     public function postchangestatus(Request $request){
         $blogcomment = BlogComment::find($request->comment_id);
         $blogcomment->status = $request->comment_status;
@@ -111,9 +118,5 @@ class BlogCommentController extends Controller
             'status' => 'true',
         ];
         return response()->json($response);
-    }
-    public function getViewBlogComment($id){
-        $blogcomment = BlogComment::find($id);
-
     }
 }
