@@ -118,10 +118,31 @@ class BlogCommentController extends Controller
         $blogcomment = BlogComment::find($request->blogcomment_id);
         $blogcomment->status = $request->blogcomment_status;
         $blogcomment->save();
+        Session::flash('updateblogcomment_successmessage','Blog Comment Updated Successfully');
         $response = [
             'status' => 'true',
             'blogcomment_id' => $request->blogcomment_id
         ];
         return response()->json($response);
+    }
+    public function deleteBlogComment($id){
+        Session::put('flag',-1);
+        $blogcomment = BlogComment::find($id);
+        try{
+            $blogcomment->delete();
+            $response = [
+                "status" => "true",
+                "url" => Session::get('url'),
+                "success_message" => "Blog Category Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => $blogcategory->title."! Sorry, You Cannot Delete This Blog Category Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
     }
 }
