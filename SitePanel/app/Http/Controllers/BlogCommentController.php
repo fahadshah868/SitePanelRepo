@@ -110,12 +110,17 @@ class BlogCommentController extends Controller
         }])->find($id);
         return view('pages.blogcomment.viewblogcomment',$data);
     }
-    public function postchangestatus(Request $request){
-        $blogcomment = BlogComment::find($request->comment_id);
-        $blogcomment->status = $request->comment_status;
+    public function getUpdateBlogComment($id){
+        $data['blogcomment'] = BlogComment::select('id','status')->find($id);
+        return view('pages.blogcomment.updateblogcomment',$data);
+    }
+    public function postUpdateBlogComment(Request $request){
+        $blogcomment = BlogComment::find($request->blogcomment_id);
+        $blogcomment->status = $request->blogcomment_status;
         $blogcomment->save();
         $response = [
             'status' => 'true',
+            'blogcomment_id' => $request->blogcomment_id
         ];
         return response()->json($response);
     }

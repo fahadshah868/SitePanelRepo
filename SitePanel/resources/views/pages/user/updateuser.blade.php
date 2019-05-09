@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-buttons-container">
                     <div>
-                        <a href="/viewuser/{{$user->id}}" id="backtousers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To User</a>
+                        <a href="/viewuser/{{$user->id}}" id="backtouser" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To User</a>
                         <input type="submit" value="Update User" class="btn btn-primary form-button"/>
                     </div>
                     <div>
@@ -106,7 +106,7 @@
             $(".close").click(function(){
                 $(".alert").slideUp();
             });
-            $("#backtousers").click(function(event){
+            $("#backtouser").click(function(event){
                 event.preventDefault();
                 $("#panel-body-container").load($(this).attr("href"));
             });

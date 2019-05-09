@@ -126,8 +126,9 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     //blog comments route
     Route::get('/allblogcomments','BlogCommentController@getAllBlogComments');
     Route::get('/filteredblogcomments/{dateremark}/{datefrom}/{dateto}','BlogCommentController@getFilteredBlogComments');
-    Route::post('/blogcomment/changestatus','BlogCommentController@postchangestatus');
     Route::get('/viewblogcomment/{id}','BlogCommentController@getViewBlogComment');
+    Route::get('/updateblogcomment/{id}','BlogCommentController@getUpdateBlogComment');
+    Route::post('/updateblogcomment','BlogCommentController@postUpdateBlogComment');
 
     //logout
     Route::get('/logout','LogoutController@logout');

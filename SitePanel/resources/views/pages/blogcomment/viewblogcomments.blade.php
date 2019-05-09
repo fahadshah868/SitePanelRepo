@@ -115,7 +115,7 @@
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="commentstatus" placeholder="Search Comment Status" autocomplete="off"/>
+                            <input type="text" class="header-searchbar-filter" id="blogcommentstatus" placeholder="Search Comment Status" autocomplete="off"/>
                             <button class="header-searchbar-filter-button" id="commentstatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
@@ -142,13 +142,13 @@
                         <td>
                             @if(strcasecmp($blogcomment->status,"pending") == 0)
                             <div id="approval-actions" class="action-buttons-container">
-                                <a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="{{$blogcomment->id}}" data-commentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>
-                                <a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="{{$blogcomment->id}}" data-commentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>
+                                <a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="{{$blogcomment->id}}" data-blogcommentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>
+                                <a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="{{$blogcomment->id}}" data-blogcommentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>
                             </div>
                             @endif
                             <div class="action-buttons-container">
                                 <a href="/viewblogcomment/{{$blogcomment->id}}" id="viewblogcomment" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="/deleteblogcomment/{{$blogcomment->id}}" id="deleteblogcomment" data-blogtitle="{{$blogcomment->blog->title}}" data-commentauthor="{{$blogcomment->author}}" data-commentauthoremail="{{$blogcomment->email}}" data-commentbody="{{$blogcomment->body}}" data-commentstatus="{{$blogcomment->status}}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteblogcomment/{{$blogcomment->id}}" id="deleteblogcomment" data-blogtitle="{{$blogcomment->blog->title}}" data-commentauthor="{{$blogcomment->author}}" data-commentauthoremail="{{$blogcomment->email}}" data-commentbody="{{$blogcomment->body}}" data-blogcommentstatus="{{$blogcomment->status}}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -168,7 +168,7 @@
             var commentauthor_val = $.trim($("#commentauthor").val()).replace(/ +/g, ' ').toLowerCase();
             var commentauthoremail_val = $.trim($("#commentauthoremail").val()).replace(/ +/g, ' ').toLowerCase();
             var commentbody_val = $.trim($("#commentbody").val()).replace(/ +/g, ' ').toLowerCase();
-            var commentstatus_val = $.trim($("#commentstatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var commentstatus_val = $.trim($("#blogcommentstatus").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var blogtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
                 var commentauthor_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
@@ -181,7 +181,7 @@
                 !~commentbody_col.indexOf(commentbody_val) || 
                 !~commentstatus_col.indexOf(commentstatus_val);
             }).hide();
-            if($("#blogtitle").val() != "" || $("#commentauthor").val() != "" || $("#commentauthoremail").val() != "" || $("#commentbody").val() != "" || $("#commentstatus").val() != ""){
+            if($("#blogtitle").val() != "" || $("#commentauthor").val() != "" || $("#commentauthoremail").val() != "" || $("#commentbody").val() != "" || $("#blogcommentstatus").val() != ""){
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
             else{
@@ -244,7 +244,7 @@
             $("#commentauthor").val("");
             $("#commentauthoremail").val("");
             $("#commentbody").val("");
-            $("#commentstatus").val("");
+            $("#blogcommentstatus").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
@@ -265,7 +265,7 @@
                 clientSideFilter();
             }
             else if($(this).attr("id") == "commentstatus_clr_btn"){
-                $("#commentstatus").val("");
+                $("#blogcommentstatus").val("");
                 clientSideFilter();
             }
         });
@@ -330,14 +330,14 @@
                                 if(value.status.toLowerCase() == "pending"){
                                     html = html +
                                     `<div id="approval-actions" class="action-buttons-container">`+
-                                        `<a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="`+value.id+`" data-commentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>`+
-                                        `<a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="`+value.id+`" data-commentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>`+
+                                        `<a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="`+value.id+`" data-blogcommentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>`+
+                                        `<a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="`+value.id+`" data-blogcommentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>`+
                                     `</div>`
                                 }
                                 html = html +
                                 `<div class="action-buttons-container">`+
                                     `<a href="/viewblogcomment/`+value.id+`" id="viewblogcomment" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>`+
-                                    `<a href="/deleteblogcomment/`+value.id+`" data-blogtitle="`+value.blog.title+`" data-commentauthor="`+value.author+`" data-commentauthoremail="`+value.email+`" data-commentbody="`+value.body+`" data-commentstatus="`+value.status+`" id="deleteblogcomment" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>`+
+                                    `<a href="/deleteblogcomment/`+value.id+`" data-blogtitle="`+value.blog.title+`" data-commentauthor="`+value.author+`" data-commentauthoremail="`+value.email+`" data-commentbody="`+value.body+`" data-blogcommentstatus="`+value.status+`" id="deleteblogcomment" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>`+
                                 `</div>`+
                             "</td>"+
                             "</tr>";
@@ -359,9 +359,9 @@
                 var parent_row = $(this).parent().parent().parent();
                 var parent_div = $(this).parent();
                 var parent_td = $(this).parent().parent();
-                var _comment_id = $(this).data("commentid");
-                var _comment_status = $(this).data("commentstatus");
-                var _jsondata = JSON.stringify({comment_id: _comment_id, comment_status: _comment_status, _token: "{{ csrf_token() }}"})
+                var _blogcomment_id = $(this).data("blogcommentid");
+                var _blogcomment_status = $(this).data("blogcommentstatus");
+                var _jsondata = JSON.stringify({blogcomment_id: _blogcomment_id, blogcomment_status: _blogcomment_status, _token: "{{ csrf_token() }}"})
                 $.ajax({
                     method: 'POST',
                     url: url,
@@ -372,12 +372,12 @@
                         if(data.status == "true"){
                             parent_div.html("")
                             parent_div.css("margin",0)
-                            parent_td.find(".action-buttons-container #deleteblogcomment").data('commentstatus',_comment_status);
-                            if(_comment_status == "approved"){
-                                parent_row.find('td.comment-status').html(`<span class="approved-comment">`+_comment_status+`</span>`);
+                            parent_td.find(".action-buttons-container #deleteblogcomment").data('blogcommentstatus',_blogcomment_status);
+                            if(_blogcomment_status == "approved"){
+                                parent_row.find('td.comment-status').html(`<span class="approved-comment">`+_blogcomment_status+`</span>`);
                             }
-                            else if(_comment_status == "rejected"){
-                                parent_row.find('td.comment-status').html(`<span class="rejected-comment">`+_comment_status+`</span>`);
+                            else if(_blogcomment_status == "rejected"){
+                                parent_row.find('td.comment-status').html(`<span class="rejected-comment">`+_blogcomment_status+`</span>`);
                             }
                         }
                     },
@@ -392,14 +392,14 @@
             else if($(this).attr("id") == "deleteblogcomment"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("commentstatus") == "pending"){
-                    status = "<span class='pending-comment'>"+$(this).data("commentstatus")+"</span><br>";
+                if($(this).data("blogcommentstatus") == "pending"){
+                    status = "<span class='pending-comment'>"+$(this).data("blogcommentstatus")+"</span><br>";
                 }
-                else if($(this).data("commentstatus") == "approved"){
-                    status = "<span class='approved-comment'>"+$(this).data("commentstatus")+"</span><br>";
+                else if($(this).data("blogcommentstatus") == "approved"){
+                    status = "<span class='approved-comment'>"+$(this).data("blogcommentstatus")+"</span><br>";
                 }
-                else if($(this).data("commentstatus") == "rejected"){
-                    status = "<span class='rejected-comment'>"+$(this).data("commentstatus")+"</span><br>";
+                else if($(this).data("blogcommentstatus") == "rejected"){
+                    status = "<span class='rejected-comment'>"+$(this).data("blogcommentstatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

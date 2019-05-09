@@ -127,7 +127,6 @@ $(document).ready(function(){
             var _blog_image = $("#blog_image")[0].files[0];
             var formdata = new FormData();
             var _jsondata = JSON.stringify({blog_title: _blog_title, blog_body: _blog_body, blog_category_id: _blog_category_id, blog_author: _blog_author, blogstatus: _blogstatus});
-            alert(_jsondata);
             formdata.append("formdata", _jsondata);
             formdata.append("_token", "{{ csrf_token() }}");
             formdata.append("blog_image", _blog_image);

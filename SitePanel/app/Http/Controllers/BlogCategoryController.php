@@ -137,7 +137,7 @@ class BlogCategoryController extends Controller
         return view('pages.blogcategory.viewblogcategory',$data);
     }
     public function getupdateBlogCategory($id){
-        $data['blogcategory'] = BlogCategory::find($id);
+        $data['blogcategory'] = BlogCategory::select('id','title','status')->find($id);
         return view('pages.blogcategory.updateblogcategory', $data);
     }
     public function postupdateBlogCategory(Request $request){
