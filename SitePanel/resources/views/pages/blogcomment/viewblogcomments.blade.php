@@ -2,13 +2,13 @@
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $blogcategoriescount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
-            <a href="/allblogcategories" class="btn btn-danger viewitems-header-filter-button" title="Get All Blog Categories List"><i class="fas fa-list"></i>Get All Bog Categories</a>
-            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Blog Categories" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            <a href="/allblogcomments" class="btn btn-danger viewitems-header-filter-button" title="Get All Blog Comments List"><i class="fas fa-list"></i>Get All Bog Comments</a>
+            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Blog Comments" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form id="daterangeblogcategoryfilterform" action="#" method="#">
+                        <form id="daterangeblogcommentfilterform" action="#" method="#">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,7 +81,7 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
-                    <th>blog</th>
+                    <th>blog Title</th>
                     <th>Author</th>
                     <th>Email</th>
                     <th>Body</th>
@@ -91,56 +91,38 @@
                 <tr>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blogcategorytitle" placeholder="Search Category Title" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blogcategorytitle_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="blogtitle" placeholder="Search Blog Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="blogtitle_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blogcategorystatus" placeholder="Search Category Status" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blogcategorystatus_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="commentauthor" placeholder="Search Author" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="commentauthor_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blogcategorystatus" placeholder="Search Category Status" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blogcategorystatus_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="commentauthoremail" placeholder="Search Email" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="commentauthoremail_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blogcategorystatus" placeholder="Search Category Status" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blogcategorystatus_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="commentbody" placeholder="Search Comment" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="commentbody_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="blogcategorystatus" placeholder="Search Category Status" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="blogcategorystatus_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="commentstatus" placeholder="Search Comment Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="commentstatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
                 </tr>
             </thead>
             <tbody id="tablebody">
-            <tr>
-            <td>asd asd asd asd asd as dasd </td>
-            <td>abcdefgh</td>
-            <td>abcd@gmail.com</td>
-            <td>comsad asd sdfdfvs dfvs dfsdf v adfvs r tgvaw erv asd v srfhwrnaedf gvwrb asdvsdv sfgbwrgv qefvadg bthqag</td>
-            <td>pending</td>
-            <td>
-                            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-                                <a href="#" id="viewcarouseloffer" class="btn btn-primary actionbutton" style="margin-right: 5px;"><i class="fa fa-check"></i>Approve</a>
-                                <a href="#" id="deletecarouseloffer"class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>
-                            </div>
-                            <div style="display: flex; flex-direction: row;">
-                                <a href="#" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="#" id="deletecarouseloffer" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
-                            </div>
-                        </td>
-</tr>            
-
                 @if(count($allblogcomments) > 0)
                     @foreach($allblogcomments as $blogcomment)
                     <tr>
@@ -148,7 +130,7 @@
                         <td>{{ $blogcomment->author }}</td>
                         <td>{{ $blogcomment->email }}</td>
                         <td>{{ $blogcomment->body }}</td>
-                        <td>
+                        <td class="comment-status">
                             @if(strcasecmp($blogcomment->status,"pending") == 0)
                                 <span class="pending-comment">{{ $blogcomment->status }}</span>
                             @elseif(strcasecmp($blogcomment->status,"approved") == 0)
@@ -158,13 +140,15 @@
                             @endif
                         </td>
                         <td>
-                            <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
-                                <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            @if(strcasecmp($blogcomment->status,"pending") == 0)
+                            <div id="approval-actions" class="action-buttons-container">
+                                <a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="{{$blogcomment->id}}" data-commentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>
+                                <a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="{{$blogcomment->id}}" data-commentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>
                             </div>
-                            <div style="display: flex; flex-direction: row;">
-                                <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            @endif
+                            <div class="action-buttons-container">
+                                <a href="/viewblogcomment/{{$blogcomment->id}}" id="viewblogcomment" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                                <a href="/deleteblogcomment/{{$blogcomment->id}}" id="deleteblogcomment" data-blogtitle="{{$blogcomment->blog->title}}" data-commentauthor="{{$blogcomment->author}}" data-commentauthoremail="{{$blogcomment->email}}" data-commentbody="{{$blogcomment->body}}" data-commentstatus="{{$blogcomment->status}}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </div>
                         </td>
                     </tr>
@@ -180,16 +164,24 @@
     $(document).ready(function(){
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
-            var blogcategorytitle_val = $.trim($("#blogcategorytitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var blogcategorystatus_val = $.trim($("#blogcategorystatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var blogcategory_added_updated_by_val = $.trim($("#blogcategory_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var blogtitle_val = $.trim($("#blogtitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var commentauthor_val = $.trim($("#commentauthor").val()).replace(/ +/g, ' ').toLowerCase();
+            var commentauthoremail_val = $.trim($("#commentauthoremail").val()).replace(/ +/g, ' ').toLowerCase();
+            var commentbody_val = $.trim($("#commentbody").val()).replace(/ +/g, ' ').toLowerCase();
+            var commentstatus_val = $.trim($("#commentstatus").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
-                var blogcategorytitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blogcategorystatus_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var blogcategory_added_updated_by_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                return !~blogcategorytitle_col.indexOf(blogcategorytitle_val) || !~blogcategorystatus_col.indexOf(blogcategorystatus_val) || !~blogcategory_added_updated_by_col.indexOf(blogcategory_added_updated_by_val);
+                var blogtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var commentauthor_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var commentauthoremail_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var commentbody_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var commentstatus_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~blogtitle_col.indexOf(blogtitle_val) || 
+                !~commentauthor_col.indexOf(commentauthor_val) ||
+                !~commentauthoremail_col.indexOf(commentauthoremail_val) ||
+                !~commentbody_col.indexOf(commentbody_val) || 
+                !~commentstatus_col.indexOf(commentstatus_val);
             }).hide();
-            if($("#blogcategorytitle").val() != "" || $("#blogcategorystatus").val() != "" || $("#blogcategory_added_updated_by").val() != ""){
+            if($("#blogtitle").val() != "" || $("#commentauthor").val() != "" || $("#commentauthoremail").val() != "" || $("#commentbody").val() != "" || $("#commentstatus").val() != ""){
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
             else{
@@ -248,38 +240,45 @@
             clientSideFilter();
         });
         $("#clear_all_filters").click(function(){
-            $("#blogcategorytitle").val("");
-            $("#blogcategorystatus").val("");
-            $("#blogcategory_added_updated_by").val("");
+            $("#blogtitle").val("");
+            $("#commentauthor").val("");
+            $("#commentauthoremail").val("");
+            $("#commentbody").val("");
+            $("#commentstatus").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
-            if($(this).attr("id") == "blogcategorytitle_clr_btn"){
-                $("#blogcategorytitle").val("");
+            if($(this).attr("id") == "blogtitle_clr_btn"){
+                $("#blogtitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "blogcategorystatus_clr_btn"){
-                $("#blogcategorystatus").val("");
+            else if($(this).attr("id") == "commentauthor_clr_btn"){
+                $("#commentauthor").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "blogcategory_added_updated_by_clr_btn"){
-                $("#blogcategory_added_updated_by").val("");
+            else if($(this).attr("id") == "commentauthoremail_clr_btn"){
+                $("#commentauthoremail").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "commentbody_clr_btn"){
+                $("#commentbody").val("");
+                clientSideFilter();
+            }
+            else if($(this).attr("id") == "commentstatus_clr_btn"){
+                $("#commentstatus").val("");
                 clientSideFilter();
             }
         });
-        $("#tablebody").on('click','#comment-status a',function(){
-            alert('as');
-        });
-        //filter blogcategorys by date range
+        //filter blog comments by date range
         $("#date-filter-container a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
         $("#cancel_modal_button").click(function(){
-            $("#daterangeblogcategoryfilterform").trigger("reset");
+            $("#daterangeblogcommentfilterform").trigger("reset");
             $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
         });
-        $("#daterangeblogcategoryfilterform").submit(function(event){
+        $("#daterangeblogcommentfilterform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
@@ -296,12 +295,12 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeblogcategoryfilterform").trigger("reset");
+                $("#daterangeblogcommentfilterform").trigger("reset");
                 $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filteredblogcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
+                    url: "/filteredblogcomments/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",
@@ -310,23 +309,36 @@
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
                         $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredblogcategories, function (index, value) {
+                        $.each(data.filteredblogcomments, function (index, value) {
                             var html = "<tr>"+
-                            "<td>"+value.title+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            "<td>"+value.blog.title+"</td>"+
+                            "<td>"+value.author+"</td>"+
+                            "<td>"+value.email+"</td>"+
+                            "<td>"+value.body+"</td>"+
+                            "<td class='comment-status'>"
+                            if(value.status.toLowerCase() == "pending"){
+                                html = html + `<span class="pending-comment">`+value.status+`</span>`;
                             }
-                            else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                            else if(value.status.toLowerCase() == "approved"){
+                                html = html + `<span class="approved-comment">`+value.status+`</span>`;
                             }
-                            if("{{Auth::User()->role}}" == "admin"){
+                            else if(value.status.toLowerCase() == "rejected"){
+                                html = html + `<span class="rejected-comment">`+value.status+`</span>`;
+                            }
+                            html = html + "</td>"+
+                            "<td>"
+                                if(value.status.toLowerCase() == "pending"){
+                                    html = html +
+                                    `<div id="approval-actions" class="action-buttons-container">`+
+                                        `<a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="`+value.id+`" data-commentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>`+
+                                        `<a href="/blogcomment/changestatus" id="changecommentstatus" data-commentid="`+value.id+`" data-commentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>`+
+                                    `</div>`
+                                }
                                 html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewblogcategory/"+value.id+"' id='viewblogcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblogcategory/"+value.id+"' id='deleteblogcategory' data-blogcategorytitle='"+value.title+"' data-blogcategorystatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                `<div class="action-buttons-container">`+
+                                    `<a href="/viewblogcomment/`+value.id+`" id="viewblogcomment" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>`+
+                                    `<a href="/deleteblogcomment/`+value.id+`" data-blogtitle="`+value.blog.title+`" data-commentauthor="`+value.author+`" data-commentauthoremail="`+value.email+`" data-commentbody="`+value.body+`" data-commentstatus="`+value.status+`" id="deleteblogcomment" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>`+
+                                `</div>`+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -342,22 +354,60 @@
         //navigation buttons actions
         $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
-            if($(this).attr("id") == "viewblogcategory"){
+            if($(this).attr("id") == "changecommentstatus"){
+                var url = $(this).attr("href");
+                var parent_row = $(this).parent().parent().parent();
+                var parent_div = $(this).parent();
+                var parent_td = $(this).parent().parent();
+                var _comment_id = $(this).data("commentid");
+                var _comment_status = $(this).data("commentstatus");
+                var _jsondata = JSON.stringify({comment_id: _comment_id, comment_status: _comment_status, _token: "{{ csrf_token() }}"})
+                $.ajax({
+                    method: 'POST',
+                    url: url,
+                    data: _jsondata,
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function(data){
+                        if(data.status == "true"){
+                            parent_div.html("")
+                            parent_div.css("margin",0)
+                            parent_td.find(".action-buttons-container #deleteblogcomment").data('commentstatus',_comment_status);
+                            if(_comment_status == "approved"){
+                                parent_row.find('td.comment-status').html(`<span class="approved-comment">`+_comment_status+`</span>`);
+                            }
+                            else if(_comment_status == "rejected"){
+                                parent_row.find('td.comment-status').html(`<span class="rejected-comment">`+_comment_status+`</span>`);
+                            }
+                        }
+                    },
+                    error: function(){
+                        alert("Ajax Error! something went wrong...");
+                    }
+                });
+            }
+            else if($(this).attr("id") == "viewblogcomment"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deleteblogcategory"){
+            else if($(this).attr("id") == "deleteblogcomment"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("blogcategorystatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("blogcategorystatus")+"</span><br>";
+                if($(this).data("commentstatus") == "pending"){
+                    status = "<span class='pending-comment'>"+$(this).data("commentstatus")+"</span><br>";
                 }
-                else if($(this).data("blogcategorystatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("blogcategorystatus")+"</span><br>";
+                else if($(this).data("commentstatus") == "approved"){
+                    status = "<span class='approved-comment'>"+$(this).data("commentstatus")+"</span><br>";
+                }
+                else if($(this).data("commentstatus") == "rejected"){
+                    status = "<span class='rejected-comment'>"+$(this).data("commentstatus")+"</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
-                    "<b>Category Title:</b>  "+$(this).data("blogcategorytitle")+"<br>"+
-                    "<b>Category Status:</b>  "+status,
+                    "<b>Blog Title:</b>  "+$(this).data("blogtitle")+"<br>"+
+                    "<b>Author:</b>  "+$(this).data("commentauthor")+"<br>"+
+                    "<b>Email:</b>  "+$(this).data("commentauthoremail")+"<br>"+
+                    "<b>Comment:</b>  "+$(this).data("commentbody")+"<br>"+
+                    "<b>Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

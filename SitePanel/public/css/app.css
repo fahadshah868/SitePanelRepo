@@ -18315,6 +18315,10 @@ td .btn {
   font-weight: 700;
 }
 
+td .btn:nth-child(1) {
+  margin-right: 4px;
+}
+
 td .blog-title-container {
   white-space: nowrap;
   max-width: 250px;
@@ -18437,6 +18441,14 @@ td .carousel_image_preview {
   margin-right: 5px;
 }
 
+.fa-check {
+  margin-right: 5px;
+}
+
+.fa-ban {
+  margin-right: 5px;
+}
+
 .highlight-column {
   background-color: #D7DBFF;
 }
@@ -18448,6 +18460,20 @@ td .carousel_image_preview {
 #tablebody tr:hover {
   background-color: #D7DBFF;
   cursor: pointer;
+}
+
+.action-buttons-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.action-buttons-container:nth-child(1) {
+  margin-bottom: 7px;
 }
 
 .active-item {
@@ -18482,14 +18508,17 @@ td .carousel_image_preview {
 
 .approved-comment {
   color: #117C00;
+  font-weight: 700;
 }
 
 .pending-comment {
   color: #0000ff;
+  font-weight: 700;
 }
 
 .rejected-comment {
   color: #FF0000;
+  font-weight: 700;
 }
 
 .update-profile-form {
