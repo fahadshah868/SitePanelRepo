@@ -26,16 +26,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Primary Url</div>
                         <input type="text" class="form-control form-field-text" id="storeprimaryurl" name="storeprimaryurl" value="{{ $store->primary_url }}" placeholder="http://www.kohls.com">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Store Secondary Url</div>
-                        <input type="text" class="form-control form-field-text" id="storesecondaryurl" name="storesecondaryurl" value="{{ $store->secondary_url }}" placeholder="kohls.com" readonly>
                     </div>
                 </div>
             </div>
@@ -161,24 +155,17 @@
             $("#updatestoreform").trigger("reset");
             $("#storedescription").val(store_description_val);
         });
-        $("#storeprimaryurl").bind('keyup input propertychange',function(){
-            var value = $("#storeprimaryurl").val();
-            if (value.toLowerCase().indexOf("http://www.") >= 0 || value.toLowerCase().indexOf("https://www.") >= 0){
-                var value = value.replace("http://www.","");
-                $("#storesecondaryurl").val(value);
-            }
-            else{
-                $("#storesecondaryurl").val("");
-            }
-        });
+        //define custom validation method to check image dimensions
+        $.validator.addMethod("siteurl", function(value, element, param) {
+            return value.match(/^((ftp|http|https):\/\/)?www\.([A-z0-9]+)\.([A-z]{2,})/);
+        },'please enter a valid url');
         $("#updatestoreform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
                 storetitle: "required",
                 storedescription: "required",
-                storeprimaryurl: { required: true, url: true },
-                storesecondaryurl: "required",
+                storeprimaryurl: { required: true, url: true, siteurl: true },
                 networkid: "required",
                 storenetworkurl: "required",
                 storetype: "required",
@@ -187,8 +174,7 @@
             messages: {
                 storetitle: "please enter store title",
                 storedescription: "please enter store details",
-                storeprimaryurl: { required: "please enter store site url", url: "site url must be 'http://www.site.com' format"},
-                storesecondaryurl: "please enter store secondary url",
+                storeprimaryurl: { required: "please enter store site url", url: "please enter a valid url", siteurl: "please enter a valid url"},
                 networkid: "please select network",
                 storenetworkurl: "please enter netwrok url",
                 storetype: "please select store type",
@@ -201,7 +187,6 @@
                 var _storetitle = $("#storetitle").val();
                 var _storedescription = $("#storedescription").val();
                 var _storeprimaryurl = $("#storeprimaryurl").val();
-                var _storesecondaryurl = $("#storesecondaryurl").val();
                 var _networkid = $("#networkid").val();
                 var _storenetworkurl = $("#storenetworkurl").val();
                 var _storetype = $("#storetype").val();
@@ -212,7 +197,7 @@
                 if($("#is_popularstore").prop("checked")){
                     _is_popularstore = $("#is_popularstore").val();
                 }
-                var _jsondata = JSON.stringify({storeid: _storeid, storetitle: _storetitle, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus, _token: "{{ csrf_token() }}"});
+                var _jsondata = JSON.stringify({storeid: _storeid, storetitle: _storetitle, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus, _token: "{{ csrf_token() }}"});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

@@ -87,9 +87,11 @@
 $(document).ready(function(){
     CKEDITOR.replace('blog_body',{
         height: 300,
-        filebrowserUploadUrl: '{{ route('upload',['_token' => csrf_token() ]) }}'
+        filebrowserBrowseUrl: '{{ route('upload',['_token' => csrf_token() ]) }}',
+        filebrowserImageBrowseUrl: '{{ route('upload',['_token' => csrf_token() ]) }}',
+        filebrowserFlashBrowseUrl: '{{ route('upload',['_token' => csrf_token() ]) }}',
+        filebrowserUploadUrl: '{{ route('upload',['_token' => csrf_token() ]) }}',
     });
-    // $('#blog_body').ckeditor(); // if class is prefered.
     $(".close").click(function(){
         $(".alert").slideUp();
     });
@@ -101,10 +103,16 @@ $(document).ready(function(){
     var validator = $("#addblogform").submit(function(event){
         event.preventDefault();
     }).validate({
-        ignore: ".hide",
+        ignore: [],
+        debug: false,
         rules: {
             blog_title: "required",
-            blog_body: "required",
+            blog_body:  { 
+                            required: function(){
+                                CKEDITOR.instances.blog_body.updateElement();
+                            },
+                            minlength: 1,
+                        },
             blog_category_id: "required",
             blog_author: "required",
             blogstatus: "required",
@@ -112,7 +120,10 @@ $(document).ready(function(){
         },
         messages: {
             blog_title: "please enter blog title",
-            blog_body: "please fill blog body",
+            blog_body: {
+                            required: "please fill blog body",
+                            minlength:"please fill blog body",
+                        },
             blog_category_id: "please select blog category",
             blog_author: "please enter blog author",
             blogstatus: "please select blog status",
@@ -131,7 +142,7 @@ $(document).ready(function(){
             formdata.append("_token", "{{ csrf_token() }}");
             formdata.append("blog_image", _blog_image);
             $("#addblogform").trigger("reset");
-            $("#blog_body").val("");
+            CKEDITOR.instances['blog_body'].setData('');
             $('#imgpath').attr("src", "");
             $(".alert").css("display","none");
             $.ajax({

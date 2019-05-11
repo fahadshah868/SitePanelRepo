@@ -9,17 +9,11 @@
         @csrf
             <div class="form-container">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-field">
                             <input type="text" id="categoryid" value="{{$category->id}}" hidden>
                             <div class="form-field-heading">Category Title</div>
                         <input type="text" class="form-control form-field-text" value="{{ $category->title }}" id="categorytitle" name="categorytitle" placeholder="Baby"/>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-field">
-                            <div class="form-field-heading">Category Url</div>
-                        <input type="text" class="form-control form-field-text" value="{{ $category->url }}" id="categoryurl" name="categoryurl" placeholder="Baby" readonly/>
                         </div>
                     </div>
                 </div>
@@ -109,10 +103,6 @@
         $(".close").click(function(){
             $(".alert").slideUp();
         });
-        $("#categorytitle").bind('keyup input propertychange',function(){
-            var value = $("#categorytitle").val();
-            $("#categoryurl").val(value.replace(/\s/g, ''));
-        });
         $("#backtocategory").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
@@ -137,13 +127,11 @@
         }).validate({
             rules: {
                 categorytitle: "required",
-                categoryurl: "required",
                 categorydescription: "required",
                 categorystatus: "required",
             },
             messages: {
                 categorytitle: "please enter category title",
-                categoryurl: "please enter category url",
                 categorydescription: "please enter category description",
                 categorystatus: "please select category status",
             },
@@ -152,7 +140,6 @@
                 var _is_popularcategory = "no";
                 var _categoryid = $("#categoryid").val();
                 var _categorytitle = $("#categorytitle").val();
-                var _categoryurl = $("#categoryurl").val();
                 var _categorydescription = $("#categorydescription").val();
                 var _categorystatus = $("input[name='categorystatus']:checked").val();
                 if($("#is_topcategory").prop("checked")){
@@ -161,7 +148,7 @@
                 if($("#is_popularcategory").prop("checked")){
                     _is_popularcategory = $("#is_popularcategory").val();
                 }
-                var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categoryurl: _categoryurl, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
+                var _jsondata = JSON.stringify({categoryid: _categoryid, categorytitle: _categorytitle, categorydescription: _categorydescription, is_topcategory: _is_topcategory, is_popularcategory: _is_popularcategory, categorystatus: _categorystatus, _token: '{{csrf_token()}}'});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: "POST",

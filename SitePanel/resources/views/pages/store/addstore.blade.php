@@ -39,16 +39,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Store Primary Url</div>
                         <input type="text" class="form-control form-field-text" id="storeprimaryurl" name="storeprimaryurl" placeholder="http://www.kohls.com">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Store Secondary Url</div>
-                        <input type="text" class="form-control form-field-text" id="storesecondaryurl" name="storesecondaryurl" placeholder="kohls.com" readonly>
                     </div>
                 </div>
             </div>
@@ -125,23 +119,9 @@
 <script type="text/javascript" src="{{asset('/js/multiselectdropdown.js')}}"></script>
 <script>
     $(document).ready(function(){
-        jQuery.validator.addMethod("siteurl", function(value, element, param) {
-            return value.match(/^((ftp|http|https):\/\/)?www\.([A-z]+)\.([A-z]{2,})/);
-        },'please enter a valid url');
         $('#storedescription').ckeditor(); // if class is prefered.
         $(".close").click(function(){
             $(".alert").slideUp();
-        });
-        $("#storeprimaryurl").bind('keyup input propertychange',function(){
-            var value = $("#storeprimaryurl").val();
-            if (value.toLowerCase().indexOf("http://www.") >= 0 || value.toLowerCase().indexOf("https://www.") >= 0){
-                var value = value.toLowerCase().replace("http://www.","");
-                value = value.toLowerCase().replace("https://www.","");
-                $("#storesecondaryurl").val(value);
-            }
-            else{
-                $("#storesecondaryurl").val(null);
-            }
         });
         $("#is_topstore").change(function(){
             if($("#is_topstore").prop("checked")){
@@ -154,6 +134,10 @@
             }
         });
         //define custom validation method to check image dimensions
+        $.validator.addMethod("siteurl", function(value, element, param) {
+            return value.match(/^((ftp|http|https):\/\/)?www\.([A-z0-9]+)\.([A-z]{2,})/);
+        },'please enter a valid url');
+        //preview image
         $.validator.addMethod('validateimage', function(value, element) {
         return ($(element).data('imagewidth') >= 200 && $(element).data('imagewidth') || 0) == $(element).data('imageheight');
         }, "please select the correct image");
@@ -166,7 +150,6 @@
                 storecategories: "required",
                 storedescription: "required",
                 storeprimaryurl: { required: true, url: true, siteurl: true },
-                storesecondaryurl: "required",
                 networkid: "required",
                 storenetworkurl: "required",
                 storestatus: "required",
@@ -177,7 +160,6 @@
                 storecategories: "please select store categories",
                 storedescription: "please enter store details",
                 storeprimaryurl: { required: "please enter store site url", url: "please enter a valid url", siteurl: "please enter a valid url"},
-                storesecondaryurl: "please enter store secondary url",
                 networkid: "please select network",
                 storenetworkurl: "please enter netwrok url",
                 storetype: "please select store type",
@@ -191,7 +173,6 @@
                 var _storecategories = $("#storecategories").val();
                 var _storedescription = $("#storedescription").val();
                 var _storeprimaryurl = $("#storeprimaryurl").val();
-                var _storesecondaryurl = $("#storesecondaryurl").val();
                 var _networkid = $("#networkid").val();
                 var _storenetworkurl = $("#storenetworkurl").val();
                 var _storestatus = $("input[name='storestatus']:checked").val();
@@ -203,12 +184,12 @@
                     _is_popularstore = $("#is_popularstore").val();
                 }
                 var formdata = new FormData();
-                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, storesecondaryurl: _storesecondaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus});
+                var _jsondata = JSON.stringify({storetitle: _storetitle, storecategories: _storecategories, storedescription: _storedescription, storeprimaryurl: _storeprimaryurl, networkid: _networkid, storenetworkurl: _storenetworkurl, is_topstore: _is_topstore, is_popularstore: _is_popularstore, storestatus: _storestatus});
                 formdata.append("storelogo", _storelogo);
                 formdata.append("formdata", _jsondata);
                 formdata.append("_token", "{{ csrf_token() }}");
                 $("#addstoreform").trigger("reset");
-                $("#storedescription").val("");
+                CKEDITOR.instances['storedescription'].setData('');
                 $('#imgpath').attr("src", "");
                 $(".alert").css("display","none");
                 $.ajax({

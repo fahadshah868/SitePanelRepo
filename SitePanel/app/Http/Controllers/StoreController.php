@@ -31,7 +31,8 @@ class StoreController extends Controller
             $store->title = $formdata->storetitle;
             $store->description = $formdata->storedescription;
             $store->primary_url = strtolower($formdata->storeprimaryurl);
-            $store->secondary_url = strtolower($formdata->storesecondaryurl);
+            $secondary_url = strtolower($formdata->storeprimaryurl);
+            $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
             $store->network_id = $formdata->networkid;
             $store->network_url = $formdata->storenetworkurl;
             $store->is_topstore = $formdata->is_topstore;
@@ -211,7 +212,8 @@ class StoreController extends Controller
             $store->title = $request->storetitle;
             $store->description = $request->storedescription;
             $store->primary_url = strtolower($request->storeprimaryurl);
-            $store->secondary_url = strtolower($request->storesecondaryurl);
+            $secondary_url = strtolower($request->storeprimaryurl);
+            $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
             $store->network_id = $request->networkid;
             $store->network_url = $request->storenetworkurl;
             $store->is_topstore = $request->is_topstore;
@@ -234,7 +236,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_topstore = $request->is_topstore;
@@ -265,7 +268,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
@@ -296,7 +300,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
@@ -329,7 +334,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
@@ -362,7 +368,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
@@ -395,7 +402,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
@@ -429,7 +437,8 @@ class StoreController extends Controller
                 $store->title = $request->storetitle;
                 $store->description = $request->storedescription;
                 $store->primary_url = strtolower($request->storeprimaryurl);
-                $store->secondary_url = strtolower($request->storesecondaryurl);
+                $secondary_url = strtolower($request->storeprimaryurl);
+                $store->secondary_url = str_replace(['http://www.','https://www.'], '', $secondary_url);
                 $store->network_id = $request->networkid;
                 $store->network_url = $request->storenetworkurl;
                 $store->is_popularstore = $request->is_popularstore;
