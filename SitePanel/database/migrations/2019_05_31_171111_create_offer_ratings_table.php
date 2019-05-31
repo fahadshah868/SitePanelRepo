@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNetworksTable extends Migration
+class CreateOfferRatingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateNetworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('networks', function (Blueprint $table) {
+        Schema::create('offer_ratings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title',191)->unique();
-            $table->enum('is_active',['y','n']);
+            $table->enum('is_like',['y','n']);
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('offer_id')->unsigned();
+            $table->foreign('offer_id')->references('id')->on('offers');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateNetworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('networks');
+        Schema::dropIfExists('offer_ratings');
     }
 }

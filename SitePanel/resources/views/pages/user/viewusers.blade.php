@@ -41,18 +41,28 @@
                     @foreach($allusers as $user)
                     <tr>
                         <td>{{ $user->username }}</td>
-                        <td>{{ $user->role }}</td>
                         <td>
-                            @if(strcasecmp($user->status,"active") == 0)
-                            <span class="active-item">_{{ $user->status }}</span>
+                            @if(strcasecmp($user->role, 'deo') == 0)
+                            <span>Data Entry Operator</span>
+                            @elseif(strcasecmp($user->role, 'cwriter') == 0)
+                            <span>Content Writer</span>
+                            @elseif(strcasecmp($user->role, 'seo') == 0)
+                            <span>SEO</span>
+                            @elseif(strcasecmp($user->role, 'admin') == 0)
+                            <span>Admin</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if(strcasecmp($user->is_active,"y") == 0)
+                            <span class="active-item">_active</span>
                             @else
-                            <span class="deactive-item">{{ $user->status }}</span>
+                            <span class="deactive-item">deactive</span>
                             @endif
                         </td>
                         <td>
                             @if($user->id != Auth::User()->id)
                             <a href="/viewuser/{{$user->id}}" id="viewuser" class="btn btn-primary"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-userrole='{{$user->role}}' data-userstatus='{{$user->status}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deleteuser/{{$user->id}}" data-username='{{$user->username}}' data-userrole='{{$user->role}}' data-userstatus='{{$user->is_active}}' id="deleteuser" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</a>
                             @endif
                         </td>
                     </tr>
@@ -121,16 +131,29 @@
             else if($(this).attr("id") == "deleteuser"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("userstatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("userstatus")+"</span><br>";
+                var role = null;
+                if($(this).data("userstatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("userstatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("userstatus")+"</span><br>";
+                else if($(this).data("userstatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
+                }
+                if($(this).data("userrole") == "deo"){
+                    role = "Data Entry Operator";
+                }
+                else if($(this).data("userrole") == "seo"){
+                    role = "SEO";
+                }
+                else if($(this).data("userrole") == "cwriter"){
+                    role = "Content Writer";
+                }
+                else if($(this).data("userrole") == "admin"){
+                    role = "Admin";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>User:</b>  "+$(this).data("username")+"<br>"+
-                    "<b>User Role:</b>  "+$(this).data("userrole")+"<br>"+
+                    "<b>User Role:</b>  "+role+"<br>"+
                     "<b>User Status:</b>  "+status,
                     buttons: {
                         confirm: {

@@ -16,7 +16,7 @@ class CheckUserStatus
      */
     public function handle($request, Closure $next)
     {
-        if(strcasecmp(Auth::User()->status, "deactive") == 0){
+        if(strcasecmp(Auth::User()->is_active, 'n') == 0){
             Auth::logout();
             return redirect('/');
         }

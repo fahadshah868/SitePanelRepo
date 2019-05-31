@@ -17,7 +17,7 @@ class CreateBlogCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->String('title');
             $table->String('url',191)->unique();
-            $table->enum('status',['active','deactive']);
+            $table->enum('is_active',['y','n']);
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

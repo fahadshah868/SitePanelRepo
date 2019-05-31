@@ -19,7 +19,7 @@ class UserController extends Controller
             $user->username = strtolower($request->username);
             $user->password = Hash::make($request->password);
             $user->role = $request->userrole;
-            $user->status = $request->userstatus;
+            $user->is_active = $request->userstatus;
             $user->updated_at = null;
             $user->save();
             $response = [
@@ -37,7 +37,7 @@ class UserController extends Controller
         }
     }
     public function getAllUsers(){
-        $data['allusers'] = User::select('id','username','role','status')->orderBy('id', 'DESC')->get();
+        $data['allusers'] = User::select('id','username','role','is_active')->orderBy('id', 'DESC')->get();
         $data['userscount'] = count($data['allusers']);
         return view('pages.user.viewusers', $data);
     }
@@ -55,7 +55,7 @@ class UserController extends Controller
         if(strcasecmp($user->username , $request->username) == 0 && strcasecmp($user->password , $request->userpassword) == 0){
             $user->username = strtolower($request->username);
             $user->role = $request->userrole;
-            $user->status = $request->userstatus;
+            $user->is_active = $request->userstatus;
             $user->save();
             Session::flash("updateuser_successmessage","User Updated Successfully");
             $response = [
@@ -72,7 +72,7 @@ class UserController extends Controller
             if(!$is_user_exists){
                 $user->username = strtolower($request->username);
                 $user->role = $request->userrole;
-                $user->status = $request->userstatus;
+                $user->is_active = $request->userstatus;
                 $user->save();
                 Session::flash("updateuser_successmessage","User Updated Successfully");
                 $response = [
@@ -96,7 +96,7 @@ class UserController extends Controller
             $user->username = strtolower($request->username);
             $user->password = Hash::make($request->userpassword);
             $user->role = $request->userrole;
-            $user->status = $request->userstatus;
+            $user->is_active = $request->userstatus;
             $user->save();
             Session::flash("updateuser_successmessage","User Updated Successfully");
             $response = [
@@ -113,7 +113,7 @@ class UserController extends Controller
                 $user->username = strtolower($request->username);
                 $user->password = Hash::make($request->userpassword);
                 $user->role = $request->userrole;
-                $user->status = $request->userstatus;
+                $user->is_active = $request->userstatus;
                 $user->save();
                 Session::flash('updateuser_successmessage','User Updated Successfully');
                 $response = [

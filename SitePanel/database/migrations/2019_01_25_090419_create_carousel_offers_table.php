@@ -24,7 +24,7 @@ class CreateCarouselOffersTable extends Migration
             $table->date('starting_date');
             $table->date('expiry_date')->nullable();
             $table->string('image_url');
-            $table->enum('status',['active','deactive']);
+            $table->enum('is_active',['y','n']);
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

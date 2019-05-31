@@ -22,9 +22,9 @@ class CreateStoresTable extends Migration
             $table->bigInteger('network_id')->unsigned();
             $table->foreign('network_id')->references('id')->on('networks');
             $table->string('network_url');
-            $table->enum('is_topstore',['yes','no']);
-            $table->enum('is_popularstore',['yes','no']);
-            $table->enum('status',['active','deactive']);
+            $table->enum('is_topstore',['y','n']);
+            $table->enum('is_popularstore',['y','n']);
+            $table->enum('is_active',['y','n']);
             $table->string('logo_url');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');

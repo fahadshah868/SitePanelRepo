@@ -27,11 +27,21 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Role</div>
-                            @if(strcasecmp($user->role,"employee") == 0)
+                            @if(strcasecmp($user->role,"deo") == 0)
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userrole" name="userrole" value="employee" checked>Employee
+                                        <input type="radio" id="userrole" name="userrole" value="deo" checked>Data Entry Operator
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="cwriter">Content Writer
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="seo">SEO
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
@@ -40,11 +50,67 @@
                                     </label>
                                 </div>
                             </div>
-                            @else
+                            @elseif(strcasecmp($user->role,"seo") == 0)
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userrole" name="userrole" value="employee">Employee
+                                        <input type="radio" id="userrole" name="userrole" value="deo">Data Entry Operator
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="cwriter">Content Writer
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="seo" checked>SEO
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="admin">Admin
+                                    </label>
+                                </div>
+                            </div>
+                            @elseif(strcasecmp($user->role,"cwriter") == 0)
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="deo">Data Entry Operator
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="cwriter" checked>Content Writer
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="seo">SEO
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="admin">Admin
+                                    </label>
+                                </div>
+                            </div>
+                            @elseif(strcasecmp($user->role,"admin") == 0)
+                            <div class="form-field-inline-remarks">
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="deo">Data Entry Operator
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="cwriter">Content Writer
+                                    </label>
+                                </div>
+                                <div class="form-field-radiobutton">
+                                    <label class="form-field-radiobutton-remarks-label">
+                                        <input type="radio" id="userrole" name="userrole" value="seo">SEO
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
@@ -59,16 +125,16 @@
                     <div class="col-sm-6">
                         <div class="form-field">
                             <div class="form-field-heading">User Status</div>
-                            @if(strcasecmp($user->status,"active") == 0)
+                            @if(strcasecmp($user->is_active,"y") == 0)
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userstatus" name="userstatus" value="active" checked>Active
+                                        <input type="radio" id="userstatus" name="userstatus" value="y" checked>Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userstatus" name="userstatus" value="deactive">Deactive
+                                        <input type="radio" id="userstatus" name="userstatus" value="n">Deactive
                                     </label>
                                 </div>
                             </div>
@@ -76,12 +142,12 @@
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userstatus" name="userstatus" value="active">Active
+                                        <input type="radio" id="userstatus" name="userstatus" value="y">Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="userstatus" name="userstatus" value="deactive" checked>Deactive
+                                        <input type="radio" id="userstatus" name="userstatus" value="n" checked>Deactive
                                     </label>
                                 </div>
                             </div>

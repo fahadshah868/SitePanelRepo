@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
             'username' => 'fahad',
             'password' => Hash::make('12345'),
             'role' => 'admin',
-            'status' => 'active'
+            'is_active' => 'y'
         ]);
     }
 }

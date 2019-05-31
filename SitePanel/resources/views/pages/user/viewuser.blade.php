@@ -17,7 +17,15 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">User Role</div>
-                <input type="text" class="form-control form-field-text" value="{{ $user->role }}" readonly/>
+                @if(strcasecmp($user->role, 'deo') == 0)
+                <input type="text" class="form-control form-field-text" value="Data Entry Operator" readonly/>
+                @elseif(strcasecmp($user->role, 'cwriter') == 0)
+                <input type="text" class="form-control form-field-text" value="Content Writer" readonly/>
+                @elseif(strcasecmp($user->role, 'seo') == 0)
+                <input type="text" class="form-control form-field-text" value="SEO" readonly/>
+                @elseif(strcasecmp($user->role, 'admin') == 0)
+                <input type="text" class="form-control form-field-text" value="Admin" readonly/>
+                @endif
             </div>
         </div>
     </div>
@@ -25,10 +33,10 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">User Status</div>
-                @if(strcasecmp($user->status,"active") == 0)
-                <input type="text" class="form-control form-field-text active-item" value="_{{ $user->status }}" readonly/>
+                @if(strcasecmp($user->is_active,"y") == 0)
+                <input type="text" class="form-control form-field-text active-item" value="_active" readonly/>
                 @else
-                <input type="text" class="form-control form-field-text deactive-item" value="{{ $user->status }}" readonly/>
+                <input type="text" class="form-control form-field-text deactive-item" value="deactive" readonly/>
                 @endif
             </div>
         </div>

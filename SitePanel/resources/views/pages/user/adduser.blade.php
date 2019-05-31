@@ -33,7 +33,17 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="userrole" name="userrole" value="employee" checked>Employee
+                                    <input type="radio" id="userrole" name="userrole" value="deo" checked>Data Entry Operator
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userrole" name="userrole" value="cwriter">Content Writer
+                                </label>
+                            </div>
+                            <div class="form-field-radiobutton">
+                                <label class="form-field-radiobutton-remarks-label">
+                                    <input type="radio" id="userrole" name="userrole" value="seo">SEO
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
@@ -50,12 +60,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="userstatus" name="userstatus" value="active" checked>Active
+                                    <input type="radio" id="userstatus" name="userstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="userstatus" name="userstatus" value="deactive">Deactive
+                                    <input type="radio" id="userstatus" name="userstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
