@@ -145,10 +145,10 @@
                             <td>{{$blog->blogcategory->title}}</td>
                             <td>{{ $blog->author }}</td>
                             <td>
-                                @if(strcasecmp($blog->status,"active") == 0)
-                                <span class="active-item">_{{ $blog->status }}</span>
+                                @if(strcasecmp($blog->is_active,"y") == 0)
+                                <span class="active-item">_active</span>
                                 @else
-                                <span class="deactive-item">{{ $blog->status }}</span>
+                                <span class="deactive-item">deactive</span>
                                 @endif
                             </td>
                             <td><img class="blog_image_preview" src="{{asset($blog->image_url)}}"></td>
@@ -157,7 +157,7 @@
                             @endif
                             <td>
                                 <a href="/viewblog/{{$blog->id}}" id="viewblog" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
-                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}"  data-blogauthor="{{$blog->author}}" data-blogstatus="{{$blog->status}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deleteblog/{{$blog->id}}" data-blogtitle="{{$blog->title}}" data-blogbody="{{$blog->body}}"  data-blogauthor="{{$blog->author}}" data-blogstatus="{{$blog->is_active}}" id="deleteblog" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -341,11 +341,11 @@
                             "<td><div class='blog-body-container'>"+value.body+"</div></td>"+
                             "<td>"+value.blogcategory.title+"</td>"+
                             "<td>"+value.author+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             html = html +
                             `<td><img src="{{asset("/")}}`+value.image_url+`" class='blog_image_preview'></td>`
@@ -356,7 +356,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewblog/"+value.id+"' id='viewblog' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblog/"+value.id+"' data-blogtitle='"+value.title+"' data-blogbody='"+value.body+"' data-blogauthor='"+value.author+"' data-blogstatus='"+value.status+"' id='deleteblog' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deleteblog/"+value.id+"' data-blogtitle='"+value.title+"' data-blogbody='"+value.body+"' data-blogauthor='"+value.author+"' data-blogstatus='"+value.is_active+"' id='deleteblog' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -378,11 +378,11 @@
             else if($(this).attr("id") == "deleteblog"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("blogstatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("blogstatus")+"</span><br>";
+                if($(this).data("blogstatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("blogstatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("blogstatus")+"</span><br>";
+                else if($(this).data("blogstatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

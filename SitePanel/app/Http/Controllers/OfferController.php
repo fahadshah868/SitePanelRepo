@@ -13,7 +13,7 @@ use Carbon\Carbon;
 class OfferController extends Controller
 {
     public function getAddOffer(){
-        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
+        $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         return view("pages.offer.addoffer",$data);
     }
     public function postAddOffer(Request $request){
@@ -37,7 +37,7 @@ class OfferController extends Controller
         $offer->is_popular = $request->offer_is_popular;
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;
-        $offer->status = $request->offerstatus;
+        $offer->is_active = $request->offerstatus;
         $offer->user_id = Auth::User()->id;
         $offer->updated_at = null;
         $offer->save();
@@ -48,7 +48,7 @@ class OfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllOffers(){
-        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','status','starting_date','expiry_date','user_id','store_id','category_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
+        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','is_active','starting_date','expiry_date','user_id','store_id','category_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
         ->with(['store' => function($q){
             $q->select('id','title');
         }, 'category' => function($q){
@@ -63,7 +63,7 @@ class OfferController extends Controller
         return view('pages.offer.viewoffers',$data);
     }
     public function getAllOffers(){
-        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','status','starting_date','expiry_date','user_id','store_id','category_id')->orderBy('id', 'DESC')
+        $data['alloffers'] = Offer::select('id','title','anchor','location','type','code','free_shipping','is_popular','display_at_home','is_verified','is_active','starting_date','expiry_date','user_id','store_id','category_id')->orderBy('id', 'DESC')
         ->with(['store' => function($q){
             $q->select('id','title');
         }, 'category' => function($q){
@@ -178,9 +178,9 @@ class OfferController extends Controller
     }
     public function getUpdateOffer($id){
         $data['offer'] = Offer::find($id);
-        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
+        $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
-            $q->select('id','title')->where('status',1);
+            $q->select('id','title')->where('is_active','y');
         }])->get();
         return view('pages.offer.updateoffer',$data);
     }
@@ -205,7 +205,7 @@ class OfferController extends Controller
         $offer->is_popular = $request->offer_is_popular;
         $offer->display_at_home = $request->offer_display_at_home;
         $offer->is_verified = $request->offer_is_verified;
-        $offer->status = $request->offerstatus;
+        $offer->is_active = $request->offerstatus;
         $offer->user_id = Auth::User()->id;
         $offer->save();
         Session::flash("updateoffer_successmessage","Offer Updated Successfully");

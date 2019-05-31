@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Input;
 class BlogController extends Controller
 {
     public function getAddBlog(){
-        $data['blogcategories'] = BlogCategory::select('id','title')->where('status',1)->get();
+        $data['blogcategories'] = BlogCategory::select('id','title')->where('is_active','y')->get();
         return view('pages.blog.addblog',$data);
     }
     public function postAddBlog(Request $request){
@@ -29,7 +29,7 @@ class BlogController extends Controller
             $blog->body = $formdata->blog_body;
             $blog->blog_category_id = $formdata->blog_category_id;
             $blog->author = $formdata->blog_author;
-            $blog->status = $formdata->blogstatus;
+            $blog->is_active = $formdata->blogstatus;
             //upload file and save path into db
             if($request->hasFile('blog_image')){
                 if(!File::exists(public_path("images/blog"))){
@@ -68,7 +68,7 @@ class BlogController extends Controller
         }
     }
     public function getTodayAllBlogs(){
-        $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
+        $data['allblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
         ->with(['user' => function($q){
             $q->select('id','username');
         }, 'blogcategory' => function($q){
@@ -81,7 +81,7 @@ class BlogController extends Controller
         return view('pages.blog.viewblogs',$data);
     }
     public function getAllBlogs(){
-        $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->orderBy('id', 'DESC')
+        $data['allblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->orderBy('id', 'DESC')
         ->with(['user' => function($q){
             $q->select('id','username');
         }, 'blogcategory' => function($q){
@@ -97,7 +97,7 @@ class BlogController extends Controller
         Session::put('url','/filteredblogs/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -109,7 +109,7 @@ class BlogController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -120,7 +120,7 @@ class BlogController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -134,7 +134,7 @@ class BlogController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -148,7 +148,7 @@ class BlogController extends Controller
                 return view('pages.blog.viewblogs',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -161,7 +161,7 @@ class BlogController extends Controller
                 return view('pages.blog.viewblogs',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allblogs'] = Blog::select('id','title','body','author','status','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allblogs'] = Blog::select('id','title','body','author','is_active','image_url','blog_category_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -186,7 +186,7 @@ class BlogController extends Controller
     }
     public function getUpdatedBlogForm($id){
         $data['blog'] = Blog::find($id);
-        $data['blogcategories'] = BlogCategory::select('id','title')->where('status',1)->get();
+        $data['blogcategories'] = BlogCategory::select('id','title')->where('is_active','y')->get();
         return view('pages.blog.updateblogform', $data);
     }
     public function postUpdatedBlogForm(Request $request){
@@ -198,7 +198,7 @@ class BlogController extends Controller
             $blog->body = $request->blog_body;
             $blog->blog_category_id = $request->blog_category_id;
             $blog->author = $request->blog_author;
-            $blog->status = $request->blogstatus;
+            $blog->is_active = $request->blogstatus;
             $blog->user_id = Auth::User()->id;
             $blog->save();
             Session::flash("updateblogform_successmessage","Blog Updated Successfully");
@@ -218,7 +218,7 @@ class BlogController extends Controller
                 $blog->body = $request->blog_body;
                 $blog->blog_category_id = $request->blog_category_id;
                 $blog->author = $request->blog_author;
-                $blog->status = $request->blogstatus;
+                $blog->is_active = $request->blogstatus;
                 $blog->user_id = Auth::User()->id;
                 $blog->save();
                 Session::flash("updateblogform_successmessage","Blog Updated Successfully");

@@ -66,12 +66,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="active" checked>Active
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="deactive">Deactive
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>

@@ -32,19 +32,19 @@
                             <div class="form-field-inline-remarks">
                                 <div class="form-field-checkbox">
                                     <label class="form-field-checkbox-remarks-label">
-                                        @if(strcasecmp($category->is_topcategory,"yes") == 0)
-                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes" checked>Top Category
+                                        @if(strcasecmp($category->is_topcategory,"y") == 0)
+                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="y" checked>Top Category
                                         @else
-                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes">Top Category
+                                        <input type="checkbox" id="is_topcategory" name="is_topcategory" value="y">Top Category
                                         @endif
                                     </label>
                                 </div>
                                 <div class="form-field-checkbox">
                                     <label class="form-field-checkbox-remarks-label">
-                                        @if(strcasecmp($category->is_popularcategory,"yes") == 0)
-                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes" checked>Popular Category
+                                        @if(strcasecmp($category->is_popularcategory,"y") == 0)
+                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="y" checked>Popular Category
                                         @else
-                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes">Popular Category
+                                        <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="y">Popular Category
                                         @endif
                                     </label>
                                 </div>
@@ -55,26 +55,26 @@
                         <div class="form-field">
                             <div class="form-field-heading">Category Status</div>
                             <div class="form-field-inline-remarks">
-                                @if(strcasecmp($category->status,"active") == 0)
+                                @if(strcasecmp($category->is_active,"y") == 0)
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="categorystatus" name="categorystatus" value="active" checked>Active
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="y" checked>Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="categorystatus" name="categorystatus" value="deactive">Deactive
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="n">Deactive
                                     </label>
                                 </div>
                                 @else
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="categorystatus" name="categorystatus" value="active">Active
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="y">Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="categorystatus" name="categorystatus" value="deactive" checked>Deactive
+                                        <input type="radio" id="categorystatus" name="categorystatus" value="n" checked>Deactive
                                     </label>
                                 </div>
                                 @endif
@@ -136,8 +136,8 @@
                 categorystatus: "please select category status",
             },
             submitHandler: function(form) {
-                var _is_topcategory = "no";
-                var _is_popularcategory = "no";
+                var _is_topcategory = "n";
+                var _is_popularcategory = "n";
                 var _categoryid = $("#categoryid").val();
                 var _categorytitle = $("#categorytitle").val();
                 var _categorydescription = $("#categorydescription").val();

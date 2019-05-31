@@ -26,7 +26,7 @@ class CategoryController extends Controller
             $category->description = $formdata->categorydescription;
             $category->is_topcategory = $formdata->is_topcategory;
             $category->is_popularcategory = $formdata->is_popularcategory;
-            $category->status = $formdata->categorystatus;
+            $category->is_active = $formdata->categorystatus;
             if($request->hasFile('categorylogo')){
                 if(!File::exists(public_path("images/category"))){
                     File::makeDirectory(public_path("images/category", 0777, true, true));
@@ -57,7 +57,7 @@ class CategoryController extends Controller
          }
     }
     public function getAllCategories(){
-        $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
+        $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
         }])->get();
         $data['mainheading'] = "All Categories";
@@ -67,7 +67,7 @@ class CategoryController extends Controller
         return view('pages.category.viewcategories',$data);
     }
     public function getTodayAllCategories(){
-        $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->with(['user' => function($q){
+        $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
         }])->get();
         $data['mainheading'] = "Today's Categories";
@@ -80,7 +80,7 @@ class CategoryController extends Controller
         Session::put('url','/filteredcategories/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -90,7 +90,7 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -99,7 +99,7 @@ class CategoryController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -111,7 +111,7 @@ class CategoryController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -123,7 +123,7 @@ class CategoryController extends Controller
                 return view('pages.category.viewcategories',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -134,7 +134,7 @@ class CategoryController extends Controller
                 return view('pages.category.viewcategories',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','status','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -165,7 +165,7 @@ class CategoryController extends Controller
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
-            $category->status = $request->categorystatus;
+            $category->is_active = $request->categorystatus;
             $category->user_id = Auth::User()->id;
             $category->save();
             Session::flash("updatecategory_successmessage","Category Updated Successfully");
@@ -186,7 +186,7 @@ class CategoryController extends Controller
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
-                $category->status = $request->categorystatus;
+                $category->is_active = $request->categorystatus;
                 $category->user_id = Auth::User()->id;
                 $category->save();
                 Session::flash("updatecategory_successmessage","Category Updated Successfully");
@@ -213,7 +213,7 @@ class CategoryController extends Controller
             $category->description = $request->categorydescription;
             $category->is_topcategory = $request->is_topcategory;
             $category->is_popularcategory = $request->is_popularcategory;
-            $category->status = $request->categorystatus;
+            $category->is_active = $request->categorystatus;
             if(strcasecmp($request->is_topcategory , "no") == 0){
                 if(!empty($category->logo_url) && File::exists($category->logo_url)){
                     File::delete($category->logo_url);
@@ -240,7 +240,7 @@ class CategoryController extends Controller
                 $category->description = $request->categorydescription;
                 $category->is_topcategory = $request->is_topcategory;
                 $category->is_popularcategory = $request->is_popularcategory;
-                $category->status = $request->categorystatus;
+                $category->is_active = $request->categorystatus;
                 if(strcasecmp($request->is_topcategory , "no") == 0){
                     if(!empty($category->logo_url) && File::exists($category->logo_url)){
                         File::delete($category->logo_url);

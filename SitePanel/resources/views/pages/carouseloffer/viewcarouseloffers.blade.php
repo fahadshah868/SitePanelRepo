@@ -164,10 +164,10 @@
                                 <td><span class="not-required-yet">Not Required</span></td>
                             @endif
                             <td>
-                                @if(strcasecmp($carouseloffer->status,"active") == 0)
-                                <span class="active-item">_{{ $carouseloffer->status }}</span>
+                                @if(strcasecmp($carouseloffer->is_active,"y") == 0)
+                                <span class="active-item">_active</span>
                                 @else
-                                <span class="deactive-item">{{ $carouseloffer->status }}</span>
+                                <span class="deactive-item">deactive</span>
                                 @endif
                             </td>
                             <td>
@@ -185,7 +185,7 @@
                             @endif
                             <td>
                                 <a href="/viewcarouseloffer/{{$carouseloffer->id}}" id="viewcarouseloffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->status}}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletecarouseloffer/{{$carouseloffer->id}}" id="deletecarouseloffer" data-storetitle="{{$carouseloffer->store->title}}" data-offertitle="{{$carouseloffer->title}}" data-offerlocation="{{$carouseloffer->location}}" data-offertype="{{$carouseloffer->type}}" data-offercode="{{$carouseloffer->code}}" data-offerstartingdate="{{$carouseloffer->starting_date}}" data-offerexpirydate="{{$carouseloffer->expiry_date}}" data-offerstatus="{{$carouseloffer->is_active}}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -383,11 +383,11 @@
                             else{
                                 html = html + "<td><span class='not-required-yet'>Not Required</span></td>"
                             }
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             if(value.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.expiry_date == null)){
                                 html = html + "<td><span class='available-offer'>Available</span></td>"
@@ -407,7 +407,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewcarouseloffer/"+value.id+"' id='viewcarouseloffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecarouseloffer/"+value.id+"' id='deletecarouseloffer' data-offerstore='"+value.store.title+"' data-offertitle='"+value.title+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-offerstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletecarouseloffer/"+value.id+"' id='deletecarouseloffer' data-offerstore='"+value.store.title+"' data-offertitle='"+value.title+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-offerstatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -446,11 +446,11 @@
                 else if($(this).data("offerexpirydate") < "{{config('constants.TODAY_DATE')}}"){
                     offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
-                if($(this).data("offerstatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("offerstatus")+"</span><br>";
+                if($(this).data("offerstatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("offerstatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("offerstatus")+"</span><br>";
+                else if($(this).data("offerstatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

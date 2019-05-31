@@ -161,10 +161,10 @@
                             <td>{{ $store->is_topstore }}</td>
                             <td>{{ $store->is_popularstore }}</td>
                             <td>
-                                @if(strcasecmp($store->status,"active") == 0)
-                                <span class="active-item">_{{ $store->status }}</span>
+                                @if(strcasecmp($store->is_active,"y") == 0)
+                                <span class="active-item">_active</span>
                                 @else
-                                <span class="deactive-item">{{ $store->status }}</span>
+                                <span class="deactive-item">deactive</span>
                                 @endif
                             </td>
                             <td><img src="{{asset($store->logo_url)}}" class="store_image_preview"></td>
@@ -173,7 +173,7 @@
                             @endif
                             <td>
                                 <a href="/viewstore/{{$store->id}}" id="viewstore" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->status}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storedescription="{{$store->description}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->is_active}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -372,11 +372,11 @@
                             "<td>"+value.network_url+"</td>"+
                             "<td>"+value.is_topstore+"</td>"+
                             "<td>"+value.is_popularstore+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             html = html +
                             `<td><img src="{{asset("/")}}`+value.logo_url+`" class='store_image_preview'></td>`
@@ -387,7 +387,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewstore/"+value.id+"' id='viewstore' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletestore/"+value.id+"' data-storetitle='"+value.title+"' data-storedescription='"+value.description+"' data-storeprimaryurl='"+value.primary_url+"' data-storesecondaryurl='"+value.secondary_url+"' data-storenetwork='"+value.network.title+"' data-storenetworkurl='"+value.network_url+"' data-istopstore='"+value.is_topstore+"' data-ispopularstore='"+value.is_popularstore+"' data-storestatus='"+value.status+"' id='deletestore' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletestore/"+value.id+"' data-storetitle='"+value.title+"' data-storedescription='"+value.description+"' data-storeprimaryurl='"+value.primary_url+"' data-storesecondaryurl='"+value.secondary_url+"' data-storenetwork='"+value.network.title+"' data-storenetworkurl='"+value.network_url+"' data-istopstore='"+value.is_topstore+"' data-ispopularstore='"+value.is_popularstore+"' data-storestatus='"+value.is_active+"' id='deletestore' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -409,11 +409,11 @@
             else if($(this).attr("id") == "deletestore"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("storestatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("storestatus")+"</span><br>";
+                if($(this).data("storestatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("storestatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("storestatus")+"</span><br>";
+                else if($(this).data("storestatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

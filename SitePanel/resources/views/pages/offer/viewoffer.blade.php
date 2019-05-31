@@ -132,10 +132,10 @@
         <div class="col-sm-3">
             <div class="form-field">
                 <div class="form-field-heading">Offer Status</div>
-                @if($offer->status == "active")
-                <input type="text" class="form-control form-field-text active-item" value="{{ $offer->status }}" readonly/>
+                @if($offer->is_active == "y")
+                <input type="text" class="form-control form-field-text active-item" value="_active" readonly/>
                 @else
-                <input type="text" class="form-control form-field-text deactive-item" value="{{ $offer->status }}" readonly/>
+                <input type="text" class="form-control form-field-text deactive-item" value="deactive" readonly/>
                 @endif
             </div>
         </div>

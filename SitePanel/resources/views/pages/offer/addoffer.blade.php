@@ -39,7 +39,7 @@
                             <div class="form-field-heading">Offer Title</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
-                                    <input type="checkbox" id="free-shipping" value="yes">Free Shipping
+                                    <input type="checkbox" id="free-shipping" value="y">Free Shipping
                                 </label>
                             </div>
                         </div>                        
@@ -133,17 +133,17 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y">Popular Offer
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes">Display At Home
+                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y">Display At Home
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes">Is Verified
+                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y">Is Verified
                                 </label>
                             </div>
                         </div>
@@ -155,12 +155,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="active" checked>Active
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive">Deactive
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
@@ -301,10 +301,10 @@
             submitHandler: function(form) {
                 var _offercode = null;
                 var _offer_expirydate = null;
-                var _offer_is_popular = "no";
-                var _offer_display_at_home = "no";
-                var _offer_is_verified = "no";
-                var _free_shipping = "no";
+                var _offer_is_popular = "n";
+                var _offer_display_at_home = "n";
+                var _offer_is_verified = "n";
+                var _free_shipping = "n";
                 var _offer_store = $("#offer_store").val();
                 var _offer_category = $("#offer_category").val();
                 var _offertitle = $("#offertitle").val();

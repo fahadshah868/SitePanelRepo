@@ -14,7 +14,7 @@ use Carbon\Carbon;
 class CarouselOfferController extends Controller
 {
     public function getAddCarouselOffer(){
-        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
+        $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         return view('pages.carouseloffer.addcarouseloffer',$data);
     }
     public function postAddCarouselOffer(Request $request){
@@ -32,7 +32,7 @@ class CarouselOfferController extends Controller
         else{
             $carouseloffer->expiry_date = $formdata->offer_expirydate;
         }
-        $carouseloffer->status = $formdata->offerstatus;
+        $carouseloffer->is_active = $formdata->offerstatus;
         if($request->hasFile('carouselofferimage')){
             if(!File::exists(public_path("images/carousel"))){
                 File::makeDirectory(public_path("images/carousel", 0777, true, true));
@@ -55,7 +55,7 @@ class CarouselOfferController extends Controller
         return response()->json($response);
     }
     public function getTodayAllCarouselOffers(){
-        $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
+        $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')
         ->with(['store' => function($q){
             $q->select('id','title');
         }, 'user' => function($q){
@@ -69,7 +69,7 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.viewcarouseloffers',$data);
     }
     public function getAllCarouselOffers(){
-        $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->orderBy('id', 'DESC')
+        $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->orderBy('id', 'DESC')
         ->with(['store' => function($q){
             $q->select('id','title');
         }, 'user' => function($q){
@@ -86,7 +86,7 @@ class CarouselOfferController extends Controller
         Session::put('url','/filteredcarouseloffers/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
@@ -99,7 +99,7 @@ class CarouselOfferController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
                     $q->select('id','title');
@@ -111,7 +111,7 @@ class CarouselOfferController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
                     $q->select('id','title');
@@ -126,7 +126,7 @@ class CarouselOfferController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
@@ -141,7 +141,7 @@ class CarouselOfferController extends Controller
                 return view('pages.carouseloffer.viewcarouseloffers',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
                     $q->select('id','title');
@@ -155,7 +155,7 @@ class CarouselOfferController extends Controller
                 return view('pages.carouseloffer.viewcarouseloffers',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','status','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allcarouseloffers'] = CarouselOffer::select('id','title','location','type','code','is_active','starting_date','expiry_date','image_url','store_id','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['store' => function($q){
                     $q->select('id','title');
@@ -180,7 +180,7 @@ class CarouselOfferController extends Controller
         return view('pages.carouseloffer.viewcarouseloffer',$data);
     }
     public function getUpdateCarouselOfferForm($id){
-        $data['allstores'] = Store::select('id','title')->where('status',1)->get();
+        $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         $data['carouseloffer'] = CarouselOffer::find($id);
         return view('pages.carouseloffer.updatecarouselofferform',$data);
     }
@@ -199,7 +199,7 @@ class CarouselOfferController extends Controller
             else{
                 $carouseloffer->expiry_date = $request->offer_expirydate;
             }
-            $carouseloffer->status = $request->offerstatus;
+            $carouseloffer->is_active = $request->offerstatus;
             $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->save();
             Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");
@@ -222,7 +222,7 @@ class CarouselOfferController extends Controller
             else{
                 $carouseloffer->expiry_date = $request->offer_expirydate;
             }
-            $carouseloffer->status = $request->offerstatus;
+            $carouseloffer->is_active = $request->offerstatus;
             $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->save();
             Session::flash("updatecarouseloffer_successmessage","Carousel Offer Updated Successfully");

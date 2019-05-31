@@ -118,10 +118,10 @@
                     <tr>
                         <td>{{ $blogcategory->title }}</td>
                         <td>
-                            @if(strcasecmp($blogcategory->status,"active") == 0)
-                            <span class="active-item">_{{ $blogcategory->status }}</span>
+                            @if(strcasecmp($blogcategory->is_active,"y") == 0)
+                            <span class="active-item">_active</span>
                             @else
-                            <span class="deactive-item">{{ $blogcategory->status }}</span>
+                            <span class="deactive-item">deactive</span>
                             @endif
                         </td>
                         @if(strcasecmp(Auth::User()->role,"admin") == 0)
@@ -129,7 +129,7 @@
                         @endif
                         <td>
                             <a href="/viewblogcategory/{{$blogcategory->id}}" id="viewblogcategory" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deleteblogcategory/{{$blogcategory->id}}" data-blogcategorytitle='{{$blogcategory->title}}' data-blogcategorystatus='{{$blogcategory->status}}' id="deleteblogcategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deleteblogcategory/{{$blogcategory->id}}" data-blogcategorytitle='{{$blogcategory->title}}' data-blogcategorystatus='{{$blogcategory->is_active}}' id="deleteblogcategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                     @endforeach
@@ -274,11 +274,11 @@
                         $.each(data.filteredblogcategories, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.title+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             if("{{Auth::User()->role}}" == "admin"){
                                 html = html +
@@ -287,7 +287,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewblogcategory/"+value.id+"' id='viewblogcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblogcategory/"+value.id+"' id='deleteblogcategory' data-blogcategorytitle='"+value.title+"' data-blogcategorystatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deleteblogcategory/"+value.id+"' id='deleteblogcategory' data-blogcategorytitle='"+value.title+"' data-blogcategorystatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -309,11 +309,11 @@
             else if($(this).attr("id") == "deleteblogcategory"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("blogcategorystatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("blogcategorystatus")+"</span><br>";
+                if($(this).data("blogcategorystatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("blogcategorystatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("blogcategorystatus")+"</span><br>";
+                else if($(this).data("blogcategorystatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

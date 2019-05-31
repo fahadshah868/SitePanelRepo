@@ -112,12 +112,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="active" checked>Active
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive">Deactive
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>

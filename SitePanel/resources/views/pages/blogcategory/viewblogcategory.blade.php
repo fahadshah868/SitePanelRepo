@@ -17,10 +17,10 @@
         <div class="col-sm-12">
             <div class="form-field">
                 <div class="form-field-heading">Category Status</div>
-                @if(strcasecmp($blogcategory->status,"active") == 0)
-                <input type="text" class="form-control form-field-text active-item" value="_{{ $blogcategory->status }}" readonly/>
+                @if(strcasecmp($blogcategory->is_active,"y") == 0)
+                <input type="text" class="form-control form-field-text active-item" value="_active" readonly/>
                 @else
-                <input type="text" class="form-control form-field-text deactive-item" value="{{ $blogcategory->status }}" readonly/>
+                <input type="text" class="form-control form-field-text deactive-item" value="deactive" readonly/>
                 @endif
             </div>
         </div>

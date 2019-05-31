@@ -137,10 +137,10 @@
                         <td>{{ $category->is_topcategory }}</td>
                         <td>{{ $category->is_popularcategory }}</td>
                         <td>
-                            @if(strcasecmp($category->status,"active") == 0)
-                            <span class="active-item">_{{ $category->status }}</span>
+                            @if(strcasecmp($category->is_active,"y") == 0)
+                            <span class="active-item">_active</span>
                             @else
-                            <span class="deactive-item">{{ $category->status }}</span>
+                            <span class="deactive-item">deactive</span>
                             @endif
                         </td>
                         <td>
@@ -155,7 +155,7 @@
                         @endif
                         <td>
                             <a href="/viewcategory/{{$category->id}}" id="viewcategory" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->status}}' id="deletecategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->is_active}}' id="deletecategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -324,11 +324,11 @@
                             "<td>"+value.title+"</td>"+
                             "<td>"+value.is_topcategory+"</td>"+
                             "<td>"+value.is_popularcategory+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             if(value.is_topcategory == "yes"){
                                 html = html + 
@@ -345,7 +345,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.status+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.is_active+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -367,11 +367,11 @@
             else if($(this).attr("id") == "deletecategory"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("categorystatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("categorystatus")+"</span><br>";
+                if($(this).data("categorystatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("categorystatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("categorystatus")+"</span><br>";
+                else if($(this).data("categorystatus") == "y"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

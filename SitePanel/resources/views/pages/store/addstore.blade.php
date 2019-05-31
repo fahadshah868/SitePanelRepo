@@ -72,12 +72,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes">Top Store
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="y">Top Store
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes">Popular Store
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="y">Popular Store
                                 </label>
                             </div>
                         </div>
@@ -89,12 +89,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="active" checked>Active
+                                    <input type="radio" id="storestatus" name="storestatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="deactive">Deactive
+                                    <input type="radio" id="storestatus" name="storestatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
@@ -167,8 +167,8 @@
                 storelogo: {required: "please select store image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },
             submitHandler: function(form) {
-                var _is_topstore = "no";
-                var _is_popularstore = "no";
+                var _is_topstore = "n";
+                var _is_popularstore = "n";
                 var _storetitle = $("#storetitle").val();
                 var _storecategories = $("#storecategories").val();
                 var _storedescription = $("#storedescription").val();

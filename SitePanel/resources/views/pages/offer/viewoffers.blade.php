@@ -209,10 +209,10 @@
                     <td>{{ $offer->display_at_home }}</td>
                     <td>{{ $offer->is_verified }}</td>
                     <td>
-                        @if(strcasecmp($offer->status,"active") == 0)
-                        <span class="active-item">_{{ $offer->status }}</span>
+                        @if(strcasecmp($offer->is_active,"y") == 0)
+                        <span class="active-item">_active</span>
                         @else
-                        <span class="deactive-item">{{ $offer->status }}</span>
+                        <span class="deactive-item">deactive</span>
                         @endif
                     </td>
                     <td>
@@ -229,7 +229,7 @@
                     @endif
                     <td>
                         <a href="/viewoffer/{{$offer->id}}" id="viewoffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->status }}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}", data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}", data-offer-display-at-home="{{$offer->display_at_home}}", data-offer-is-verified="{{$offer->is_verified}}", data-offerstatus="{{ $offer->is_active }}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -492,11 +492,11 @@
                             "<td>"+value.is_popular+"</td>"+
                             "<td>"+value.display_at_home+"</td>"+
                             "<td>"+value.is_verified+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             if(value.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.expiry_date == null)){
                                 html = html + "<td><span class='available-offer'>Available</span></td>"
@@ -514,7 +514,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewoffer/"+value.id+"' id='viewoffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -553,11 +553,11 @@
                 else if($(this).data("offerexpirydate") < "{{config('constants.TODAY_DATE')}}"){
                     offer_remark = "<span class='expired-offer'>Expired</span><br>"
                 }
-                if($(this).data("offerstatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("offerstatus")+"</span><br>";
+                if($(this).data("offerstatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("offerstatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("offerstatus")+"</span><br>";
+                else if($(this).data("offerstatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+

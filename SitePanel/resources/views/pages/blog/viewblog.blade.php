@@ -77,10 +77,10 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Status</div>
-                        @if(strcasecmp($blog->status,"active") == 0)
-                        <input type="text" class="form-control form-field-text active-item" value="_{{ $blog->status }}" readonly/>
+                        @if(strcasecmp($blog->is_active,"y") == 0)
+                        <input type="text" class="form-control form-field-text active-item" value="_active" readonly/>
                         @else
-                        <input type="text" class="form-control form-field-text deactive-item" value="{{ $blog->status }}" readonly/>
+                        <input type="text" class="form-control form-field-text deactive-item" value="deactive" readonly/>
                         @endif
                     </div>
                 </div>

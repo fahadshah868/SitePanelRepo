@@ -43,16 +43,16 @@
                     <div class="form-field">
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Offer Title</div>
-                            @if(strcasecmp($offer->free_shipping,"yes") == 0)
+                            @if(strcasecmp($offer->free_shipping,"y") == 0)
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
-                                    <input type="checkbox" id="free-shipping" value="yes" checked>Free Shipping
+                                    <input type="checkbox" id="free-shipping" value="y" checked>Free Shipping
                                 </label>
                             </div>
                             @else
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
-                                    <input type="checkbox" id="free-shipping" value="yes">Free Shipping
+                                    <input type="checkbox" id="free-shipping" value="y">Free Shipping
                                 </label>
                             </div>
                             @endif
@@ -244,28 +244,28 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->is_popular,"yes") == 0)
-                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes" checked>Popular Offer
+                                    @if(strcasecmp($offer->is_popular,"y") == 0)
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y" checked>Popular Offer
                                     @else
-                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="yes">Popular Offer
+                                    <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y">Popular Offer
                                     @endif
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->display_at_home,"yes") == 0)
-                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes" checked>Display At Home
+                                    @if(strcasecmp($offer->display_at_home,"y") == 0)
+                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y" checked>Display At Home
                                     @else
-                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="yes">Display At Home
+                                    <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y">Display At Home
                                     @endif
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->is_verified,"yes") == 0)
-                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes" checked>Is Verified
+                                    @if(strcasecmp($offer->is_verified,"y") == 0)
+                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y" checked>Is Verified
                                     @else
-                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="yes">Is Verified 
+                                    <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y">Is Verified 
                                     @endif
                                 </label>
                             </div>
@@ -276,26 +276,26 @@
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
                         <div class="form-field-inline-remarks">
-                            @if(strcasecmp($offer->status,"active") == 0)
+                            @if(strcasecmp($offer->is_active,"y") == 0)
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="active" checked>Active
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive">Deactive
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="n">Deactive
                                 </label>
                             </div>
                             @else
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="active">Active
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="y">Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="offerstatus" name="offerstatus" value="deactive" checked>Deactive
+                                    <input type="radio" id="offerstatus" name="offerstatus" value="n" checked>Deactive
                                 </label>
                             </div>
                             @endif
@@ -504,10 +504,10 @@
             submitHandler: function(form) {
                 var _offercode = null;
                 var _offer_expirydate = null;
-                var _offer_is_popular = "no";
-                var _offer_display_at_home = "no";
-                var _offer_is_verified = "no";
-                var _free_shipping = "no";
+                var _offer_is_popular = "n";
+                var _offer_display_at_home = "n";
+                var _offer_is_verified = "n";
+                var _free_shipping = "n";
                 var _offerid = $("#offerid").val();
                 var _offer_store = $("#offer_store").val();
                 var _offer_category = $("#offer_category").val();

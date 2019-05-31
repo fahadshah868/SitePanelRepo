@@ -287,7 +287,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewnetwork/"+value.id+"' id='viewnetwork' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletenetwork/"+value.id+"' id='deletenetwork' data-networktitle='"+value.title+"' data-networkstatus='"+value.status+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletenetwork/"+value.id+"' id='deletenetwork' data-networktitle='"+value.title+"' data-networkstatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);

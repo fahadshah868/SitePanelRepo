@@ -45,16 +45,16 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Blog Status</div>
-                        @if(strcasecmp($blog->status,"active") == 0)
+                        @if(strcasecmp($blog->is_active,"y") == 0)
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="active" checked>Active
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="deactive">Deactive
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
@@ -62,12 +62,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="active">Active
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="y">Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="blogstatus" name="blogstatus" value="deactive" checked>Deactive
+                                    <input type="radio" id="blogstatus" name="blogstatus" value="n" checked>Deactive
                                 </label>
                             </div>
                         </div>

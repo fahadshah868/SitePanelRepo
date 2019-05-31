@@ -62,19 +62,19 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($store->is_topstore,"yes") == 0)
-                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes" checked>Top Store
+                                    @if(strcasecmp($store->is_topstore,"y") == 0)
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="y" checked>Top Store
                                     @else
-                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="yes">Top Store
+                                    <input type="checkbox" id="is_topstore" name="is_topstore" value="y">Top Store
                                     @endif
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($store->is_popularstore,"yes") == 0)
-                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes" checked>Popular Store
+                                    @if(strcasecmp($store->is_popularstore,"y") == 0)
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="y" checked>Popular Store
                                     @else
-                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="yes">Popular Store
+                                    <input type="checkbox" id="is_popularstore" name="is_popularstore" value="y">Popular Store
                                     @endif
                                 </label>
                             </div>
@@ -84,16 +84,16 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Store Status</div>
-                        @if(strcasecmp($store->status,"active") == 0)
+                        @if(strcasecmp($store->is_active,"y") == 0)
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="active" checked>Active
+                                    <input type="radio" id="storestatus" name="storestatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="deactive">Deactive
+                                    <input type="radio" id="storestatus" name="storestatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
@@ -101,12 +101,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="active">Active
+                                    <input type="radio" id="storestatus" name="storestatus" value="y">Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="storestatus" name="storestatus" value="deactive" checked>Deactive
+                                    <input type="radio" id="storestatus" name="storestatus" value="n" checked>Deactive
                                 </label>
                             </div>
                         </div>
@@ -181,8 +181,8 @@
                 storestatus: "please select store status",
             },
             submitHandler: function(form) {
-                var _is_topstore = "no";
-                var _is_popularstore = "no";
+                var _is_topstore = "n";
+                var _is_popularstore = "n";
                 var _storeid = $("#storeid").val();
                 var _storetitle = $("#storetitle").val();
                 var _storedescription = $("#storedescription").val();

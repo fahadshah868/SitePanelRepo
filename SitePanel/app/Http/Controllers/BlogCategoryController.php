@@ -20,7 +20,7 @@ class BlogCategoryController extends Controller
             $blogcategory->title = $request->blogcategorytitle;
             $url = strtolower(str_replace(' ', '-', $request->blogcategorytitle));
             $blogcategory->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-            $blogcategory->status = $request->blogcategorystatus;
+            $blogcategory->is_active = $request->blogcategorystatus;
             $blogcategory->user_id = Auth::User()->id;
             $blogcategory->updated_at = null;
             $blogcategory->save();
@@ -39,7 +39,7 @@ class BlogCategoryController extends Controller
         }
     }
     public function getAllBlogCategories(){
-        $data['allblogcategories'] = BlogCategory::select('id','title','status','user_id')
+        $data['allblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
         ->with(['user' => function($q){
             $q->select('id','username');
         }])->get();
@@ -53,7 +53,7 @@ class BlogCategoryController extends Controller
         Session::put('url','/filteredblogcategories/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredblogcategories'] = BlogCategory::select('id','title','status','user_id')
+                $response['filteredblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
                 ->with(['user' => function($q){
                     $q->select('id','username');
                 }])
@@ -65,7 +65,7 @@ class BlogCategoryController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredblogcategories'] = BlogCategory::select('id','title','status','user_id')
+                $response['filteredblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
                 ->with(['user' => function($q){
                     $q->select('id','username');
                 }])
@@ -76,7 +76,7 @@ class BlogCategoryController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredblogcategories'] = BlogCategory::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredblogcategories'] = BlogCategory::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -88,7 +88,7 @@ class BlogCategoryController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allblogcategories'] = BlogCategory::select('id','title','status','user_id')
+                $data['allblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
                 ->with(['user' => function($q){
                     $q->select('id','username');
                 }])
@@ -102,7 +102,7 @@ class BlogCategoryController extends Controller
                 return view('pages.blogcategory.viewblogcategories',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allblogcategories'] = BlogCategory::select('id','title','status','user_id')
+                $data['allblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
                 ->with(['user' => function($q){
                     $q->select('id','username');
                 }])
@@ -115,7 +115,7 @@ class BlogCategoryController extends Controller
                 return view('pages.blogcategory.viewblogcategories',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allblogcategories'] = BlogCategory::select('id','title','status','user_id')
+                $data['allblogcategories'] = BlogCategory::select('id','title','is_active','user_id')
                 ->with(['user' => function($q){
                     $q->select('id','username');
                 }])
@@ -137,7 +137,7 @@ class BlogCategoryController extends Controller
         return view('pages.blogcategory.viewblogcategory',$data);
     }
     public function getupdateBlogCategory($id){
-        $data['blogcategory'] = BlogCategory::select('id','title','status')->find($id);
+        $data['blogcategory'] = BlogCategory::select('id','title','is_active')->find($id);
         return view('pages.blogcategory.updateblogcategory', $data);
     }
     public function postupdateBlogCategory(Request $request){
@@ -146,7 +146,7 @@ class BlogCategoryController extends Controller
             $blogcategory->title = $request->blogcategorytitle;
             $url = strtolower(str_replace(' ', '-', $request->blogcategorytitle));
             $blogcategory->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-            $blogcategory->status = $request->blogcategorystatus;
+            $blogcategory->is_active = $request->blogcategorystatus;
             $blogcategory->user_id = Auth::User()->id;
             $blogcategory->save();
             Session::flash('updateblogcategory_successmessage','Blog Category Updated Successfully');
@@ -163,7 +163,7 @@ class BlogCategoryController extends Controller
                 $blogcategory->title = $request->blogcategorytitle;
                 $url = strtolower(str_replace(' ', '-', $request->blogcategorytitle));
                 $blogcategory->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-                $blogcategory->status = $request->blogcategorystatus;
+                $blogcategory->is_active = $request->blogcategorystatus;
                 $blogcategory->user_id = Auth::User()->id;
                 $blogcategory->save();
                 Session::flash('updateblogcategory_successmessage','Blog Category Updated Successfully');

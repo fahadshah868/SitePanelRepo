@@ -34,12 +34,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="is_topcategory" name="is_topcategory" value="yes">Top Category
+                                    <input type="checkbox" id="is_topcategory" name="is_topcategory" value="y">Top Category
                                 </label>
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="yes">Popular Category
+                                    <input type="checkbox" id="is_popularcategory" name="is_popularcategory" value="y">Popular Category
                                 </label>
                             </div>
                         </div>
@@ -51,12 +51,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="categorystatus" name="categorystatus" value="active" checked>Active
+                                    <input type="radio" id="categorystatus" name="categorystatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="categorystatus" name="categorystatus" value="deactive">Deactive
+                                    <input type="radio" id="categorystatus" name="categorystatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>
@@ -127,8 +127,8 @@
                 categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },
             submitHandler: function(form) {
-                var _is_topcategory = "no";
-                var _is_popularcategory = "no";
+                var _is_topcategory = "n";
+                var _is_popularcategory = "n";
                 var _categorytitle = $("#categorytitle").val();
                 var _categorydescription = $("#categorydescription").val();
                 var _categorystatus = $("input[name='categorystatus']:checked").val();
