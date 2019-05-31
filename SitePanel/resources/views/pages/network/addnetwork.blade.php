@@ -25,12 +25,12 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="networkstatus" name="networkstatus" value="active" checked>Active
+                                    <input type="radio" id="networkstatus" name="networkstatus" value="y" checked>Active
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="networkstatus" name="networkstatus" value="deactive">Deactive
+                                    <input type="radio" id="networkstatus" name="networkstatus" value="n">Deactive
                                 </label>
                             </div>
                         </div>

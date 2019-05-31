@@ -18,7 +18,7 @@ class NetworkController extends Controller
         if(!$is_network_exists){
             $network = new Network;
             $network->title = $request->networktitle;
-            $network->status = $request->networkstatus;
+            $network->is_active = $request->networkstatus;
             $network->user_id = Auth::User()->id;
             $network->updated_at = null;
             $network->save();
@@ -37,7 +37,7 @@ class NetworkController extends Controller
         }
     }
     public function getAllNetworks(){
-        $data['allnetworks'] = Network::select('id','title','status','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
+        $data['allnetworks'] = Network::select('id','title','is_active','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
         }])->get();
         $data['mainheading'] = "All Networks";
@@ -50,7 +50,7 @@ class NetworkController extends Controller
         Session::put('url','/filterednetworks/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filterednetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filterednetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -60,7 +60,7 @@ class NetworkController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filterednetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filterednetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -69,7 +69,7 @@ class NetworkController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filterednetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filterednetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -81,7 +81,7 @@ class NetworkController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allnetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allnetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -93,7 +93,7 @@ class NetworkController extends Controller
                 return view('pages.network.viewnetworks',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allnetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allnetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -104,7 +104,7 @@ class NetworkController extends Controller
                 return view('pages.network.viewnetworks',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allnetworks'] = Network::select('id','title','status','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allnetworks'] = Network::select('id','title','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -131,7 +131,7 @@ class NetworkController extends Controller
         $network = Network::find($request->networkid);
         if(strcasecmp($network->title, $request->networktitle) == 0){
             $network->title = $request->networktitle;
-            $network->status = $request->networkstatus;
+            $network->is_active = $request->networkstatus;
             $network->user_id = Auth::User()->id;
             $network->save();
             Session::flash('updatenetwork_successmessage','Network Updated Successfully');
@@ -146,7 +146,7 @@ class NetworkController extends Controller
             $is_network_exists = Network::where('title', $request->networktitle)->exists();
             if(!$is_network_exists){
                 $network->title = $request->networktitle;
-                $network->status = $request->networkstatus;
+                $network->is_active = $request->networkstatus;
                 $network->user_id = Auth::User()->id;
                 $network->save();
                 Session::flash('updatenetwork_successmessage','Network Updated Successfully');

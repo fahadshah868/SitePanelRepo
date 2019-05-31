@@ -20,26 +20,26 @@
                         <div class="form-field">
                             <div class="form-field-heading">Network Status</div>
                             <div class="form-field-inline-remarks">
-                                @if(strcasecmp($network->status,"active") == 0)
+                                @if(strcasecmp($network->is_active,"y") == 0)
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="networkstatus" name="networkstatus" value="active" checked>Active
+                                        <input type="radio" id="networkstatus" name="networkstatus" value="y" checked>Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="networkstatus" name="networkstatus" value="deactive">Deactive
+                                        <input type="radio" id="networkstatus" name="networkstatus" value="n">Deactive
                                     </label>
                                 </div>
                                 @else
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="networkstatus" name="networkstatus" value="active">Active
+                                        <input type="radio" id="networkstatus" name="networkstatus" value="y">Active
                                     </label>
                                 </div>
                                 <div class="form-field-radiobutton">
                                     <label class="form-field-radiobutton-remarks-label">
-                                        <input type="radio" id="networkstatus" name="networkstatus" value="deactive" checked>Deactive
+                                        <input type="radio" id="networkstatus" name="networkstatus" value="n" checked>Deactive
                                     </label>
                                 </div>
                                 @endif

@@ -118,10 +118,10 @@
                     <tr>
                         <td>{{ $network->title }}</td>
                         <td>
-                            @if(strcasecmp($network->status,"active") == 0)
-                            <span class="active-item">_{{ $network->status }}</span>
+                            @if(strcasecmp($network->is_active,"y") == 0)
+                            <span class="active-item">_active</span>
                             @else
-                            <span class="deactive-item">{{ $network->status }}</span>
+                            <span class="deactive-item">deactive</span>
                             @endif
                         </td>
                         @if(strcasecmp(Auth::User()->role,"admin") == 0)
@@ -129,7 +129,7 @@
                         @endif
                         <td>
                             <a href="/viewnetwork/{{$network->id}}" id="viewnetwork" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->status}}' id="deletenetwork" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deletenetwork/{{$network->id}}" data-networktitle='{{$network->title}}' data-networkstatus='{{$network->is_active}}' id="deletenetwork" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                     @endforeach
@@ -274,11 +274,11 @@
                         $.each(data.filterednetworks, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.title+"</td>"
-                            if(value.status == "active"){
-                                html = html + "<td><span class='active-item'>_"+value.status+"</span></td>"
+                            if(value.is_active == "y"){
+                                html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
-                                html = html + "<td><span class='deactive-item'>"+value.status+"</span></td>"
+                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
                             if("{{Auth::User()->role}}" == "admin"){
                                 html = html +
@@ -309,11 +309,11 @@
             else if($(this).attr("id") == "deletenetwork"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("networkstatus") == "active"){
-                    status = "<span class='active-item'>_"+$(this).data("networkstatus")+"</span><br>";
+                if($(this).data("networkstatus") == "y"){
+                    status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("networkstatus") == "deactive"){
-                    status = "<span class='deactive-item'>"+$(this).data("networkstatus")+"</span><br>";
+                else if($(this).data("networkstatus") == "n"){
+                    status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
