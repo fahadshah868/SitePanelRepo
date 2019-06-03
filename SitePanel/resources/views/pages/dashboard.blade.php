@@ -101,6 +101,9 @@
                             <li>
                                 <a href="/todayalloffers" class="sidebar-suboption">View Today's Offers</a>
                             </li>
+                            <li>
+                                <a href="/alleventoffers" class="sidebar-suboption">View Event's Offers</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

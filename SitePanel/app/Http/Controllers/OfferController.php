@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Store;
 use App\Offer;
 use App\StoreCategory;
+use App\Event;
+use App\EventOffer;
 use Session;
 use Auth;
 use Carbon\Carbon;
@@ -13,6 +15,7 @@ use Carbon\Carbon;
 class OfferController extends Controller
 {
     public function getAddOffer(){
+        $data['events'] = Event::select('id','title')->where('is_ready','y')->get();
         $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         return view("pages.offer.addoffer",$data);
     }
@@ -41,6 +44,15 @@ class OfferController extends Controller
         $offer->user_id = Auth::User()->id;
         $offer->updated_at = null;
         $offer->save();
+        if($request->events_id != 0){
+            for($event = 0; $event < count($request->events_id); $event++){
+                $eventoffers[] = [
+                    'offer_id' => $offer->id,
+                    'event_id' => $request->events_id[$event],
+                ];
+            }
+            EventOffer::insert($eventoffers);
+        }
         $response = [
             "status" => "true",
             "success_message" => "Offer Added Successfully"

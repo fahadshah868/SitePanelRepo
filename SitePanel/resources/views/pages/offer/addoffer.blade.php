@@ -55,17 +55,6 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox">Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
                         <div class="row">
@@ -89,7 +78,14 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Code</div>
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox">Code Not Required
+                                </label>
+                            </div>
+                        </div>
                         <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" autocomplete="off">
                     </div>
                 </div>
@@ -103,16 +99,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
@@ -121,7 +107,14 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>        
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select Expiry date" autocomplete="off"/>
                     </div>
                 </div>
@@ -167,7 +160,27 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Add Offer" class="btn btn-primary form-button"/>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="submit" value="Add Offer" class="btn btn-primary form-button"/>
+                </div>
+                @if(count($events) > 0)
+                <div class="col-sm-6">
+                    <div class="form-field">
+                        <div class="form-field-heading">Events</div>
+                        <div class="form-field-inline-remarks">
+                            @foreach($events as $event)
+                                <div class="form-field-checkbox">
+                                    <label class="form-field-checkbox-remarks-label">
+                                        <input type="checkbox" class="js-event" id="offer-is-popular" name="offer-is-popular" value="{{$event->id}}">{{$event->title}}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
         </div>
     </form>
 </div>
@@ -299,6 +312,7 @@
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
+                var _events_id = [];
                 var _offercode = null;
                 var _offer_expirydate = null;
                 var _offer_is_popular = "n";
@@ -332,7 +346,13 @@
                 if($("#free-shipping").prop("checked")){
                     _free_shipping = $("#free-shipping").val();
                 }
-                var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
+                $(`.js-event:checked`).each(function () {
+                    _events_id.push($(this).val());
+                });
+                if(_events_id.length == 0){
+                    _events_id = 0;
+                }
+                var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, events_id: _events_id, _token: '{{ csrf_token() }}' });
                 $("#addofferform").trigger("reset");
                 $("#offercode").prop('disabled', false);
                 $("#offer_expirydate").addClass("readonly-bg-color");
