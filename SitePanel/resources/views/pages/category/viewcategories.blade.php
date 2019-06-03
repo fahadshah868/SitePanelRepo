@@ -144,7 +144,7 @@
                             @endif
                         </td>
                         <td>
-                            @if(strcasecmp($category->is_topcategory,"yes") == 0)
+                            @if(strcasecmp($category->is_topcategory,"y") == 0)
                             <img src="{{ asset($category->logo_url) }}" class="category_image_preview"/>
                             @else
                             <b>N/A</b>
@@ -155,7 +155,7 @@
                         @endif
                         <td>
                             <a href="/viewcategory/{{$category->id}}" id="viewcategory" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-categorydescription="{{$category->description}}" data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->is_active}}' id="deletecategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deletecategory/{{$category->id}}" data-categorytitle='{{$category->title}}' data-istopcategory='{{$category->is_topcategory}}' data-ispopularcategory='{{$category->is_popularcategory}}' data-categorystatus='{{$category->is_active}}' id="deletecategory" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -330,7 +330,7 @@
                             else{
                                 html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
-                            if(value.is_topcategory == "yes"){
+                            if(value.is_topcategory == "y"){
                                 html = html + 
                                 `<td><img src="{{asset("/")}}`+value.logo_url+`" class='category_image_preview'></td>`
                             }
@@ -345,7 +345,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-categorydescription='"+value.description+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.is_active+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.is_active+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -376,7 +376,6 @@
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Category Title:</b>  "+$(this).data("categorytitle")+"<br>"+
-                    "<b>Category Description:</b>  "+$(this).data("categorydescription")+"<br>"+
                     "<b>Is TopCategory:</b>  "+$(this).data("istopcategory")+"<br>"+
                     "<b>Is PopularCategory:</b>  "+$(this).data("ispopularcategory")+"<br>"+
                     "<b>Category Status:</b>  "+status,

@@ -141,6 +141,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#eventsuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fa fa-calendar"></i>
+                            Event
+                        </a>
+                        <ul class="collapse list-unstyled" id="eventsuboptions">
+                            <li>
+                                <a href="/addevent" class="sidebar-suboption">Add Event</a>
+                            </li>
+                            <li>
+                                <a href="/allevents" class="sidebar-suboption">View Events</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#seosuboptions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fas fa-won-sign"></i>
                             SEO

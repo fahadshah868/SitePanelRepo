@@ -15,9 +15,13 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('title');
-            //todo
+            $table->String('title',191)->unique();
+            $table->enum('is_topevent',['y','n']);
+            $table->longText('description');
+            $table->enum('is_ready',['y','n']);
             $table->enum('is_active',['y','n']);
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

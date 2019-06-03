@@ -131,6 +131,15 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::post('/updateblogcomment','BlogCommentController@postUpdateBlogComment');
     Route::get('/deleteblogcomment/{id}','BlogCommentController@deleteBlogComment');
 
+    Route::get('/addevent','EventController@getAddEvent');
+    Route::post('/addevent','EventController@postAddEvent');
+    Route::get('/allevents','EventController@getAllEvents');
+    Route::get('/filteredevents/{dateremark}/{datefrom}/{dateto}','EventController@getFilteredEvents');
+    Route::get('/viewevent/{id}','EventController@getViewEvent');
+    Route::get('/updateevent/{id}','EventController@getUpdateEvent');
+    Route::post('/updateevent','EventController@postUpdateEvent');
+    Route::get('/deleteevent/{id}','EventController@deleteEvent');
+
     //logout
     Route::get('/logout','LogoutController@logout');
 });

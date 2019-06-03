@@ -116,13 +116,21 @@
             ignore: ".hide",
             rules: {
                 categorytitle: "required",
-                categorydescription: "required",
+                categorydescription: { 
+                                        required: function(){
+                                            CKEDITOR.instances.categorydescription.updateElement();
+                                        },
+                                        minlength: 1,
+                                    },
                 categorystatus: "required",
                 categorylogo: { required: true, validateimage: true }
             },
             messages: {
                 categorytitle: "please enter category title",
-                categorydescription: "please enter category description",
+                categorydescription: {
+                                        required: "please fill category description",
+                                        minlength:"please fill category description",
+                                    },
                 categorystatus: "please select category status",
                 categorylogo: {required: "please select category image logo", validateimage: "image width and height must be same and must be 200 or greater e.g 200 x 200 etc"}
             },

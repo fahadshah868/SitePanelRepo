@@ -127,12 +127,20 @@
         }).validate({
             rules: {
                 categorytitle: "required",
-                categorydescription: "required",
+                categorydescription: { 
+                                        required: function(){
+                                            CKEDITOR.instances.categorydescription.updateElement();
+                                        },
+                                        minlength: 1,
+                                    },
                 categorystatus: "required",
             },
             messages: {
                 categorytitle: "please enter category title",
-                categorydescription: "please enter category description",
+                categorydescription: {
+                                        required: "please fill category description",
+                                        minlength:"please fill category description",
+                                    },
                 categorystatus: "please select category status",
             },
             submitHandler: function(form) {

@@ -145,10 +145,16 @@
         var validator = $("#addstoreform").submit(function(event){
             event.preventDefault();
         }).validate({
+            ignore: ".hide",
             rules: {
                 storetitle: "required",
                 storecategories: "required",
-                storedescription: "required",
+                storedescription: { 
+                                        required: function(){
+                                            CKEDITOR.instances.storedescription.updateElement();
+                                        },
+                                        minlength: 1,
+                                    },
                 storeprimaryurl: { required: true, url: true, siteurl: true },
                 networkid: "required",
                 storenetworkurl: "required",
@@ -158,7 +164,10 @@
             messages: {
                 storetitle: "please enter store title",
                 storecategories: "please select store categories",
-                storedescription: "please enter store details",
+                storedescription: {
+                                        required: "please fill store description",
+                                        minlength:"please fill store description",
+                                    },
                 storeprimaryurl: { required: "please enter store site url", url: "please enter a valid url", siteurl: "please enter a valid url"},
                 networkid: "please select network",
                 storenetworkurl: "please enter netwrok url",

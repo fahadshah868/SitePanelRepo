@@ -1,15 +1,14 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $storescount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $eventscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
-            <a href="/todayallstores" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Stores List"><i class="fas fa-list"></i>Get Today All Stores</a>
-            <a href="/allstores" class="btn btn-danger viewitems-header-filter-button" title="Get All Stores List"><i class="fas fa-list"></i>Get All Stores</a>
-            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Stores" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
+            <a href="/allevents" class="btn btn-danger viewitems-header-filter-button" title="Get All Events List"><i class="fas fa-list"></i>Get All Events</a>
+            <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Categories" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form id="daterangestorefilterform" action="#" method="#">
+                        <form id="daterangeeventfilterform" action="#" method="#">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -82,14 +81,10 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
-                    <th>Store Title</th>
-                    <th>Store Primary Url</th>
-                    <th>Network</th>
-                    <th>Network Url</th>
-                    <th>Is TopStore</th>
-                    <th>Is PopularStore</th>
-                    <th>Store Status</th>
-                    <th>Store Logo</th>
+                    <th>Event Title</th>
+                    <th>Is TopEvent</th>
+                    <th>Is Ready</th>
+                    <th>Event Status</th>
                     @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>Added/Updated By</th>
                     @endif
@@ -98,52 +93,33 @@
                 <tr>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storetitle" placeholder="Search Store Title" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storetitle_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="eventtitle" placeholder="Search Event Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="eventtitle_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storeprimaryurl" placeholder="Search Primary URL" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storeprimaryurl_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="istopevent" placeholder="Search Top Event" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="istopevent_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storenetwork" placeholder="Search Network" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storenetwork_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="iseventready" placeholder="Search Ready Event" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="iseventready_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storenetworkurl" placeholder="Search Network URL" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storenetworkurl_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="eventstatus" placeholder="Search Event Status" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="eventstatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="istopstore" placeholder="Search Top Store" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="istopstore_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="ispopularstore" placeholder="Search Popular Store" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="ispopularstore_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="storestatus" placeholder="Search Store Status" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="storestatus_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th></th>
                     @if(strcasecmp(Auth::User()->role,"admin") == 0)
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="store_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="store_added_updated_by_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="event_added_updated_by" placeholder="Search User" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="event_added_updated_by_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     @endif
@@ -151,33 +127,29 @@
                 </tr>
             </thead>
             <tbody id="tablebody">
-                @if(count($allstores) > 0)
-                    @foreach($allstores as $store)
-                        <tr>
-                            <td>{{ $store->title }}</td>
-                            <td>{{ $store->primary_url }}</td>
-                            <td>{{ $store->network->title }}</td>
-                            <td>{{ $store->network_url }}</td>
-                            <td>{{ $store->is_topstore }}</td>
-                            <td>{{ $store->is_popularstore }}</td>
-                            <td>
-                                @if(strcasecmp($store->is_active,"y") == 0)
-                                <span class="active-item">_active</span>
-                                @else
-                                <span class="deactive-item">deactive</span>
-                                @endif
-                            </td>
-                            <td><img src="{{asset($store->logo_url)}}" class="store_image_preview"></td>
-                            @if(strcasecmp(Auth::User()->role,"admin") == 0)
-                            <td>{{ $store->user->username }}</td>
+            @if(count($allevents) > 0)
+                @foreach($allevents as $event)
+                    <tr>
+                        <td>{{ $event->title }}</td>
+                        <td>{{ $event->is_topevent }}</td>
+                        <td>{{ $event->is_ready }}</td>
+                        <td>
+                            @if(strcasecmp($event->is_active,"y") == 0)
+                            <span class="active-item">_active</span>
+                            @else
+                            <span class="deactive-item">deactive</span>
                             @endif
-                            <td>
-                                <a href="/viewstore/{{$store->id}}" id="viewstore" class="btn btn-primary actionbutton "><i class="fa fa-eye"></i>View</a>
-                                <a href="/deletestore/{{$store->id}}" data-storetitle="{{$store->title}}" data-storeprimaryurl="{{$store->primary_url}}" data-storesecondaryurl="{{$store->secondary_url}}" data-storenetwork="{{$store->network->title}}" data-storenetworkurl="{{$store->network_url}}" data-istopstore="{{$store->is_topstore}}" data-ispopularstore="{{$store->is_popularstore}}" data-storestatus="{{$store->is_active}}" id="deletestore" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
+                        </td>
+                        @if(strcasecmp(Auth::User()->role,"admin") == 0)
+                        <td>{{ $event->user->username}}</td>
+                        @endif
+                        <td>
+                            <a href="/viewevent/{{$event->id}}" id="viewevent" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                            <a href="/deleteevent/{{$event->id}}" data-eventtitle='{{$event->title}}' data-istopevent='{{$event->is_topevent}}' data-iseventready='{{$event->is_ready}}' data-eventstatus='{{$event->is_active}}' id="deleteevent" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
     </div>
@@ -188,40 +160,28 @@
     $(document).ready(function(){
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
-            var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var storeprimaryurl_val = $.trim($("#storeprimaryurl").val()).replace(/ +/g, ' ').toLowerCase();
-            var storenetwork_val = $.trim($("#storenetwork").val()).replace(/ +/g, ' ').toLowerCase();
-            var storenetworkurl_val = $.trim($("#storenetworkurl").val()).replace(/ +/g, ' ').toLowerCase();
-            var istopstore_val = $.trim($("#istopstore").val()).replace(/ +/g, ' ').toLowerCase();
-            var ispopularstore_val = $.trim($("#ispopularstore").val()).replace(/ +/g, ' ').toLowerCase();
-            var storestatus_val = $.trim($("#storestatus").val()).replace(/ +/g, ' ').toLowerCase();
-            var store_added_updated_by_val = $.trim($("#store_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
+            var eventtitle_val = $.trim($("#eventtitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var istopevent_val = $.trim($("#istopevent").val()).replace(/ +/g, ' ').toLowerCase();
+            var iseventready_val = $.trim($("#iseventready").val()).replace(/ +/g, ' ').toLowerCase();
+            var eventstatus_val = $.trim($("#eventstatus").val()).replace(/ +/g, ' ').toLowerCase();
+            var event_added_updated_by_val = $.trim($("#event_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
-                var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
-                var storeprimaryurl_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var storenetwork_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                var storenetworkurl_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
-                var istopstore_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
-                var ispopularstore_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
-                var storestatus_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
-                var store_added_updated_by_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
-                return !~storetitle_col.indexOf(storetitle_val) || 
-                        !~storeprimaryurl_col.indexOf(storeprimaryurl_val) || 
-                        !~storenetwork_col.indexOf(storenetwork_val) || 
-                        !~storenetworkurl_col.indexOf(storenetworkurl_val) || 
-                        !~istopstore_col.indexOf(istopstore_val) || 
-                        !~ispopularstore_col.indexOf(ispopularstore_val) ||
-                        !~storestatus_col.indexOf(storestatus_val) || 
-                        !~store_added_updated_by_col.indexOf(store_added_updated_by_val);
+                var eventtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var istopevent_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var iseventready_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var eventstatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var event_added_updated_by_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~eventtitle_col.indexOf(eventtitle_val) || 
+                        !~istopevent_col.indexOf(istopevent_val) || 
+                        !~iseventready_col.indexOf(iseventready_val) || 
+                        !~eventstatus_col.indexOf(eventstatus_val) || 
+                        !~event_added_updated_by_col.indexOf(event_added_updated_by_val);
             }).hide();
-            if($("#storetitle").val() != "" || 
-                $("#storeprimaryurl").val() != "" || 
-                $("#storenetwork").val() != "" ||
-                $("#storenetworkurl").val() != "" || 
-                $("#istopstore").val() != "" || 
-                $("#ispopularstore").val() != "" ||
-                $("#storestatus").val() != "" || 
-                $("#store_added_updated_by").val() != "")
+            if($("#eventtitle").val() != "" || 
+                $("#istopevent").val() != "" || 
+                $("#iseventready").val() != "" ||
+                $("#eventstatus").val() != "" || 
+                $("#event_added_updated_by").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -280,60 +240,45 @@
             clientSideFilter();
         });
         $("#clear_all_filters").click(function(){
-            $("#storetitle").val("");
-            $("#storeprimaryurl").val("");
-            $("#storenetwork").val("");
-            $("#storenetworkurl").val("");
-            $("#istopstore").val("");
-            $("#ispopularstore").val("");
-            $("#storestatus").val("");
-            $("#store_added_updated_by").val("");
+            $("#eventtitle").val("");
+            $("#istopevent").val("");
+            $("#iseventready").val("");
+            $("#eventstatus").val("");
+            $("#event_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
-            if($(this).attr("id") == "storetitle_clr_btn"){
-                $("#storetitle").val("");
+            if($(this).attr("id") == "eventtitle_clr_btn"){
+                $("#eventtitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "storeprimaryurl_clr_btn"){
-                $("#storeprimaryurl").val("");
+            else if($(this).attr("id") == "istopevent_clr_btn"){
+                $("#istopevent").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "storenetwork_clr_btn"){
-                $("#storenetwork").val("");
+            else if($(this).attr("id") == "iseventready_clr_btn"){
+                $("#iseventready").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "storenetworkurl_clr_btn"){
-                $("#storenetworkurl").val("");
+            else if($(this).attr("id") == "eventstatus_clr_btn"){
+                $("#eventstatus").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "istopstore_clr_btn"){
-                $("#istopstore").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "ispopularstore_clr_btn"){
-                $("#ispopularstore").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "storestatus_clr_btn"){
-                $("#storestatus").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "store_added_updated_by_clr_btn"){
-                $("#store_added_updated_by").val("");
+            else if($(this).attr("id") == "event_added_updated_by_clr_btn"){
+                $("#event_added_updated_by").val("");
                 clientSideFilter();
             }
         });
-        //filter stores by date range
+        //filter categories by date range
         $("#date-filter-container a").click(function(event){
             event.preventDefault();
             $("#panel-body-container").load($(this).attr("href"));
         });
         $("#cancel_modal_button").click(function(){
-            $("#daterangestorefilterform").trigger("reset");
+            $("#daterangeeventfilterform").trigger("reset");
             $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
         });
-        $("#daterangestorefilterform").submit(function(event){
+        $("#daterangeeventfilterform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
@@ -350,12 +295,12 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangestorefilterform").trigger("reset");
+                $("#daterangeeventfilterform").trigger("reset");
                 $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filteredstores/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
+                    url: "/filteredevents/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",
@@ -364,30 +309,25 @@
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
                         $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredstores, function (index, value) {
+                        $.each(data.filteredevents, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.title+"</td>"+
-                            "<td>"+value.primary_url+"</td>"+
-                            "<td>"+value.network.title+"</td>"+
-                            "<td>"+value.network_url+"</td>"+
-                            "<td>"+value.is_topstore+"</td>"+
-                            "<td>"+value.is_popularstore+"</td>"
+                            "<td>"+value.is_topevent+"</td>"+
+                            "<td>"+value.is_eventready+"</td>"
                             if(value.is_active == "y"){
                                 html = html + "<td><span class='active-item'>_active</span></td>"
                             }
                             else{
                                 html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
-                            html = html +
-                            `<td><img src="{{asset("/")}}`+value.logo_url+`" class='store_image_preview'></td>`
                             if('{{Auth::User()->role}}' == "admin"){
                                 html = html +
                                 "<td>"+value.user.username+"</td>"
                             }
                             html = html +
                             "<td>"+
-                                "<a href='/viewstore/"+value.id+"' id='viewstore' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletestore/"+value.id+"' data-storetitle='"+value.title+"' data-storeprimaryurl='"+value.primary_url+"' data-storesecondaryurl='"+value.secondary_url+"' data-storenetwork='"+value.network.title+"' data-storenetworkurl='"+value.network_url+"' data-istopstore='"+value.is_topstore+"' data-ispopularstore='"+value.is_popularstore+"' data-storestatus='"+value.is_active+"' id='deletestore' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/viewevent/"+value.id+"' id='viewevent' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
+                                "<a href='/deleteevent/"+value.id+"' data-eventtitle='"+value.title+"' data-istopevent='"+value.is_topevent+"' data-iseventready='"+value.is_ready+"' data-eventstatus='"+value.is_active+"' id='deleteevent' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -403,28 +343,24 @@
         //navigation buttons actions
         $("#tablebody").on("click","a.actionbutton",function(event){
             event.preventDefault();
-            if($(this).attr("id") == "viewstore"){
+            if($(this).attr("id") == "viewevent"){
                 $("#panel-body-container").load($(this).attr("href"));
             }
-            else if($(this).attr("id") == "deletestore"){
+            else if($(this).attr("id") == "deleteevent"){
                 var url = $(this).attr("href");
                 var status = null;
-                if($(this).data("storestatus") == "y"){
+                if($(this).data("eventstatus") == "y"){
                     status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("storestatus") == "n"){
+                else if($(this).data("eventstatus") == "y"){
                     status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
-                    "<b>Store Title:</b>  "+$(this).data("storetitle")+"<br>"+
-                    "<b>Store Primary Url:</b>  "+$(this).data("storeprimaryurl")+"<br>"+
-                    "<b>Store Secondary Url:</b>  "+$(this).data("storesecondaryurl")+"<br>"+
-                    "<b>Store Network:</b>  "+$(this).data("storenetwork")+"<br>"+
-                    "<b>Store Network Url:</b>  "+$(this).data("storenetworkurl")+"<br>"+
-                    "<b>Is TopStore:</b>  "+$(this).data("istopstore")+"<br>"+
-                    "<b>Is PopularStore:</b>  "+$(this).data("ispopularstore")+"<br>"+
-                    "<b>Store Status:</b>  "+status,
+                    "<b>Event Title:</b>  "+$(this).data("eventtitle")+"<br>"+
+                    "<b>Is TopEvent:</b>  "+$(this).data("istopevent")+"<br>"+
+                    "<b>Is Event Ready:</b>  "+$(this).data("iseventready")+"<br>"+
+                    "<b>Event Status:</b>  "+status,
                     buttons: {
                         confirm: {
                             label: 'Delete',

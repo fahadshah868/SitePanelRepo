@@ -116,14 +116,22 @@
         }).validate({
             rules: {
                 blog_title: "required",
-                blog_body: "required",
+                blog_body: { 
+                                required: function(){
+                                    CKEDITOR.instances.blog_body.updateElement();
+                                },
+                                minlength: 1,
+                            },
                 blog_category_id: "required",
                 blog_author: "required",
                 blogstatus: "required",
             },
             messages: {
                 blog_title: "please enter blog title",
-                blog_body: "please fill blog body",
+                blog_body: {
+                                required: "please fill blog body",
+                                minlength:"please fill blog body",
+                            },
                 blog_category_id: "please select category",
                 blog_author: "please enter blog author",
                 blogstatus: "please select blog status",
