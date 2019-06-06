@@ -11,7 +11,7 @@
     </div>
     <form id="addofferform" action="#" method="#">
         <div class="form-container">
-        <div class="row">
+            <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Select Store</div>
@@ -161,11 +161,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <input type="submit" value="Add Offer" class="btn btn-primary form-button"/>
-                </div>
                 @if(count($events) > 0)
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Events</div>
                         <div class="form-field-inline-remarks">
@@ -182,6 +179,7 @@
                 @endif
             </div>
         </div>
+        <input type="submit" value="Add Offer" class="btn btn-primary form-button"/>
     </form>
 </div>
 <script type="text/javascript" src="{{asset('js/multiselectdropdown.js')}}"></script>

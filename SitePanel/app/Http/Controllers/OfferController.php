@@ -196,13 +196,15 @@ class OfferController extends Controller
         return view('pages.offer.viewoffer',$data);
     }
     public function getUpdateOffer($id){
-        $data['offer'] = Offer::
-        with(['store' => function($sq){
+        $data['events'] = Event::select('id','title')->where('is_ready','y')->get();
+        $data['offer'] = Offer::with(['store' => function($sq){
             $sq->select('id','title');
         }, 'category' => function($sq){
             $sq->select('id','title');
         }, 'user' => function($sq){
             $sq->select('id','username');
+        }, 'eventoffers' => function($q){
+            $q->select('id','offer_id','event_id');
         }])->find($id);
         $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
@@ -212,35 +214,36 @@ class OfferController extends Controller
     }
     public function postUpdateOffer(Request $request){
         $offer = Offer::find($request->offerid);
-        $offer->store_id = $request->offer_store;
-        $offer->category_id = $request->offer_category;
-        $offer->title = ucwords($request->offertitle);
-        $offer->free_shipping = $request->free_shipping;
-        $offer->anchor = strtoupper($request->offeranchor);
-        $offer->location = $request->offerlocation;
-        $offer->type = $request->offertype;
-        $offer->code = $request->offercode;
-        $offer->details = ucfirst($request->offerdetails);
-        $offer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
-        if($request->offer_expirydate != null){
-            $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
-        }
-        else{
-            $offer->expiry_date = $request->offer_expirydate;
-        }
-        $offer->is_popular = $request->offer_is_popular;
-        $offer->display_at_home = $request->offer_display_at_home;
-        $offer->is_verified = $request->offer_is_verified;
-        $offer->is_active = $request->offerstatus;
-        $offer->user_id = Auth::User()->id;
-        $offer->save();
+        // $offer->store_id = $request->offer_store;
+        // $offer->category_id = $request->offer_category;
+        // $offer->title = ucwords($request->offertitle);
+        // $offer->free_shipping = $request->free_shipping;
+        // $offer->anchor = strtoupper($request->offeranchor);
+        // $offer->location = $request->offerlocation;
+        // $offer->type = $request->offertype;
+        // $offer->code = $request->offercode;
+        // $offer->details = ucfirst($request->offerdetails);
+        // $offer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
+        // if($request->offer_expirydate != null){
+        //     $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        // }
+        // else{
+        //     $offer->expiry_date = $request->offer_expirydate;
+        // }
+        // $offer->is_popular = $request->offer_is_popular;
+        // $offer->display_at_home = $request->offer_display_at_home;
+        // $offer->is_verified = $request->offer_is_verified;
+        // $offer->is_active = $request->offerstatus;
+        // $offer->user_id = Auth::User()->id;
+        // $offer->save();
+        $offerevents = $offer->eventoffers();
         Session::flash("updateoffer_successmessage","Offer Updated Successfully");
         $response = [
             "status" => "true",
             "offer_id" => $request->offerid,
             "success_message" => "Offer Updated Successfully"
         ];
-        return response()->json($response);
+        return response()->json($offerevents);
     }
     public function deleteOffer($id){
         Session::put('flag',-1);

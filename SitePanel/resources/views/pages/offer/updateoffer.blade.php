@@ -67,18 +67,6 @@
                     </div>
                 </div>
             </div>
-            @if($offer->code != null)
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox">Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -117,67 +105,30 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code">
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox" checked>Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Offer Type</div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if(strcasecmp($offer->location,"Online") == 0)
-                                    <option value="Online" selected>Online</option>
-                                    <option value="In-Store">In-Store</option>
-                                    <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($offer->location,"In-Store") == 0)
-                                    <option value="Online">Online</option>
-                                    <option value="In-Store" selected>In-Store</option>
-                                    <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($offer->location,"Online & In-Store") == 0)
-                                    <option value="Online">Online</option>
-                                    <option value="In-Store">In-Store</option>
-                                    <option value="Online & In-Store" selected>Online & In-Store</option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if(strcasecmp($offer->type,"Code") == 0)
-                                    <option value="Code" selected>Code</option>
-                                    <option value="Sale">Sale</option>
-                                    @else
-                                    <option value="Code">Code</option>
-                                    <option value="Sale" selected>Sale</option>
-                                    @endif
-                                </select>
+                        @if($offer->code != null)
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox">Code Not Required
+                                </label>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" disabled>
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code" autocomplete="off">
+                        @else
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox" checked>Code Not Required
+                                </label>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" disabled autocomplete="off">
+                        @endif
                     </div>
                 </div>
             </div>
-            @endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-field">
@@ -186,17 +137,16 @@
                     </div>
                 </div>
             </div>
-            @if($offer->expiry_date != null)
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
+            
+            
+            
+            
+            
+            
+
+            
+
+
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -206,37 +156,30 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
+                        @if($offer->expiry_date != null)
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox" checked>Expiry Date Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Starting Date</div>
-                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
+                        @else
+                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox" checked>Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" readonly placeholder="select Expiry date" autocomplete="off" disabled/>
+                        @endif
                     </div>
                 </div>
             </div>
-            @endif
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -303,6 +246,47 @@
                     </div>
                 </div>
             </div>
+            
+            
+            @if(count($events) > 0)
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-field">
+                        <div class="form-field-heading">Events</div>
+                        <div class="form-field-inline-remarks">
+                            @foreach($events as $event)
+                                @php
+                                    $flag = 0
+                                @endphp
+                                @foreach($offer->eventoffers as $eventoffer)
+                                    @if($eventoffer->event_id == $event->id)
+                                        @php
+                                            $flag = 1
+                                        @endphp
+                                        <div class="form-field-checkbox">
+                                            <label class="form-field-checkbox-remarks-label">
+                                                <input type="checkbox" class="js-event" id="offer-is-popular" name="offer-is-popular" value="{{$event->id}}" checked>{{$event->title}}
+                                            </label>
+                                        </div>
+                                        @break
+                                    @endif
+                                @endforeach
+                                @if($flag == 0)
+                                    <div class="form-field-checkbox">
+                                        <label class="form-field-checkbox-remarks-label">
+                                            <input type="checkbox" class="js-event" id="offer-is-popular" name="offer-is-popular" value="{{$event->id}}">{{$event->title}}
+                                        </label>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
+            
+            
+            
             <div class="form-buttons-container">
                 <div>
                     <a href="/viewoffer/{{$offer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer</a>
@@ -547,13 +531,16 @@
                     contentType: "application/json",
                     cache: false,
                     success: function(data){
-                        if(data.status == "true"){
-                            $("#panel-body-container").load("/viewoffer/"+data.offer_id);
-                        }
-                        else{
-                            $("#alert-danger-message-area").html(data.error_message);
-                            $("#alert-danger").css("display","block");
-                        }
+                        $.each(data, function(index, val){
+                            console.log(val);
+                        });
+                        // if(data.status == "true"){
+                        //     $("#panel-body-container").load("/viewoffer/"+data.offer_id);
+                        // }
+                        // else{
+                        //     $("#alert-danger-message-area").html(data.error_message);
+                        //     $("#alert-danger").css("display","block");
+                        // }
                     },
                     error: function(){
                         alert("Ajax Error! something went wrong...");

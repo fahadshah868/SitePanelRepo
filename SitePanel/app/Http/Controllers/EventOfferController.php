@@ -159,8 +159,8 @@ class EventOfferController extends Controller
         }
     }
     public function getViewOffer($id){
-        $data['eventoffer'] = EventOffer::
-        with(['event' => function($q){
+        Session::put('flag',-1);
+        $data['eventoffer'] = EventOffer::with(['event' => function($q){
             $q->select('id','title');
         }, 'offer' => function($q){
             $q->select('*')
