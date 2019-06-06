@@ -10,6 +10,12 @@ class Offer extends Model
     protected $primaryKey = "id";
     public $timestamps = true;
 
+    // has many
+    public function eventoffers(){
+        return $this->hasMany('App\EventOffer');
+    }
+
+    // belongs to
     public function store(){
         return $this->belongsTo('App\Store','store_id');
     }

@@ -49,6 +49,8 @@ class OfferController extends Controller
                 $eventoffers[] = [
                     'offer_id' => $offer->id,
                     'event_id' => $request->events_id[$event],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
                 ];
             }
             EventOffer::insert($eventoffers);

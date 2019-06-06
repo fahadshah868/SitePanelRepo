@@ -57,7 +57,9 @@ class StoreController extends Controller
                     $storecategories[] = [
                         'store_id' => $store->id,
                         'category_id' => $formdata->storecategories[$category],
-                        'user_id' => Auth::User()->id
+                        'user_id' => Auth::User()->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
                     ];
                 }
                 StoreCategory::insert($storecategories);

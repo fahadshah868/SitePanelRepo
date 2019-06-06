@@ -2,14 +2,14 @@
     <div class="viewitems-header-container">
         <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
-            <a href="/todayalloffers" class="btn btn-danger viewitems-header-filter-button" title="Get Today All Offers List"><i class="fas fa-list"></i>Get Today's Offers</a>
-            <a href="/alloffers" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Offers</a>
+            <a href="/event/todayalloffers" class="btn btn-danger viewitems-header-filter-button" title="Get Today All Offers List"><i class="fas fa-list"></i>Get Today's Event Offers</a>
+            <a href="/event/alloffers" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Event Offers</a>
             <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Offers" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
             {{--popup to update image--}}
             <div class="modal fade" id="daterangemodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form id="daterangeofferfilterform" action="#" method="#">
+                        <form id="daterangeeventofferfilterform" action="#" method="#">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Select Date Range</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -82,25 +82,27 @@
         <table class="table table-bordered" id="tableview">
             <thead>
                 <tr>
+                    <th>Event</th>
+                    <th>Offer Title</th>
                     <th>Store</th>
                     <th>Category</th>
-                    <th>Title</th>
-                    <th>Anchor</th>
-                    <th>Offer Location</th>
-                    <th>Offer Type</th>
-                    <th>Code</th>
-                    <th>Free Shipping</th>
-                    <th>Is Popular</th>
-                    <th>Display At Home</th>
-                    <th>Is Verified</th>
                     <th>Status</th>
                     <th>Remark</th>
-                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
-                    <th>Added/Updated By</th>
-                    @endif
                     <th>Actions</th>
                 </tr>
                 <tr>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="eventtitle" placeholder="Search Event Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="eventtitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="header-searchbar-filter-assets">
+                            <input type="text" class="header-searchbar-filter" id="offertitle" placeholder="Search Offer Title" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="offertitle_clr_btn" title="clear">&#x2715;</button>
+                        </div>
+                    </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="storetitle" placeholder="Search Store Title" autocomplete="off"/>
@@ -115,60 +117,6 @@
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offertitle" placeholder="Search Offer Title" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offertitle_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offeranchor" placeholder="Search Offer Anchor" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offeranchor_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offerlocation" placeholder="Search Offer Location" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offerlocation_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offertype" placeholder="Search Offer Type" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offertype_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offercode" placeholder="Search Offer Code" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offercode_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="freeshippingoffer" placeholder="Search Free Shipping Offers" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="freeshippingoffer_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="popularoffer" placeholder="Search Popular Offers" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="popularoffer_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="homeoffer" placeholder="Search Home Offers" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="homeoffer_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="verifiedoffer" placeholder="Search Verified Offers" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="verifiedoffer_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="header-searchbar-filter-assets">
                             <input type="text" class="header-searchbar-filter" id="offerstatus" placeholder="Search Offer Status" autocomplete="off"/>
                             <button class="header-searchbar-filter-button" id="offerstatus_clr_btn" title="clear">&#x2715;</button>
                         </div>
@@ -179,57 +127,35 @@
                             <button class="header-searchbar-filter-button" id="offerremark_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
-                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
-                    <th>
-                        <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="offer_added_updated_by" placeholder="Search User" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="offer_added_updated_by_clr_btn" title="clear">&#x2715;</button>
-                        </div>
-                    </th>
-                    @endif
                     <th><button class="header-searchbar-clear-filters-button" id="clear_all_filters" title="Clear All Applied Filters"><i class="fas fa-times-circle"></i>Clear All Filters</button></th>
                 </tr>
             </thead>
             <tbody id="tablebody">
-                @foreach($alloffers as $offer)
+                @foreach($eventoffers as $eventoffer)
                 <tr>
-                    <td>{{ $offer->store->title }}</td>
-                    <td>{{ $offer->category->title }}</td>
-                    <td>{{ $offer->title }}</td>
-                    <td>{{ $offer->anchor }}</td>
-                    <td>{{ $offer->location }}</td>
-                    <td>{{ $offer->type }}</td>
-                    @if($offer->code != null)
-                        <td>{{ $offer->code }}</td>
-                    @else
-                        <td><span class='not-required-yet'>Not Required</span></td>
-                    @endif
-                    <td>{{ $offer->free_shipping }}</td>
-                    <td>{{ $offer->is_popular }}</td>
-                    <td>{{ $offer->display_at_home }}</td>
-                    <td>{{ $offer->is_verified }}</td>
+                    <td>{{ $eventoffer->event->title }}</td>
+                    <td>{{ $eventoffer->offer->title }}</td>
+                    <td>{{ $eventoffer->offer->store->title }}</td>
+                    <td>{{ $eventoffer->offer->category->title }}</td>
                     <td>
-                        @if(strcasecmp($offer->is_active,"y") == 0)
+                        @if(strcasecmp($eventoffer->offer->is_active,"y") == 0)
                         <span class="active-item">_active</span>
                         @else
                         <span class="deactive-item">deactive</span>
                         @endif
                     </td>
                     <td>
-                    @if($offer->starting_date <= config('constants.TODAY_DATE') && ($offer->expiry_date >= config('constants.TODAY_DATE') || $offer->expiry_date == null))
-                    <span class="available-offer">Available</span>
-                    @elseif($offer->starting_date > config('constants.TODAY_DATE'))
-                    <span class="pending-offer">Pending</span>
-                    @elseif($offer->expiry_date < config('constants.TODAY_DATE'))
-                    <span class="expired-offer">Expired</span>
-                    @endif
+                        @if($eventoffer->offer->starting_date <= config('constants.TODAY_DATE') && ($eventoffer->offer->expiry_date >= config('constants.TODAY_DATE') || $eventoffer->offer->expiry_date == null))
+                        <span class="available-offer">Available</span>
+                        @elseif($eventoffer->offer->starting_date > config('constants.TODAY_DATE'))
+                        <span class="pending-offer">Pending</span>
+                        @elseif($eventoffer->offer->expiry_date < config('constants.TODAY_DATE'))
+                        <span class="expired-offer">Expired</span>
+                        @endif
                     </td>
-                    @if(strcasecmp(Auth::User()->role,"admin") == 0)
-                    <td>{{ $offer->user->username }}</td>
-                    @endif
                     <td>
-                        <a href="/viewoffer/{{$offer->id}}" id="viewoffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                        <a href="/deleteoffer/{{$offer->id}}" id="deleteoffer" data-offerstore="{{ $offer->store->title }}" data-offercategory="{{ $offer->category->title }}" data-offertitle="{{ $offer->title }}" data-offeranchor="{{ $offer->anchor }}" data-offerlocation="{{ $offer->location }}" data-offertype="{{ $offer->type }}" data-offercode="{{ $offer->code }}" data-offerdetails="{{ $offer->details }}" data-offerstartingdate="{{ $offer->starting_date }}" data-offerexpirydate="{{ $offer->expiry_date }}" data-freeshipping="{{ $offer->free_shipping }}" data-offer-is-popular="{{$offer->is_popular}}" data-offer-display-at-home="{{$offer->display_at_home}}" data-offer-is-verified="{{$offer->is_verified}}" data-offerstatus="{{ $offer->is_active }}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                        <a href="/event/viewoffer/{{$eventoffer->id}}" id="viewoffer" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
+                        <a href="/event/deleteoffer/{{$eventoffer->id}}" id="deleteoffer" data-eventtitle="{{ $eventoffer->event->title }}" data-offertitle="{{ $eventoffer->offer->title }}" data-offerstore="{{ $eventoffer->offer->store->title }}" data-offercategory="{{ $eventoffer->offer->category->title }}" data-offerstartingdate="{{ $eventoffer->offer->starting_date }}" data-offerexpirydate="{{ $eventoffer->offer->expiry_date }}" data-offerstatus="{{ $eventoffer->offer->is_active }}" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                     </td>
                 </tr>
                 @endforeach
@@ -243,64 +169,32 @@
     $(document).ready(function(){
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
+            var eventtitle_val = $.trim($("#eventtitle").val()).replace(/ +/g, ' ').toLowerCase();
+            var offertitle_val = $.trim($("#offertitle").val()).replace(/ +/g, ' ').toLowerCase();
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
             var categorytitle_val = $.trim($("#categorytitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var offertitle_val = $.trim($("#offertitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var offeranchor_val = $.trim($("#offeranchor").val()).replace(/ +/g, ' ').toLowerCase();
-            var offerlocation_val = $.trim($("#offerlocation").val()).replace(/ +/g, ' ').toLowerCase();
-            var offertype_val = $.trim($("#offertype").val()).replace(/ +/g, ' ').toLowerCase();
-            var offercode_val = $.trim($("#offercode").val()).replace(/ +/g, ' ').toLowerCase();
-            var freeshippingoffer_val = $.trim($("#freeshippingoffer").val()).replace(/ +/g, ' ').toLowerCase();
-            var popularoffer_val = $.trim($("#popularoffer").val()).replace(/ +/g, ' ').toLowerCase();
-            var homeoffer_val = $.trim($("#homeoffer").val()).replace(/ +/g, ' ').toLowerCase();
-            var verifiedoffer_val = $.trim($("#verifiedoffer").val()).replace(/ +/g, ' ').toLowerCase();
             var offerstatus_val = $.trim($("#offerstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var offerremark_val = $.trim($("#offerremark").val()).replace(/ +/g, ' ').toLowerCase();
-            var offer_added_updated_by_val = $.trim($("#offer_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
-                var storetitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
-                var categorytitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offertitle_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offeranchor_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offerlocation_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offertype_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offercode_col = $(this).find('td:nth-child(7)').text().replace(/\s+/g, ' ').toLowerCase();
-                var freeshippingoffer_col = $(this).find('td:nth-child(8)').text().replace(/\s+/g, ' ').toLowerCase();
-                var popularoffer_col = $(this).find('td:nth-child(9)').text().replace(/\s+/g, ' ').toLowerCase();
-                var homeoffer_col = $(this).find('td:nth-child(10)').text().replace(/\s+/g, ' ').toLowerCase();
-                var verifiedoffer_col = $(this).find('td:nth-child(11)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offerstatus_col = $(this).find('td:nth-child(12)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offerremark_col = $(this).find('td:nth-child(13)').text().replace(/\s+/g, ' ').toLowerCase();
-                var offer_added_updated_by_col = $(this).find('td:nth-child(14)').text().replace(/\s+/g, ' ').toLowerCase();
-                return !~storetitle_col.indexOf(storetitle_val) || 
-                        !~categorytitle_col.indexOf(categorytitle_val) || 
+                var eventtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offertitle_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var storetitle_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
+                var categorytitle_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerstatus_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
+                var offerremark_col = $(this).find('td:nth-child(6)').text().replace(/\s+/g, ' ').toLowerCase();
+                return !~eventtitle_col.indexOf(eventtitle_val) || 
                         !~offertitle_col.indexOf(offertitle_val) || 
-                        !~offeranchor_col.indexOf(offeranchor_val) || 
-                        !~offerlocation_col.indexOf(offerlocation_val) || 
-                        !~offertype_col.indexOf(offertype_val) ||
-                        !~offercode_col.indexOf(offercode_val) || 
-                        !~freeshippingoffer_col.indexOf(freeshippingoffer_val) || 
-                        !~popularoffer_col.indexOf(popularoffer_val) ||
-                        !~homeoffer_col.indexOf(homeoffer_val) ||
-                        !~verifiedoffer_col.indexOf(verifiedoffer_val) ||
+                        !~storetitle_col.indexOf(storetitle_val) || 
+                        !~categorytitle_col.indexOf(categorytitle_val) || 
                         !~offerstatus_col.indexOf(offerstatus_val) ||
-                        !~offerremark_col.indexOf(offerremark_val) ||
-                        !~offer_added_updated_by_col.indexOf(offer_added_updated_by_val);
+                        !~offerremark_col.indexOf(offerremark_val)
             }).hide();
-            if($("#storetitle").val() != "" || 
-                $("#categorytitle").val() != "" || 
+            if($("#eventtitle").val() != "" ||
                 $("#offertitle").val() != "" ||
-                $("#offeranchor").val() != "" || 
-                $("#offerlocation").val() != "" || 
-                $("#offertype").val() != "" ||
-                $("#offercode").val() != "" || 
-                $("#freeshippingoffer").val() != "" || 
-                $("#popularoffer").val() != "" ||
-                $("#homeoffer").val() != "" ||
-                $("#verifiedoffer").val() != "" ||
+                $("#storetitle").val() != "" || 
+                $("#categorytitle").val() != "" || 
                 $("#offerstatus").val() != "" ||
-                $("#offerremark").val() != "" ||
-                $("#offer_added_updated_by").val() != "")
+                $("#offerremark").val() != "")
             {
                 $("#filtered_row_count").html("/"+$("#tablebody tr:visible").length);
             }
@@ -359,65 +253,29 @@
             clientSideFilter();
         });
         $("#clear_all_filters").click(function(){
+            $("#eventtitle").val("");
+            $("#offertitle").val("");
             $("#storetitle").val("");
             $("#categorytitle").val("");
-            $("#offertitle").val("");
-            $("#offeranchor").val("");
-            $("#offerlocation").val("");
-            $("#offertype").val("");
-            $("#offercode").val("");
-            $("#freeshippingoffer").val("");
-            $("#popularoffer").val("");
-            $("#homeoffer").val("");
-            $("#verifiedoffer").val("");
             $("#offerstatus").val("");
             $("#offerremark").val("");
-            $("#offer_added_updated_by").val("");
             clientSideFilter();
         });
         $(".header-searchbar-filter-button").click(function(){
-            if($(this).attr("id") == "storetitle_clr_btn"){
-                $("#storetitle").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "categorytitle_clr_btn"){
-                $("#categorytitle").val("");
+            if($(this).attr("id") == "eventtitle_clr_btn"){
+                $("#eventtitle").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "offertitle_clr_btn"){
                 $("#offertitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offeranchor_clr_btn"){
-                $("#offeranchor").val("");
+            else if($(this).attr("id") == "storetitle_clr_btn"){
+                $("#storetitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offerlocation_clr_btn"){
-                $("#offerlocation").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "offertype_clr_btn"){
-                $("#offertype").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "offercode_clr_btn"){
-                $("#offercode").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "freeshippingoffer_clr_btn"){
-                $("#freeshippingoffer").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "popularoffer_clr_btn"){
-                $("#popularoffer").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "homeoffer_clr_btn"){
-                $("#homeoffer").val("");
-                clientSideFilter();
-            }
-            else if($(this).attr("id") == "verifiedoffer_clr_btn"){
-                $("#verifiedoffer").val("");
+            else if($(this).attr("id") == "categorytitle_clr_btn"){
+                $("#categorytitle").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "offerstatus_clr_btn"){
@@ -428,10 +286,6 @@
                 $("#offerremark").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "offer_added_updated_by_clr_btn"){
-                $("#offer_added_updated_by").val("");
-                clientSideFilter();
-            }
         });
         //filter offer by date range
         $("#date-filter-container a").click(function(event){
@@ -439,10 +293,10 @@
             $("#panel-body-container").load($(this).attr("href"));
         });
         $("#cancel_modal_button").click(function(){
-            $("#daterangeofferfilterform").trigger("reset");
+            $("#daterangeeventofferfilterform").trigger("reset");
             $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null, maxDate: new Date()});
         });
-        $("#daterangeofferfilterform").submit(function(event){
+        $("#daterangeeventofferfilterform").submit(function(event){
             event.preventDefault();
         }).validate({
             rules: {
@@ -459,12 +313,12 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeofferfilterform").trigger("reset");
+                $("#daterangeeventofferfilterform").trigger("reset");
                 $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "GET",
-                    url: "/filteredoffers/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
+                    url: "/event/filteredoffers/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
                     data: null,
                     dataType: "json",
                     contentType: "application/json",
@@ -473,48 +327,31 @@
                         $("#daterangemodal").modal('toggle');
                         $("#tablebody").empty();
                         $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredoffers, function (index, value) {
+                        $.each(data.filteredeventoffers, function (index, value) {
                             var html = "<tr>"+
-                            "<td>"+value.store.title+"</td>"+
-                            "<td>"+value.category.title+"</td>"+
-                            "<td>"+value.title+"</td>"+
-                            "<td>"+value.anchor+"</td>"+
-                            "<td>"+value.location+"</td>"+
-                            "<td>"+value.type+"</td>"
-                            if(value.code != null){
-                                html = html + "<td>"+value.code+"</td>"
-                            }
-                            else{
-                                html = html + "<td><span class='not-required-yet'>Not Required</span></td>"
-                            }
-                            html  = html +
-                            "<td>"+value.free_shipping+"</td>"+
-                            "<td>"+value.is_popular+"</td>"+
-                            "<td>"+value.display_at_home+"</td>"+
-                            "<td>"+value.is_verified+"</td>"
-                            if(value.is_active == "y"){
+                            "<td>"+value.event.title+"</td>"+
+                            "<td>"+value.offer.title+"</td>"+
+                            "<td>"+value.offer.store.title+"</td>"+
+                            "<td>"+value.offer.category.title+"</td>"
+                            if(value.offer.is_active == "y"){
                                 html = html + "<td><span class='active-item'>active</span></td>"
                             }
                             else{
                                 html = html + "<td><span class='deactive-item'>deactive</span></td>"
                             }
-                            if(value.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.expiry_date == null)){
+                            if(value.offer.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.offer.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.offer.expiry_date == null)){
                                 html = html + "<td><span class='available-offer'>Available</span></td>"
                             }
-                            else if(value.starting_date > "{{config('constants.TODAY_DATE')}}"){
+                            else if(value.offer.starting_date > "{{config('constants.TODAY_DATE')}}"){
                                 html = html + "<td><span class='pending-offer'>Pending</span></td>"
                             }
-                            else if(value.expiry_date < "{{config('constants.TODAY_DATE')}}"){
+                            else if(value.offer.expiry_date < "{{config('constants.TODAY_DATE')}}"){
                                 html = html + "<td><span class='expired-offer'>Expired</span></td>"
-                            }
-                            if("{{Auth::User()->role}}" == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
                             }
                             html = html +
                             "<td>"+
-                                "<a href='/viewoffer/"+value.id+"' id='viewoffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteoffer/"+value.id+"' id='deleteoffer' data-offerstore='"+value.store.title+"' data-offercategory='"+value.category.title+"' data-offertitle='"+value.title+"' data-offeranchor='"+value.anchor+"' data-offerlocation='"+value.location+"' data-offertype='"+value.type+"' data-offercode='"+value.code+"' data-offerdetails='"+value.details+"' data-offerstartingdate='"+value.starting_date+"' data-offerexpirydate='"+value.expiry_date+"' data-freeshipping='"+value.free_shipping+"' data-offer-is-popular='"+value.is_popular+"' data-offer-display-at-home='"+value.display_at_home+"' data-offer-is-verified='"+value.is_verified+"' data-offerstatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/event/viewoffer/"+value.id+"' id='viewoffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
+                                "<a href='/event/deleteoffer/"+value.id+"' id='deleteoffer' data-eventtitle='"+value.event.title+"' data-offerstore='"+value.offer.store.title+"' data-offercategory='"+value.offer.category.title+"' data-offertitle='"+value.offer.title+"' data-offerstartingdate='"+value.offer.starting_date+"' data-offerexpirydate='"+value.offer.expiry_date+"' data-offerstatus='"+value.offer.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -535,15 +372,9 @@
             }
             else if($(this).attr("id") == "deleteoffer"){
                 var url = $(this).attr("href");
-                var code = null;
                 var offer_remark = null;
                 var status = null;
-                if($(this).data("offercode") != null && $(this).data("offercode") != ""){
-                    code = $(this).data("offercode")+"<br>";
-                }
-                else{
-                    code = "<span class='not-required-yet'>Not Required</span><br>";
-                }
+                // alert($(this).data("offerstartingdate") + "  " + $(this).data("offerexpirydate"));
                 if($(this).data("offerstartingdate") <= "{{config('constants.TODAY_DATE')}}" && ($(this).data("offerexpirydate") >= "{{config('constants.TODAY_DATE')}}" || $(this).data("offerexpirydate") == null || $(this).data("offerexpirydate") == "")){
                     offer_remark = "<span class='available-offer'>Available</span><br>"
                 }
@@ -561,20 +392,12 @@
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
+                    "<b>Event:</b>  "+$(this).data("eventtitle")+"<br>"+
+                    "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
                     "<b>Store:</b>  "+$(this).data("offerstore")+"<br>"+
                     "<b>Category:</b>  "+$(this).data("offercategory")+"<br>"+
-                    "<b>Offer Title:</b>  "+$(this).data("offertitle")+"<br>"+
-                    "<b>Offer Anchor:</b>  "+$(this).data("offeranchor")+"<br>"+
-                    "<b>Offer Location:</b>  "+$(this).data("offerlocation")+"<br>"+
-                    "<b>Offer Type:</b>  "+$(this).data("offertype")+"<br>"+
-                    "<b>Offer Code:</b>  "+code+
-                    "<b>Offer Details:</b>  "+$(this).data("offerdetails")+"<br>"+
-                    "<b>Offer Remark:</b>  "+offer_remark+
-                    "<b>Free Shipping:</b>  "+$(this).data("freeshipping")+"<br>"+
-                    "<b>Offer Is Popular:</b>  "+$(this).data("offer-is-popular")+"<br>"+
-                    "<b>Offer Display At Home:</b>  "+$(this).data("offer-display-at-home")+"<br>"+
-                    "<b>Offer Is Verified:</b>  "+$(this).data("offer-is-verified")+"<br>"+
-                    "<b>Offer Status:</b>  "+status,
+                    "<b>Offer Status:</b>  "+status+
+                    "<b>Offer Remark:</b>  "+offer_remark,
                     buttons: {
                         confirm: {
                             label: 'Delete',
