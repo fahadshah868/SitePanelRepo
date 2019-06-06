@@ -6,6 +6,12 @@
         <strong id="alert-success-message-area"></strong>
     </div>
     <div class="row">
+        <div class="col-sm-6">
+            <div class="form-field">
+                <div class="form-field-heading">Event Title</div>
+                <input type="text" class="form-control form-field-text" value="{{ $eventoffer->event->title }}" readonly/>
+            </div>
+        </div>
         <div class="col-sm-3">
             <div class="form-field">
                 <div class="form-field-heading">Store Title</div>
@@ -150,14 +156,14 @@
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer Created At</div>
-                <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($eventoffer->offer->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($eventoffer->created_at)->format('d-m-Y  h:i:s A') }}" readonly/>
             </div>
         </div>
         @if($eventoffer->offer->updated_at != null)
         <div class="col-sm-6">
             <div class="form-field">
                 <div class="form-field-heading">Offer Updated At</div>
-                <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($eventoffer->offer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
+                <input type="text" class="form-control form-field-text" value="{{ Carbon\Carbon::parse($eventoffer->updated_at)->format('d-m-Y  h:i:s A') }}" readonly/>
             </div>
         </div>
         @else

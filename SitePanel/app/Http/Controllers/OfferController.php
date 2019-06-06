@@ -187,11 +187,23 @@ class OfferController extends Controller
     }
     public function getViewOffer($id){
         Session::put('flag',-1);
-        $data['offer'] = Offer::find($id);
+        $data['offer'] = Offer::
+        with(['store' => function($sq){
+            $sq->select('id','title');
+        }, 'category' => function($sq){
+            $sq->select('id','title');
+        }])->find($id);
         return view('pages.offer.viewoffer',$data);
     }
     public function getUpdateOffer($id){
-        $data['offer'] = Offer::find($id);
+        $data['offer'] = Offer::
+        with(['store' => function($sq){
+            $sq->select('id','title');
+        }, 'category' => function($sq){
+            $sq->select('id','title');
+        }, 'user' => function($sq){
+            $sq->select('id','username');
+        }])->find($id);
         $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
         $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
             $q->select('id','title')->where('is_active','y');

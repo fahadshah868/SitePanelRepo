@@ -159,8 +159,17 @@ class EventOfferController extends Controller
         }
     }
     public function getViewOffer($id){
-        $data['eventoffer'] = EventOffer::find($id);
-        dd($data->offer->id);
+        $data['eventoffer'] = EventOffer::
+        with(['event' => function($q){
+            $q->select('id','title');
+        }, 'offer' => function($q){
+            $q->select('*')
+            ->with(['store' => function($sq){
+                $sq->select('id','title');
+            }, 'category' => function($sq){
+                $sq->select('id','title');
+            }]);
+        }])->find($id);
         return view('pages.eventoffer.viewoffer',$data);
     }
 }
