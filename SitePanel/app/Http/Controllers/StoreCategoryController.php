@@ -49,4 +49,12 @@ class StoreCategoryController extends Controller
         ];
         return response()->json($response);
     }
+    //retrieve all categories against store
+    public function getStoreCategories($id){
+        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$id)
+        ->with(['category' => function($q){
+            $q->select('id','title');
+        }])->get();
+        return response()->json($data);
+    }
 }

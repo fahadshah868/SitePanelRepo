@@ -63,7 +63,8 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/allstorecategories','StoreCategoryController@getAllStoreCategories');
     Route::get('/updatestorecategories/{id}','StoreCategoryController@getUpdateStoreCategories');
     Route::post('/updatestorecategories','StoreCategoryController@postUpdateStoreCategories');
-                                    
+    Route::get('/getstorecategories/{id}','StoreCategoryController@getStoreCategories');
+                                
     //category routes
     Route::get('/addcategory','CategoryController@getaddCategory');
     Route::post('/addcategory','CategoryController@postAddCategory');
@@ -78,7 +79,6 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
 
     //offer routes
     Route::get('/addoffer','OfferController@getAddOffer');
-    Route::get('/getstorecategories/{id}','OfferController@getStoreCategories');
     Route::post('/addoffer','OfferController@postAddOffer');
     Route::get('/todayalloffers','OfferController@getTodayAllOffers');
     Route::get('/alloffers','OfferController@getAllOffers');

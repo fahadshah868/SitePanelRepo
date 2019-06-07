@@ -309,12 +309,4 @@ class OfferController extends Controller
             return response()->json($response);
         }
     }
-    //retrieve store all categories
-    public function getStoreCategories($id){
-        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$id)
-        ->with(['category' => function($q){
-            $q->select('id','title');
-        }])->get();
-        return response()->json($data);
-    }
 }

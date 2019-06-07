@@ -224,4 +224,24 @@ class EventOfferController extends Controller
         ];
         return response()->json($response);
     }
+    public function deleteOffer($id){
+        Session::put('flag',-1);
+        $eventoffer = EventOffer::find($id);
+        try{
+            $eventoffer->delete();
+            $response = [
+                "status" => "true",
+                "url" => Session::get('url'),
+                "success_message" => "Event Offer Deleted Successfully"
+            ];
+            return response()->json($response);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            $response = [
+                "status" => "false",
+                "error_message" => "Sorry, You Cannot Delete This Event Offer Until You Delete Its Child Entries Exists In Other Tables."
+            ];
+            return response()->json($response);
+        }
+    }
 }
