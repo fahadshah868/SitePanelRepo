@@ -11,6 +11,7 @@ use App\Category;
 use App\StoreCategory;
 use Session;
 use Carbon\Carbon;
+use Auth;
 
 class EventOfferController extends Controller
 {
@@ -168,8 +169,7 @@ class EventOfferController extends Controller
         $data['eventoffer'] = EventOffer::with(['event' => function($q){
             $q->select('id','title');
         }, 'offer' => function($q){
-            $q->select('*')
-            ->with(['store' => function($sq){
+            $q->with(['store' => function($sq){
                 $sq->select('id','title');
             }, 'category' => function($sq){
                 $sq->select('id','title');
@@ -178,16 +178,16 @@ class EventOfferController extends Controller
         return view('pages.eventoffer.viewoffer',$data);
     }
     public function getUpdateOffer($id){
-        $data['eventoffer'] = EventOffer::select('id','offer_id')->find($id)
+        $data['eventoffer'] = EventOffer::select('id','offer_id')
         ->with(['offer' => function($q){
             $q->with(['store' => function($sq){
                 $sq->select('id','title');
             }, 'category' => function($sq){
                 $sq->select('id','title');
             }]);
-        }]);
+        }])->find($id);
         $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
-        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
+        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['eventoffer']->offer->store_id)->with(['category' => function($q){
             $q->select('id','title')->where('is_active','y');
         }])->get();
         return view('pages.eventoffer.updateoffer',$data);
@@ -216,51 +216,10 @@ class EventOfferController extends Controller
         $offer->is_active = $request->offerstatus;
         $offer->user_id = Auth::User()->id;
         $offer->save();
-        $saved_eventoffers = $offer->eventoffers()->get();
-        if(count($saved_eventoffers) == count($request->events_id)){
-            for($savedevent = 0; $savedevent< count($saved_eventoffers); $savedevent++){
-                $flag = false;
-                for($requestedevent = 0; $requestedevent < count($request->events_id); $requestedevent++){
-                    if($saved_eventoffers[$savedevent]->event_id == $request->events_id[$requestedevent]){
-                        $flag = true;
-                        break;
-                    }
-                }
-                if($flag == false){
-                    $offer->eventoffers()->delete();
-                    if($request->events_id != 0){
-                        for($event = 0; $event < count($request->events_id); $event++){
-                            $eventoffers[] = [
-                                'offer_id' => $offer->id,
-                                'event_id' => $request->events_id[$event],
-                                'created_at' => Carbon::now(),
-                                'updated_at' => Carbon::now(),
-                            ];
-                        }
-                        EventOffer::insert($eventoffers);
-                    }
-                    break;
-                }
-            }
-        }
-        else{
-            $offer->eventoffers()->delete();
-            if(count($request->events_id) > 0){
-                for($event = 0; $event < count($request->events_id); $event++){
-                    $eventoffers[] = [
-                        'offer_id' => $offer->id,
-                        'event_id' => $request->events_id[$event],
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-                }
-                EventOffer::insert($eventoffers);
-            }
-        }
         Session::flash("updateoffer_successmessage","Offer Updated Successfully");
         $response = [
             "status" => "true",
-            "offer_id" => $request->offerid,
+            "eventoffer_id" => $request->eventofferid,
             "success_message" => "Offer Updated Successfully"
         ];
         return response()->json($response);

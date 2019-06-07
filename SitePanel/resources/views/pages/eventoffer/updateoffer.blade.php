@@ -10,11 +10,12 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <input type="text" id="offerid" name="offerid" value="{{$event->offer->id}}" hidden>
+                        <input type="text" id="offerid" name="offerid" value="{{$eventoffer->offer->id}}" hidden>
+                        <input type="text" id="eventofferid" name="eventofferid" value="{{$eventoffer->id}}" hidden>
                         <div class="form-field-heading">Select Store</div>
                         <select id="offer_store" name="offer_store" class="form-control form-field-text">
                             @foreach($allstores as $store)
-                                @if($store->id == $event->offer->store_id)
+                                @if($store->id == $eventoffer->offer->store_id)
                                 <option value="{{$store->id}}" selected>{{$store->title}}</option>
                                 @else
                                 <option value="{{$store->id}}">{{$store->title}}</option>
@@ -28,7 +29,7 @@
                         <div class="form-field-heading">Select Category</div>
                         <select id="offer_category" name="offer_category" class="form-control form-field-text">
                             @foreach($allstorecategories as $storecategory)
-                                @if($storecategory->category_id == $event->offer->category_id)
+                                @if($storecategory->category_id == $eventoffer->offer->category_id)
                                 <option value="{{$storecategory->category_id}}" selected>{{$storecategory->category->title}}</option>
                                 @else
                                 <option value="{{$storecategory->category_id}}">{{$storecategory->category->title}}</option>
@@ -43,7 +44,7 @@
                     <div class="form-field">
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Offer Title</div>
-                            @if(strcasecmp($event->offer->free_shipping,"y") == 0)
+                            @if(strcasecmp($eventoffer->offer->free_shipping,"y") == 0)
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
                                     <input type="checkbox" id="free-shipping" value="y" checked>Free Shipping
@@ -57,13 +58,13 @@
                             </div>
                             @endif
                         </div>
-                        <input type="text" class="form-control form-field-text" id="offertitle" value="{{$event->offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
+                        <input type="text" class="form-control form-field-text" id="offertitle" value="{{$eventoffer->offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Anchor</div>
-                        <input type="text" class="form-control form-field-text" id="offeranchor" value="{{$event->offer->anchor}}" name="offeranchor" placeholder="20% off"/>
+                        <input type="text" class="form-control form-field-text" id="offeranchor" value="{{$eventoffer->offer->anchor}}" name="offeranchor" placeholder="20% off"/>
                     </div>
                 </div>
             </div>
@@ -74,15 +75,15 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if(strcasecmp($event->offer->location,"Online") == 0)
+                                    @if(strcasecmp($eventoffer->offer->location,"Online") == 0)
                                     <option value="Online" selected>Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($event->offer->location,"In-Store") == 0)
+                                    @elseif(strcasecmp($eventoffer->offer->location,"In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store" selected>In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($event->offer->location,"Online & In-Store") == 0)
+                                    @elseif(strcasecmp($eventoffer->offer->location,"Online & In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store" selected>Online & In-Store</option>
@@ -91,7 +92,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if(strcasecmp($event->offer->type,"Code") == 0)
+                                    @if(strcasecmp($eventoffer->offer->type,"Code") == 0)
                                     <option value="Code" selected>Code</option>
                                     <option value="Sale">Sale</option>
                                     @else
@@ -105,7 +106,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        @if($event->offer->code != null)
+                        @if($eventoffer->offer->code != null)
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Code</div>
                             <div class="form-field-checkbox">
@@ -114,7 +115,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$event->offer->code}}" placeholder="code" autocomplete="off">
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$eventoffer->offer->code}}" placeholder="code" autocomplete="off">
                         @else
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Code</div>
@@ -133,7 +134,7 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
-                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description">{{$event->offer->details}}</textarea>
+                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description">{{$eventoffer->offer->details}}</textarea>
                     </div>
                 </div>
             </div>
@@ -141,12 +142,12 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($event->offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($eventoffer->offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        @if($event->offer->expiry_date != null)
+                        @if($eventoffer->offer->expiry_date != null)
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Expiry Date</div>
                             <div class="form-field-checkbox">
@@ -155,7 +156,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($event->offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($eventoffer->offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
                         @else
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Expiry Date</div>
@@ -177,7 +178,7 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($event->offer->is_popular,"y") == 0)
+                                    @if(strcasecmp($eventoffer->offer->is_popular,"y") == 0)
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y" checked>Popular Offer
                                     @else
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y">Popular Offer
@@ -186,7 +187,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($event->offer->display_at_home,"y") == 0)
+                                    @if(strcasecmp($eventoffer->offer->display_at_home,"y") == 0)
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y" checked>Display At Home
                                     @else
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y">Display At Home
@@ -195,7 +196,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($event->offer->is_verified,"y") == 0)
+                                    @if(strcasecmp($eventoffer->offer->is_verified,"y") == 0)
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y" checked>Is Verified
                                     @else
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y">Is Verified 
@@ -209,7 +210,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
                         <div class="form-field-inline-remarks">
-                            @if(strcasecmp($event->offer->is_active,"y") == 0)
+                            @if(strcasecmp($eventoffer->offer->is_active,"y") == 0)
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
                                     <input type="radio" id="offerstatus" name="offerstatus" value="y" checked>Active
@@ -238,7 +239,7 @@
             </div>
             <div class="form-buttons-container">
                 <div>
-                    <a href="/event/viewoffer/{{$event->offer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Event Offer</a>
+                    <a href="/event/viewoffer/{{$eventoffer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Event Offer</a>
                     <input type="submit" value="Update Event Offer" class="btn btn-primary form-button"/>
                 </div>
                 <div>
@@ -253,8 +254,8 @@
     $(document).ready(function(){
         var dateToday = new Date();
         var _maxdate = null;
-        if("{{$event->offer->expiry_date}}" != ""){
-            _maxdate = "{{\Carbon\Carbon::parse($event->offer->expiry_date)->format('d-m-Y')}}"
+        if("{{$eventoffer->offer->expiry_date}}" != ""){
+            _maxdate = "{{\Carbon\Carbon::parse($eventoffer->offer->expiry_date)->format('d-m-Y')}}"
         }
         $("#offer_startingdate").datepicker({
             dateFormat: 'dd-mm-yy',
@@ -305,7 +306,7 @@
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
-            minDate: "{{\Carbon\Carbon::parse($event->offer->starting_date)->format('d-m-Y')}}",
+            minDate: "{{\Carbon\Carbon::parse($eventoffer->offer->starting_date)->format('d-m-Y')}}",
             onSelect: function(selectedDate) {
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
@@ -435,13 +436,13 @@
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
-                var _events_id = [];
                 var _offercode = null;
                 var _offer_expirydate = null;
                 var _offer_is_popular = "n";
                 var _offer_display_at_home = "n";
                 var _offer_is_verified = "n";
                 var _free_shipping = "n";
+                var _eventofferid = $("#eventofferid").val();
                 var _offerid = $("#offerid").val();
                 var _offer_store = $("#offer_store").val();
                 var _offer_category = $("#offer_category").val();
@@ -470,14 +471,11 @@
                 if($("#free-shipping").prop("checked")){
                     _free_shipping = $("#free-shipping").val();
                 }
-                $(`.js-event:checked`).each(function () {
-                    _events_id.push($(this).val());
-                });
-                var _jsondata = JSON.stringify({offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, events_id: _events_id, _token: '{{ csrf_token() }}' });
+                var _jsondata = JSON.stringify({eventofferid: _eventofferid, offerid: _offerid, offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, _token: '{{ csrf_token() }}' });
                 $(".alert").css('display','none');
                 $.ajax({
                     method: "POST",
-                    url: "/updateoffer",
+                    url: "/event/updateoffer",
                     dataType: "json",
                     data: _jsondata,
                     dataType: "json",
@@ -485,7 +483,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load("/event/viewoffer/"+data.offer_id);
+                            $("#panel-body-container").load("/event/viewoffer/"+data.eventoffer_id);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);
