@@ -169,6 +169,16 @@
         </div>
         @endif
     </div>
+    @if(count($offer->eventoffers) > 0)
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-field">
+                    <div class="form-field-heading">Events</div>
+                    <input type="text" class="form-control form-field-text" value= "@foreach($offer->eventoffers as $eventoffer){{ $eventoffer->event->title.', ' }} @endforeach" readonly/>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field" id="viewoffer-action-buttons">

@@ -146,6 +146,8 @@ Route::group(['middleware' => ['clearcache','authenticate','checkuserstatus']], 
     Route::get('/event/alloffers','EventOfferController@getAllOffers');
     Route::get('/event/filteredoffers/{dateremark}/{datefrom}/{dateto}','EventOfferController@getFilteredOffers');
     Route::get('/event/viewoffer/{id}','EventOfferController@getViewOffer');
+    Route::get('/event/updateoffer/{id}','EventOfferController@getUpdateOffer');
+    Route::post('/event/updateoffer','EventOfferController@postUpdateOffer');
     Route::get('/event/deleteoffer/{id}','EventOfferController@deleteOffer');
 
     //logout

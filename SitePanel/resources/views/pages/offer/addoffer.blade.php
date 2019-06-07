@@ -347,9 +347,6 @@
                 $(`.js-event:checked`).each(function () {
                     _events_id.push($(this).val());
                 });
-                if(_events_id.length == 0){
-                    _events_id = 0;
-                }
                 var _jsondata = JSON.stringify({offer_store: _offer_store, offer_category: _offer_category, offertitle: _offertitle, free_shipping: _free_shipping, offeranchor: _offeranchor, offerlocation: _offerlocation, offertype: _offertype, offercode: _offercode, offerdetails: _offerdetails, offer_startingdate: _offer_startingdate, offer_expirydate: _offer_expirydate, offer_is_popular: _offer_is_popular, offer_display_at_home: _offer_display_at_home, offer_is_verified: _offer_is_verified, offerstatus: _offerstatus, events_id: _events_id, _token: '{{ csrf_token() }}' });
                 $("#addofferform").trigger("reset");
                 $("#offercode").prop('disabled', false);

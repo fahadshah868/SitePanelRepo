@@ -1,5 +1,5 @@
 <div class="form-main-container">
-    <div class="form-main-heading">Update Offer</div>
+    <div class="form-main-heading">Update Event Offer</div>
     <hr>
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -10,11 +10,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <input type="text" id="offerid" name="offerid" value="{{$offer->id}}" hidden>
+                        <input type="text" id="offerid" name="offerid" value="{{$event->offer->id}}" hidden>
                         <div class="form-field-heading">Select Store</div>
                         <select id="offer_store" name="offer_store" class="form-control form-field-text">
                             @foreach($allstores as $store)
-                                @if($store->id == $offer->store_id)
+                                @if($store->id == $event->offer->store_id)
                                 <option value="{{$store->id}}" selected>{{$store->title}}</option>
                                 @else
                                 <option value="{{$store->id}}">{{$store->title}}</option>
@@ -28,7 +28,7 @@
                         <div class="form-field-heading">Select Category</div>
                         <select id="offer_category" name="offer_category" class="form-control form-field-text">
                             @foreach($allstorecategories as $storecategory)
-                                @if($storecategory->category_id == $offer->category_id)
+                                @if($storecategory->category_id == $event->offer->category_id)
                                 <option value="{{$storecategory->category_id}}" selected>{{$storecategory->category->title}}</option>
                                 @else
                                 <option value="{{$storecategory->category_id}}">{{$storecategory->category->title}}</option>
@@ -43,7 +43,7 @@
                     <div class="form-field">
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Offer Title</div>
-                            @if(strcasecmp($offer->free_shipping,"y") == 0)
+                            @if(strcasecmp($event->offer->free_shipping,"y") == 0)
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
                                     <input type="checkbox" id="free-shipping" value="y" checked>Free Shipping
@@ -57,13 +57,13 @@
                             </div>
                             @endif
                         </div>
-                        <input type="text" class="form-control form-field-text" id="offertitle" value="{{$offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
+                        <input type="text" class="form-control form-field-text" id="offertitle" value="{{$event->offer->title}}" name="offertitle" placeholder="20% off on your online order"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Anchor</div>
-                        <input type="text" class="form-control form-field-text" id="offeranchor" value="{{$offer->anchor}}" name="offeranchor" placeholder="20% off"/>
+                        <input type="text" class="form-control form-field-text" id="offeranchor" value="{{$event->offer->anchor}}" name="offeranchor" placeholder="20% off"/>
                     </div>
                 </div>
             </div>
@@ -74,15 +74,15 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if(strcasecmp($offer->location,"Online") == 0)
+                                    @if(strcasecmp($event->offer->location,"Online") == 0)
                                     <option value="Online" selected>Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($offer->location,"In-Store") == 0)
+                                    @elseif(strcasecmp($event->offer->location,"In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store" selected>In-Store</option>
                                     <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($offer->location,"Online & In-Store") == 0)
+                                    @elseif(strcasecmp($event->offer->location,"Online & In-Store") == 0)
                                     <option value="Online">Online</option>
                                     <option value="In-Store">In-Store</option>
                                     <option value="Online & In-Store" selected>Online & In-Store</option>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if(strcasecmp($offer->type,"Code") == 0)
+                                    @if(strcasecmp($event->offer->type,"Code") == 0)
                                     <option value="Code" selected>Code</option>
                                     <option value="Sale">Sale</option>
                                     @else
@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        @if($offer->code != null)
+                        @if($event->offer->code != null)
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Code</div>
                             <div class="form-field-checkbox">
@@ -114,7 +114,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code" autocomplete="off">
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$event->offer->code}}" placeholder="code" autocomplete="off">
                         @else
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Code</div>
@@ -133,30 +133,20 @@
                 <div class="col-sm-12">
                     <div class="form-field">
                         <div class="form-field-heading">Details</div>
-                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description">{{$offer->details}}</textarea>
+                        <textarea class="form-control form-field-textarea" id="offerdetails" name="offerdetails" placeholder="description">{{$event->offer->details}}</textarea>
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
-            
-            
-
-            
-
-
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Starting Date</div>
-                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
+                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($event->offer->starting_date)->format('d-m-Y')}}" readonly placeholder="select starting date" autocomplete="off"/>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        @if($offer->expiry_date != null)
+                        @if($event->offer->expiry_date != null)
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Expiry Date</div>
                             <div class="form-field-checkbox">
@@ -165,7 +155,7 @@
                                 </label>
                             </div>
                         </div>
-                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($event->offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
                         @else
                         <div style="display:flex; flex-direction:row; justify-content:space-between;">
                             <div class="form-field-heading">Expiry Date</div>
@@ -187,7 +177,7 @@
                         <div class="form-field-inline-remarks">
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->is_popular,"y") == 0)
+                                    @if(strcasecmp($event->offer->is_popular,"y") == 0)
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y" checked>Popular Offer
                                     @else
                                     <input type="checkbox" id="offer-is-popular" name="offer-is-popular" value="y">Popular Offer
@@ -196,7 +186,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->display_at_home,"y") == 0)
+                                    @if(strcasecmp($event->offer->display_at_home,"y") == 0)
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y" checked>Display At Home
                                     @else
                                     <input type="checkbox" id="offer-display-at-home" name="offer-display-at-home" value="y">Display At Home
@@ -205,7 +195,7 @@
                             </div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-remarks-label">
-                                    @if(strcasecmp($offer->is_verified,"y") == 0)
+                                    @if(strcasecmp($event->offer->is_verified,"y") == 0)
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y" checked>Is Verified
                                     @else
                                     <input type="checkbox" id="offer-is-verified" name="offer-is-verified" value="y">Is Verified 
@@ -219,7 +209,7 @@
                     <div class="form-field">
                         <div class="form-field-heading">Offer Status</div>
                         <div class="form-field-inline-remarks">
-                            @if(strcasecmp($offer->is_active,"y") == 0)
+                            @if(strcasecmp($event->offer->is_active,"y") == 0)
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
                                     <input type="radio" id="offerstatus" name="offerstatus" value="y" checked>Active
@@ -246,51 +236,10 @@
                     </div>
                 </div>
             </div>
-            
-            
-            @if(count($events) > 0)
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-field">
-                        <div class="form-field-heading">Events</div>
-                        <div class="form-field-inline-remarks">
-                            @foreach($events as $event)
-                                @php
-                                    $flag = 0
-                                @endphp
-                                @foreach($offer->eventoffers as $eventoffer)
-                                    @if($eventoffer->event_id == $event->id)
-                                        @php
-                                            $flag = 1
-                                        @endphp
-                                        <div class="form-field-checkbox">
-                                            <label class="form-field-checkbox-remarks-label">
-                                                <input type="checkbox" class="js-event" id="offer-is-popular" name="offer-is-popular" value="{{$event->id}}" checked>{{$event->title}}
-                                            </label>
-                                        </div>
-                                        @break
-                                    @endif
-                                @endforeach
-                                @if($flag == 0)
-                                    <div class="form-field-checkbox">
-                                        <label class="form-field-checkbox-remarks-label">
-                                            <input type="checkbox" class="js-event" id="offer-is-popular" name="offer-is-popular" value="{{$event->id}}">{{$event->title}}
-                                        </label>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-            
-            
-            
             <div class="form-buttons-container">
                 <div>
-                    <a href="/viewoffer/{{$offer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Offer</a>
-                    <input type="submit" value="Update Offer" class="btn btn-primary form-button"/>
+                    <a href="/event/viewoffer/{{$event->offer->id}}" id="backtooffer" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Event Offer</a>
+                    <input type="submit" value="Update Event Offer" class="btn btn-primary form-button"/>
                 </div>
                 <div>
                     <a href="#" id="resetupdateofferform" class="btn btn-info form-button"><i class="fa fa-undo"></i>Reset Form</a>
@@ -304,8 +253,8 @@
     $(document).ready(function(){
         var dateToday = new Date();
         var _maxdate = null;
-        if("{{$offer->expiry_date}}" != ""){
-            _maxdate = "{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}"
+        if("{{$event->offer->expiry_date}}" != ""){
+            _maxdate = "{{\Carbon\Carbon::parse($event->offer->expiry_date)->format('d-m-Y')}}"
         }
         $("#offer_startingdate").datepicker({
             dateFormat: 'dd-mm-yy',
@@ -356,7 +305,7 @@
             changeMonth: true,
             showButtonPanel: true,
             numberOfMonths: 2,
-            minDate: "{{\Carbon\Carbon::parse($offer->starting_date)->format('d-m-Y')}}",
+            minDate: "{{\Carbon\Carbon::parse($event->offer->starting_date)->format('d-m-Y')}}",
             onSelect: function(selectedDate) {
                 instance = $(this).data("datepicker"),
                 date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
@@ -536,7 +485,7 @@
                     cache: false,
                     success: function(data){
                         if(data.status == "true"){
-                            $("#panel-body-container").load("/viewoffer/"+data.offer_id);
+                            $("#panel-body-container").load("/event/viewoffer/"+data.offer_id);
                         }
                         else{
                             $("#alert-danger-message-area").html(data.error_message);

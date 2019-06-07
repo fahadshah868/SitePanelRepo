@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\EventOffer;
+use App\Event;
+use App\Offer;
+use App\Store;
+use App\Category;
+use App\StoreCategory;
 use Session;
 use Carbon\Carbon;
 
@@ -171,5 +176,93 @@ class EventOfferController extends Controller
             }]);
         }])->find($id);
         return view('pages.eventoffer.viewoffer',$data);
+    }
+    public function getUpdateOffer($id){
+        $data['eventoffer'] = EventOffer::select('id','offer_id')->find($id)
+        ->with(['offer' => function($q){
+            $q->with(['store' => function($sq){
+                $sq->select('id','title');
+            }, 'category' => function($sq){
+                $sq->select('id','title');
+            }]);
+        }]);
+        $data['allstores'] = Store::select('id','title')->where('is_active','y')->get();
+        $data['allstorecategories'] = StoreCategory::select('category_id')->where('store_id',$data['offer']->store_id)->with(['category' => function($q){
+            $q->select('id','title')->where('is_active','y');
+        }])->get();
+        return view('pages.eventoffer.updateoffer',$data);
+    }
+    public function postUpdateOffer(Request $request){
+        $offer = Offer::find($request->offerid);
+        $offer->store_id = $request->offer_store;
+        $offer->category_id = $request->offer_category;
+        $offer->title = ucwords($request->offertitle);
+        $offer->free_shipping = $request->free_shipping;
+        $offer->anchor = strtoupper($request->offeranchor);
+        $offer->location = $request->offerlocation;
+        $offer->type = $request->offertype;
+        $offer->code = $request->offercode;
+        $offer->details = ucfirst($request->offerdetails);
+        $offer->starting_date = Carbon::parse($request->offer_startingdate)->format('Y-m-d');
+        if($request->offer_expirydate != null){
+            $offer->expiry_date = Carbon::parse($request->offer_expirydate)->format('Y-m-d');
+        }
+        else{
+            $offer->expiry_date = $request->offer_expirydate;
+        }
+        $offer->is_popular = $request->offer_is_popular;
+        $offer->display_at_home = $request->offer_display_at_home;
+        $offer->is_verified = $request->offer_is_verified;
+        $offer->is_active = $request->offerstatus;
+        $offer->user_id = Auth::User()->id;
+        $offer->save();
+        $saved_eventoffers = $offer->eventoffers()->get();
+        if(count($saved_eventoffers) == count($request->events_id)){
+            for($savedevent = 0; $savedevent< count($saved_eventoffers); $savedevent++){
+                $flag = false;
+                for($requestedevent = 0; $requestedevent < count($request->events_id); $requestedevent++){
+                    if($saved_eventoffers[$savedevent]->event_id == $request->events_id[$requestedevent]){
+                        $flag = true;
+                        break;
+                    }
+                }
+                if($flag == false){
+                    $offer->eventoffers()->delete();
+                    if($request->events_id != 0){
+                        for($event = 0; $event < count($request->events_id); $event++){
+                            $eventoffers[] = [
+                                'offer_id' => $offer->id,
+                                'event_id' => $request->events_id[$event],
+                                'created_at' => Carbon::now(),
+                                'updated_at' => Carbon::now(),
+                            ];
+                        }
+                        EventOffer::insert($eventoffers);
+                    }
+                    break;
+                }
+            }
+        }
+        else{
+            $offer->eventoffers()->delete();
+            if(count($request->events_id) > 0){
+                for($event = 0; $event < count($request->events_id); $event++){
+                    $eventoffers[] = [
+                        'offer_id' => $offer->id,
+                        'event_id' => $request->events_id[$event],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                }
+                EventOffer::insert($eventoffers);
+            }
+        }
+        Session::flash("updateoffer_successmessage","Offer Updated Successfully");
+        $response = [
+            "status" => "true",
+            "offer_id" => $request->offerid,
+            "success_message" => "Offer Updated Successfully"
+        ];
+        return response()->json($response);
     }
 }

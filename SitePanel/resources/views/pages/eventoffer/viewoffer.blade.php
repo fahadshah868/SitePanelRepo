@@ -1,5 +1,5 @@
 <div class="viewitems-main-container">
-    <div class="viewitems-main-heading">View Offer</div>
+    <div class="viewitems-main-heading">View Event Offer</div>
     <hr>
     <div id="alert-success" class="alert alert-success alert-dismissible fade show alert-success-message">
         <a href="#" class="close" aria-label="close">&times;</a>
@@ -179,7 +179,7 @@
         <div class="col-sm-12">
             <div class="form-field" id="viewoffer-action-buttons">
                 <a href="{{Session::get('url')}}" id="backtooffers" class="btn btn-success form-button"><i class="fa fa-backward"></i>Back To Event Offers</a>
-                <a href="/updateoffer/{{$eventoffer->offer->id}}" class="btn btn-primary form-button" id="updateoffer">Update Offer<i class="fa fa-forward"></i></a>
+                <a href="/event/updateoffer/{{$eventoffer->id}}" class="btn btn-primary form-button" id="updateoffer">Update Offer<i class="fa fa-forward"></i></a>
             </div>
         </div>
     </div>
