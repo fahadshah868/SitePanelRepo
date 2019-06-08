@@ -82,7 +82,7 @@
             <thead>
                 <tr>
                     <th>Event Title</th>
-                    <th>Is TopEvent</th>
+                    <th>Display In Footer</th>
                     <th>Is Ready</th>
                     <th>Event Status</th>
                     @if(strcasecmp(Auth::User()->role,"admin") == 0)
@@ -99,8 +99,8 @@
                     </th>
                     <th>
                         <div class="header-searchbar-filter-assets">
-                            <input type="text" class="header-searchbar-filter" id="istopevent" placeholder="Search Top Event" autocomplete="off"/>
-                            <button class="header-searchbar-filter-button" id="istopevent_clr_btn" title="clear">&#x2715;</button>
+                            <input type="text" class="header-searchbar-filter" id="displayinfooter" placeholder="Search Top Event" autocomplete="off"/>
+                            <button class="header-searchbar-filter-button" id="displayinfooter_clr_btn" title="clear">&#x2715;</button>
                         </div>
                     </th>
                     <th>
@@ -131,7 +131,7 @@
                 @foreach($allevents as $event)
                     <tr>
                         <td>{{ $event->title }}</td>
-                        <td>{{ $event->is_topevent }}</td>
+                        <td>{{ $event->display_in_footer }}</td>
                         <td>{{ $event->is_ready }}</td>
                         <td>
                             @if(strcasecmp($event->is_active,"y") == 0)
@@ -145,7 +145,7 @@
                         @endif
                         <td>
                             <a href="/viewevent/{{$event->id}}" id="viewevent" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>
-                            <a href="/deleteevent/{{$event->id}}" data-eventtitle='{{$event->title}}' data-istopevent='{{$event->is_topevent}}' data-iseventready='{{$event->is_ready}}' data-eventstatus='{{$event->is_active}}' id="deleteevent" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
+                            <a href="/deleteevent/{{$event->id}}" data-eventtitle='{{$event->title}}' data-displayinfooter='{{$event->display_in_footer}}' data-iseventready='{{$event->is_ready}}' data-eventstatus='{{$event->is_active}}' id="deleteevent" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>
                         </td>
                     </tr>
                 @endforeach
@@ -161,24 +161,24 @@
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var eventtitle_val = $.trim($("#eventtitle").val()).replace(/ +/g, ' ').toLowerCase();
-            var istopevent_val = $.trim($("#istopevent").val()).replace(/ +/g, ' ').toLowerCase();
+            var displayinfooter_val = $.trim($("#displayinfooter").val()).replace(/ +/g, ' ').toLowerCase();
             var iseventready_val = $.trim($("#iseventready").val()).replace(/ +/g, ' ').toLowerCase();
             var eventstatus_val = $.trim($("#eventstatus").val()).replace(/ +/g, ' ').toLowerCase();
             var event_added_updated_by_val = $.trim($("#event_added_updated_by").val()).replace(/ +/g, ' ').toLowerCase();
             $rows.show().filter(function() {
                 var eventtitle_col = $(this).find('td:nth-child(1)').text().replace(/\s+/g, ' ').toLowerCase();
-                var istopevent_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
+                var displayinfooter_col = $(this).find('td:nth-child(2)').text().replace(/\s+/g, ' ').toLowerCase();
                 var iseventready_col = $(this).find('td:nth-child(3)').text().replace(/\s+/g, ' ').toLowerCase();
                 var eventstatus_col = $(this).find('td:nth-child(4)').text().replace(/\s+/g, ' ').toLowerCase();
                 var event_added_updated_by_col = $(this).find('td:nth-child(5)').text().replace(/\s+/g, ' ').toLowerCase();
                 return !~eventtitle_col.indexOf(eventtitle_val) || 
-                        !~istopevent_col.indexOf(istopevent_val) || 
+                        !~displayinfooter_col.indexOf(displayinfooter_val) || 
                         !~iseventready_col.indexOf(iseventready_val) || 
                         !~eventstatus_col.indexOf(eventstatus_val) || 
                         !~event_added_updated_by_col.indexOf(event_added_updated_by_val);
             }).hide();
             if($("#eventtitle").val() != "" || 
-                $("#istopevent").val() != "" || 
+                $("#displayinfooter").val() != "" || 
                 $("#iseventready").val() != "" ||
                 $("#eventstatus").val() != "" || 
                 $("#event_added_updated_by").val() != "")
@@ -241,7 +241,7 @@
         });
         $("#clear_all_filters").click(function(){
             $("#eventtitle").val("");
-            $("#istopevent").val("");
+            $("#displayinfooter").val("");
             $("#iseventready").val("");
             $("#eventstatus").val("");
             $("#event_added_updated_by").val("");
@@ -252,8 +252,8 @@
                 $("#eventtitle").val("");
                 clientSideFilter();
             }
-            else if($(this).attr("id") == "istopevent_clr_btn"){
-                $("#istopevent").val("");
+            else if($(this).attr("id") == "displayinfooter_clr_btn"){
+                $("#displayinfooter").val("");
                 clientSideFilter();
             }
             else if($(this).attr("id") == "iseventready_clr_btn"){
@@ -312,7 +312,7 @@
                         $.each(data.filteredevents, function (index, value) {
                             var html = "<tr>"+
                             "<td>"+value.title+"</td>"+
-                            "<td>"+value.is_topevent+"</td>"+
+                            "<td>"+value.display_in_footer+"</td>"+
                             "<td>"+value.is_eventready+"</td>"
                             if(value.is_active == "y"){
                                 html = html + "<td><span class='active-item'>_active</span></td>"
@@ -327,7 +327,7 @@
                             html = html +
                             "<td>"+
                                 "<a href='/viewevent/"+value.id+"' id='viewevent' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteevent/"+value.id+"' data-eventtitle='"+value.title+"' data-istopevent='"+value.is_topevent+"' data-iseventready='"+value.is_ready+"' data-eventstatus='"+value.is_active+"' id='deleteevent' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
+                                "<a href='/deleteevent/"+value.id+"' data-eventtitle='"+value.title+"' data-displayinfooter='"+value.display_in_footer+"' data-iseventready='"+value.is_ready+"' data-eventstatus='"+value.is_active+"' id='deleteevent' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
                             "</td>"+
                             "</tr>";
                             $("#tablebody").append(html);
@@ -352,13 +352,13 @@
                 if($(this).data("eventstatus") == "y"){
                     status = "<span class='active-item'>_active</span><br>";
                 }
-                else if($(this).data("eventstatus") == "y"){
+                else if($(this).data("eventstatus") == "n"){
                     status = "<span class='deactive-item'>deactive</span><br>";
                 }
                 bootbox.confirm({
                     message: "<b>Are you sure to delete this record?</b><br>"+
                     "<b>Event Title:</b>  "+$(this).data("eventtitle")+"<br>"+
-                    "<b>Is TopEvent:</b>  "+$(this).data("istopevent")+"<br>"+
+                    "<b>Is TopEvent:</b>  "+$(this).data("displayinfooter")+"<br>"+
                     "<b>Is Event Ready:</b>  "+$(this).data("iseventready")+"<br>"+
                     "<b>Event Status:</b>  "+status,
                     buttons: {

@@ -18,28 +18,28 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Is Top Event?</div>
+                        <div class="form-field-heading">Should This Event Display In Footer?</div>
                         <div class="form-field-inline-remarks">
-                            @if(strcasecmp($event->is_topevent,"y") == 0)
+                            @if(strcasecmp($event->display_in_footer,"y") == 0)
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="istopevent" name="istopevent" value="y" checked>Yes
+                                    <input type="radio" id="displayinfooter" name="displayinfooter" value="y" checked>Yes
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="istopevent" name="istopevent" value="n">No
+                                    <input type="radio" id="displayinfooter" name="displayinfooter" value="n">No
                                 </label>
                             </div>
                             @else
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="istopevent" name="istopevent" value="y">Yes
+                                    <input type="radio" id="displayinfooter" name="displayinfooter" value="y">Yes
                                 </label>
                             </div>
                             <div class="form-field-radiobutton">
                                 <label class="form-field-radiobutton-remarks-label">
-                                    <input type="radio" id="istopevent" name="istopevent" value="n" checked>No
+                                    <input type="radio" id="displayinfooter" name="displayinfooter" value="n" checked>No
                                 </label>
                             </div>
                             @endif
@@ -153,7 +153,7 @@
             ignore: ".hide",
             rules: {
                 eventtitle: "required",
-                istopevent: "required",
+                displayinfooter: "required",
                 eventdescription: { 
                                         required: function(){
                                             CKEDITOR.instances.eventdescription.updateElement();
@@ -165,7 +165,7 @@
             },
             messages: {
                 eventtitle: "please fill event title",
-                istopevent: "please select top event remark",
+                displayinfooter: "please select top event remark",
                 eventdescription: {
                                         required: "please fill event description",
                                         minlength:"please fill event description",
@@ -187,11 +187,11 @@
             submitHandler: function(form) {
                 var _eventid = $("#eventid").val();
                 var _eventtitle = $("#eventtitle").val();
-                var _istopevent = $("input[name='istopevent']:checked").val();
+                var _displayinfooter = $("input[name='displayinfooter']:checked").val();
                 var _eventdescription = $("#eventdescription").val();
                 var _iseventready = $("input[name='iseventready']:checked").val();
                 var _eventstatus = $("input[name='eventstatus']:checked").val();
-                var _jsondata = JSON.stringify({ eventid: _eventid, eventtitle: _eventtitle, istopevent: _istopevent, eventdescription: _eventdescription, iseventready: _iseventready, eventstatus: _eventstatus, _token: '{{ csrf_token() }}'});
+                var _jsondata = JSON.stringify({ eventid: _eventid, eventtitle: _eventtitle, displayinfooter: _displayinfooter, eventdescription: _eventdescription, iseventready: _iseventready, eventstatus: _eventstatus, _token: '{{ csrf_token() }}'});
                 $(".alert").css("display","none");
                 $.ajax({
                     method: 'POST',

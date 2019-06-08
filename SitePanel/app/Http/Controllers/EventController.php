@@ -18,7 +18,9 @@ class EventController extends Controller
         if(!$isevent_exists){
             $event = new Event;
             $event->title = $request->eventtitle;
-            $event->is_topevent = $request->istopevent;
+            $url = strtolower(str_replace(' ', '-', $request->eventtitle));
+            $event->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
+            $event->display_in_footer = $request->displayinfooter;
             $event->description = $request->eventdescription;
             $event->is_ready = $request->iseventready;
             $event->is_active = $request->eventstatus;
@@ -40,7 +42,7 @@ class EventController extends Controller
         }
     }
     public function getAllEvents(){
-        $data['allevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
+        $data['allevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
         }])->get();
         $data['mainheading'] = "All Events";
@@ -53,7 +55,7 @@ class EventController extends Controller
         Session::put('url','/filteredevents/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
         if(Session::get('flag') == 1){
             if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -63,7 +65,7 @@ class EventController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -72,7 +74,7 @@ class EventController extends Controller
                 return response()->json($response);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $response['filteredevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -84,7 +86,7 @@ class EventController extends Controller
         else{
             Session::put('flag',1);
             if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
@@ -96,7 +98,7 @@ class EventController extends Controller
                 return view('pages.event.viewevents',$data);
             }
             else if(strcasecmp($dateremark,"created") == 0){
-                $data['allevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -107,7 +109,7 @@ class EventController extends Controller
                 return view('pages.event.viewevents',$data);
             }
             else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allevents'] = Event::select('id','title','is_topevent','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+                $data['allevents'] = Event::select('id','title','display_in_footer','is_ready','is_active','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
                 ->orderBy('id','DESC')
                 ->with(['user' => function($q){
                     $q->select('id','username');
@@ -134,7 +136,9 @@ class EventController extends Controller
         $event = Event::find($request->eventid);
         if(strcasecmp($event->title, $request->eventtitle) == 0){
             $event->title = $request->eventtitle;
-            $event->is_topevent = $request->istopevent;
+            $url = strtolower(str_replace(' ', '-', $request->eventtitle));
+            $event->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
+            $event->display_in_footer = $request->displayinfooter;
             $event->description = $request->eventdescription;
             $event->is_ready = $request->iseventready;
             $event->is_active = $request->eventstatus;
@@ -152,7 +156,9 @@ class EventController extends Controller
             $is_event_exists = Event::where('title', $request->eventtitle)->exists();
             if(!$is_event_exists){
                 $event->title = $request->eventtitle;
-                $event->is_topevent = $request->istopevent;
+                $url = strtolower(str_replace(' ', '-', $request->eventtitle));
+                $event->url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
+                $event->display_in_footer = $request->displayinfooter;
                 $event->description = $request->eventdescription;
                 $event->is_ready = $request->iseventready;
                 $event->is_active = $request->eventstatus;

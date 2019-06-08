@@ -15,8 +15,9 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('title',191)->unique();
-            $table->enum('is_topevent',['y','n']);
+            $table->String('title');
+            $table->String('url',191)->unique();
+            $table->enum('display_in_footer',['y','n']);
             $table->longText('description');
             $table->enum('is_ready',['y','n']);
             $table->enum('is_active',['y','n']);

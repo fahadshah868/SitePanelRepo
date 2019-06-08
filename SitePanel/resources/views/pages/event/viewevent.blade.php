@@ -16,8 +16,8 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-field">
-                <div class="form-field-heading">Is Top Event?</div>
-                <input type="text" class="form-control form-field-text" value="{{ $event->is_topevent }}" readonly/>
+                <div class="form-field-heading">Should This Event Display In Footer?</div>
+                <input type="text" class="form-control form-field-text" value="{{ $event->display_in_footer }}" readonly/>
             </div>
         </div>
     </div>
