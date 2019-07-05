@@ -39,7 +39,7 @@ class CarouselOfferController extends Controller
             }
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
-            $resized_carousel_image->resize(1050, 400);
+            $resized_carousel_image->resize(400, 300);
             $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;
@@ -246,7 +246,7 @@ class CarouselOfferController extends Controller
             }
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
-            $resized_carousel_image->resize(1050, 400);
+            $resized_carousel_image->resize(400, 300);
             $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
             $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
             $carousel_image_path = 'images/carousel/'.$carousel_image_name;

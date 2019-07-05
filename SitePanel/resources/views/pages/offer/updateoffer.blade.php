@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Offer Title</div>
                             @if(strcasecmp($offer->free_shipping,"y") == 0)
                             <div class="form-field-checkbox">
@@ -106,7 +106,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         @if($offer->code != null)
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Code</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
@@ -116,7 +116,7 @@
                         </div>
                         <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$offer->code}}" placeholder="code" autocomplete="off">
                         @else
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Code</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
@@ -137,16 +137,6 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
-            
-            
-
-            
-
-
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -157,7 +147,7 @@
                 <div class="col-sm-6">
                     <div class="form-field">
                         @if($offer->expiry_date != null)
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Expiry Date</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
@@ -167,7 +157,7 @@
                         </div>
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($offer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
                         @else
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Expiry Date</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">

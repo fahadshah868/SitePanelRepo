@@ -33,18 +33,6 @@
                     </div>
                 </div>
             </div>
-            @if($carouseloffer->code != null)
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox">Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
@@ -83,75 +71,27 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" value="{{$carouseloffer->code}}" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-            @else
-            <div class="row">
-                <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox" checked>Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Offer Type</div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <select class="form-control form-field-text" id="offerlocation" name="offerlocation">
-                                    @if(strcasecmp($carouseloffer->location,"Online") == 0)
-                                    <option value="Online" selected>Online</option>
-                                    <option value="In-Store">In-Store</option>
-                                    <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($carouseloffer->location,"In-Store") == 0)
-                                    <option value="Online">Online</option>
-                                    <option value="In-Store" selected>In-Store</option>
-                                    <option value="Online & In-Store">Online & In-Store</option>
-                                    @elseif(strcasecmp($carouseloffer->location,"Online & In-Store") == 0)
-                                    <option value="Online">Online</option>
-                                    <option value="In-Store">In-Store</option>
-                                    <option value="Online & In-Store" selected>Online & In-Store</option>
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <select class="form-control form-field-text" id="offertype" name="offertype">
-                                    @if(strcasecmp($carouseloffer->type,"Code") == 0)
-                                    <option value="Code" selected>Code</option>
-                                    <option value="Sale">Sale</option>
-                                    @else
-                                    <option value="Code">Code</option>
-                                    <option value="Sale" selected>Sale</option>
-                                    @endif
-                                </select>
+                        @if($carouseloffer->code != null)
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox">Code Not Required
+                                </label>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Code</div>
-                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" autocomplete="off" disabled>
-                    </div>
-                </div>
-            </div>
-            @endif
-            @if($carouseloffer->expiry_date != null)
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
-                        </label>
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" value="{{$carouseloffer->code}}" placeholder="code" autocomplete="off">
+                        @else
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox" checked>Code Not Required
+                                </label>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" disabled autocomplete="off">
+                        @endif
                     </div>
                 </div>
             </div>
@@ -164,37 +104,30 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
-                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select expiry date" value="{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}"/>
+                        @if($carouseloffer->expiry_date != null)
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" value="{{\Carbon\Carbon::parse($carouseloffer->expiry_date)->format('d-m-Y')}}" readonly placeholder="select Expiry date" autocomplete="off"/>
+                        @else
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox" checked>Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>
+                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" readonly placeholder="select Expiry date" autocomplete="off" disabled/>
+                        @endif
                     </div>
                 </div>
             </div>
-            @else
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox" checked>Expiry Date Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Starting Date</div>
-                        <input type="text" id="offer_startingdate" name="offer_startingdate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select starting date" autocomplete="off" value="{{\Carbon\Carbon::parse($carouseloffer->starting_date)->format('d-m-Y')}}"/>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
-                        <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text" readonly placeholder="select expiry date" disabled/>
-                    </div>
-                </div>
-            </div>
-            @endif
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">

@@ -35,17 +35,6 @@
             </div>
             <div class="row">
                 <div class="col-sm-6">
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="offercode-checkbox">Code Not Required
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
                     <div class="form-field">
                         <div class="form-field-heading">Offer Type</div>
                         <div class="row">
@@ -69,18 +58,15 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Code</div>
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Code</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="offercode-checkbox">Code Not Required
+                                </label>
+                            </div>
+                        </div>
                         <input type="text" class="form-control form-field-text" id="offercode" name="offercode" placeholder="code" autocomplete="off">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6"></div>
-                <div class="col-sm-6">
-                    <div class="form-field-checkbox">
-                        <label class="form-field-checkbox-label">
-                            <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
-                        </label>
                     </div>
                 </div>
             </div>
@@ -93,7 +79,14 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div class="form-field-heading">Expiry Date</div>
+                        <div class="inline-form-fields">
+                            <div class="form-field-heading">Expiry Date</div>
+                            <div class="form-field-checkbox">
+                                <label class="form-field-checkbox-label">
+                                    <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
+                                </label>
+                            </div>
+                        </div>
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select expiry date" autocomplete="off"/>
                     </div>
                 </div>
@@ -202,7 +195,7 @@
             }
         });
         $.validator.addMethod('validateimage', function(value, element) {
-        return ($(element).data('imagewidth') === 1050 && $(element).data('imageheight') === 400);
+        return (($(element).data('imagewidth') === 400 && $(element).data('imageheight') === 300) || $(element).data('imagewidth')/$(element).data('imageheight') == 1.3333333333);
         }, "please select the correct image");
         //validation rules
         var validator = $("#addcarouselofferform").submit(function(event){
@@ -227,7 +220,7 @@
                 offercode: "please enter offer code",
                 offer_startingdate: "please select starting date",
                 offer_expirydate: "please select expiry date",
-                carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 1050 x 400"},
+                carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 400 x 300 OR 1.3333333333"},
                 offerstatus: "please select offer status"
             },
             submitHandler: function(form) {
@@ -258,6 +251,7 @@
                 $("#offer_expirydate").prop('disabled', false);
                 $("#offer_startingdate , #offer_expirydate").datepicker("option" , {minDate: null,maxDate: null});
                 $(".alert").css('display','none');
+                $('#imgpath').attr('src', '');
                 $.ajax({
                     method: "POST",
                     url: "/addcarouseloffer",
@@ -298,7 +292,7 @@
                         var imageheight = image.height;
                         photoinput.data('imagewidth', imagewidth);
                         photoinput.data('imageheight', imageheight);
-                        if(imagewidth == 1050 && imageheight == 400){
+                        if((imagewidth == 400 && imageheight == 300) || imagewidth/imageheight == 1.3333333333){
                             $('#imgpath').attr('src', e.target.result);
                         }
                         else{

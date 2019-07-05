@@ -18032,6 +18032,19 @@ ul ul a:hover {
   height: 33px !important;
 }
 
+.inline-form-fields {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .form-field-textarea {
   font-size: 14px !important;
   padding: 4px 10px !important;
@@ -18049,8 +18062,8 @@ ul ul a:hover {
 }
 
 .form-field .carousel_image_preview {
-  width: 105px;
-  height: 40px;
+  width: 120px;
+  height: 90px;
 }
 
 .form-field .blog_image_preview {
@@ -18072,8 +18085,8 @@ ul ul a:hover {
 }
 
 .modal-body .carousel_image_preview {
-  width: 210px;
-  height: 80px;
+  width: 280px;
+  height: 210px;
 }
 
 .form-field-heading {
@@ -18352,8 +18365,8 @@ td .category_image_preview {
 }
 
 td .carousel_image_preview {
-  width: 105px;
-  height: 40px;
+  width: 80px;
+  height: 60px;
 }
 
 .update-image-container .update-image-button {
@@ -18386,12 +18399,12 @@ td .carousel_image_preview {
 }
 
 .update-image-container.carousel_image_preview_container {
-  width: 210px;
+  width: 260px;
 }
 
 .update-image-container .carousel_image_preview {
-  width: 210px;
-  height: 80px;
+  width: 260px;
+  height: 190.5px;
   border: 1px solid #d1d1d1;
 }
 

@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Offer Title</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Code</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
@@ -107,14 +107,14 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-field">
-                        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+                        <div class="inline-form-fields">
                             <div class="form-field-heading">Expiry Date</div>
                             <div class="form-field-checkbox">
                                 <label class="form-field-checkbox-label">
                                     <input type="checkbox" id="expiry-date-checkbox" name="expiry-date-checkbox">Expiry Date Not Required
                                 </label>
                             </div>
-                        </div>        
+                        </div>
                         <input type="text" id="offer_expirydate" name="offer_expirydate" class="form-control form-field-text readonly-bg-color" readonly placeholder="select Expiry date" autocomplete="off"/>
                     </div>
                 </div>

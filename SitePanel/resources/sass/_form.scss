@@ -10,6 +10,11 @@
     padding: 4px 10px !important;
     height: 33px !important;
 }
+.inline-form-fields{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+}
 .form-field-textarea{
     font-size: 14px !important;
     padding: 4px 10px !important;
@@ -23,8 +28,8 @@
     border: 1px solid #d1d1d1;
 }
 .form-field .carousel_image_preview{
-    width: 105px;
-    height: 40px;
+    width: 120px;
+    height: 90px;
 }
 .form-field .blog_image_preview{
     width: 180px;
@@ -41,8 +46,8 @@
     border: 1px solid #d1d1d1;
 }
 .modal-body .carousel_image_preview{
-    width: 210px;
-    height: 80px;
+    width: 280px;
+    height: 210px;
 }
 .form-field-heading{
     font-size: 14px;

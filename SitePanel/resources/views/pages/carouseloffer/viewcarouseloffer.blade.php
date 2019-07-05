@@ -198,7 +198,7 @@
             $("#panel-body-container").load($(this).attr("href"));
         });
         $.validator.addMethod('validateimage', function(value, element) {
-        return ($(element).data('imagewidth') === 1050 && $(element).data('imageheight') === 400);
+            return (($(element).data('imagewidth') === 400 && $(element).data('imageheight') === 300) || $(element).data('imagewidth')/$(element).data('imageheight') == 1.3333333333);
         }, "please select the correct image");
         var validator = $("#updatecarouselofferimageform").submit(function(event){
             event.preventDefault();
@@ -207,7 +207,7 @@
                 carouselofferimage: { required: true, validateimage: true }
             },
             messages: {
-                carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 1050 x 400"}
+                carouselofferimage: {required: "please select carousel offer image", validateimage: "image dimaensions must be 400 x 300 OR 1.3333333333"}
             },submitHandler: function(form) {
                 var _carouselofferid = $("#carouselofferid").val();
                 var _carouselofferimage = $("#carouselofferimage")[0].files[0];
@@ -229,7 +229,7 @@
                     success: function(data){
                         if(data.status == "true"){
                             $("#updatecarouselofferimagemodal").modal('toggle');
-                            $("#panel-body-container").load("/updatecarouseloffer/"+data.carouselofferid);
+                            $("#panel-body-container").load("/viewcarouseloffer/"+data.carouselofferid);
                             $("#alert-success-message-area").html(data.success_message);
                             $("#alert-success").fadeTo(1000, 500).slideUp(500, function(){
                                 $("#alert-success").slideUp(500);
@@ -261,7 +261,7 @@
                         var imageheight = image.height;
                         photoinput.data('imagewidth', imagewidth);
                         photoinput.data('imageheight', imageheight);
-                        if(imagewidth == 1050 && imageheight == 400){
+                        if((imagewidth == 400 && imageheight == 300) || imagewidth/imageheight == 1.3333333333){
                             $('#imgpath').attr('src', e.target.result);
                         }
                         else{
