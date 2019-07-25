@@ -74,11 +74,11 @@
         </div>
     </div>
     <hr id="horizontal-line">
-    {{$alloffers->links()}}
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$alloffers->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -243,6 +243,7 @@
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        // pagination via jquery
         $(`.pagination li a`).click(function(e) {
             e.preventDefault();
             var url = $(this).attr(`href`);
@@ -261,6 +262,7 @@
                 alert(`something went wrong.`);
             });
         }
+        // table filters
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();

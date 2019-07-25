@@ -74,7 +74,6 @@ class OfferController extends Controller
             $q->select('id','username');
         }])->paginate(200);
         $data['mainheading'] = "Today's Offers";
-        $data['offerscount'] = count($data['alloffers']);
         $data['filtereddaterange'] = "";
         Session::put('url',$pageurl);
         return view('pages.offer.viewoffers',$data);
@@ -90,7 +89,6 @@ class OfferController extends Controller
             $q->select('id','username');
         }])->paginate(200);
         $data['mainheading'] = "All Offers";
-        $data['offerscount'] = count($data['alloffers']);
         $data['filtereddaterange'] = "";
         return view('pages.offer.viewoffers',$data);
     }
@@ -108,7 +106,6 @@ class OfferController extends Controller
                 $q->select('id','username');
             }])->paginate(200);
             $data['mainheading'] = "Created & Updated Offers";
-            $data['offerscount'] = count($data['alloffers']);
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.offer.viewoffers',$data);
         }
@@ -123,7 +120,6 @@ class OfferController extends Controller
                 $q->select('id','username');
             }])->paginate(200);
             $data['mainheading'] = "Created Offers";
-            $data['offerscount'] = count($data['alloffers']);
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.offer.viewoffers',$data);
         }
@@ -138,7 +134,6 @@ class OfferController extends Controller
                 $q->select('id','username');
             }])->paginate(200);
             $data['mainheading'] = "Updated Offers";
-            $data['offerscount'] = count($data['alloffers']);
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.offer.viewoffers',$data);
         }

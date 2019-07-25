@@ -257,46 +257,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeblogcategoryfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredblogcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredblogcategories, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.title+"</td>"
-                            if(value.is_active == "y"){
-                                html = html + "<td><span class='active-item'>_active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            if("{{Auth::User()->role}}" == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewblogcategory/"+value.id+"' id='viewblogcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblogcategory/"+value.id+"' id='deleteblogcategory' data-blogcategorytitle='"+value.title+"' data-blogcategorystatus='"+value.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredblogcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });

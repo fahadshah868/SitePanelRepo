@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $categoriescount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $allcategories->total() }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/todayallcategories" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Categories List"><i class="fas fa-list"></i>Get Today All Categories</a>
             <a href="/allcategories" class="btn btn-danger viewitems-header-filter-button" title="Get All Categories List"><i class="fas fa-list"></i>Get All Categories</a>
@@ -73,11 +73,12 @@
             {{-- end popup --}}
         </div>
     </div>
-    <hr>
+    <hr id="horizontal-line">
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$allcategories->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -162,12 +163,33 @@
             @endif
             </tbody>
         </table>
+        {{$allcategories->links()}}
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        // pagination via jquery
+        $(`.pagination li a`).click(function(e) {
+            e.preventDefault();
+            var url = $(this).attr(`href`);
+            getArticles(url);
+        });
+        function getArticles(url) {
+            $.ajax({
+                url : url,
+                type: 'GET',
+            }).done(function (data) {
+                $(`#panel-body-container`).html(data);
+                $('html, body').animate({
+                    scrollTop: $("hr#horizontal-line").offset().top
+                }, 500)
+            }).fail(function () {
+                alert(`something went wrong.`);
+            });
+        }
+        // table filters
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var categorytitle_val = $.trim($("#categorytitle").val()).replace(/ +/g, ' ').toLowerCase();
@@ -305,56 +327,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangecategoryfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredcategories, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.title+"</td>"+
-                            "<td>"+value.is_topcategory+"</td>"+
-                            "<td>"+value.is_popularcategory+"</td>"
-                            if(value.is_active == "y"){
-                                html = html + "<td><span class='active-item'>_active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            if(value.is_topcategory == "y"){
-                                html = html + 
-                                `<td><img src="{{asset("/")}}`+value.logo_url+`" class='category_image_preview'></td>`
-                            }
-                            else{
-                                html = html +
-                                "<td><b>N/A</b></td>"
-                            }
-                            if('{{Auth::User()->role}}' == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewcategory/"+value.id+"' id='viewcategory' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletecategory/"+value.id+"' data-categorytitle='"+value.title+"' data-istopcategory='"+value.is_topcategory+"' data-ispopularcategory='"+value.is_popularcategory+"' data-categorystatus='"+value.is_active+"' id='deletecategory' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredcategories/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto)
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });

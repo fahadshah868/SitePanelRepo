@@ -85,114 +85,74 @@ class StoreController extends Controller
             return response()->json($response);
         }
     }
-    public function getAllStores(){
+    public function getAllStores(Request $request){
+        Session::put('url',$request->getRequestUri());
         $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->with(['network' => function($q){
             $q->select('id','title');
         },'user' => function($q){
             $q->select('id','username');
-        }])->orderBy('id', 'DESC')->get();
+        }])->orderBy('id', 'DESC')
+        ->paginate(2);
         $data['mainheading'] = "All Stores";
-        $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
-        Session::put(['url'=>'/allstores','flag'=>1]);
         return view('pages.store.viewstores', $data);
     }
-    public function getTodayAllStores(){
+    public function getTodayAllStores(Request $request){
+        Session::put('url',$request->getRequestUri());
         $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->with(['network' => function($q){
             $q->select('id','title');
         },'user' => function($q){
             $q->select('id','username');
-        }])->orderBy('id', 'DESC')->get();
+        }])->orderBy('id', 'DESC')
+        ->paginate(2);
         $data['mainheading'] = "Today's Stores";
-        $data['storescount'] = count($data['allstores']);
         $data['filtereddaterange'] = "";
-        Session::put(['url'=>'/todayallstores','flag'=>1]);
         return view('pages.store.viewstores',$data);
     }
-    public function getFilteredStores($dateremark, $datefrom, $dateto){
-        Session::put('url','/filteredstores/'.$dateremark.'/'.Carbon::parse($datefrom)->format('Y-m-d').'/'.Carbon::parse($dateto)->format('Y-m-d'));
-        if(Session::get('flag') == 1){
-            if(strcasecmp($dateremark,"both") == 0 ){
-                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $response['mainheading'] = 'Created & Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
-                return response()->json($response);
-            }
-            else if(strcasecmp($dateremark,"created") == 0){
-                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $response['mainheading'] = 'Created Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
-                return response()->json($response);
-            }
-            else if(strcasecmp($dateremark,"updated") == 0){
-                $response['filteredstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $response['mainheading'] = 'Updated Stores<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">('.count($response['filteredstores']).'<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">('.$datefrom.' To '.$dateto.')</span>';
-                return response()->json($response);
-            }
+    public function getFilteredStores(Request $request, $dateremark, $datefrom, $dateto){
+        Session::put('url',$request->getRequestUri());
+        if(strcasecmp($dateremark,"both") == 0 ){
+            $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with(['network' => function($q){
+                $q->select('id','title');
+            },'user' => function($q){
+                $q->select('id','username');
+            }])
+            ->paginate(2);
+            $data['mainheading'] = "Created & Updated Stores";
+            $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+            return view('pages.store.viewstores', $data);
         }
-        else{
-            Session::put('flag',1);
-            if(strcasecmp($dateremark,"both") == 0 ){
-                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orWhereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $data['mainheading'] = "Created & Updated Stores";
-                $data['storescount'] = count($data['allstores']);
-                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.viewstores', $data);
-            }
-            else if(strcasecmp($dateremark,"created") == 0){
-                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $data['mainheading'] = "Created Stores";
-                $data['storescount'] = count($data['allstores']);
-                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.viewstores', $data);
-            }
-            else if(strcasecmp($dateremark,"updated") == 0){
-                $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
-                ->orderBy('id','DESC')
-                ->with(['network' => function($q){
-                    $q->select('id','title');
-                },'user' => function($q){
-                    $q->select('id','username');
-                }])->get();
-                $data['mainheading'] = "Updated Stores";
-                $data['storescount'] = count($data['allstores']);
-                $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
-                return view('pages.store.viewstores', $data);
-            }
+        else if(strcasecmp($dateremark,"created") == 0){
+            $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(created_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with(['network' => function($q){
+                $q->select('id','title');
+            },'user' => function($q){
+                $q->select('id','username');
+            }])
+            ->paginate(2);
+            $data['mainheading'] = "Created Stores";
+            $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+            return view('pages.store.viewstores', $data);
+        }
+        else if(strcasecmp($dateremark,"updated") == 0){
+            $data['allstores'] = Store::select('id','title','primary_url','network_id','network_url','is_topstore','is_popularstore','is_active','logo_url','user_id')->whereBetween((\DB::raw('DATE(updated_at)')),[Carbon::parse($datefrom)->format('Y-m-d'),Carbon::parse($dateto)->format('Y-m-d')])
+            ->orderBy('id','DESC')
+            ->with(['network' => function($q){
+                $q->select('id','title');
+            },'user' => function($q){
+                $q->select('id','username');
+            }])
+            ->paginate(2);
+            $data['mainheading'] = "Updated Stores";
+            $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
+            return view('pages.store.viewstores', $data);
         }
     }
     public function getViewStore($id){
-        Session::put('flag',-1);
         $data['store'] = Store::with(['network' => function($q){
             $q->select('id','title');
         },'user' => function($q){
@@ -501,7 +461,6 @@ class StoreController extends Controller
         }
     }
     public function deleteStore($id){
-        Session::put('flag',-1);
         $store = Store::find($id);
         try{
             $store->delete();

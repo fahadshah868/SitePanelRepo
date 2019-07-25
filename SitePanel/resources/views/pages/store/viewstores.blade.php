@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $storescount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $allstores->total() }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/todayallstores" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Stores List"><i class="fas fa-list"></i>Get Today All Stores</a>
             <a href="/allstores" class="btn btn-danger viewitems-header-filter-button" title="Get All Stores List"><i class="fas fa-list"></i>Get All Stores</a>
@@ -73,11 +73,12 @@
             {{-- end popup --}}
         </div>
     </div>
-    <hr>
+    <hr id="horizontal-line">
     <div id="alert-danger" class="alert alert-danger alert-dismissible fade show alert-danger-message">
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$allstores->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -180,12 +181,33 @@
                 @endif
             </tbody>
         </table>
+        {{$allstores->links()}}
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
 <script src="{{asset('js/hightlighttablecolumn.js')}}"></script>
 <script>
     $(document).ready(function(){
+        // pagination via jquery
+        $(`.pagination li a`).click(function(e) {
+            e.preventDefault();
+            var url = $(this).attr(`href`);
+            getArticles(url);
+        });
+        function getArticles(url) {
+            $.ajax({
+                url : url,
+                type: 'GET',
+            }).done(function (data) {
+                $(`#panel-body-container`).html(data);
+                $('html, body').animate({
+                    scrollTop: $("hr#horizontal-line").offset().top
+                }, 500)
+            }).fail(function () {
+                alert(`something went wrong.`);
+            });
+        }
+        // table filters
         function clientSideFilter(){
             var $rows = $('#tablebody tr');
             var storetitle_val = $.trim($("#storetitle").val()).replace(/ +/g, ' ').toLowerCase();
@@ -350,53 +372,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangestorefilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredstores/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredstores, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.title+"</td>"+
-                            "<td>"+value.primary_url+"</td>"+
-                            "<td>"+value.network.title+"</td>"+
-                            "<td>"+value.network_url+"</td>"+
-                            "<td>"+value.is_topstore+"</td>"+
-                            "<td>"+value.is_popularstore+"</td>"
-                            if(value.is_active == "y"){
-                                html = html + "<td><span class='active-item'>_active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            html = html +
-                            `<td><img src="{{asset("/")}}`+value.logo_url+`" class='store_image_preview'></td>`
-                            if('{{Auth::User()->role}}' == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewstore/"+value.id+"' id='viewstore' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deletestore/"+value.id+"' data-storetitle='"+value.title+"' data-storeprimaryurl='"+value.primary_url+"' data-storesecondaryurl='"+value.secondary_url+"' data-storenetwork='"+value.network.title+"' data-storenetworkurl='"+value.network_url+"' data-istopstore='"+value.is_topstore+"' data-ispopularstore='"+value.is_popularstore+"' data-storestatus='"+value.is_active+"' id='deletestore' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredstores/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });
