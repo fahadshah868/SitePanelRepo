@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $offerscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $eventoffers->total() }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/event/todayalloffers" class="btn btn-danger viewitems-header-filter-button" title="Get Today All Offers List"><i class="fas fa-list"></i>Get Today's Event Offers</a>
             <a href="/event/alloffers" class="btn btn-danger viewitems-header-filter-button" title="Get All Offers List"><i class="fas fa-list"></i>Get All Event Offers</a>
@@ -78,6 +78,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$eventoffers->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -161,6 +162,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{$eventoffers->links()}}
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
@@ -313,54 +315,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeeventofferfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/event/filteredoffers/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredeventoffers, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.event.title+"</td>"+
-                            "<td>"+value.offer.title+"</td>"+
-                            "<td>"+value.offer.store.title+"</td>"+
-                            "<td>"+value.offer.category.title+"</td>"
-                            if(value.offer.is_active == "y"){
-                                html = html + "<td><span class='active-item'>active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            if(value.offer.starting_date <= "{{config('constants.TODAY_DATE')}}" && (value.offer.expiry_date >= "{{config('constants.TODAY_DATE')}}" || value.offer.expiry_date == null)){
-                                html = html + "<td><span class='available-offer'>Available</span></td>"
-                            }
-                            else if(value.offer.starting_date > "{{config('constants.TODAY_DATE')}}"){
-                                html = html + "<td><span class='pending-offer'>Pending</span></td>"
-                            }
-                            else if(value.offer.expiry_date < "{{config('constants.TODAY_DATE')}}"){
-                                html = html + "<td><span class='expired-offer'>Expired</span></td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/event/viewoffer/"+value.id+"' id='viewoffer' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/event/deleteoffer/"+value.id+"' id='deleteoffer' data-eventtitle='"+value.event.title+"' data-offerstore='"+value.offer.store.title+"' data-offercategory='"+value.offer.category.title+"' data-offertitle='"+value.offer.title+"' data-offerstartingdate='"+value.offer.starting_date+"' data-offerexpirydate='"+value.offer.expiry_date+"' data-offerstatus='"+value.offer.is_active+"' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/event/filteredoffers/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });

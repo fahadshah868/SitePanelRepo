@@ -295,48 +295,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeeventfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredevents/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredevents, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.title+"</td>"+
-                            "<td>"+value.display_in_footer+"</td>"+
-                            "<td>"+value.is_eventready+"</td>"
-                            if(value.is_active == "y"){
-                                html = html + "<td><span class='active-item'>_active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            if('{{Auth::User()->role}}' == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewevent/"+value.id+"' id='viewevent' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteevent/"+value.id+"' data-eventtitle='"+value.title+"' data-displayinfooter='"+value.display_in_footer+"' data-iseventready='"+value.is_ready+"' data-eventstatus='"+value.is_active+"' id='deleteevent' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredevents/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });
