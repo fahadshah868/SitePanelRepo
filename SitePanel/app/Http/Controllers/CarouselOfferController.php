@@ -62,7 +62,7 @@ class CarouselOfferController extends Controller
         }, 'user' => function($q){
             $q->select('id','username');
         }])
-        ->paginate(2);
+        ->paginate(200);
         $data['mainheading'] = "Today's Carousel Offers";
         $data['filtereddaterange'] = "";
         return view('pages.carouseloffer.viewcarouseloffers',$data);
@@ -75,7 +75,7 @@ class CarouselOfferController extends Controller
         }, 'user' => function($q){
             $q->select('id','username');
         }])
-        ->paginate(2);
+        ->paginate(200);
         $data['mainheading'] = "All Carousel Offers";
         $data['filtereddaterange'] = "";
         return view('pages.carouseloffer.viewcarouseloffers',$data);
@@ -91,7 +91,7 @@ class CarouselOfferController extends Controller
             }, 'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Created & Updated Carousel Offers";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.carouseloffer.viewcarouseloffers',$data);
@@ -104,7 +104,7 @@ class CarouselOfferController extends Controller
             }, 'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Created Carousel Offers";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.carouseloffer.viewcarouseloffers',$data);
@@ -117,7 +117,7 @@ class CarouselOfferController extends Controller
             }, 'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Updated Carousel Offers";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.carouseloffer.viewcarouseloffers',$data);
