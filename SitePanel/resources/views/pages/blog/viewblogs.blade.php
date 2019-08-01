@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $blogscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $allblogs->total() }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/todayallblogs" class="btn btn-danger viewitems-header-filter-button" title="Get Today's Blogs List"><i class="fas fa-list"></i>Get Today All Blogs</a>
             <a href="/allblogs" class="btn btn-danger viewitems-header-filter-button" title="Get All Blogs List"><i class="fas fa-list"></i>Get All Blogs</a>
@@ -78,6 +78,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$allblogs->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -164,6 +165,7 @@
                 @endif
             </tbody>
         </table>
+        {{$allblogs->links()}}
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
@@ -321,51 +323,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeblogfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredblogs/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredblogs, function (index, value) {
-                            var html = "<tr>"+
-                            "<td><div class='blog-title-container'>"+value.title+"</div></td>"+
-                            "<td><div class='blog-body-container'>"+value.body+"</div></td>"+
-                            "<td>"+value.blogcategory.title+"</td>"+
-                            "<td>"+value.author+"</td>"
-                            if(value.is_active == "y"){
-                                html = html + "<td><span class='active-item'>_active</span></td>"
-                            }
-                            else{
-                                html = html + "<td><span class='deactive-item'>deactive</span></td>"
-                            }
-                            html = html +
-                            `<td><img src="{{asset("/")}}`+value.image_url+`" class='blog_image_preview'></td>`
-                            if('{{Auth::User()->role}}' == "admin"){
-                                html = html +
-                                "<td>"+value.user.username+"</td>"
-                            }
-                            html = html +
-                            "<td>"+
-                                "<a href='/viewblog/"+value.id+"' id='viewblog' class='btn btn-primary actionbutton'><i class='fa fa-eye'></i>View</a>"+
-                                "<a href='/deleteblog/"+value.id+"' data-blogtitle='"+value.title+"' data-blogbody='"+value.body+"' data-blogauthor='"+value.author+"' data-blogstatus='"+value.is_active+"' id='deleteblog' class='btn btn-danger actionbutton'><i class='fa fa-trash'></i>Delete</a>"+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredblogs/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });

@@ -1,6 +1,6 @@
 <div class="viewitems-main-container">
     <div class="viewitems-header-container">
-        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $blogcommentscount }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
+        <div class="viewitems-main-heading" id="viewitems-main-heading">{{$mainheading}}<span class="viewitems-main-heading-count" id="viewitems-main-heading-count">({{ $allblogcomments->total() }}<span id="filtered_row_count"></span>)</span><span class="filtered_daterange">{{$filtereddaterange}}</span></div>
         <div class="date-filter-container" id="date-filter-container">
             <a href="/allblogcomments" class="btn btn-danger viewitems-header-filter-button" title="Get All Blog Comments List"><i class="fas fa-list"></i>Get All Bog Comments</a>
             <button class="btn btn-danger date-range-filter-button" title="Set Date Range To Filter Blog Comments" data-toggle="modal" data-target="#daterangemodal"><i class="fas fa-calendar-alt"></i>Set Date Range</button>
@@ -77,6 +77,7 @@
         <a href="#" class="close" aria-label="close">&times;</a>
         <strong id="alert-danger-message-area"></strong>
     </div>
+    {{$allblogcomments->links()}}
     <div class="viewitems-tableview">
         <table class="table table-bordered" id="tableview">
             <thead>
@@ -156,6 +157,7 @@
                 @endif
             </tbody>
         </table>
+        {{$allblogcomments->links()}}
     </div>
 </div>
 <script src="{{asset('js/bootbox.min.js')}}"></script>
@@ -295,59 +297,8 @@
                 var _dateremark = $("input[name='dateremark']:checked"). val();
                 var _modal_datefrom = $("#modal_datefrom").val();
                 var _modal_dateto = $("#modal_dateto").val();
-                $("#daterangeblogcommentfilterform").trigger("reset");
-                $("#modal_datefrom , #modal_dateto").datepicker("option" , {minDate: null,maxDate: null});
-                $(".alert").css('display','none');
-                $.ajax({
-                    method: "GET",
-                    url: "/filteredblogcomments/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto,
-                    data: null,
-                    dataType: "json",
-                    contentType: "application/json",
-                    cache: false,
-                    success: function(data){
-                        $("#daterangemodal").modal('toggle');
-                        $("#tablebody").empty();
-                        $("#viewitems-main-heading").html(data.mainheading);
-                        $.each(data.filteredblogcomments, function (index, value) {
-                            var html = "<tr>"+
-                            "<td>"+value.blog.title+"</td>"+
-                            "<td>"+value.author+"</td>"+
-                            "<td>"+value.email+"</td>"+
-                            "<td>"+value.body+"</td>"+
-                            "<td class='comment-status'>"
-                            if(value.status.toLowerCase() == "pending"){
-                                html = html + `<span class="pending-comment">`+value.status+`</span>`;
-                            }
-                            else if(value.status.toLowerCase() == "approved"){
-                                html = html + `<span class="approved-comment">`+value.status+`</span>`;
-                            }
-                            else if(value.status.toLowerCase() == "rejected"){
-                                html = html + `<span class="rejected-comment">`+value.status+`</span>`;
-                            }
-                            html = html + "</td>"+
-                            "<td>"
-                                if(value.status.toLowerCase() == "pending"){
-                                    html = html +
-                                    `<div id="approval-actions" class="action-buttons-container">`+
-                                        `<a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="`+value.id+`" data-blogcommentstatus="approved" class="btn btn-success actionbutton"><i class="fa fa-check"></i>Approve</a>`+
-                                        `<a href="/updateblogcomment" id="changecommentstatus" data-blogcommentid="`+value.id+`" data-blogcommentstatus="rejected" class="btn btn-danger actionbutton"><i class="fa fa-ban"></i>Reject</a>`+
-                                    `</div>`
-                                }
-                                html = html +
-                                `<div class="action-buttons-container">`+
-                                    `<a href="/viewblogcomment/`+value.id+`" id="viewblogcomment" class="btn btn-primary actionbutton"><i class="fa fa-eye"></i>View</a>`+
-                                    `<a href="/deleteblogcomment/`+value.id+`" data-blogtitle="`+value.blog.title+`" data-commentauthor="`+value.author+`" data-commentauthoremail="`+value.email+`" data-commentbody="`+value.body+`" data-blogcommentstatus="`+value.status+`" id="deleteblogcomment" class="btn btn-danger actionbutton"><i class="fa fa-trash"></i>Delete</a>`+
-                                `</div>`+
-                            "</td>"+
-                            "</tr>";
-                            $("#tablebody").append(html);
-                        });
-                    },
-                    error: function(){
-                        alert("Ajax Error! something went wrong...");
-                    }
-                });
+                $("#panel-body-container").load("/filteredblogcomments/"+_dateremark+"/"+_modal_datefrom+"/"+_modal_dateto);
+                $("#daterangemodal").modal('toggle');
                 return false;
             }
         });
