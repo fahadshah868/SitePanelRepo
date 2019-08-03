@@ -60,7 +60,7 @@ class CategoryController extends Controller
         Session::put('url',$request->getRequestUri());
         $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
-        }])->paginate(2);
+        }])->paginate(200);
         $data['mainheading'] = "All Categories";
         $data['filtereddaterange'] = "";
         return view('pages.category.viewcategories',$data);
@@ -69,7 +69,7 @@ class CategoryController extends Controller
         Session::put('url',$request->getRequestUri());
         $data['allcategories'] = Category::select('id','title','is_topcategory','is_popularcategory','is_active','logo_url','user_id')->whereDate('created_at',config('constants.TODAY_DATE'))->orderBy('id', 'DESC')->with(['user' => function($q){
             $q->select('id','username');
-        }])->paginate(2);
+        }])->paginate(200);
         $data['mainheading'] = "Today's Categories";
         $data['filtereddaterange'] = "";
         return view('pages.category.viewcategories',$data);
@@ -82,7 +82,7 @@ class CategoryController extends Controller
             ->orderBy('id','DESC')
             ->with(['user' => function($q){
                 $q->select('id','username');
-            }])->paginate(2);
+            }])->paginate(200);
             $data['mainheading'] = "Created & Updated Categories";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.category.viewcategories',$data);
@@ -92,7 +92,7 @@ class CategoryController extends Controller
             ->orderBy('id','DESC')
             ->with(['user' => function($q){
                 $q->select('id','username');
-            }])->paginate(2);
+            }])->paginate(200);
             $data['mainheading'] = "Created Categories";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.category.viewcategories',$data);
@@ -102,7 +102,7 @@ class CategoryController extends Controller
             ->orderBy('id','DESC')
             ->with(['user' => function($q){
                 $q->select('id','username');
-            }])->paginate(2);
+            }])->paginate(200);
             $data['mainheading'] = "Updated Categories";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.category.viewcategories',$data);

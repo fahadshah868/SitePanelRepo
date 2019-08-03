@@ -92,7 +92,7 @@ class StoreController extends Controller
         },'user' => function($q){
             $q->select('id','username');
         }])->orderBy('id', 'DESC')
-        ->paginate(2);
+        ->paginate(200);
         $data['mainheading'] = "All Stores";
         $data['filtereddaterange'] = "";
         return view('pages.store.viewstores', $data);
@@ -104,7 +104,7 @@ class StoreController extends Controller
         },'user' => function($q){
             $q->select('id','username');
         }])->orderBy('id', 'DESC')
-        ->paginate(2);
+        ->paginate(200);
         $data['mainheading'] = "Today's Stores";
         $data['filtereddaterange'] = "";
         return view('pages.store.viewstores',$data);
@@ -120,7 +120,7 @@ class StoreController extends Controller
             },'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Created & Updated Stores";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.store.viewstores', $data);
@@ -133,7 +133,7 @@ class StoreController extends Controller
             },'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Created Stores";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.store.viewstores', $data);
@@ -146,7 +146,7 @@ class StoreController extends Controller
             },'user' => function($q){
                 $q->select('id','username');
             }])
-            ->paginate(2);
+            ->paginate(200);
             $data['mainheading'] = "Updated Stores";
             $data['filtereddaterange'] = "(".Carbon::parse($datefrom)->format('d-m-Y')." To ".Carbon::parse($dateto)->format('d-m-Y').")";
             return view('pages.store.viewstores', $data);
