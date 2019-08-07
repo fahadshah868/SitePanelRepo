@@ -40,15 +40,15 @@ class StoreController extends Controller
             $store->is_active = $formdata->storestatus;
             //upload file and save path into db
             if($request->hasFile('storelogo')){
-                if(!File::exists(public_path("images/store"))){
-                    File::makeDirectory(public_path("images/store", 0777, true, true));
+                if(!File::exists(public_path("/images/store"))){
+                    File::makeDirectory(public_path("/images/store", 0777, true, true));
                 }
                 $storelogo = $request->file('storelogo');
                 $resized_store_logo = Image::make($storelogo);
                 $resized_store_logo->resize(200, 200);
                 $store_logo_name = "merchant-".time().".".$storelogo->getClientOriginalExtension();
-                $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
-                $store_logo_path = 'images/store/'.$store_logo_name;
+                $resized_store_logo->save(public_path('/images/store/'.$store_logo_name));
+                $store_logo_path = '/images/store/'.$store_logo_name;
                 $store->logo_url = $store_logo_path;
                 $store->user_id = Auth::User()->id;
                 $store->updated_at = null;
@@ -429,8 +429,8 @@ class StoreController extends Controller
         $formdata = json_decode($request->formdata);
         $store = Store::find($formdata->storeid);
         if($request->hasFile('storelogo')){
-            if(!File::exists(public_path("images/store"))){
-                File::makeDirectory(public_path("images/store", 0777, true, true));
+            if(!File::exists(public_path("/images/store"))){
+                File::makeDirectory(public_path("/images/store", 0777, true, true));
             }
             if(File::exists($store->logo_url)){
                 File::delete($store->logo_url);
@@ -439,8 +439,8 @@ class StoreController extends Controller
             $resized_store_logo = Image::make($storelogo);
             $resized_store_logo->resize(200, 200);
             $store_logo_name = "merchant-".time().".".$storelogo->getClientOriginalExtension();
-            $resized_store_logo->save(public_path('images/store/'.$store_logo_name));
-            $store_logo_path = 'images/store/'.$store_logo_name;
+            $resized_store_logo->save(public_path('/images/store/'.$store_logo_name));
+            $store_logo_path = '/images/store/'.$store_logo_name;
             $store->logo_url = $store_logo_path;
             $store->user_id = Auth::User()->id;
             $store->save();

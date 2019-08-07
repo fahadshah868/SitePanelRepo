@@ -34,15 +34,15 @@ class CarouselOfferController extends Controller
         }
         $carouseloffer->is_active = $formdata->offerstatus;
         if($request->hasFile('carouselofferimage')){
-            if(!File::exists(public_path("images/carousel"))){
-                File::makeDirectory(public_path("images/carousel", 0777, true, true));
+            if(!File::exists(public_path("/images/carousel"))){
+                File::makeDirectory(public_path("/images/carousel", 0777, true, true));
             }
             $carousel_image = $request->file('carouselofferimage');
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(400, 300);
             $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
-            $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
-            $carousel_image_path = 'images/carousel/'.$carousel_image_name;
+            $resized_carousel_image->save(public_path('/images/carousel/'.$carousel_image_name));
+            $carousel_image_path = '/images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
             $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->updated_at = null;
@@ -190,8 +190,8 @@ class CarouselOfferController extends Controller
         $formdata = json_decode($request->formdata);
         $carouseloffer = CarouselOffer::find($formdata->carouselofferid);
         if($request->hasFile('carouselofferimage')){
-            if(!File::exists(public_path("images/carousel"))){
-                File::makeDirectory(public_path("images/carousel", 0777, true, true));
+            if(!File::exists(public_path("/images/carousel"))){
+                File::makeDirectory(public_path("/images/carousel", 0777, true, true));
             }
             if(File::exists($carouseloffer->image_url)){
                 File::delete($carouseloffer->image_url);
@@ -200,8 +200,8 @@ class CarouselOfferController extends Controller
             $resized_carousel_image = Image::make($carousel_image);
             $resized_carousel_image->resize(400, 300);
             $carousel_image_name = "carousel-".time().".".$carousel_image->getClientOriginalExtension();
-            $resized_carousel_image->save(public_path('images/carousel/'.$carousel_image_name));
-            $carousel_image_path = 'images/carousel/'.$carousel_image_name;
+            $resized_carousel_image->save(public_path('/images/carousel/'.$carousel_image_name));
+            $carousel_image_path = '/images/carousel/'.$carousel_image_name;
             $carouseloffer->image_url = $carousel_image_path;
             $carouseloffer->user_id = Auth::User()->id;
             $carouseloffer->save();

@@ -28,15 +28,15 @@ class CategoryController extends Controller
             $category->is_popularcategory = $formdata->is_popularcategory;
             $category->is_active = $formdata->categorystatus;
             if($request->hasFile('categorylogo')){
-                if(!File::exists(public_path("images/category"))){
-                    File::makeDirectory(public_path("images/category", 0777, true, true));
+                if(!File::exists(public_path("/images/category"))){
+                    File::makeDirectory(public_path("/images/category", 0777, true, true));
                 }
                 $categorylogo = $request->file('categorylogo');
                 $resized_category_logo = Image::make($categorylogo);
                 $resized_category_logo->resize(200, 200);
                 $category_logo_name = "category-".time().".".$categorylogo->getClientOriginalExtension();
-                $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
-                $category_logo_path = 'images/category/'.$category_logo_name;
+                $resized_category_logo->save(public_path('/images/category/'.$category_logo_name));
+                $category_logo_path = '/images/category/'.$category_logo_name;
                 $category->logo_url = $category_logo_path;
             }
             $category->user_id = Auth::User()->id;
@@ -235,8 +235,8 @@ class CategoryController extends Controller
             if(!empty($category->logo_url) && File::exists($category->logo_url)){
                 File::delete($category->logo_url);
             }
-            if(!File::exists(public_path("images/category"))){
-                File::makeDirectory(public_path("images/category", 0777, true, true));
+            if(!File::exists(public_path("/images/category"))){
+                File::makeDirectory(public_path("/images/category", 0777, true, true));
             }
             if(empty($category->logo_url)){
                 $categorylogo_message = "Added";
@@ -248,8 +248,8 @@ class CategoryController extends Controller
             $resized_category_logo = Image::make($categorylogo);
             $resized_category_logo->resize(200, 200);
             $category_logo_name = "category-".time().".".$categorylogo->getClientOriginalExtension();
-            $resized_category_logo->save(public_path('images/category/'.$category_logo_name));
-            $category_logo_path = 'images/category/'.$category_logo_name;
+            $resized_category_logo->save(public_path('/images/category/'.$category_logo_name));
+            $category_logo_path = '/images/category/'.$category_logo_name;
             $category->logo_url = $category_logo_path;
             $category->user_id = Auth::User()->id;
             $category->save();

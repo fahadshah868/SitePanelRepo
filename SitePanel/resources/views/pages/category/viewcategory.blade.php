@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         <div class="col-xl-3" style="margin: 20px 0;">
-            @if(strcasecmp($category->is_topcategory,"yes") == 0)
+            @if(strcasecmp($category->is_topcategory,"y") == 0)
             <div class="update-image-container category_image_preview_container">
                 <img src="{{asset($category->logo_url)}}" class="category_image_preview">
                 @if($category->logo_url == null)

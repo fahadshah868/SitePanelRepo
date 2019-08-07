@@ -32,15 +32,15 @@ class BlogController extends Controller
             $blog->is_active = $formdata->blogstatus;
             //upload file and save path into db
             if($request->hasFile('blog_image')){
-                if(!File::exists(public_path("images/blog"))){
-                    File::makeDirectory(public_path("images/blog", 0777, true, true));
+                if(!File::exists(public_path("/images/blog"))){
+                    File::makeDirectory(public_path("/images/blog", 0777, true, true));
                 }
                 $blog_image = $request->file('blog_image');
                 $resized_blog_image = Image::make($blog_image);
                 $resized_blog_image->resize(900, 500);
                 $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
-                $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
-                $blog_image_path = 'images/blog/'.$blog_image_name;
+                $resized_blog_image->save(public_path('/images/blog/'.$blog_image_name));
+                $blog_image_path = '/images/blog/'.$blog_image_name;
                 $blog->image_url = $blog_image_path;
                 $blog->user_id = Auth::User()->id;
                 $blog->updated_at = null;
@@ -198,8 +198,8 @@ class BlogController extends Controller
         $formdata = json_decode($request->formdata);
         $blog = Blog::find($formdata->blogid);
         if($request->hasFile('blog_image')){
-            if(!File::exists(public_path("images/blog"))){
-                File::makeDirectory(public_path("images/blog", 0777, true, true));
+            if(!File::exists(public_path("/images/blog"))){
+                File::makeDirectory(public_path("/images/blog", 0777, true, true));
             }
             if(File::exists($blog->image_url)){
                 File::delete($blog->image_url);
@@ -208,8 +208,8 @@ class BlogController extends Controller
             $resized_blog_image = Image::make($blog_image);
             $resized_blog_image->resize(900, 500);
             $blog_image_name = "blog-".time().".".$blog_image->getClientOriginalExtension();
-            $resized_blog_image->save(public_path('images/blog/'.$blog_image_name));
-            $blog_image_path = 'images/blog/'.$blog_image_name;
+            $resized_blog_image->save(public_path('/images/blog/'.$blog_image_name));
+            $blog_image_path = '/images/blog/'.$blog_image_name;
             $blog->image_url = $blog_image_path;
             $blog->user_id = Auth::User()->id;
             $blog->save();
@@ -259,12 +259,12 @@ class BlogController extends Controller
         if(Input::hasFile('upload')){
             $file = Input::file('upload');
             if($file->isValid()){
-                if(!File::exists(public_path("images/blog_body"))){
-                    File::makeDirectory(public_path("images/blog_body", 0777, true, true));
+                if(!File::exists(public_path("/images/blog_body"))){
+                    File::makeDirectory(public_path("/images/blog_body", 0777, true, true));
                 }
                 $blog_image = Image::make($file);
                 $blog_image_name = "blog-".time().".".$file->getClientOriginalExtension();
-                $blog_image_location = 'images/blog_body/'.$blog_image_name;
+                $blog_image_location = '/images/blog_body/'.$blog_image_name;
                 $blog_image->save(public_path($blog_image_location));
             }
             else{
