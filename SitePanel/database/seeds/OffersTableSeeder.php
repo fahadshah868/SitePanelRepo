@@ -28,7 +28,8 @@ class OffersTableSeeder extends Seeder
         $display_at_home = ['y','n'];
         $is_verified = ['y','n'];
         // create array to inserting in db
-        for($i=0; $i< 5000; $i++){
+        for($i=0; $i< 3000; $i++){
+            $code = null;
             // get random index values from above define arrays
             $store_index = array_rand($stores,1);
             $category_index = array_rand($categories,1);
@@ -40,10 +41,8 @@ class OffersTableSeeder extends Seeder
             $is_popular_index = array_rand($is_popular,1);
             $display_at_home_index = array_rand($display_at_home,1);
             $is_verified_index = array_rand($is_verified,1);
-
-            $code = null;
-            if(strcasecmp($types[$type_index], 'Code')){
-                $code = $types[$type_index];
+            if(strcasecmp($types[$type_index], 'Code') == 0){
+                $code = $codes[$code_index];
             }
             $offers[] = [
                 'store_id' => $stores[$store_index],
